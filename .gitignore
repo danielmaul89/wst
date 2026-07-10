@@ -1,0 +1,7 @@
+# Raw/unprocessed source renders — huge (100s of MB), not referenced by the site.
+# Only the cropped/optimized derivatives in assets/products/web/ and
+# assets/products/renders/ are actually used.
+assets/products/*.png
+
+# Local Claude Code tool permissions (machine-specific, not project config)
+.claude/settings.local.json
