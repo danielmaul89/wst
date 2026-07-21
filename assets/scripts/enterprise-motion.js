@@ -4,6 +4,19 @@
   var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function setupButtonLighting() {
+    var buttons = document.querySelectorAll('.btn, .nav-contact, .card-cta, .glass-cta, .cat-explore');
+    buttons.forEach(function (button) {
+      button.addEventListener('pointermove', function (event) {
+        var rect = button.getBoundingClientRect();
+        button.style.setProperty('--button-light-x', (event.clientX - rect.left) + 'px');
+        button.style.setProperty('--button-light-y', (event.clientY - rect.top) + 'px');
+      });
+    });
+  }
+
+  if (!reduceMotion) setupButtonLighting();
+
   if (reduceMotion || !('IntersectionObserver' in window)) return;
 
   root.classList.add('motion-ready');
