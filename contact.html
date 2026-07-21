@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — WS Technicals</title>
+<meta name="description" content="Get in touch with WS Technicals about a sales inquiry, a purchase, or a general question — or find your way to our support center.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+@font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-medium.woff') format('woff'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-semi-bold.woff') format('woff'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
+
+:root{
+  --paper:#FBF9F5; --paper-2:#F3EFE7; --card:#FFFFFF;
+  --ink:#06081A; --ink-soft:#4A4C58; --ink-faint:#8B8D98;
+  --line:#E4DFD3; --line-2:#EAE6DC;
+  --blue:#0F2A5C; --blue-deep:#030B21; --brass:#B99A72; --brass-hi:#CBB08A; --brass-soft:#E7DDCB;
+  --paper-on-dark:#FBF9F5; --ink-soft-on-dark:#AEB3C9;
+  --r:4px; --r-lg:8px; --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  --font-display:'Geogrotesque','Sora',sans-serif; --font-body:'Arbeit','Inter',Arial,sans-serif;
+  --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:48px; --sp-6:64px; --sp-7:96px; --sp-8:140px;
+  --ease:cubic-bezier(.4,0,.2,1); --dur:.35s;
+  --shadow-sm:0 1px 2px rgba(6,8,26,.04); --shadow-md:0 12px 32px -12px rgba(6,8,26,.14); --shadow-lg:0 24px 60px -20px rgba(6,8,26,.22);
+  --container:1240px;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top:92px; }
+body{ position:relative; margin:0; background:var(--blue-deep); color:var(--paper); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+h1,h2,h3,h4,p{ margin:0; }
+button,input,select,textarea{ font-family:inherit; font-size:inherit; color:inherit; }
+button{ cursor:pointer; }
+h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.03em; line-height:1.05; }
+.container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
+section{ position:relative; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
+.on-dark a:focus-visible, .on-dark button:focus-visible, .on-dark input:focus-visible, .on-dark select:focus-visible, .on-dark textarea:focus-visible{ outline-color:var(--brass-hi); }
+.eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+.on-dark .eyebrow{ color:var(--ink-soft-on-dark); }
+.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
+.btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
+.btn:hover::before{ opacity:1; }
+.btn-primary{ background:var(--blue-deep); color:#fff; box-shadow:var(--shadow-sm); }
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+.btn-ghost:hover{ border-color:var(--ink); }
+.btn-on-dark{ background:var(--paper); color:var(--ink); }
+.btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; color:var(--blue); }
+.link-arrow svg{ transition:transform var(--dur) var(--ease); }
+.on-dark .link-arrow{ color:var(--paper); }
+
+.ambient{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(100px); }
+.ambient-blob-brass{ width:2080px; height:1520px; top:-280px; left:-220px; background:radial-gradient(circle at 40% 40%, var(--brass-hi), transparent 68%); opacity:.85; }
+.ambient-blob-grey{ width:1960px; height:1960px; top:-260px; right:-300px; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 68%); opacity:.7; }
+.ambient-blob-blue{ width:2480px; height:2480px; top:7%; left:6%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.5; }
+.ambient-blob-4{ width:2000px; height:2000px; top:22%; right:-16%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.5; }
+.ambient-blob-5{ width:2240px; height:2240px; top:37%; left:-17%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.42; }
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+
+.nav{ position:sticky; top:0; z-index:100; transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease); }
+.nav--scrolled{ backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); }
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+.brand{ display:flex; align-items:center; }
+.brand-logo{ height:26px; width:auto; flex:none; }
+.brand-logo .cls-1{ fill:#022e70; } .brand-logo .cls-2{ fill:#f0f0f0; } .brand-logo .cls-3{ fill:#d6d6d6; } .brand-logo .cls-4{ fill:#00001f; } .brand-logo .cls-5{ fill:#c2b59b; }
+.brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
+.nav-menu{ display:flex; align-items:center; gap:var(--sp-1); }
+.nav-item{ position:relative; }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:var(--r); font-weight:500; font-size:15px; color:var(--ink-soft-on-dark); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--paper); background:rgba(251,249,245,.08); }
+.nav-item.current > .nav-link{ color:var(--paper); }
+.nav-link .chev{ transition:transform var(--dur) var(--ease); }
+.nav-item:hover .chev{ transform:rotate(180deg); }
+.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:240px; background:var(--blue); border:1px solid rgba(251,249,245,.14); border-radius:var(--r-lg); box-shadow:var(--shadow-lg); padding:var(--sp-1); opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
+.dropdown a{ display:block; padding:10px 14px; border-radius:var(--r); font-size:14.5px; font-weight:500; color:var(--ink-soft-on-dark); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a:hover{ background:rgba(251,249,245,.08); color:var(--paper); }
+.nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
+.nav-toggle{ display:none; background:none; border:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
+.nav-toggle:hover{ background:rgba(251,249,245,.08); }
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--paper); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.nav-toggle span::before{ position:absolute; top:-6px; }
+.nav-toggle span::after{ position:absolute; top:6px; }
+body.menu-open .nav-toggle span{ background:transparent; }
+body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--paper); }
+body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--paper); }
+
+.page-hero{ padding:var(--sp-6) 0 var(--sp-4); text-align:center; overflow:hidden; }
+.page-hero-inner{ max-width:700px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
+.page-hero h1{ font-size:clamp(34px, 5vw, 56px); letter-spacing:-0.035em; }
+.page-hero p{ max-width:560px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft-on-dark); line-height:1.65; }
+
+.contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0 var(--sp-8); }
+.contact-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); }
+.contact-intro{ color:var(--ink-soft-on-dark); font-size:16px; max-width:44ch; margin-bottom:var(--sp-4); }
+.contact-detail{ display:flex; gap:var(--sp-2); padding:var(--sp-2) 0; }
+.contact-detail .k{ width:110px; flex:none; font-size:13px; color:var(--ink-soft-on-dark); letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
+.contact-detail .v{ font-size:16px; font-weight:500; }
+.contact-detail a:hover{ color:var(--brass-hi); }
+.support-card{ margin-top:var(--sp-4); background:rgba(251,249,245,.04); border:1px solid rgba(251,249,245,.14); border-radius:var(--r-lg); padding:var(--sp-3); }
+.support-card h3{ font-size:16px; margin-bottom:6px; }
+.support-card p{ font-size:13.5px; color:var(--ink-soft-on-dark); margin-bottom:var(--sp-2); max-width:36ch; }
+
+.form-wrap{ position:relative; }
+.form-glow{
+  position:absolute; inset:-90px; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%);
+  filter:blur(66px);
+}
+.contact-form{
+  position:relative; z-index:1; overflow:hidden;
+  background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%);
+  border:1px solid rgba(251,249,245,.34);
+  border-radius:var(--r-lg);
+  padding:var(--sp-4);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06);
+}
+.contact-form::before{
+  content:"";
+  position:absolute;
+  top:-70%; left:-30%;
+  width:70%; height:240%;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%);
+  filter:blur(26px);
+  pointer-events:none;
+  z-index:-1;
+}
+.type-toggle{ display:flex; gap:8px; margin-bottom:var(--sp-3); flex-wrap:wrap; }
+.type-btn{ flex:1; min-width:110px; padding:12px 14px; border-radius:var(--r); border:1px solid rgba(251,249,245,.26); background:rgba(251,249,245,.09); color:var(--ink-soft-on-dark); font-size:14px; font-weight:600; text-align:center; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.type-btn.active{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-size:13px; color:var(--ink-soft-on-dark); }
+.field input, .field select, .field textarea{
+  background:rgba(251,249,245,.14);
+  border:1px solid rgba(251,249,245,.3);
+  border-radius:var(--r);
+  padding:12px 14px;
+  color:var(--paper);
+  width:100%;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1);
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.field select option{ color:var(--ink); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft-on-dark); }
+.field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
+.field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
+.field textarea{ resize:vertical; min-height:96px; }
+.sales-fields{ display:none; }
+.sales-fields.show{ display:contents; }
+.form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
+.form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
+.form-success.show{ display:flex; }
+
+.footer{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); }
+.footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
+.footer-brand .brand-logo{ height:30px; }
+.footer-tagline{ font-size:14.5px; color:var(--ink-soft-on-dark); max-width:32ch; margin-bottom:var(--sp-2); }
+.footer-address{ font-size:13.5px; color:var(--ink-soft-on-dark); line-height:1.7; }
+.footer-col h4{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft-on-dark); margin-bottom:var(--sp-2); font-weight:500; }
+.footer-col ul li{ margin-bottom:10px; }
+.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.82; transition:opacity var(--dur) var(--ease); }
+.footer-col a:hover{ opacity:1; color:var(--brass-hi); }
+.footer-bottom{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-2); padding-top:var(--sp-3); }
+.footer-copy{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft-on-dark); }
+.cert-chips{ display:flex; gap:8px; }
+.cert-chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:6px 12px; border:1px solid rgba(251,249,245,.22); color:var(--ink-soft-on-dark); }
+
+@media (max-width:980px){
+  :root{ --sp-8:96px; --sp-7:72px; }
+  .nav-menu, .nav-cta .btn-ghost{ display:none; }
+  .nav-toggle{ display:flex; }
+  .nav-cta{ gap:var(--sp-1); }
+  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--blue-deep); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
+  body.menu-open .nav-item{ border-bottom:1px solid rgba(251,249,245,.14); }
+  body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
+  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:rgba(251,249,245,.05); margin-bottom:8px; }
+  body.menu-open .nav-item.open .dropdown{ display:block; }
+  .contact-grid{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:repeat(3, 1fr); }
+  .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
+}
+@media (max-width:640px){
+  .container{ padding:0 var(--sp-2); }
+  .form-row{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:1fr 1fr; }
+  .footer-bottom{ flex-direction:column; align-items:flex-start; }
+}
+</style>
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body class="on-dark">
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+        <g>
+          <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
+          <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+          <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
+          <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
+          <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
+          <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
+          <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
+          <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
+          <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
+          <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+        </g>
+        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+      </svg>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="solutions.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="solutions.html#robotics">Robotics</a>
+            <a href="solutions.html#maritime">Maritime</a>
+            <a href="solutions.html#ups">UPS</a>
+            <a href="solutions.html#heavy-machinery">Heavy Machinery</a>
+            <a href="solutions.html#defense">Defense</a>
+            <a href="solutions.html#material-handling">Material Handling</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="development.html" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="development.html#use-case">Use Case / Application</a>
+            <a href="development.html#feasibility">Feasibility Study</a>
+            <a href="development.html#prototype">Prototype &amp; Testing</a>
+            <a href="development.html#industrialization">Industrialization</a>
+            <a href="development.html#compliance">Market Compliance</a>
+            <a href="development.html#mass-production">Mass Production</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="production.html" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="production.html#facility">Production Facility</a>
+            <a href="production.html#quality">Quality &amp; Testing</a>
+            <a href="production.html#passport">Battery Passport</a>
+            <a href="production.html#supply-chain">Supply Chain</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="bms.html" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="bms.html#i-bms">i-BMS</a>
+            <a href="bms.html#n-bms">n-BMS</a>
+            <a href="bms.html#n3-bms">n3-BMS</a>
+            <a href="bms.html#c-bms24x">c-BMS24x</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="about.html#company">Company</a>
+            <a href="about.html#career">Career</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-on-dark">Get in touch</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="eyebrow">Contact</span>
+    <h1>Let's talk about your application.</h1>
+    <p>Tell us what you need — a sales conversation, a purchase, or a general question — and the right person will get back to you.</p>
+  </div>
+</section>
+
+<section class="contact on-dark" id="contact-form">
+  <div class="container contact-grid">
+    <div>
+      <div class="contact-detail">
+        <span class="k">Phone</span>
+        <a class="v" href="tel:+4588618386">+45 88 61 83 86</a>
+      </div>
+      <div class="contact-detail">
+        <span class="k">Email</span>
+        <a class="v" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a>
+      </div>
+      <div class="contact-detail">
+        <span class="k">Address</span>
+        <span class="v">Gjellerupvej 89D, 8230 Åbyhøj, Denmark</span>
+      </div>
+
+      <div class="support-card">
+        <h3>Already a customer?</h3>
+        <p>For technical support on an existing product, use our Support Center instead of the form — you'll get a faster, more specific answer.</p>
+        <a href="mailto:wstech@wstech.dk?subject=Support%20request" class="link-arrow">Go to Support Center
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="form-wrap">
+    <div class="form-glow" aria-hidden="true"></div>
+    <form class="contact-form" id="contactForm">
+      <div class="type-toggle" role="group" aria-label="Inquiry type">
+        <button type="button" class="type-btn active" data-type="sales">Sales</button>
+        <button type="button" class="type-btn" data-type="buy">Buy</button>
+        <button type="button" class="type-btn" data-type="general">General</button>
+      </div>
+      <input type="hidden" name="inquiry_type" id="inquiryType" value="sales">
+
+      <div class="form-row">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input type="text" id="f-name" name="name" placeholder="Jane Doe">
+        </div>
+        <div class="field">
+          <label for="f-company">Company</label>
+          <input type="text" id="f-company" name="company" placeholder="Company name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" placeholder="jane@company.com">
+        </div>
+      </div>
+
+      <div class="form-row sales-fields show" id="salesFields">
+        <div class="field">
+          <label for="f-usecase">Use Case</label>
+          <input type="text" id="f-usecase" name="use_case" placeholder="e.g. AGV, drone, marine">
+        </div>
+        <div class="field">
+          <label for="f-capacity">Capacity</label>
+          <input type="text" id="f-capacity" name="capacity" placeholder="e.g. voltage / Ah / annual volume">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" placeholder="Tell us about your project"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-on-dark" style="width:100%;">Send message</button>
+      <p class="form-note">All fields optional. We'll only use this to respond to your enquiry.</p>
+      <div class="form-success" id="formSuccess">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#B99A72" stroke-width="1.8"><path d="M4 10l4 4 8-8"/></svg>
+        <span>Thanks — we'll be in touch shortly.</span>
+      </div>
+    </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+            <g>
+              <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
+              <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+              <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
+              <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
+              <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+              <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
+              <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
+              <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
+              <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+              <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
+              <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
+              <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+            </g>
+            <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+            <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+            <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+            <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+          </svg>
+        </a>
+        <p class="footer-tagline">Quality made affordable.</p>
+        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="solutions.html#robotics">Robotics</a></li>
+          <li><a href="solutions.html#maritime">Maritime</a></li>
+          <li><a href="solutions.html#heavy-machinery">Heavy Machinery</a></li>
+          <li><a href="solutions.html#material-handling">Material Handling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Development</h4>
+        <ul>
+          <li><a href="development.html#use-case">Use Case &amp; Requirements</a></li>
+          <li><a href="development.html#feasibility">Feasibility Study</a></li>
+          <li><a href="development.html#prototype">Prototype &amp; Testing</a></li>
+          <li><a href="development.html#compliance">Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Production</h4>
+        <ul>
+          <li><a href="production.html#facility">Production Facility</a></li>
+          <li><a href="production.html#quality">Quality &amp; Testing</a></li>
+          <li><a href="production.html#passport">Battery Passport</a></li>
+          <li><a href="bms.html">BMS Solutions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html#company">About us</a></li>
+          <li><a href="about.html#career">Career</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
+      <div class="cert-chips">
+        <span class="cert-chip">CE</span>
+        <span class="cert-chip">UN 38.3</span>
+        <span class="cert-chip">RoHS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', function(){
+    var open = body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  var nav = document.querySelector('.nav');
+  function onScroll(){ nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    var link = item.querySelector('.nav-link');
+    link.addEventListener('click', function(e){
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item.open').forEach(function(o){ o.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      }
+    });
+  });
+  document.querySelectorAll('.dropdown a, .nav-cta a').forEach(function(a){
+    a.addEventListener('click', function(){
+      body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Inquiry type toggle — shows Use Case / Capacity only for Sales
+  var typeBtns = document.querySelectorAll('.type-btn');
+  var inquiryType = document.getElementById('inquiryType');
+  var salesFields = document.getElementById('salesFields');
+  typeBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      typeBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var type = btn.getAttribute('data-type');
+      inquiryType.value = type;
+      salesFields.classList.toggle('show', type === 'sales');
+    });
+  });
+
+  // Contact form — front-end only placeholder (no backend wired up)
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    success.classList.add('show');
+  });
+})();
+</script>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/enterprise-motion.js" defer></script>
+</body>
+</html>

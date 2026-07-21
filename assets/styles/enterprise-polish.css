@@ -1,0 +1,420 @@
+/* Shared finishing layer for component evaluation.
+   Intentionally restrained: it improves rhythm, interaction and accessibility
+   without flattening the visual identity of each page concept. */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+}
+
+/* Motion language ------------------------------------------------------- */
+:root {
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+  --motion-ease-soft: cubic-bezier(.33, 1, .68, 1);
+  --motion-fast: 320ms;
+  --motion-base: 620ms;
+  --motion-slow: 900ms;
+}
+
+html.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  filter: blur(3px);
+  transition:
+    opacity var(--motion-slow) var(--motion-ease),
+    transform var(--motion-slow) var(--motion-ease),
+    filter calc(var(--motion-slow) * .8) var(--motion-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+html.motion-ready [data-reveal="media"] {
+  transform: translate3d(0, 12px, 0) scale(.992);
+  filter: blur(2px);
+}
+
+html.motion-ready.home-motion [data-reveal] {
+  transform: translate3d(0, 30px, 0);
+  filter: blur(5px);
+  transition-duration: 1050ms;
+}
+
+html.motion-ready.home-motion [data-reveal="media"] {
+  transform: translate3d(0, 22px, 0) scale(.975);
+  filter: blur(4px);
+  transition-duration: 1250ms;
+}
+
+html.motion-ready.home-motion [data-reveal="left"] {
+  transform: translate3d(-34px, 0, 0);
+}
+
+html.motion-ready.home-motion [data-reveal="right"] {
+  transform: translate3d(34px, 0, 0);
+}
+
+html.motion-ready.home-motion [data-reveal="scale"] {
+  transform: translate3d(0, 14px, 0) scale(.955);
+}
+
+html.motion-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  will-change: auto;
+}
+
+html.home-motion .hero-stage,
+html.home-motion .hero-visual,
+html.home-motion .hero-diagram,
+html.home-motion .proof-visual,
+html.home-motion .tech-visual {
+  transform-origin: 50% 55%;
+}
+
+/* Exploded battery sequence -------------------------------------------- */
+.exploded-sequence {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.exploded-sequence .exploded-source {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.exploded-sequence .exploded-part {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: saturate(.92) blur(2px);
+  transform: translate3d(0, var(--part-offset, 18px), 0) scale(.985);
+  transition:
+    opacity 850ms var(--motion-ease),
+    transform 1150ms var(--motion-ease),
+    filter 950ms var(--motion-ease);
+  transition-delay: var(--part-delay, 0ms);
+  will-change: opacity, transform, filter;
+  pointer-events: none;
+}
+
+.exploded-sequence.is-assembled .exploded-part {
+  opacity: 1;
+  filter: saturate(1) blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.proof-visual.has-exploded-sequence .callout {
+  z-index: 21;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0) scale(.97);
+  transition:
+    opacity 700ms var(--motion-ease),
+    transform 900ms var(--motion-ease),
+    box-shadow 600ms var(--motion-ease);
+}
+
+.proof-visual.has-exploded-sequence .callouts {
+  z-index: 20;
+  overflow: visible;
+}
+
+.proof-visual.has-exploded-sequence .callout.part-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.proof-visual.has-exploded-sequence .callout.part-visible:nth-child(1) { transition-delay: 40ms; }
+.proof-visual.has-exploded-sequence .callout.part-visible:nth-child(2) { transition-delay: 70ms; }
+.proof-visual.has-exploded-sequence .callout.part-visible:nth-child(3) { transition-delay: 90ms; }
+.proof-visual.has-exploded-sequence .callout.part-visible:nth-child(4) { transition-delay: 110ms; }
+
+html.home-motion .hero-stage-ring,
+html.home-motion .diagram-orbit,
+html.home-motion .seal-ring {
+  animation-duration: 28s;
+  animation-timing-function: linear;
+}
+
+html.home-motion .hero-chip,
+html.home-motion .hero-node,
+html.home-motion .callout,
+html.home-motion .presence-ripple {
+  transition:
+    opacity 800ms var(--motion-ease),
+    transform 900ms var(--motion-ease),
+    background-color 500ms var(--motion-ease),
+    box-shadow 700ms var(--motion-ease);
+}
+
+html.home-motion section {
+  transition: background-color 900ms var(--motion-ease-soft);
+}
+
+.nav,
+.site-nav,
+header {
+  transition:
+    background-color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease),
+    backdrop-filter var(--motion-base) var(--motion-ease);
+}
+
+.category-card,
+.work-card,
+.process-card,
+.production-card,
+.bms-card,
+.sol-tile,
+.related-card,
+.spec-cell,
+.story-card {
+  transition-duration: var(--motion-base);
+  transition-timing-function: var(--motion-ease);
+}
+
+.category-card img,
+.work-card img,
+.production-card img,
+.sol-tile img,
+.related-card img,
+.product-stage img,
+.proof-media img,
+.case-media img {
+  transition:
+    transform var(--motion-slow) var(--motion-ease),
+    filter var(--motion-slow) var(--motion-ease),
+    opacity var(--motion-base) var(--motion-ease);
+}
+
+@media (hover:hover) {
+  .work-card:hover,
+  .process-card:hover,
+  .production-card:hover,
+  .bms-card:hover,
+  .sol-tile:hover,
+  .related-card:hover,
+  .spec-cell:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+
+  .production-card:hover img,
+  .sol-tile:hover img,
+  .related-card:hover img {
+    transform: scale(1.018);
+  }
+}
+
+::selection {
+  color: var(--paper, #fbf9f5);
+  background: var(--blue, #0f2a5c);
+}
+
+/* Temporary section references used while assembling the final homepage. */
+main > section,
+body > section.contact {
+  position: relative;
+}
+
+.section-selection-label {
+  position: absolute;
+  top: 16px;
+  right: clamp(16px, 2.2vw, 32px);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid rgba(15, 42, 92, .13);
+  border-radius: 999px;
+  background: rgba(251, 249, 245, .78);
+  color: var(--blue-deep, #030b21);
+  box-shadow:
+    0 8px 24px rgba(3, 11, 33, .06),
+    inset 0 1px 0 rgba(255, 255, 255, .76);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.on-dark > .section-selection-label,
+.contact > .section-selection-label,
+.trust > .section-selection-label,
+.stats > .section-selection-label {
+  border-color: rgba(251, 249, 245, .2);
+  background: rgba(251, 249, 245, .1);
+  color: var(--paper, #fbf9f5);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, .16),
+    inset 0 1px 0 rgba(255, 255, 255, .18);
+}
+
+@media (max-width: 640px) {
+  .section-selection-label {
+    top: 10px;
+    right: 10px;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+img,
+svg {
+  shape-rendering: geometricPrecision;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.btn,
+.nav-contact,
+.card-cta,
+.glass-cta {
+  min-height: 46px;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  transition-duration: 420ms;
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+}
+
+.btn::before,
+.nav-contact::before,
+.card-cta::before,
+.glass-cta::before {
+  transition-duration: 520ms;
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+}
+
+@media (hover:hover) {
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 12px 30px rgba(3, 11, 33, .14),
+      inset 0 1px 0 rgba(255, 255, 255, .24);
+  }
+
+  .btn-on-dark:hover {
+    color: var(--blue-deep, #030b21);
+    background: #fff;
+    transform: translateY(-1px);
+    box-shadow:
+      0 14px 34px rgba(0, 0, 0, .16),
+      inset 0 1px 0 rgba(255, 255, 255, .9);
+  }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--brass-hi, #cbb08a);
+  outline-offset: 4px;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+input,
+select,
+textarea {
+  transition:
+    border-color 320ms cubic-bezier(.22, 1, .36, 1),
+    background-color 320ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow:
+    0 12px 34px rgba(3, 11, 33, .08),
+    inset 0 1px 0 rgba(255, 255, 255, .3);
+}
+
+/* Dark contact forms use a single brighter border as their focus state. */
+.on-dark .contact-form input:focus,
+.on-dark .contact-form select:focus,
+.on-dark .contact-form textarea:focus,
+.on-dark .contact-form input:focus-visible,
+.on-dark .contact-form select:focus-visible,
+.on-dark .contact-form textarea:focus-visible {
+  outline: none !important;
+  border-color: rgba(251, 249, 245, .8) !important;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, .2),
+    inset 0 1px 0 rgba(251, 249, 245, .12) !important;
+}
+
+@media (hover:hover) {
+  .contact-form .btn:hover,
+  .contact-form button:hover,
+  .contact-form input[type="submit"]:hover {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  html.motion-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .exploded-sequence .exploded-source { opacity: 1 !important; }
+  .exploded-sequence .exploded-part { display: none !important; }
+}

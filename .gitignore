@@ -3,5 +3,18 @@
 # assets/products/renders/ are actually used.
 assets/products/*.png
 
+# Design/source assets that are not used by the published website.
+assets/products/*.psd
+assets/products/no-background/
+assets/products/cards/*.png
+
+# Local image-processing helpers; the generated web assets remain included.
+scripts/bake-cards.ps1
+scripts/process-cutouts.ps1
+
+# Local editor/tool state.
+.claude/
+.DS_Store
+
 # Local Claude Code tool permissions (machine-specific, not project config)
 .claude/settings.local.json

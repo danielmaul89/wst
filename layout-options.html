@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layout options — scratch preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+
+:root{
+  --paper:#FBF9F5; --paper-2:#F3EFE7; --card:#FFFFFF;
+  --ink:#06081A; --ink-soft:#4A4C58; --ink-faint:#8B8D98;
+  --line:#E4DFD3; --line-2:#DFDACC;
+  --blue:#0F2A5C; --blue-deep:#030B21; --brass:#B99A72; --brass-hi:#CBB08A;
+  --font-display:'Geogrotesque','Sora',sans-serif; --font-body:'Arbeit','Inter',Arial,sans-serif; --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:48px; --sp-6:64px; --sp-8:120px;
+  --ease:cubic-bezier(.4,0,.2,1); --dur:.3s;
+  --r:4px; --r-lg:8px;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; }
+h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.03em; line-height:1.05; margin:0; }
+p{ margin:0; }
+.container{ max-width:1280px; margin:0 auto; padding:0 var(--sp-4); }
+.opt-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--brass); background:var(--card); border:1px solid var(--line-2); display:inline-block; padding:4px 10px; margin-bottom:var(--sp-2); }
+section{ padding:var(--sp-6) 0; }
+section + section{ border-top:1px dashed var(--line-2); }
+.section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
+.section-head h2{ font-size:clamp(26px,3vw,38px); max-width:600px; }
+.section-head p{ color:var(--ink-soft); max-width:380px; font-size:15px; }
+
+/* ============ LAYOUT A — connected rail (Development) ============ */
+.rail{ position:relative; display:grid; grid-template-columns:repeat(6,1fr); gap:var(--sp-3); padding-top:34px; }
+.rail::before{ content:""; position:absolute; top:9px; left:calc(100%/12); right:calc(100%/12); height:1px; background:var(--line-2); }
+.rail-node{ position:relative; }
+.rail-dot{ position:absolute; top:-34px; left:0; width:19px; height:19px; border-radius:50%; background:var(--paper); border:2px solid var(--brass); z-index:2; }
+.rail-node h3{ font-size:16px; margin-bottom:6px; }
+.rail-node p{ font-size:13px; color:var(--ink-soft); line-height:1.5; }
+.rail-node .idx{ font-family:var(--font-mono); font-size:11px; color:var(--brass); display:block; margin-bottom:4px; }
+
+/* ============ LAYOUT B — ledger rows (Production) ============ */
+.ledger{ display:flex; flex-direction:column; }
+.ledger-row{ display:grid; grid-template-columns:56px 1fr; align-items:center; gap:var(--sp-3); padding:var(--sp-3) var(--sp-2); border-radius:var(--r-lg); transition:background var(--dur) var(--ease); }
+.ledger-row:nth-child(odd){ background:var(--paper-2); }
+.ledger-icon{ width:40px; height:40px; border-radius:50%; background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; }
+.ledger-icon svg{ stroke:var(--blue); }
+.ledger-body{ display:grid; grid-template-columns:220px 1fr; align-items:center; gap:var(--sp-3); }
+.ledger-body h3{ font-size:16.5px; }
+.ledger-body p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+
+/* ============ LAYOUT C — featured + grid (BMS) ============ */
+.bento{ display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:auto auto; gap:var(--sp-3); }
+.bento-feat{ grid-row:1/3; background:var(--blue-deep); color:var(--paper); border-radius:var(--r-lg); padding:var(--sp-4); display:flex; flex-direction:column; justify-content:space-between; }
+.bento-feat .idx{ font-family:var(--font-mono); font-size:11px; color:var(--brass-hi); letter-spacing:.08em; }
+.bento-feat h3{ font-size:24px; color:var(--paper); margin:10px 0 8px; }
+.bento-feat p{ font-size:14px; color:#AEB3C9; line-height:1.6; }
+.bento-tile{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-3); }
+.bento-tile .idx{ font-family:var(--font-mono); font-size:11px; color:var(--brass); }
+.bento-tile h3{ font-size:16px; margin:8px 0 6px; }
+.bento-tile p{ font-size:13px; color:var(--ink-soft); line-height:1.5; }
+</style>
+</head>
+<body>
+
+<section>
+  <div class="container">
+    <span class="opt-label">Option A — connected rail</span>
+    <div class="section-head">
+      <h2>From idea to mass production, in six stages.</h2>
+      <p>A structured process that keeps performance, safety and cost aligned from the first sketch to the production line.</p>
+    </div>
+    <div class="rail">
+      <div class="rail-node"><span class="rail-dot"></span><span class="idx">01</span><h3>Idea &amp; Requirements</h3><p>We define performance, environment, and certification requirements alongside your engineering team.</p></div>
+      <div class="rail-node"><span class="rail-dot"></span><span class="idx">02</span><h3>Feasibility Study</h3><p>Cell chemistry, form factor, and BMS architecture are evaluated against your constraints.</p></div>
+      <div class="rail-node"><span class="rail-dot"></span><span class="idx">03</span><h3>Prototype &amp; Testing</h3><p>Working prototypes are built and validated under real operating and abuse conditions.</p></div>
+      <div class="rail-node"><span class="rail-dot"></span><span class="idx">04</span><h3>Industrialization</h3><p>The design is engineered for repeatable, cost-efficient manufacturing at scale.</p></div>
+      <div class="rail-node"><span class="rail-dot"></span><span class="idx">05</span><h3>Compliance</h3><p>CE, UN 38.3, and RoHS testing are handled in-house ahead of production release.</p></div>
+      <div class="rail-node"><span class="rail-dot"></span><span class="idx">06</span><h3>Mass Production</h3><p>Packs move into production with full traceability and consistent quality control.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="opt-label">Option B — ledger rows</span>
+    <div class="section-head">
+      <h2>Built and verified in-house.</h2>
+      <p>Manufacturing, quality assurance, and testing all run under one roof in Aarhus.</p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="ledger-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 5h14v11H3z"/><path d="M3 9h14"/></svg></div>
+        <div class="ledger-body"><h3>Production Facility</h3><p>A dedicated Aarhus facility for custom pack assembly and low-to-mid volume production.</p></div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
+        <div class="ledger-body"><h3>Quality Assurance</h3><p>Every batch is tracked and inspected against documented process and material standards.</p></div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><circle cx="10" cy="10" r="2.5"/><path d="M10 2v3M10 15v3M2 10h3M15 10h3"/></svg></div>
+        <div class="ledger-body"><h3>Testing</h3><p>In-house electrical, thermal, and mechanical testing validates every design before release.</p></div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><circle cx="5" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="10" cy="15" r="2"/><path d="M5 8v2a2 2 0 0 0 2 2h1M15 8v2a2 2 0 0 0-2 2h-1"/></svg></div>
+        <div class="ledger-body"><h3>Supply Chain</h3><p>Qualified cell and component suppliers with traceability from raw material to finished pack.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="opt-label">Option C — featured + grid</span>
+    <div class="section-head">
+      <h2>Battery management systems, engineered in-house.</h2>
+      <p>Our BMS team designs the electronics and firmware around your pack — not the other way around.</p>
+    </div>
+    <div class="bento">
+      <div class="bento-feat">
+        <div><span class="idx">01 / 04 — MOST USED</span><h3>Low Voltage</h3><p>BMS platforms for compact packs in robotics, drones, and portable equipment — our most widely deployed architecture.</p></div>
+      </div>
+      <div class="bento-tile"><span class="idx">02</span><h3>High Voltage</h3><p>Robust architectures for heavy machinery, marine, and industrial power systems.</p></div>
+      <div class="bento-tile"><span class="idx">03</span><h3>Fast Charge</h3><p>Charge management engineered for minimal downtime in continuous operation.</p></div>
+      <div class="bento-tile" style="grid-column:2/4;"><span class="idx">04</span><h3>Custom Development</h3><p>Application-specific firmware and CANBUS integration built around your control system.</p></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WS Technicals — Custom Battery Engineering</title>
+<meta name="description" content="Custom lithium battery systems engineered for demanding applications. From concept and certification to scalable production.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   BRAND TYPEFACES
+   Geogrotesque — headlines. Arbeit — body. IBM Plex Mono — the
+   technical voice: index numbers, spec labels, coordinates,
+   annotations. This third voice is what separates a spec sheet
+   from a brochure.
+   ============================================================ */
+@font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-medium.woff') format('woff'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-semi-bold.woff') format('woff'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
+
+/* ============================================================
+   0. DESIGN TOKENS
+   ============================================================ */
+:root{
+  --paper:      #FBF9F5;
+  --paper-2:    #F3EFE7;
+  --card:       #FFFFFF;
+  --ink:        #06081A;
+  --ink-soft:   #4A4C58;
+  --ink-faint:  #8B8D98;
+  --line:       #E4DFD3;
+  --line-2:     #DFDACC;
+  --blue:       #0F2A5C;
+  --blue-deep:  #030B21;
+  --brass:      #B99A72;
+  --brass-hi:   #CBB08A;
+  --brass-soft: #E7DDCB;
+  --paper-on-dark:     #FBF9F5;
+  --ink-soft-on-dark:  #AEB3C9;
+
+  /* Sharper corners than a consumer brochure — this is a datasheet, not an app icon */
+  --r:    4px;
+  --r-lg: 8px;
+
+  --font-display: 'Geogrotesque', 'Sora', sans-serif;
+  --font-body: 'Arbeit', 'Inter', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px; --sp-5: 48px; --sp-6: 64px; --sp-7: 96px; --sp-8: 140px;
+  --ease: cubic-bezier(.4,0,.2,1);
+  --dur: .35s;
+  --shadow-sm: 0 1px 2px rgba(6,8,26,.04);
+  --shadow-md: 0 12px 32px -12px rgba(6,8,26,.14);
+  --shadow-lg: 0 24px 60px -20px rgba(6,8,26,.22);
+  --container: 1280px;
+}
+
+/* ============================================================
+   1. RESET & BASE
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top:92px; }
+body{
+  position:relative;
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+h1,h2,h3,h4,p{ margin:0; }
+button,input,select,textarea{ font-family:inherit; font-size:inherit; color:inherit; }
+button{ cursor:pointer; background:none; border:none; }
+h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.03em; line-height:1.03; }
+.container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
+section{ position:relative; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:2px; }
+.on-dark a:focus-visible, .on-dark button:focus-visible, .on-dark input:focus-visible{ outline-color:var(--brass-hi); }
+
+/* ---- The technical voice: spec-line, mono tags, hairline rules, corner brackets ---- */
+.mono{ font-family:var(--font-mono); }
+.spec-line{ display:flex; align-items:center; gap:12px; margin-bottom:var(--sp-3); }
+.spec-line .idx{ font-family:var(--font-mono); font-weight:500; font-size:12.5px; letter-spacing:.02em; color:var(--brass); flex:none; }
+.spec-line .rule{ width:36px; height:1px; background:var(--line-2); flex:none; }
+.spec-line .label{ font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+.on-dark .spec-line .label{ color:var(--ink-soft-on-dark); }
+.on-dark .spec-line .rule{ background:rgba(251,249,245,.18); }
+.on-dark .spec-line .idx{ color:var(--brass-hi); }
+
+.frame{ position:relative; }
+.corner{ position:absolute; width:16px; height:16px; border-color:var(--blue); border-style:solid; border-width:0; z-index:2; pointer-events:none; }
+.corner.tl{ top:0; left:0; border-top-width:1.5px; border-left-width:1.5px; }
+.corner.tr{ top:0; right:0; border-top-width:1.5px; border-right-width:1.5px; }
+.corner.bl{ bottom:0; left:0; border-bottom-width:1.5px; border-left-width:1.5px; }
+.corner.br{ bottom:0; right:0; border-bottom-width:1.5px; border-right-width:1.5px; }
+.frame.on-dark .corner{ border-color:var(--brass-hi); }
+
+.meta-tag{ position:absolute; z-index:3; display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line-2); padding:6px 10px; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:var(--ink-soft); }
+.meta-tag .dot{ width:5px; height:5px; background:var(--brass); flex:none; }
+
+.hairline{ height:1px; background:var(--line-2); border:none; margin:0; }
+
+.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 26px; border-radius:var(--r); font-weight:600; font-size:14.5px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
+.btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
+.btn:hover::before{ opacity:1; }
+.btn-primary{ background:var(--blue-deep); color:#fff; box-shadow:var(--shadow-sm); }
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line-2); }
+.btn-ghost:hover{ border-color:var(--ink); }
+.btn-on-dark{ background:var(--paper); color:var(--ink); }
+.btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; color:var(--blue); }
+.link-arrow svg{ transition:transform var(--dur) var(--ease); }
+.link-arrow:hover svg{ transform:translateX(3px); }
+.on-dark .link-arrow{ color:var(--paper); }
+
+/* ============================================================
+   1B. AMBIENT BACKGROUND — full-page soft brand-colour wash
+   ============================================================ */
+.ambient{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(100px); }
+.ambient-blob-brass{ width:2080px; height:1520px; top:-280px; left:-220px; background:radial-gradient(circle at 40% 40%, var(--brass-hi), transparent 68%); opacity:.7; }
+.ambient-blob-grey{ width:1960px; height:1960px; top:-260px; right:-300px; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 68%); opacity:.55; }
+.ambient-blob-blue{ width:2480px; height:2480px; top:7%; left:6%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.4; }
+.ambient-blob-4{ width:2000px; height:2000px; top:22%; right:-16%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.4; }
+.ambient-blob-5{ width:2240px; height:2240px; top:37%; left:-17%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.34; }
+.ambient-blob-6{ width:2000px; height:2000px; top:52%; right:-15%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.38; }
+.ambient-blob-7{ width:2240px; height:2240px; top:65%; left:-16%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.34; }
+.ambient-blob-8{ width:1920px; height:1920px; top:78%; right:-13%; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 66%); opacity:.32; }
+.about .container, .production .container{ position:relative; z-index:1; }
+
+/* ============================================================
+   1C. BLUEPRINT GRID
+   ============================================================ */
+.blueprint-grid{
+  position:absolute; inset:0; z-index:40; pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px);
+  background-size:96px 96px;
+  opacity:.06;
+}
+
+/* ============================================================
+   2. NAVIGATION
+   ============================================================ */
+.nav{ position:sticky; top:0; z-index:100; transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease); }
+.nav--scrolled{ backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); }
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-logo{ height:24px; width:auto; flex:none; }
+.brand-logo .cls-1{ fill:#022e70; } .brand-logo .cls-2{ fill:#f0f0f0; } .brand-logo .cls-3{ fill:#d6d6d6; } .brand-logo .cls-4{ fill:#00001f; } .brand-logo .cls-5{ fill:#c2b59b; }
+.brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
+.brand-coord{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; color:var(--ink-faint); border-left:1px solid var(--line-2); padding-left:10px; display:none; }
+.nav-menu{ display:flex; align-items:center; gap:2px; }
+.nav-item{ position:relative; }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 15px; border-radius:var(--r); font-weight:500; font-size:14.5px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--ink); background:var(--paper-2); }
+.nav-link .chev{ transition:transform var(--dur) var(--ease); }
+.nav-item:hover .chev{ transform:rotate(180deg); }
+.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:220px; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r); box-shadow:var(--shadow-lg); padding:6px; opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
+.dropdown a{ display:block; padding:9px 12px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a:hover{ background:var(--paper-2); color:var(--ink); }
+.nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
+.nav-toggle{ display:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
+.nav-toggle:hover{ background:var(--paper-2); }
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--ink); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.nav-toggle span::before{ position:absolute; top:-6px; }
+.nav-toggle span::after{ position:absolute; top:6px; }
+body.menu-open .nav-toggle span{ background:transparent; }
+body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
+body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
+
+/* ============================================================
+   3. HERO — asymmetric, not centered. The product is a spec
+   exhibit, not a floating hero shot.
+   ============================================================ */
+.hero{ padding:var(--sp-6) 0 0; overflow:hidden; }
+.hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:var(--sp-6); align-items:center; }
+.hero h1{ font-size:clamp(38px, 4.6vw, 68px); letter-spacing:-0.035em; margin-bottom:var(--sp-3); max-width:14ch; }
+.hero-copy p{ max-width:46ch; font-size:17px; color:var(--ink-soft); line-height:1.65; margin-bottom:var(--sp-4); }
+.hero-cta-row{ display:flex; align-items:center; gap:var(--sp-4); flex-wrap:wrap; }
+.hero-specs{ display:flex; gap:var(--sp-3); margin-top:var(--sp-5); padding-top:var(--sp-3); border-top:1px solid var(--line-2); }
+.hero-specs .item{ font-family:var(--font-mono); }
+.hero-specs .item b{ display:block; font-size:20px; font-weight:600; color:var(--ink); letter-spacing:-.01em; }
+.hero-specs .item span{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); }
+
+.hero-visual{ position:relative; aspect-ratio:4/5; }
+.hero-visual img{ width:100%; height:100%; object-fit:contain; padding:var(--sp-4); filter:drop-shadow(0 40px 50px rgba(6,8,26,.18)); }
+.hero-visual .meta-tag{ bottom:var(--sp-3); left:var(--sp-3); }
+.hero-visual .meta-tag.top{ top:var(--sp-3); right:var(--sp-3); left:auto; bottom:auto; }
+
+/* application strip — a ticker-like index of every domain served */
+.app-strip{ border-top:1px solid var(--line-2); border-bottom:1px solid var(--line-2); padding:14px 0; margin-top:var(--sp-6); overflow:hidden; }
+.app-strip-track{ display:flex; align-items:center; gap:36px; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; }
+.app-strip-track span::after{ content:"—"; margin-left:36px; color:var(--line-2); }
+.app-strip-track span:last-child::after{ content:""; margin-left:0; }
+
+/* ============================================================
+   4. SOLUTIONS — asymmetric bento index, not a repeated card grid
+   ============================================================ */
+.solutions{ padding:var(--sp-7) 0 var(--sp-8); }
+.section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-4); margin-bottom:var(--sp-5); flex-wrap:wrap; }
+.section-head h2{ font-size:clamp(28px,3.2vw,42px); max-width:15ch; }
+.section-head p{ color:var(--ink-soft); max-width:38ch; font-size:15.5px; }
+
+.bento-top{ display:grid; grid-template-columns:1.6fr 1fr; gap:var(--sp-3); margin-bottom:var(--sp-3); }
+.bento-row{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+
+.sol-tile{ position:relative; border:1px solid var(--line-2); background:var(--card); display:flex; flex-direction:column; transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); overflow:hidden; }
+.sol-tile:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:var(--ink); }
+.sol-tile .tile-img{ position:relative; flex:1; min-height:200px; background-size:cover; background-position:center; -webkit-mask-image:radial-gradient(ellipse 92% 88% at center, black 60%, transparent 100%); mask-image:radial-gradient(ellipse 92% 88% at center, black 60%, transparent 100%); }
+.sol-tile .tile-body{ padding:var(--sp-3); }
+.sol-tile .tag{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink-faint); display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.sol-tile .tag .dot{ width:5px; height:5px; background:var(--brass); }
+.sol-tile h3{ font-size:19px; letter-spacing:-.02em; margin-bottom:6px; }
+.sol-tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+.sol-tile .go{ position:absolute; top:var(--sp-2); right:var(--sp-2); width:30px; height:30px; border:1px solid rgba(255,255,255,.5); background:rgba(6,8,26,.35); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:#fff; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease); z-index:2; }
+.sol-tile:hover .go{ transform:translate(3px,-3px); background:var(--blue-deep); }
+
+.sol-featured{ min-height:420px; }
+.sol-featured .tile-img{ min-height:280px; }
+.sol-featured h3{ font-size:26px; }
+.sol-featured p{ font-size:14.5px; max-width:34ch; }
+.sol-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.sol-chip{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.03em; padding:4px 9px; border:1px solid var(--line-2); color:var(--ink-soft); }
+
+.sol-stat-panel{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-4); display:flex; flex-direction:column; justify-content:space-between; min-height:420px; }
+.sol-stat-panel .big{ font-family:var(--font-display); font-weight:800; font-size:clamp(48px,6vw,84px); letter-spacing:-.04em; line-height:.92; }
+.sol-stat-panel .cap{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft-on-dark); margin-top:12px; max-width:20ch; }
+.sol-stat-panel .foot{ font-size:14px; color:var(--ink-soft-on-dark); border-top:1px solid rgba(251,249,245,.16); padding-top:var(--sp-2); margin-top:var(--sp-3); }
+
+/* ============================================================
+   4B. ENGINEERING PROOF — exploded view, leader-line annotations
+   ============================================================ */
+.proof{ background:var(--ink); color:var(--paper); padding:var(--sp-8) 0; }
+.proof-grid{ display:grid; grid-template-columns:.8fr 1.2fr; gap:var(--sp-6); align-items:center; }
+.proof-copy h2{ font-size:clamp(26px,3vw,38px); margin:var(--sp-2) 0 var(--sp-3); max-width:15ch; color:var(--paper); }
+.proof-copy p{ color:var(--ink-soft-on-dark); font-size:15.5px; max-width:42ch; margin-bottom:var(--sp-3); line-height:1.65; }
+.proof-visual{ position:relative; aspect-ratio:1391 / 1307; }
+.proof-img{ width:100%; height:100%; object-fit:contain; -webkit-mask-image:radial-gradient(ellipse 98% 98% at 50% 50%, black 90%, transparent 100%); mask-image:radial-gradient(ellipse 98% 98% at 50% 50%, black 90%, transparent 100%); filter:brightness(1.06); }
+.proof-visual .callouts{ position:absolute; inset:0; pointer-events:none; }
+.callout{ position:absolute; pointer-events:auto; display:flex; align-items:center; gap:9px; }
+.callout .dot{ width:7px; height:7px; border:1.5px solid var(--brass-hi); background:var(--ink); flex:none; }
+.callout .leader{ width:22px; height:1px; background:var(--brass-hi); opacity:.6; flex:none; }
+.callout .txt{ font-family:var(--font-mono); font-size:12px; letter-spacing:.03em; color:var(--paper); background:rgba(251,249,245,.06); border:1px solid rgba(251,249,245,.2); padding:6px 10px; white-space:nowrap; }
+
+/* ============================================================
+   5. STAT BAND
+   ============================================================ */
+.stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-4); }
+.stat-item{ padding-left:var(--sp-3); }
+.stat-item .mono-cap{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--brass-hi); margin-bottom:10px; display:block; }
+.stat-num{ font-family:var(--font-display); font-weight:800; font-size:clamp(40px,5vw,64px); letter-spacing:-0.04em; line-height:1; color:var(--paper); margin-bottom:10px; }
+.stat-label{ font-size:14px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
+
+/* ============================================================
+   6. ABOUT — spec-table layout instead of stat cards
+   ============================================================ */
+.about{ padding:var(--sp-8) 0; }
+.about-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:var(--sp-6); align-items:start; }
+.about h2{ font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); max-width:15ch; }
+.about p{ color:var(--ink-soft); font-size:16px; max-width:54ch; margin-bottom:var(--sp-3); line-height:1.7; }
+.about-coords{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); letter-spacing:.03em; margin-bottom:var(--sp-3); }
+.spec-table{ border-top:1px solid var(--line-2); }
+.spec-row{ display:flex; align-items:baseline; justify-content:space-between; gap:var(--sp-2); padding:16px 0; border-bottom:1px solid var(--line-2); }
+.spec-row .k{ font-family:var(--font-mono); font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.spec-row .v{ font-family:var(--font-display); font-weight:700; font-size:19px; letter-spacing:-.01em; text-align:right; }
+
+/* ============================================================
+   7. PROCESS — numbered technical index
+   ============================================================ */
+.process{ background:var(--paper-2); padding:var(--sp-8) 0; }
+.process-list{ border-top:1px solid var(--line-2); }
+.process-row{ display:grid; grid-template-columns:80px 1fr 1fr; gap:var(--sp-3); padding:var(--sp-3) 0; border-bottom:1px solid var(--line-2); align-items:baseline; transition:background var(--dur) var(--ease); }
+.process-row:hover{ background:rgba(255,255,255,.5); }
+.process-num{ font-family:var(--font-mono); font-weight:600; font-size:14px; color:var(--brass); }
+.process-row h3{ font-size:19px; letter-spacing:-.02em; }
+.process-row p{ font-size:14px; color:var(--ink-soft); line-height:1.55; max-width:46ch; }
+
+/* ============================================================
+   8. PRODUCTION — banner photo + tiles
+   ============================================================ */
+.production{ padding:var(--sp-8) 0; }
+.prod-banner{ position:relative; aspect-ratio:21/8; margin-bottom:var(--sp-5); overflow:hidden; }
+.prod-banner img{ width:100%; height:100%; object-fit:cover; filter:saturate(1.05); }
+.prod-banner::after{ content:""; position:absolute; inset:0; background:linear-gradient(100deg, rgba(3,11,33,.55) 0%, rgba(3,11,33,.05) 45%, transparent 65%); }
+.prod-banner .banner-copy{ position:absolute; left:var(--sp-4); bottom:var(--sp-4); color:var(--paper); max-width:34ch; z-index:2; }
+.prod-banner .banner-copy .spec-line .label{ color:var(--ink-soft-on-dark); }
+.prod-banner .banner-copy .spec-line .rule{ background:rgba(251,249,245,.3); }
+.prod-banner .banner-copy p{ font-size:15.5px; line-height:1.5; }
+.tile-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.tile{ border:1px solid var(--line-2); padding:var(--sp-3); min-height:190px; display:flex; flex-direction:column; justify-content:space-between; background:var(--card); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.tile:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--ink); }
+.tile-num{ font-family:var(--font-mono); font-size:11px; color:var(--brass); letter-spacing:.06em; }
+.tile h3{ font-size:17px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
+.tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+
+/* ============================================================
+   9. BMS SOLUTIONS
+   ============================================================ */
+.bms{ background:var(--card); padding:var(--sp-8) 0; }
+.bms-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.bms-card{ background:var(--paper); border:1px solid var(--line-2); padding:var(--sp-3); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.bms-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--ink); }
+.bms-tag{ display:block; font-family:var(--font-mono); font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); margin-bottom:10px; }
+.bms-card h3{ font-size:19px; margin-bottom:8px; letter-spacing:-.01em; }
+.bms-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.bms-cta{ margin-top:var(--sp-4); text-align:center; }
+
+/* ============================================================
+   10. CONTACT — dark, intentional
+   ============================================================ */
+.contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; }
+.contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:var(--sp-6); }
+.contact h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); color:var(--paper); }
+.contact-intro{ color:var(--ink-soft-on-dark); font-size:16px; max-width:44ch; margin-bottom:var(--sp-4); }
+.contact-detail{ display:flex; gap:var(--sp-2); padding:var(--sp-2) 0; }
+.contact-detail .k{ width:110px; flex:none; font-family:var(--font-mono); font-size:12px; color:var(--ink-soft-on-dark); letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
+.contact-detail .v{ font-size:16px; font-weight:500; }
+.contact-detail a:hover{ color:var(--brass-hi); }
+.form-wrap{ position:relative; }
+.form-glow{
+  position:absolute; inset:-90px; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%);
+  filter:blur(66px);
+}
+.contact-form{
+  position:relative; z-index:1; overflow:hidden;
+  background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%);
+  border:1px solid rgba(251,249,245,.34);
+  border-radius:var(--r);
+  padding:var(--sp-4);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06);
+}
+.contact-form::before{
+  content:"";
+  position:absolute;
+  top:-70%; left:-30%;
+  width:70%; height:240%;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%);
+  filter:blur(26px);
+  pointer-events:none;
+  z-index:-1;
+}
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft-on-dark); }
+.field input, .field select, .field textarea{
+  background:rgba(251,249,245,.14);
+  border:1px solid rgba(251,249,245,.3);
+  border-radius:var(--r);
+  padding:12px 14px;
+  color:var(--paper);
+  width:100%;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1);
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.field select option{ color:var(--ink); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft-on-dark); }
+.field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
+.field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
+.field textarea{ resize:vertical; min-height:96px; }
+.form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
+.form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
+.form-success.show{ display:flex; }
+
+/* ============================================================
+   11. FOOTER
+   ============================================================ */
+.footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); border-bottom:1px solid rgba(251,249,245,.12); }
+.footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
+.footer-brand .brand-logo{ height:28px; }
+.footer-tagline{ font-size:14.5px; color:var(--ink-soft-on-dark); max-width:32ch; margin-bottom:var(--sp-2); }
+.footer-address{ font-size:13.5px; color:var(--ink-soft-on-dark); line-height:1.7; }
+.footer-col h4{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft-on-dark); margin-bottom:var(--sp-2); font-weight:500; }
+.footer-col ul li{ margin-bottom:10px; }
+.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.82; transition:opacity var(--dur) var(--ease); }
+.footer-col a:hover{ opacity:1; color:var(--brass-hi); }
+.footer-bottom{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-2); padding-top:var(--sp-3); }
+.footer-copy{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft-on-dark); }
+.cert-chips{ display:flex; gap:8px; }
+.cert-chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:6px 12px; border:1px solid rgba(251,249,245,.22); color:var(--ink-soft-on-dark); }
+
+/* ============================================================
+   12. RESPONSIVE
+   ============================================================ */
+@media (max-width:980px){
+  :root{ --sp-8:96px; --sp-7:72px; }
+  .nav-menu, .nav-cta .btn-ghost{ display:none; }
+  .nav-toggle{ display:flex; }
+  .nav-cta{ gap:var(--sp-1); }
+  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
+  body.menu-open .nav-item{ border-bottom:1px solid var(--line-2); }
+  body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
+  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
+  body.menu-open .nav-item.open .dropdown{ display:block; }
+
+  .hero-grid{ grid-template-columns:1fr; }
+  .hero-visual{ order:-1; aspect-ratio:4/3; }
+  .bento-top{ grid-template-columns:1fr; }
+  .bento-row{ grid-template-columns:repeat(2, 1fr); }
+  .proof-grid{ grid-template-columns:1fr; }
+  .proof-visual{ min-height:320px; }
+  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
+  .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .process-row{ grid-template-columns:1fr; gap:6px; }
+  .tile-grid{ grid-template-columns:repeat(2, 1fr); }
+  .bms-grid{ grid-template-columns:repeat(2, 1fr); }
+  .contact-grid{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:repeat(3, 1fr); }
+  .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
+}
+@media (max-width:640px){
+  .container{ padding:0 var(--sp-2); }
+  .bento-row{ grid-template-columns:1fr; }
+  .stats-grid{ grid-template-columns:1fr 1fr; }
+  .tile-grid{ grid-template-columns:1fr; }
+  .bms-grid{ grid-template-columns:1fr; }
+  .form-row{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:1fr 1fr; }
+  .footer-bottom{ flex-direction:column; align-items:flex-start; }
+  .hero-specs{ flex-wrap:wrap; }
+}
+</style>
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-grey"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+  <span class="ambient-blob ambient-blob-4"></span>
+  <span class="ambient-blob ambient-blob-5"></span>
+  <span class="ambient-blob ambient-blob-6"></span>
+  <span class="ambient-blob ambient-blob-7"></span>
+  <span class="ambient-blob ambient-blob-8"></span>
+</div>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+        <g>
+          <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
+          <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+          <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
+          <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
+          <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
+          <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
+          <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
+          <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
+          <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
+          <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+        </g>
+        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+      </svg>
+      <span class="brand-coord mono">56.163°N 10.204°E — AARHUS</span>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="solutions.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="solutions.html#robotics">Robotics</a>
+            <a href="solutions.html#maritime">Maritime</a>
+            <a href="solutions.html#ups">UPS</a>
+            <a href="solutions.html#heavy-machinery">Heavy Machinery</a>
+            <a href="solutions.html#defense">Defense</a>
+            <a href="solutions.html#material-handling">Material Handling</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="development.html" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="development.html#use-case">Use Case / Application</a>
+            <a href="development.html#feasibility">Feasibility Study</a>
+            <a href="development.html#prototype">Prototype &amp; Testing</a>
+            <a href="development.html#industrialization">Industrialization</a>
+            <a href="development.html#compliance">Market Compliance</a>
+            <a href="development.html#mass-production">Mass Production</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="production.html" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="production.html#facility">Production Facility</a>
+            <a href="production.html#quality">Quality &amp; Testing</a>
+            <a href="production.html#passport">Battery Passport</a>
+            <a href="production.html#supply-chain">Supply Chain</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="bms.html" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="bms.html#i-bms">i-BMS</a>
+            <a href="bms.html#n-bms">n-BMS</a>
+            <a href="bms.html#n3-bms">n3-BMS</a>
+            <a href="bms.html#c-bms24x">c-BMS24x</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="about.html#company">Company</a>
+            <a href="about.html#career">Career</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="spec-line"><span class="idx">REF. 00 / SYSTEM</span><span class="rule"></span><span class="label">Custom Battery Engineering</span></div>
+        <h1>Custom battery systems, engineered around your application.</h1>
+        <p>From concept and certification to scalable production, every solution is tailored to meet the performance, safety and reliability requirements of your product — not sourced from a catalogue.</p>
+        <div class="hero-cta-row">
+          <a href="#contact" class="btn btn-primary">Get in touch</a>
+          <a href="#solutions" class="link-arrow">View applications
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="hero-specs">
+          <div class="item"><b>19+</b><span>Years engineering</span></div>
+          <div class="item"><b>100%</b><span>In-house BMS</span></div>
+          <div class="item"><b>6</b><span>Application domains</span></div>
+          <div class="item"><b>DK</b><span>Aarhus, Denmark</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual frame">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <img src="assets/products/renders/crop/xug_transparant_print.png" alt="WS Technicals custom lithium battery module with visible cell stack and CANBUS connectors">
+        <span class="meta-tag top"><span class="dot"></span>FIG. 01 — MODULE</span>
+        <span class="meta-tag mono">24V · CANBUS-ENABLED</span>
+      </div>
+    </div>
+
+    <div class="app-strip">
+      <div class="app-strip-track">
+        <span>Robotics</span><span>Maritime</span><span>UPS</span><span>Heavy Machinery</span><span>Defense — UAV / USV / UUV / UGV</span><span>Material Handling — AGV / AMR</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOLUTIONS — asymmetric bento index
+     ============================================================ -->
+<section class="solutions" id="solutions">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="spec-line"><span class="idx">INDEX 01—06</span><span class="rule"></span><span class="label">Application Domains</span></div>
+        <h2>Six demanding domains. One engineering process.</h2>
+      </div>
+      <p>Every pack starts with your application — duty cycle, environment, and certification requirements — not a catalogue part number.</p>
+    </div>
+
+    <div class="bento-top">
+      <article class="sol-tile sol-featured">
+        <div class="tile-img" style="background-image:url('assets/products/cards/robotics.jpg')">
+          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="tile-body">
+          <span class="tag"><span class="dot"></span>APPLICATION 01 / 06</span>
+          <h3>Robotics</h3>
+          <p>Compact, high-cycle packs built for precision robotics and collaborative automation, including humanoid platforms.</p>
+          <div class="sol-chips"><span class="sol-chip">Humanoid</span><span class="sol-chip">Cobots</span><span class="sol-chip">High cycle-life</span></div>
+        </div>
+      </article>
+
+      <div class="sol-stat-panel">
+        <div>
+          <div class="spec-line"><span class="idx">WHY WST</span><span class="rule"></span><span class="label">Proof</span></div>
+          <div class="big">19+</div>
+          <div class="cap">Years engineering custom power systems — in-house, from Aarhus</div>
+        </div>
+        <div class="foot">Every pack: designed, tested and certified before it ships.</div>
+      </div>
+    </div>
+
+    <div class="bento-row">
+
+      <article class="sol-tile" id="maritime">
+        <div class="tile-img" style="background-image:url('assets/products/cards/maritime.jpg')">
+          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="tile-body">
+          <span class="tag"><span class="dot"></span>02 / 06</span>
+          <h3>Maritime</h3>
+          <p>Marine-certified systems for vibration, moisture and long duty cycles at sea.</p>
+        </div>
+      </article>
+
+      <article class="sol-tile" id="ups">
+        <div class="tile-img" style="background-image:url('assets/products/cards/ups.jpg')">
+          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="tile-body">
+          <span class="tag"><span class="dot"></span>03 / 06</span>
+          <h3>UPS</h3>
+          <p>Uninterrupted power for critical infrastructure and continuous uptime.</p>
+        </div>
+      </article>
+
+      <article class="sol-tile" id="heavy-machinery">
+        <div class="tile-img" style="background-image:url('assets/products/cards/heavy-machinery.jpg')">
+          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="tile-body">
+          <span class="tag"><span class="dot"></span>04 / 06</span>
+          <h3>Heavy Machinery</h3>
+          <p>High-torque packs for construction, agriculture and cranes.</p>
+        </div>
+      </article>
+
+      <article class="sol-tile" id="drone">
+        <div class="tile-img" style="background-image:url('assets/products/cards/drone.jpg')">
+          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="tile-body">
+          <span class="tag"><span class="dot"></span>05 / 06</span>
+          <h3>Defense</h3>
+          <p>High energy-density packs for UAV, USV, UUV and UGV platforms.</p>
+        </div>
+      </article>
+
+    </div>
+    <div class="bento-row" style="margin-top:var(--sp-3); grid-template-columns:1fr;">
+      <article class="sol-tile" id="material-handling" style="flex-direction:row; min-height:180px;">
+        <div class="tile-img" style="background-image:url('assets/products/cards/material-handling.jpg'); flex:0 0 38%;">
+          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="tile-body" style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+          <span class="tag"><span class="dot"></span>06 / 06</span>
+          <h3>Material Handling</h3>
+          <p>Robust battery systems for continuous industrial operation — AGVs, AMRs and forklifts.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ENGINEERING PROOF
+     ============================================================ -->
+<section class="proof" id="proof">
+  <div class="container proof-grid">
+    <div class="proof-copy">
+      <div class="spec-line"><span class="idx">EXPLODED VIEW</span><span class="rule"></span><span class="label">Engineered, not assembled</span></div>
+      <h2>Every layer is a decision made for your application.</h2>
+      <p>From cell chemistry to firmware, every layer of the pack is engineered for your duty cycle, environment and certification requirements — designed and tested in-house, not sourced from a catalogue.</p>
+      <a href="#contact" class="link-arrow">Talk to our engineering team
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="proof-visual">
+      <img src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
+      <div class="callouts">
+        <div class="callout" style="top:10%; left:33%;"><span class="dot"></span><span class="leader"></span><span class="txt">01 — BMS &amp; RELAY MODULE</span></div>
+        <div class="callout" style="top:44%; left:0%;"><span class="dot"></span><span class="leader"></span><span class="txt">02 — MATCHED CELL STACK</span></div>
+        <div class="callout" style="top:56%; left:2%;"><span class="dot"></span><span class="leader"></span><span class="txt">03 — THERMAL INTERFACE</span></div>
+        <div class="callout" style="top:75%; left:38%;"><span class="dot"></span><span class="leader"></span><span class="txt">04 — CONNECTOR HARNESS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STAT BAND
+     ============================================================ -->
+<section class="stats on-dark">
+  <div class="container stats-grid">
+    <div class="stat-item"><span class="mono-cap">Metric 01</span><div class="stat-num">19+</div><div class="stat-label">Years engineering custom power systems</div></div>
+    <div class="stat-item"><span class="mono-cap">Metric 02</span><div class="stat-num">6</div><div class="stat-label">Application categories served</div></div>
+    <div class="stat-item"><span class="mono-cap">Metric 03</span><div class="stat-num">100%</div><div class="stat-label">In-house BMS &amp; compliance testing</div></div>
+    <div class="stat-item"><span class="mono-cap">Metric 04</span><div class="stat-num">DK</div><div class="stat-label">Designed and built in Aarhus</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div>
+      <div class="spec-line"><span class="idx">EST.</span><span class="rule"></span><span class="label">About WS Technicals</span></div>
+      <h2>Quality made affordable — by people who've done it for 19 years.</h2>
+      <p class="about-coords mono">56.1629° N, 10.2039° E — Aarhus, Denmark</p>
+      <p>We engineer and manufacture custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated.</p>
+      <a href="#contact" class="link-arrow">Get in touch
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="spec-table">
+      <div class="spec-row"><span class="k">Founded</span><span class="v">19+ years ago</span></div>
+      <div class="spec-row"><span class="k">BMS &amp; Compliance</span><span class="v">In-house</span></div>
+      <div class="spec-row"><span class="k">Headquarters</span><span class="v">Aarhus, DK</span></div>
+      <div class="spec-row"><span class="k">Certifications</span><span class="v">CE · UN 38.3 · RoHS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DEVELOPMENT PROCESS
+     ============================================================ -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="spec-line"><span class="idx">PROCESS</span><span class="rule"></span><span class="label">From idea to mass production</span></div>
+        <h2>Six stages, one continuous process.</h2>
+      </div>
+      <p>A structured process that keeps performance, safety and cost aligned from the first sketch to the production line.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-row"><span class="process-num">01</span><h3>Idea &amp; Requirements</h3><p>We define performance, environment, and certification requirements alongside your engineering team.</p></div>
+      <div class="process-row"><span class="process-num">02</span><h3>Feasibility Study</h3><p>Cell chemistry, form factor, and BMS architecture are evaluated against your constraints.</p></div>
+      <div class="process-row"><span class="process-num">03</span><h3>Prototype &amp; Testing</h3><p>Working prototypes are built and validated under real operating and abuse conditions.</p></div>
+      <div class="process-row"><span class="process-num">04</span><h3>Industrialization</h3><p>The design is engineered for repeatable, cost-efficient manufacturing at scale.</p></div>
+      <div class="process-row"><span class="process-num">05</span><h3>Compliance</h3><p>CE, UN 38.3, and RoHS testing are handled in-house ahead of production release.</p></div>
+      <div class="process-row"><span class="process-num">06</span><h3>Mass Production</h3><p>Packs move into production with full traceability and consistent quality control.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCTION
+     ============================================================ -->
+<section class="production" id="production">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="spec-line"><span class="idx">FACILITY</span><span class="rule"></span><span class="label">Built and verified in-house</span></div>
+        <h2>Manufacturing, QA and testing — one roof.</h2>
+      </div>
+      <p>Production runs through our trusted partner facility, with full traceability back to WS Technicals engineering in Aarhus.</p>
+    </div>
+
+    <div class="prod-banner frame on-dark">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <img src="assets/unsplash/production-line-web.jpg" alt="Automated lithium battery production line">
+      <div class="banner-copy">
+        <div class="spec-line"><span class="idx mono">30.000+ M²</span><span class="rule"></span><span class="label">Production Floor</span></div>
+        <p>Manual, semi- and fully automatic assembly lines, spot- and laser-welding, and automated end-of-line testing on every unit.</p>
+      </div>
+    </div>
+
+    <div class="tile-grid">
+      <div class="tile"><div class="tile-num">01 / 04</div><div><h3>Production Facility</h3><p>A dedicated facility for custom pack assembly and low-to-mid volume production.</p></div></div>
+      <div class="tile"><div class="tile-num">02 / 04</div><div><h3>Quality Assurance</h3><p>Every batch is tracked and inspected against documented process and material standards.</p></div></div>
+      <div class="tile"><div class="tile-num">03 / 04</div><div><h3>Testing</h3><p>In-house electrical, thermal, and mechanical testing validates every design before release.</p></div></div>
+      <div class="tile"><div class="tile-num">04 / 04</div><div><h3>Supply Chain</h3><p>Qualified cell and component suppliers with traceability from raw material to finished pack.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BMS SOLUTIONS
+     ============================================================ -->
+<section class="bms" id="bms">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="spec-line"><span class="idx">PLATFORMS</span><span class="rule"></span><span class="label">BMS Solutions</span></div>
+        <h2>Battery management, engineered in-house.</h2>
+      </div>
+      <p>Our BMS team designs the electronics and firmware around your pack — not the other way around.</p>
+    </div>
+    <div class="bms-grid">
+      <div class="bms-card"><span class="bms-tag">01 — Low Voltage</span><h3>i-BMS</h3><p>BMS platforms for compact packs in robotics, drones, and portable equipment.</p></div>
+      <div class="bms-card"><span class="bms-tag">02 — High Voltage</span><h3>n-BMS</h3><p>Robust architectures for heavy machinery, marine, and industrial power systems.</p></div>
+      <div class="bms-card"><span class="bms-tag">03 — Fast Charge</span><h3>n3-BMS</h3><p>Charge management engineered for minimal downtime in continuous operation.</p></div>
+      <div class="bms-card"><span class="bms-tag">04 — Highly Specialized</span><h3>c-BMS24x</h3><p>Application-specific firmware and CANBUS integration built around your control system.</p></div>
+    </div>
+    <div class="bms-cta">
+      <a href="bms.html" class="link-arrow">Talk to a BMS engineer
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="contact on-dark" id="contact">
+  <div class="container contact-grid">
+    <div>
+      <div class="spec-line"><span class="idx">CONTACT</span><span class="rule"></span><span class="label">Get in touch</span></div>
+      <h2>Let's talk about your application.</h2>
+      <p class="contact-intro">Tell us about your requirements and a member of our engineering team will get back to you.</p>
+
+      <div class="contact-detail"><span class="k">Phone</span><a class="v" href="tel:+4588618386">+45 88 61 83 86</a></div>
+      <div class="contact-detail"><span class="k">Email</span><a class="v" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></div>
+      <div class="contact-detail"><span class="k">Address</span><span class="v">Gjellerupvej 89D, 8230 Åbyhøj, Denmark</span></div>
+    </div>
+
+    <div class="form-wrap">
+    <div class="form-glow" aria-hidden="true"></div>
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" name="name" placeholder="Jane Doe"></div>
+        <div class="field"><label for="f-company">Company</label><input type="text" id="f-company" name="company" placeholder="Company name"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" placeholder="jane@company.com"></div>
+        <div class="field"><label for="f-country">Country</label><input type="text" id="f-country" name="country" placeholder="Country"></div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-application">Application</label>
+          <select id="f-application" name="application">
+            <option value="">Select an application</option>
+            <option>Robotics</option><option>Maritime</option><option>UPS</option>
+            <option>Heavy Machinery</option><option>Defense</option><option>Material Handling</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Tell us about your project"></textarea></div>
+      </div>
+      <button type="submit" class="btn btn-on-dark" style="width:100%;">Send message</button>
+      <p class="form-note">All fields optional. We'll only use this to respond to your enquiry.</p>
+      <div class="form-success" id="formSuccess">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#B99A72" stroke-width="1.8"><path d="M4 10l4 4 8-8"/></svg>
+        <span>Thanks — we'll be in touch shortly.</span>
+      </div>
+    </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+            <g>
+              <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
+              <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+              <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
+              <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
+              <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+              <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
+              <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
+              <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
+              <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+              <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
+              <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
+              <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+            </g>
+            <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+            <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+            <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+            <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+          </svg>
+        </a>
+        <p class="footer-tagline">Quality made affordable.</p>
+        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="solutions.html#robotics">Robotics</a></li>
+          <li><a href="solutions.html#maritime">Maritime</a></li>
+          <li><a href="solutions.html#heavy-machinery">Heavy Machinery</a></li>
+          <li><a href="solutions.html#material-handling">Material Handling</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Development</h4>
+        <ul>
+          <li><a href="development.html#use-case">Use Case &amp; Requirements</a></li>
+          <li><a href="development.html#feasibility">Feasibility Study</a></li>
+          <li><a href="development.html#prototype">Prototype &amp; Testing</a></li>
+          <li><a href="development.html#compliance">Compliance</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Production</h4>
+        <ul>
+          <li><a href="production.html#facility">Production Facility</a></li>
+          <li><a href="production.html#quality">Quality &amp; Testing</a></li>
+          <li><a href="production.html#passport">Battery Passport</a></li>
+          <li><a href="bms.html">BMS Solutions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html#company">About us</a></li>
+          <li><a href="about.html#career">Career</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
+      <div class="cert-chips">
+        <span class="cert-chip">CE</span>
+        <span class="cert-chip">UN 38.3</span>
+        <span class="cert-chip">RoHS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', function(){
+    var open = body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  var nav = document.querySelector('.nav');
+  function onScroll(){ nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    var link = item.querySelector('.nav-link');
+    link.addEventListener('click', function(e){
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item.open').forEach(function(o){ o.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropdown a, .nav-cta a').forEach(function(a){
+    a.addEventListener('click', function(){
+      body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    success.classList.add('show');
+  });
+})();
+</script>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/section-labels.js" defer></script>
+<script src="assets/scripts/enterprise-motion.js" defer></script>
+</body>
+</html>

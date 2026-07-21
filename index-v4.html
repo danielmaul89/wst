@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WS Technicals — Custom Battery Engineering</title>
+<meta name="description" content="Custom lithium battery systems engineered for demanding applications. From concept and certification to scalable production.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+@font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-medium.woff') format('woff'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-semi-bold.woff') format('woff'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
+
+:root{
+  --paper:#FBF9F5; --paper-2:#F3EFE7; --card:#FFFFFF;
+  --ink:#06081A; --ink-soft:#4A4C58; --ink-faint:#8B8D98;
+  --line:#E4DFD3; --line-2:#EAE6DC;
+  --blue:#0F2A5C; --blue-deep:#030B21; --brass:#B99A72; --brass-hi:#CBB08A; --brass-soft:#E7DDCB;
+  --paper-on-dark:#FBF9F5; --ink-soft-on-dark:#AEB3C9;
+  --r:10px; --r-lg:16px;
+  --font-display:'Geogrotesque','Sora',sans-serif; --font-body:'Arbeit','Inter',Arial,sans-serif; --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:48px; --sp-6:64px; --sp-7:96px; --sp-8:140px;
+  --ease:cubic-bezier(.4,0,.2,1); --ease-out:cubic-bezier(.22,1,.36,1); --dur:.35s;
+  --shadow-sm:0 1px 2px rgba(6,8,26,.04); --shadow-md:0 12px 32px -12px rgba(6,8,26,.14); --shadow-lg:0 28px 70px -24px rgba(6,8,26,.24);
+  --container:1240px;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top:92px; }
+body{ position:relative; margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+h1,h2,h3,h4,p{ margin:0; }
+button,input,select,textarea{ font-family:inherit; font-size:inherit; color:inherit; }
+button{ cursor:pointer; }
+h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.03em; line-height:1.05; }
+.container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
+section{ position:relative; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
+.on-dark a:focus-visible, .on-dark button:focus-visible{ outline-color:var(--brass-hi); }
+.eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass); }
+.on-dark .eyebrow{ color:var(--brass-hi); }
+
+/* ============================================================
+   GLASS SYSTEM
+   ============================================================ */
+.glass{ position:relative; background:linear-gradient(155deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,.22) 100%); border:1px solid rgba(255,255,255,.7); border-radius:var(--r-lg); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 24px 60px -28px rgba(6,8,26,.22), inset 0 1px 0 rgba(255,255,255,.85); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.glass:hover{ transform:translateY(-4px); box-shadow:0 30px 70px -26px rgba(6,8,26,.28), inset 0 1px 0 rgba(255,255,255,.9); }
+.glass-dark{ position:relative; background:linear-gradient(155deg, rgba(251,249,245,.14) 0%, rgba(251,249,245,.04) 100%); border:1px solid rgba(251,249,245,.18); border-radius:var(--r-lg); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 24px 60px -28px rgba(0,0,0,.5), inset 0 1px 0 rgba(251,249,245,.24); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.glass-dark:hover{ transform:translateY(-4px); border-color:rgba(203,176,138,.4); }
+
+/* Scroll reveal — generic, reused across sections */
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+.reveal.in-view{ opacity:1; transform:translateY(0); }
+.reveal-scale{ opacity:0; transform:scale(.94); transition:opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+.reveal-scale.in-view{ opacity:1; transform:scale(1); }
+@media (prefers-reduced-motion: reduce){
+  .reveal, .reveal-scale{ opacity:1; transform:none; transition:none; }
+}
+
+.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
+.btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
+.btn:hover::before{ opacity:1; }
+.btn-primary{ background:var(--blue-deep); color:#fff; box-shadow:var(--shadow-sm); }
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+.btn-ghost:hover{ border-color:var(--ink); }
+.btn-on-dark{ background:var(--paper); color:var(--ink); }
+.btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; color:var(--blue); }
+.link-arrow svg{ transition:transform var(--dur) var(--ease); }
+.link-arrow:hover svg{ transform:translateX(3px); }
+.on-dark .link-arrow{ color:var(--paper); }
+
+.ambient{ position:absolute; top:0; left:0; right:0; height:2600px; overflow:hidden; z-index:0; pointer-events:none; -webkit-mask-image:linear-gradient(to bottom, black 0%, black 70%, transparent 100%); mask-image:linear-gradient(to bottom, black 0%, black 70%, transparent 100%); }
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(120px); animation:drift 26s ease-in-out infinite; }
+.ambient-blob-brass{ width:1640px; height:1040px; top:-260px; left:-180px; background:radial-gradient(circle at 35% 35%, var(--brass-hi), transparent 70%); opacity:.38; animation-duration:24s; }
+.ambient-blob-grey{ width:1520px; height:1520px; top:-160px; right:-260px; background:radial-gradient(circle at 55% 45%, #8890AC, transparent 70%); opacity:.26; animation-duration:30s; animation-direction:reverse; }
+.ambient-blob-blue{ width:2160px; height:2160px; top:340px; left:8%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 70%); opacity:.2; animation-duration:34s; }
+.ambient-blob-brass2{ width:1400px; height:1400px; top:1500px; right:-10%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 70%); opacity:.18; animation-duration:28s; animation-direction:reverse; }
+.ambient-blob-blue2{ width:1600px; height:1600px; top:2100px; left:-15%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 70%); opacity:.16; animation-duration:32s; }
+@keyframes drift{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(3%,2%); } }
+@media (prefers-reduced-motion: reduce){ .ambient-blob{ animation:none; } }
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.85) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.85) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.07; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{ position:sticky; top:0; z-index:100; transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.nav--scrolled{ background:rgba(251,249,245,.6); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border-bottom:1px solid rgba(6,8,26,.06); }
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+.brand{ display:flex; align-items:center; }
+.brand-logo{ height:26px; width:auto; flex:none; }
+.brand-logo .cls-1{ fill:#022e70; } .brand-logo .cls-2{ fill:#f0f0f0; } .brand-logo .cls-3{ fill:#d6d6d6; } .brand-logo .cls-4{ fill:#00001f; } .brand-logo .cls-5{ fill:#c2b59b; }
+.brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
+.nav-menu{ display:flex; align-items:center; gap:var(--sp-1); }
+.nav-item{ position:relative; }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:999px; font-weight:500; font-size:15px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--ink); background:rgba(6,8,26,.06); }
+.nav-link .chev{ transition:transform var(--dur) var(--ease); }
+.nav-item:hover .chev{ transform:rotate(180deg); }
+.dropdown{ position:absolute; top:calc(100% + 8px); left:0; min-width:240px; padding:var(--sp-1); opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
+.dropdown a{ display:block; padding:10px 14px; border-radius:var(--r); font-size:14.5px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a:hover{ background:rgba(6,8,26,.06); color:var(--ink); }
+.nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
+.nav-toggle{ display:none; background:none; border:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
+.nav-toggle:hover{ background:rgba(6,8,26,.06); }
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--ink); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.nav-toggle span::before{ position:absolute; top:-6px; }
+.nav-toggle span::after{ position:absolute; top:6px; }
+body.menu-open .nav-toggle span{ background:transparent; }
+body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
+body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
+
+/* ============================================================
+   HERO — mouse-tilt product stage + scroll cue
+   ============================================================ */
+.hero{ padding:var(--sp-6) 0 0; text-align:center; overflow:hidden; }
+.hero-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); position:relative; z-index:2; }
+.hero h1{ font-size:clamp(38px, 5.6vw, 74px); }
+.hero p{ max-width:600px; font-size:clamp(16px,1.6vw,19px); color:var(--ink-soft); line-height:1.65; }
+.hero-stage{ position:relative; max-width:620px; margin:var(--sp-6) auto 0; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; perspective:1200px; }
+.hero-stage-ring{ position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 50% 42%, rgba(255,255,255,.9) 0%, rgba(255,255,255,.35) 55%, transparent 78%); backdrop-filter:blur(30px) saturate(180%); -webkit-backdrop-filter:blur(30px) saturate(180%); border:1px solid rgba(255,255,255,.8); box-shadow:0 40px 90px -30px rgba(6,8,26,.28), inset 0 1px 0 rgba(255,255,255,.9); }
+.hero-stage-inner{ position:relative; z-index:2; width:78%; transition:transform .2s var(--ease-out); transform-style:preserve-3d; will-change:transform; }
+.hero-stage-inner img{ filter:drop-shadow(0 40px 60px rgba(6,8,26,.2)); animation:hero-float 7s ease-in-out infinite; }
+@keyframes hero-float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
+@media (prefers-reduced-motion: reduce){ .hero-stage-inner img{ animation:none; } }
+.hero-chips{ position:relative; z-index:2; display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:calc(var(--sp-6) * -1); padding:0 var(--sp-3) var(--sp-5); }
+.hero-chip{ display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px; font-family:var(--font-mono); font-size:12px; letter-spacing:.03em; color:var(--ink-soft); }
+.hero-chip .dot{ width:5px; height:5px; border-radius:50%; background:var(--brass); flex:none; }
+.scroll-cue{ display:flex; flex-direction:column; align-items:center; gap:6px; padding-bottom:var(--sp-4); position:relative; z-index:2; }
+.scroll-cue span{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); }
+.scroll-cue svg{ animation:cue-bounce 1.8s ease-in-out infinite; color:var(--ink-faint); }
+@keyframes cue-bounce{ 0%,100%{ transform:translateY(0); opacity:.5; } 50%{ transform:translateY(6px); opacity:1; } }
+@media (prefers-reduced-motion: reduce){ .scroll-cue svg{ animation:none; } }
+
+/* ============================================================
+   CATEGORIES — horizontal scroll-snap carousel (new element type)
+   ============================================================ */
+.categories{ padding:var(--sp-5) 0 var(--sp-8); overflow:hidden; }
+.section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
+.section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
+.section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
+.cat-nav-arrows{ display:flex; gap:8px; }
+.cat-arrow{ width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--ink); transition:transform var(--dur) var(--ease); }
+.cat-arrow:hover{ transform:scale(1.08); }
+.cat-arrow:active{ transform:scale(.96); }
+.cat-scroller{ display:flex; gap:var(--sp-3); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:8px 8px 28px; margin:-8px -8px 0; scrollbar-width:none; }
+.cat-scroller::-webkit-scrollbar{ display:none; }
+.cat-card{ position:relative; overflow:hidden; border-radius:var(--r-lg); padding:var(--sp-3); min-height:460px; flex:0 0 320px; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:space-between; background:var(--paper-2); border:1px solid rgba(6,8,26,.08); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease), opacity var(--dur) var(--ease); opacity:.55; }
+.cat-card.is-active{ opacity:1; transform:scale(1.02); box-shadow:var(--shadow-lg); border-color:rgba(6,8,26,.16); }
+.cat-card::after{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(6,8,26,.12) 0%, rgba(6,8,26,.02) 22%, transparent 40%); pointer-events:none; }
+.cat-text{ position:relative; z-index:2; }
+.cat-card h3{ font-size:22px; letter-spacing:-.02em; margin-bottom:8px; color:var(--blue-deep); }
+.cat-card p{ font-size:14px; color:var(--blue); max-width:28ch; line-height:1.55; }
+.cat-visual{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+.cat-visual img{ width:100%; height:100%; object-fit:cover; object-position:center; transition:transform .5s var(--ease); }
+.cat-card.is-active .cat-visual img{ transform:scale(1.05); }
+.cat-explore{ position:relative; z-index:2; align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:999px; background:linear-gradient(155deg, rgba(6,8,26,.62) 0%, rgba(6,8,26,.4) 100%); border:1px solid rgba(6,8,26,.2); backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); box-shadow:0 8px 20px -10px rgba(6,8,26,.45), inset 0 1px 0 rgba(255,255,255,.16); font-weight:600; font-size:13.5px; color:#fff; transition:background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.cat-card:hover .cat-explore{ background:linear-gradient(155deg, rgba(6,8,26,.74) 0%, rgba(6,8,26,.5) 100%); transform:translateY(-1px); }
+.cat-progress{ display:flex; gap:6px; justify-content:center; margin-top:var(--sp-3); }
+.cat-progress span{ width:22px; height:3px; border-radius:2px; background:var(--line-2); transition:background var(--dur) var(--ease), width var(--dur) var(--ease); }
+.cat-progress span.is-active{ background:var(--brass); width:34px; }
+
+/* ============================================================
+   ENGINEERING PROOF — staggered callout reveal
+   ============================================================ */
+.proof{ padding:var(--sp-8) 0; }
+.proof-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); align-items:center; }
+.proof-copy h2{ font-size:clamp(26px,3.2vw,38px); margin:var(--sp-2) 0 var(--sp-3); max-width:16ch; }
+.proof-copy p{ color:var(--ink-soft); font-size:16px; max-width:42ch; margin-bottom:var(--sp-3); }
+.proof-visual{ position:relative; aspect-ratio:1800 / 1346; padding:var(--sp-4); }
+.proof-img{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain; }
+.proof-visual .callouts{ position:absolute; inset:0; pointer-events:none; z-index:2; }
+.callout{ position:absolute; pointer-events:auto; display:flex; align-items:center; gap:8px; border-radius:999px; padding:8px 14px 8px 10px; font-size:13px; font-weight:500; color:var(--ink); white-space:nowrap; background:linear-gradient(155deg, rgba(255,255,255,.75) 0%, rgba(255,255,255,.35) 100%); border:1px solid rgba(255,255,255,.85); backdrop-filter:blur(14px) saturate(180%); -webkit-backdrop-filter:blur(14px) saturate(180%); box-shadow:0 10px 24px -14px rgba(6,8,26,.25), inset 0 1px 0 rgba(255,255,255,.9); opacity:0; transform:translateY(14px) scale(.92); transition:opacity .55s var(--ease-out), transform .55s var(--ease-out); }
+.callout.in-view{ opacity:1; transform:translateY(0) scale(1); }
+.callout-dot{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; }
+
+/* ============================================================
+   STATS — animated count-up
+   ============================================================ */
+.stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; overflow:hidden; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.stat-item{ padding:var(--sp-4) var(--sp-3); }
+.stat-num{ font-family:var(--font-display); font-weight:800; font-size:clamp(38px,4.6vw,58px); letter-spacing:-0.04em; line-height:1; color:var(--paper); margin-bottom:10px; }
+.stat-bar{ height:2px; background:rgba(251,249,245,.14); margin-bottom:12px; overflow:hidden; border-radius:2px; }
+.stat-bar span{ display:block; height:100%; width:0%; background:var(--brass-hi); transition:width 1.1s var(--ease-out); }
+.stat-item.in-view .stat-bar span{ width:100%; }
+.stat-label{ font-size:14px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about{ padding:var(--sp-8) 0; }
+.about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
+.about h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); max-width:14ch; }
+.about p{ color:var(--ink-soft); font-size:16px; max-width:52ch; margin-bottom:var(--sp-3); }
+.about-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
+.mini-stat{ padding:var(--sp-3); }
+.mini-stat .num{ font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.02em; margin-bottom:4px; color:var(--blue-deep); }
+.mini-stat .label{ font-size:13.5px; color:var(--ink-faint); }
+
+/* ============================================================
+   THE WAY WE WORK — pinned-scroll active-step rail (new layout,
+   distinct from the plain icon-list used on the other variants)
+   ============================================================ */
+.work{ background:var(--paper-2); padding:var(--sp-6) 0 var(--sp-8); overflow:hidden; }
+.work-pin-grid{ display:grid; grid-template-columns:1fr 1.2fr; gap:var(--sp-6); margin-top:var(--sp-4); align-items:start; }
+.work-visual-col{ position:relative; }
+.work-sticky{ position:sticky; top:110px; height:64vh; min-height:420px; }
+.work-stack{ position:relative; width:100%; height:100%; overflow:hidden; border-radius:var(--r-lg); }
+.work-frame{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .6s var(--ease); }
+.work-frame.is-active{ opacity:1; }
+.work-frame-icon{ width:140px; height:140px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.work-frame-icon svg{ width:56px; height:56px; stroke:var(--blue); }
+.work-list-col{ display:flex; flex-direction:column; }
+.work-row{ min-height:26vh; display:flex; flex-direction:column; justify-content:center; padding:var(--sp-3) var(--sp-2); }
+.work-row:last-child{ min-height:20vh; }
+.work-num{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--line-2); margin-bottom:10px; transition:color var(--dur) var(--ease); }
+.work-row.is-active .work-num{ color:var(--brass); }
+.work-row h3{ font-size:clamp(20px,2.2vw,26px); letter-spacing:-.02em; margin-bottom:8px; color:var(--line-2); transition:color var(--dur) var(--ease); }
+.work-row.is-active h3{ color:var(--ink); }
+.work-row p{ font-size:14.5px; line-height:1.6; max-width:48ch; color:var(--line-2); transition:color var(--dur) var(--ease); }
+.work-row.is-active p{ color:var(--ink-soft); }
+
+/* ============================================================
+   GLOBAL PRESENCE — dot-map with ripple markers + animated flight arcs
+   ============================================================ */
+.presence{ position:relative; z-index:41; background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; overflow:hidden; }
+.presence-head{ max-width:640px; margin-bottom:var(--sp-5); }
+.presence-head h2{ color:var(--paper); font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); }
+.presence-head p{ color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
+.presence-map{ position:relative; width:100%; aspect-ratio:1147.5/514.4; }
+.presence-map img{ width:100%; height:100%; object-fit:contain; opacity:.9; }
+.presence-arcs{ position:absolute; inset:0; z-index:1; pointer-events:none; overflow:visible; }
+.presence-arcs path{ fill:none; stroke:var(--brass-hi); stroke-width:1; stroke-dasharray:4 5; opacity:.5; stroke-dashoffset:400; transition:stroke-dashoffset 1.6s var(--ease-out); }
+.presence.in-view .presence-arcs path{ stroke-dashoffset:0; }
+.presence-ripple{ position:absolute; width:5px; height:5px; transform:translate(-50%,-50%); z-index:2; }
+.presence-ripple .dot{ position:absolute; inset:0; border-radius:50%; background:var(--brass-hi); box-shadow:0 0 5px 1px rgba(203,176,138,.7); }
+.presence-ripple .ring{ position:absolute; inset:0; border-radius:50%; border:1px solid var(--brass-hi); animation:presence-ping 4.8s var(--ease) infinite; animation-delay:var(--ripple-delay, 0s); pointer-events:none; }
+.presence-ripple.hq .dot{ background:var(--paper); box-shadow:0 0 6px 1px rgba(251,249,245,.6); }
+.presence-ripple.hq .ring{ border-color:var(--paper); }
+.presence-ripple.partner .dot{ background:var(--blue); box-shadow:0 0 6px 1px rgba(15,42,92,.65); }
+.presence-ripple.partner .ring{ border-color:var(--blue); }
+.presence-ripple .ripple-label{ position:absolute; overflow:hidden; top:calc(100% + 7px); left:50%; transform:translateX(-50%); font-size:11px; white-space:nowrap; color:var(--ink-soft-on-dark); background:linear-gradient(155deg, rgba(251,249,245,.16) 0%, rgba(251,249,245,.03) 100%); padding:5px 12px; border-radius:999px; border:1px solid rgba(251,249,245,.24); backdrop-filter:blur(10px) saturate(160%); -webkit-backdrop-filter:blur(10px) saturate(160%); box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.3); pointer-events:none; }
+.presence-ripple.hq .ripple-label{ color:var(--paper); font-weight:600; border-color:rgba(203,176,138,.4); background:linear-gradient(155deg, rgba(203,176,138,.22) 0%, rgba(251,249,245,.04) 100%); box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.4); }
+.presence-ripple .ripple-label::before{ content:""; position:absolute; top:0; left:-60%; width:35%; height:100%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.22), transparent); transform:skewX(-20deg); animation:label-shine 7s ease-in-out infinite; animation-delay:var(--ripple-delay, 0s); }
+@keyframes label-shine{ 0%{ left:-60%; } 45%{ left:130%; } 100%{ left:130%; } }
+@media (prefers-reduced-motion: reduce){ .presence-ripple .ripple-label::before{ animation:none; opacity:0; } .presence-arcs path{ transition:none; stroke-dashoffset:0; } }
+.presence-ripple.label-top .ripple-label{ top:auto; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); }
+.presence-ripple.label-left .ripple-label{ top:50%; left:auto; right:calc(100% + 9px); transform:translateY(-50%); }
+.presence-ripple.label-right .ripple-label{ top:50%; left:calc(100% + 9px); right:auto; transform:translateY(-50%); }
+@keyframes presence-ping{ 0%{ transform:scale(1); opacity:.5; } 70%{ transform:scale(7); opacity:0; } 100%{ transform:scale(7); opacity:0; } }
+@media (prefers-reduced-motion: reduce){ .presence-ripple .ring{ animation:none; opacity:0; } }
+.presence-legend{ display:flex; gap:var(--sp-4); flex-wrap:wrap; margin-top:var(--sp-4); padding-top:var(--sp-3); border-top:1px solid rgba(251,249,245,.14); }
+.presence-legend .item{ display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft-on-dark); }
+.presence-legend .swatch{ width:9px; height:9px; border-radius:50%; flex:none; }
+
+/* ============================================================
+   PROCESS — animated horizontal timeline
+   ============================================================ */
+.process{ padding:var(--sp-8) 0; overflow:hidden; }
+.timeline{ position:relative; padding-top:34px; }
+.timeline-track{ position:absolute; top:9px; left:calc(100%/12); right:calc(100%/12); height:1px; background:var(--line-2); overflow:hidden; }
+.timeline-track span{ display:block; height:100%; width:0%; background:var(--brass); transition:width 1.4s var(--ease-out); }
+.timeline.in-view .timeline-track span{ width:100%; }
+.timeline-grid{ display:grid; grid-template-columns:repeat(6, 1fr); gap:var(--sp-3); }
+.timeline-step{ position:relative; opacity:0; transform:translateY(18px); transition:opacity .55s var(--ease-out), transform .55s var(--ease-out); }
+.timeline-step.in-view{ opacity:1; transform:translateY(0); }
+.timeline-dot{ position:absolute; top:-34px; left:0; width:19px; height:19px; border-radius:50%; background:var(--paper); border:2px solid var(--line-2); z-index:2; transition:border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.timeline-step.in-view .timeline-dot{ border-color:var(--brass); background:var(--brass-soft); }
+.timeline-idx{ font-family:var(--font-mono); font-size:11px; color:var(--brass); display:block; margin-bottom:6px; }
+.timeline-step h3{ font-size:16px; margin-bottom:6px; letter-spacing:-.01em; }
+.timeline-step p{ font-size:13px; color:var(--ink-soft); line-height:1.5; }
+
+/* ============================================================
+   PRODUCTION / BMS — tilt cards + stagger reveal
+   ============================================================ */
+.production{ padding:var(--sp-8) 0; }
+.tile-grid, .bms-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.tile, .bms-card{ padding:var(--sp-3); transition:transform .15s var(--ease-out), box-shadow var(--dur) var(--ease); transform-style:preserve-3d; will-change:transform; }
+.tile{ min-height:220px; display:flex; flex-direction:column; justify-content:space-between; }
+.tile-icon{ width:40px; height:40px; border-radius:var(--r); background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.7); display:flex; align-items:center; justify-content:center; }
+.tile-icon svg{ stroke:var(--blue); }
+.tile h3{ font-size:17px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
+.tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+.bms{ padding:var(--sp-8) 0; }
+.bms-tag{ display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); background:rgba(15,42,92,.08); padding:4px 10px; border-radius:999px; margin-bottom:var(--sp-2); }
+.bms-card h3{ font-size:18px; margin-bottom:8px; letter-spacing:-.01em; }
+.bms-card p{ font-size:14px; color:var(--ink-soft); line-height:1.55; }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; }
+.contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:var(--sp-6); }
+.contact h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); color:var(--paper); }
+.contact-intro{ color:var(--ink-soft-on-dark); font-size:16px; max-width:44ch; margin-bottom:var(--sp-4); }
+.contact-detail{ display:flex; gap:var(--sp-2); padding:var(--sp-2) 0; }
+.contact-detail .k{ width:110px; flex:none; font-size:13px; color:var(--ink-soft-on-dark); letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
+.contact-detail .v{ font-size:16px; font-weight:500; }
+.contact-detail a:hover{ color:var(--brass-hi); }
+.form-wrap{ position:relative; }
+.form-glow{ position:absolute; inset:-90px; z-index:0; pointer-events:none; background:radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%), radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%); filter:blur(66px); }
+.contact-form{ position:relative; z-index:1; overflow:hidden; background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%); border:1px solid rgba(251,249,245,.34); border-radius:var(--r-lg); padding:var(--sp-4); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06); }
+.contact-form::before{ content:""; position:absolute; top:-70%; left:-30%; width:70%; height:240%; background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%); filter:blur(26px); pointer-events:none; z-index:-1; }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-size:13px; color:var(--ink-soft-on-dark); }
+.field input, .field select, .field textarea{ background:rgba(251,249,245,.14); border:1px solid rgba(251,249,245,.3); border-radius:var(--r); padding:12px 14px; color:var(--paper); width:100%; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1); transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.field select option{ color:var(--ink); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft-on-dark); }
+.field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
+.field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
+.field textarea{ resize:vertical; min-height:96px; }
+.form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
+.form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
+.form-success.show{ display:flex; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); }
+.footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
+.footer-brand .brand-logo{ height:30px; }
+.footer-tagline{ font-size:14.5px; color:#C7CCDE; max-width:32ch; margin-bottom:var(--sp-2); }
+.footer-address{ font-size:13.5px; color:#C7CCDE; line-height:1.7; }
+.footer-col h4{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:#C7CCDE; margin-bottom:var(--sp-2); font-family:var(--font-body); font-weight:700; }
+.footer-col ul li{ margin-bottom:10px; }
+.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.92; transition:opacity var(--dur) var(--ease); }
+.footer-col a:hover{ opacity:1; color:var(--brass-hi); }
+.footer-bottom{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-2); padding-top:var(--sp-3); }
+.footer-copy{ font-size:13px; color:#C7CCDE; }
+.cert-chips{ display:flex; gap:8px; }
+.cert-chip{ font-size:11.5px; font-weight:600; letter-spacing:.04em; padding:6px 12px; border-radius:999px; border:1px solid rgba(251,249,245,.22); color:#C7CCDE; }
+
+@media (max-width:980px){
+  :root{ --sp-8:96px; --sp-7:72px; }
+  .nav-menu, .nav-cta .btn-ghost{ display:none; }
+  .nav-toggle{ display:flex; }
+  .nav-cta{ gap:var(--sp-1); }
+  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
+  body.menu-open .nav-item{ border-bottom:1px solid var(--line-2); }
+  body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; border-radius:var(--r); }
+  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; backdrop-filter:none; -webkit-backdrop-filter:none; }
+  body.menu-open .nav-item.open .dropdown{ display:block; }
+  .cat-card{ flex:0 0 82vw; }
+  .proof-grid{ grid-template-columns:1fr; }
+  .proof-visual{ min-height:320px; }
+  .proof-visual .callouts{ position:static; display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--sp-3); }
+  .callout{ position:static; }
+  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-3); }
+  .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .work-pin-grid{ grid-template-columns:1fr; }
+  .work-visual-col{ order:-1; }
+  .work-sticky{ position:sticky; top:76px; height:38vh; min-height:260px; margin-bottom:var(--sp-3); }
+  .work-row{ min-height:auto; padding:var(--sp-3) var(--sp-2); }
+  .timeline-grid{ grid-template-columns:repeat(2, 1fr); }
+  .timeline-track{ display:none; }
+  .tile-grid, .bms-grid{ grid-template-columns:repeat(2, 1fr); }
+  .contact-grid{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:repeat(3, 1fr); }
+  .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
+}
+@media (max-width:640px){
+  .container{ padding:0 var(--sp-2); }
+  .stats-grid{ grid-template-columns:1fr 1fr; }
+  .timeline-grid{ grid-template-columns:1fr; }
+  .tile-grid, .bms-grid{ grid-template-columns:1fr; }
+  .form-row{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:1fr 1fr; }
+  .footer-bottom{ flex-direction:column; align-items:flex-start; }
+}
+</style>
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-grey"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+  <span class="ambient-blob ambient-blob-brass2"></span>
+  <span class="ambient-blob ambient-blob-blue2"></span>
+</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+        <g>
+          <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
+          <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+          <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
+          <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
+          <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
+          <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
+          <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
+          <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
+          <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
+          <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+        </g>
+        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+      </svg>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#categories" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown glass">
+            <a href="#categories">Industrial Automation</a>
+            <a href="#categories">Energy &amp; Infrastructure</a>
+            <a href="#categories">Mobility</a>
+            <a href="#categories">Custom Battery Solutions</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#process" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown glass">
+            <a href="#process">Idea &amp; Requirements</a>
+            <a href="#process">Feasibility Study</a>
+            <a href="#process">Prototype &amp; Testing</a>
+            <a href="#process">Industrialization</a>
+            <a href="#process">Compliance</a>
+            <a href="#process">Mass Production</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#production" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown glass">
+            <a href="#production">Production Facility</a>
+            <a href="#production">Quality Assurance</a>
+            <a href="#production">Testing</a>
+            <a href="#production">Supply Chain</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#bms" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown glass">
+            <a href="#bms">Low Voltage</a>
+            <a href="#bms">High Voltage</a>
+            <a href="#bms">Fast Charge</a>
+            <a href="#bms">Custom Development</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#about" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown glass">
+            <a href="#about">Company</a>
+            <a href="#about">Partner Network</a>
+            <a href="#about">Global Presence</a>
+            <a href="#about">Careers</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="eyebrow">Custom Battery Engineering</span>
+    <h1>Custom battery systems.<br>Engineered around your application.</h1>
+    <p>Custom lithium battery systems engineered for demanding applications. From concept and certification to scalable production, every solution is tailored to meet the performance, safety and reliability requirements of your product.</p>
+    <a href="#contact" class="btn btn-primary">Get in touch</a>
+  </div>
+  <div class="hero-stage" id="heroStage">
+    <div class="hero-stage-ring" aria-hidden="true"></div>
+    <div class="hero-stage-inner" id="heroStageInner">
+      <img src="assets/products/renders/crop/xug_transparant_print.png" alt="WS Technicals custom lithium battery module with visible cell stack and CANBUS connectors">
+    </div>
+  </div>
+  <div class="container hero-chips">
+    <span class="hero-chip glass"><span class="dot"></span>Custom cell chemistry</span>
+    <span class="hero-chip glass"><span class="dot"></span>In-house BMS</span>
+    <span class="hero-chip glass"><span class="dot"></span>CE · UN 38.3 · RoHS</span>
+    <span class="hero-chip glass"><span class="dot"></span>Built in Aarhus</span>
+  </div>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5.5 7 9.5 11 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCT CATEGORIES — scroll-snap carousel
+     ============================================================ -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Battery systems built for six demanding application categories.</h2>
+        <p>Every pack starts with your application — duty cycle, environment, and certification requirements — not a catalogue part number.</p>
+      </div>
+      <div class="cat-nav-arrows">
+        <button class="cat-arrow glass" id="catPrev" aria-label="Previous category"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="cat-arrow glass" id="catNext" aria-label="Next category"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3 11 8l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <div class="cat-scroller" id="catScroller">
+      <article class="cat-card">
+        <div class="cat-text"><h3>Drone</h3><p>High energy-density packs engineered for flight time, weight budgets, and rapid field swaps.</p></div>
+        <div class="cat-visual"><img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone"></div>
+        <a href="#" class="cat-explore">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="cat-card">
+        <div class="cat-text"><h3>Material Handling</h3><p>Robust battery systems for AGVs, AMRs, and pallet handling in continuous industrial operation.</p></div>
+        <div class="cat-visual"><img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform"></div>
+        <a href="#" class="cat-explore">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="cat-card">
+        <div class="cat-text"><h3>Robotics</h3><p>Compact, high-cycle packs built for precision robotics and collaborative automation.</p></div>
+        <div class="cat-visual"><img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot"></div>
+        <a href="#" class="cat-explore">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="cat-card">
+        <div class="cat-text"><h3>Maritime</h3><p>Marine-certified lithium systems engineered for vibration, moisture, and long duty cycles at sea.</p></div>
+        <div class="cat-visual"><img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel"></div>
+        <a href="#" class="cat-explore">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="cat-card">
+        <div class="cat-text"><h3>UPS</h3><p>Reliable backup power systems engineered for critical infrastructure and continuous uptime.</p></div>
+        <div class="cat-visual"><img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power"></div>
+        <a href="#" class="cat-explore">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="cat-card">
+        <div class="cat-text"><h3>Heavy Machinery</h3><p>High-capacity packs engineered for torque, duty cycles, and the demands of off-road machinery.</p></div>
+        <div class="cat-visual"><img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery"></div>
+        <a href="#" class="cat-explore">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+    </div>
+    <div class="cat-progress" id="catProgress"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ENGINEERING PROOF
+     ============================================================ -->
+<section class="proof" id="proof">
+  <div class="container proof-grid">
+    <div class="proof-copy">
+      <span class="eyebrow">Engineered, not assembled</span>
+      <h2>Every detail is built around your application — not pulled off a shelf.</h2>
+      <p>From cell chemistry to firmware, every layer of the pack is a decision made for your duty cycle, environment and certification requirements — designed and tested in-house, not sourced from a catalogue.</p>
+      <a href="#contact" class="link-arrow">Talk to our engineering team
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="proof-visual glass reveal-scale">
+      <img src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
+      <div class="callouts">
+        <div class="callout" style="top:12%; left:35%;"><span class="callout-dot"></span>Custom BMS &amp; relay module</div>
+        <div class="callout" style="top:45%; left:0%;"><span class="callout-dot"></span>Matched cell stack</div>
+        <div class="callout" style="top:57%; left:2%;"><span class="callout-dot"></span>Thermal interface layer</div>
+        <div class="callout" style="top:76%; left:40%;"><span class="callout-dot"></span>Connector &amp; wiring harness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STAT BAND — animated count-up
+     ============================================================ -->
+<section class="stats on-dark">
+  <div class="container stats-grid">
+    <div class="stat-item glass-dark">
+      <div class="stat-num" data-count="19" data-suffix="+">0</div>
+      <div class="stat-bar"><span></span></div>
+      <div class="stat-label">Years engineering custom power systems</div>
+    </div>
+    <div class="stat-item glass-dark">
+      <div class="stat-num" data-count="6">0</div>
+      <div class="stat-bar"><span></span></div>
+      <div class="stat-label">Application categories served</div>
+    </div>
+    <div class="stat-item glass-dark">
+      <div class="stat-num" data-count="100" data-suffix="%">0</div>
+      <div class="stat-bar"><span></span></div>
+      <div class="stat-label">In-house BMS &amp; compliance testing</div>
+    </div>
+    <div class="stat-item glass-dark">
+      <div class="stat-num">DK</div>
+      <div class="stat-bar"><span></span></div>
+      <div class="stat-label">Designed and built in Aarhus</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div>
+      <span class="eyebrow">About WS Technicals</span>
+      <h2 style="margin-top:16px;">Quality made affordable — by people who've done it for 19 years.</h2>
+      <p>We engineer and manufacture custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated.</p>
+      <a href="#contact" class="link-arrow">Get in touch
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="about-mini-stats">
+      <div class="mini-stat glass reveal"><div class="num">19+</div><div class="label">Years in operation</div></div>
+      <div class="mini-stat glass reveal"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
+      <div class="mini-stat glass reveal"><div class="num">Aarhus</div><div class="label">Engineering &amp; production</div></div>
+      <div class="mini-stat glass reveal"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE WAY WE WORK — pinned-scroll active step rail
+     ============================================================ -->
+<section class="work">
+  <div class="container">
+    <div class="section-head">
+      <h2>The way we work.</h2>
+      <p>Four principles that carry through every project, regardless of application or volume.</p>
+    </div>
+    <div class="work-pin-grid">
+      <div class="work-list-col">
+        <div class="work-row is-active" data-step="1">
+          <span class="work-num">Principle 01 / 04</span>
+          <h3>Turn-Key Solutions</h3>
+          <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
+        </div>
+        <div class="work-row" data-step="2">
+          <span class="work-num">Principle 02 / 04</span>
+          <h3>Competitive Solution</h3>
+          <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
+        </div>
+        <div class="work-row" data-step="3">
+          <span class="work-num">Principle 03 / 04</span>
+          <h3>State of the Art Technology</h3>
+          <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
+        </div>
+        <div class="work-row" data-step="4">
+          <span class="work-num">Principle 04 / 04</span>
+          <h3>End-of-Line Testing</h3>
+          <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
+        </div>
+      </div>
+      <div class="work-visual-col">
+        <div class="work-sticky">
+          <div class="work-stack glass">
+            <div class="work-frame is-active" data-step="1"><div class="work-frame-icon"><svg viewBox="0 0 20 20" fill="none" stroke-width="1.4"><path d="M10 2a5 5 0 0 0-3 9v2h6v-2a5 5 0 0 0-3-9Z"/><path d="M8 16h4M8.5 18h3"/><path d="M8.5 9.5 10 11l2.5-3"/></svg></div></div>
+            <div class="work-frame" data-step="2"><div class="work-frame-icon"><svg viewBox="0 0 20 20" fill="none" stroke-width="1.4"><path d="M4 17V11M10 17V8M16 17v-6"/><path d="m3.5 8 .9-2.6L6 6.2 6.7 4l1.4 1.9L9.5 4"/></svg></div></div>
+            <div class="work-frame" data-step="3"><div class="work-frame-icon"><svg viewBox="0 0 20 20" fill="none" stroke-width="1.4"><path d="M4 8 7 3h6l3 5-6 9-6-9Z"/><path d="M4 8h12M8.5 3 7 8l3 9M11.5 3 13 8l-3 9"/></svg></div></div>
+            <div class="work-frame" data-step="4"><div class="work-frame-icon"><svg viewBox="0 0 20 20" fill="none" stroke-width="1.4"><path d="M10 2 4 4.5V9c0 4.5 2.8 7.5 6 9 3.2-1.5 6-4.5 6-9V4.5L10 2Z"/><path d="M7.5 10 9 11.5 12.5 8"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GLOBAL PRESENCE
+     ============================================================ -->
+<section class="presence on-dark" id="presenceSection">
+  <div class="container">
+    <div class="presence-head">
+      <span class="eyebrow">Global Presence</span>
+      <h2 style="margin-top:16px;">Engineered in Denmark. Built and delivered worldwide.</h2>
+      <p>From our Aarhus headquarters to our production partner in China, WS Technicals supports customers and partners across Europe, the Americas and Asia.</p>
+    </div>
+
+    <div class="presence-map">
+      <img src="assets/map/wst-map.svg" alt="World map showing WS Technicals' engineering headquarters, production partner, and regions served">
+
+      <svg class="presence-arcs" viewBox="0 0 1147.5 514.4" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M600,125 Q574,90 547,125" pathLength="400"/>
+        <path d="M600,125 Q430,150 266,178" pathLength="400"/>
+        <path d="M600,125 Q380,155 161,178" pathLength="400"/>
+        <path d="M600,125 Q470,220 336,319" pathLength="400"/>
+        <path d="M600,125 Q750,145 899,178" pathLength="400"/>
+      </svg>
+
+      <div class="presence-ripple hq label-top" style="left:52.305%; top:24.358%; --ripple-delay:0s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">Aarhus, DK — HQ</span>
+      </div>
+      <div class="presence-ripple" style="left:47.704%; top:24.358%; --ripple-delay:.5s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">United Kingdom</span>
+      </div>
+      <div class="presence-ripple label-right" style="left:23.181%; top:34.623%; --ripple-delay:1.1s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">United States — East</span>
+      </div>
+      <div class="presence-ripple label-left" style="left:13.987%; top:34.623%; --ripple-delay:1.7s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">United States — West</span>
+      </div>
+      <div class="presence-ripple" style="left:29.316%; top:61.975%; --ripple-delay:2.2s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">South America</span>
+      </div>
+      <div class="presence-ripple partner" style="left:78.353%; top:34.623%; --ripple-delay:.8s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">China — Production Partner</span>
+      </div>
+    </div>
+
+    <div class="presence-legend">
+      <div class="item"><span class="swatch" style="background:#FBF9F5;"></span>Headquarters</div>
+      <div class="item"><span class="swatch" style="background:#0F2A5C;"></span>Production partner</div>
+      <div class="item"><span class="swatch" style="background:#CBB08A;"></span>Regions served</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DEVELOPMENT PROCESS — animated timeline
+     ============================================================ -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-head">
+      <h2>From idea to mass production, in six stages.</h2>
+      <p>A structured process that keeps performance, safety and cost aligned from the first sketch to the production line.</p>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-track"><span></span></div>
+      <div class="timeline-grid">
+        <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-idx">01</span><h3>Idea &amp; Requirements</h3><p>We define performance, environment, and certification requirements alongside your engineering team.</p></div>
+        <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-idx">02</span><h3>Feasibility Study</h3><p>Cell chemistry, form factor, and BMS architecture are evaluated against your constraints.</p></div>
+        <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-idx">03</span><h3>Prototype &amp; Testing</h3><p>Working prototypes are built and validated under real operating and abuse conditions.</p></div>
+        <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-idx">04</span><h3>Industrialization</h3><p>The design is engineered for repeatable, cost-efficient manufacturing at scale.</p></div>
+        <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-idx">05</span><h3>Compliance</h3><p>CE, UN 38.3, and RoHS testing are handled in-house ahead of production release.</p></div>
+        <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-idx">06</span><h3>Mass Production</h3><p>Packs move into production with full traceability and consistent quality control.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCTION / MANUFACTURING — tilt cards
+     ============================================================ -->
+<section class="production" id="production">
+  <div class="container">
+    <div class="section-head">
+      <h2>Built and verified in-house.</h2>
+      <p>Manufacturing, quality assurance, and testing all run under one roof in Aarhus.</p>
+    </div>
+    <div class="tile-grid">
+      <div class="tile glass reveal tilt-card">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
+        <div><h3>Production Facility</h3><p>A dedicated Aarhus facility for custom pack assembly and low-to-mid volume production.</p></div>
+      </div>
+      <div class="tile glass reveal tilt-card">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
+        <div><h3>Quality Assurance</h3><p>Every batch is tracked and inspected against documented process and material standards.</p></div>
+      </div>
+      <div class="tile glass reveal tilt-card">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2v4M10 14v4M2 10h4M14 10h4"/><circle cx="10" cy="10" r="4"/></svg></div>
+        <div><h3>Testing</h3><p>In-house electrical, thermal, and mechanical testing validates every design before release.</p></div>
+      </div>
+      <div class="tile glass reveal tilt-card">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="14" cy="6" r="2.5"/><circle cx="10" cy="15" r="2.5"/><path d="M8 7.5 9 13M12 7.5 11 13"/></svg></div>
+        <div><h3>Supply Chain</h3><p>Qualified cell and component suppliers with traceability from raw material to finished pack.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BMS SOLUTIONS — tilt cards
+     ============================================================ -->
+<section class="bms" id="bms">
+  <div class="container">
+    <div class="section-head">
+      <h2>Battery management systems, engineered in-house.</h2>
+      <p>Our BMS team designs the electronics and firmware around your pack — not the other way around.</p>
+    </div>
+    <div class="bms-grid">
+      <div class="bms-card glass reveal tilt-card"><span class="bms-tag">01</span><h3>Low Voltage</h3><p>BMS platforms for compact packs in robotics, drones, and portable equipment.</p></div>
+      <div class="bms-card glass reveal tilt-card"><span class="bms-tag">02</span><h3>High Voltage</h3><p>Robust architectures for heavy machinery, marine, and industrial power systems.</p></div>
+      <div class="bms-card glass reveal tilt-card"><span class="bms-tag">03</span><h3>Fast Charge</h3><p>Charge management engineered for minimal downtime in continuous operation.</p></div>
+      <div class="bms-card glass reveal tilt-card"><span class="bms-tag">04</span><h3>Custom Development</h3><p>Application-specific firmware and CANBUS integration built around your control system.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="contact on-dark" id="contact">
+  <div class="container contact-grid">
+    <div>
+      <span class="eyebrow">Get in touch</span>
+      <h2 style="margin-top:16px;">Let's talk about your application.</h2>
+      <p class="contact-intro">Tell us about your requirements and a member of our engineering team will get back to you.</p>
+
+      <div class="contact-detail">
+        <span class="k">Phone</span>
+        <a class="v" href="tel:+4588618388">+45 88 61 83 88</a>
+      </div>
+      <div class="contact-detail">
+        <span class="k">Email</span>
+        <a class="v" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a>
+      </div>
+      <div class="contact-detail">
+        <span class="k">Address</span>
+        <span class="v">Gjellerupvej 89A, 8230 Aarhus, Denmark</span>
+      </div>
+    </div>
+
+    <div class="form-wrap">
+    <div class="form-glow" aria-hidden="true"></div>
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input type="text" id="f-name" name="name" placeholder="Jane Doe">
+        </div>
+        <div class="field">
+          <label for="f-company">Company</label>
+          <input type="text" id="f-company" name="company" placeholder="Company name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" placeholder="jane@company.com">
+        </div>
+        <div class="field">
+          <label for="f-country">Country</label>
+          <input type="text" id="f-country" name="country" placeholder="Country">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-application">Application</label>
+          <select id="f-application" name="application">
+            <option value="">Select an application</option>
+            <option>Drone</option>
+            <option>Material Handling</option>
+            <option>Robotics</option>
+            <option>Maritime</option>
+            <option>UPS</option>
+            <option>Heavy Machinery</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" placeholder="Tell us about your project"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-on-dark" style="width:100%;">Send message</button>
+      <p class="form-note">All fields optional. We'll only use this to respond to your enquiry.</p>
+      <div class="form-success" id="formSuccess">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#B99A72" stroke-width="1.8"><path d="M4 10l4 4 8-8"/></svg>
+        <span>Thanks — we'll be in touch shortly.</span>
+      </div>
+    </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+            <g><path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/><path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/><path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/><path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/><path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/><path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/><path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/><path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/><path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/><path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/><path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/><path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/></g>
+            <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+            <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+            <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+            <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+          </svg>
+        </a>
+        <p class="footer-tagline">Quality made affordable.</p>
+        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#categories">Industrial Automation</a></li>
+          <li><a href="#categories">Energy &amp; Infrastructure</a></li>
+          <li><a href="#categories">Mobility</a></li>
+          <li><a href="#categories">Custom Battery Solutions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Development</h4>
+        <ul>
+          <li><a href="#process">Idea &amp; Requirements</a></li>
+          <li><a href="#process">Feasibility Study</a></li>
+          <li><a href="#process">Prototype &amp; Testing</a></li>
+          <li><a href="#process">Compliance</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Production</h4>
+        <ul>
+          <li><a href="#production">Production Facility</a></li>
+          <li><a href="#production">Quality Assurance</a></li>
+          <li><a href="#production">Testing</a></li>
+          <li><a href="#production">Supply Chain</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About us</a></li>
+          <li><a href="#bms">BMS Solutions</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
+      <div class="cert-chips">
+        <span class="cert-chip">CE</span>
+        <span class="cert-chip">UN 38.3</span>
+        <span class="cert-chip">RoHS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', function(){
+    var open = body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  var nav = document.querySelector('.nav');
+  function onScroll(){ nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    var link = item.querySelector('.nav-link');
+    link.addEventListener('click', function(e){
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item.open').forEach(function(o){ o.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropdown a, .nav-cta a').forEach(function(a){
+    a.addEventListener('click', function(){
+      body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    success.classList.add('show');
+  });
+
+  // Generic scroll-reveal for .reveal / .reveal-scale elements
+  var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+  if (revealEls.length) {
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.2 });
+    revealEls.forEach(function(el, i){
+      el.style.transitionDelay = (i % 4 * 0.08) + 's';
+      revealObserver.observe(el);
+    });
+  }
+
+  // Hero — mouse-tilt on the product stage
+  var stage = document.getElementById('heroStage');
+  var stageInner = document.getElementById('heroStageInner');
+  if (stage && stageInner && window.matchMedia('(hover: hover)').matches) {
+    stage.addEventListener('mousemove', function(e){
+      var rect = stage.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      stageInner.style.transform = 'rotateY(' + (x * 10) + 'deg) rotateX(' + (y * -10) + 'deg)';
+    });
+    stage.addEventListener('mouseleave', function(){
+      stageInner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  }
+
+  // Categories — scroll-snap carousel: active card + progress dots + arrows
+  var scroller = document.getElementById('catScroller');
+  var catCards = document.querySelectorAll('.cat-card');
+  var progressWrap = document.getElementById('catProgress');
+  if (scroller && catCards.length) {
+    catCards.forEach(function(_, i){
+      var dot = document.createElement('span');
+      if (i === 0) dot.classList.add('is-active');
+      dot.addEventListener('click', function(){ catCards[i].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'}); });
+      progressWrap.appendChild(dot);
+    });
+    var dots = progressWrap.querySelectorAll('span');
+    var catObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var i = Array.prototype.indexOf.call(catCards, entry.target);
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          catCards.forEach(function(c){ c.classList.remove('is-active'); });
+          dots.forEach(function(d){ d.classList.remove('is-active'); });
+          entry.target.classList.add('is-active');
+          if (dots[i]) dots[i].classList.add('is-active');
+        }
+      });
+    }, { root: scroller, threshold: [0.6] });
+    catCards.forEach(function(c){ catObserver.observe(c); });
+
+    document.getElementById('catPrev').addEventListener('click', function(){ scroller.scrollBy({left:-340, behavior:'smooth'}); });
+    document.getElementById('catNext').addEventListener('click', function(){ scroller.scrollBy({left:340, behavior:'smooth'}); });
+  }
+
+  // Stats — count-up on scroll into view
+  var counters = document.querySelectorAll('.stat-num[data-count]');
+  if (counters.length) {
+    var counterObserver = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        el.closest('.stat-item').classList.add('in-view');
+        var target = parseFloat(el.dataset.count);
+        var suffix = el.dataset.suffix || '';
+        var start = performance.now();
+        var duration = 1300;
+        function tick(now){
+          var progress = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function(el){ counterObserver.observe(el); });
+  }
+  var dkStat = document.querySelectorAll('.stat-item')[3];
+  if (dkStat) {
+    var dkObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.5 });
+    dkObserver.observe(dkStat);
+  }
+
+  // Work — pinned-scroll active step
+  var workItems = document.querySelectorAll('.work-row');
+  var workFrames = document.querySelectorAll('.work-frame');
+  if (workItems.length) {
+    var workObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var step = entry.target.dataset.step;
+          workItems.forEach(function(i){ i.classList.toggle('is-active', i === entry.target); });
+          workFrames.forEach(function(f){ f.classList.toggle('is-active', f.dataset.step === step); });
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    workItems.forEach(function(item){ workObserver.observe(item); });
+  }
+
+  // Presence — reveal flight arcs once the section is in view
+  var presenceSection = document.getElementById('presenceSection');
+  if (presenceSection) {
+    var presenceObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.25 });
+    presenceObserver.observe(presenceSection);
+  }
+
+  // Process — animated timeline (track fill + staggered steps)
+  var timeline = document.getElementById('timeline');
+  var timelineSteps = document.querySelectorAll('.timeline-step');
+  if (timeline) {
+    var timelineObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          timeline.classList.add('in-view');
+          timelineSteps.forEach(function(step, i){
+            setTimeout(function(){ step.classList.add('in-view'); }, i * 110);
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    timelineObserver.observe(timeline);
+  }
+
+  // Production / BMS — mouse-tracked tilt
+  var tiltCards = document.querySelectorAll('.tilt-card');
+  if (window.matchMedia('(hover: hover)').matches) {
+    tiltCards.forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width - 0.5;
+        var y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = 'perspective(800px) rotateY(' + (x * 8) + 'deg) rotateX(' + (y * -8) + 'deg) translateY(-4px)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = '';
+      });
+    });
+  }
+})();
+</script>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/section-labels.js" defer></script>
+<script src="assets/scripts/enterprise-motion.js" defer></script>
+</body>
+</html>

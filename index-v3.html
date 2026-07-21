@@ -8,405 +8,130 @@
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 
-/* ============================================================
-   BRAND TYPEFACES — Geogrotesque (headlines) / Arbeit (body)
-   Sora/Inter (Google Fonts, loaded above) remain as the fallback
-   chain if these files are ever missing.
-   ============================================================ */
-@font-face{
-  font-family:'Geogrotesque';
-  src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype');
-  font-weight:600 800;
-  font-style:normal;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Arbeit';
-  src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'),
-      url('assets/fonts/arbeit/arbeit-regular.woff') format('woff');
-  font-weight:400;
-  font-style:normal;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Arbeit';
-  src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'),
-      url('assets/fonts/arbeit/arbeit-medium.woff') format('woff');
-  font-weight:500;
-  font-style:normal;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Arbeit';
-  src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'),
-      url('assets/fonts/arbeit/arbeit-semi-bold.woff') format('woff');
-  font-weight:600;
-  font-style:normal;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Arbeit';
-  src:url('assets/fonts/arbeit/arbeit-bold.woff2') format('woff2'),
-      url('assets/fonts/arbeit/arbeit-bold.woff') format('woff');
-  font-weight:700;
-  font-style:normal;
-  font-display:swap;
-}
+@font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-medium.woff') format('woff'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-semi-bold.woff') format('woff'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
 
 /* ============================================================
    0. DESIGN TOKENS
    ============================================================ */
 :root{
-  /* Surfaces */
-  --paper:      #FBF9F5;
-  --paper-2:    #F3EFE7;
-  --card:       #FFFFFF;
-
-  /* Ink / text */
-  --ink:        #06081A;
-  --ink-soft:   #4A4C58;
-  --ink-faint:  #8B8D98;
-
-  /* Lines */
-  --line:       #E4DFD3;
-  --line-2:     #EAE6DC;
-
-  /* Brand accents */
-  --blue:       #0F2A5C;
-  --blue-deep:  #030B21;
-  --brass:      #B99A72;
-  --brass-hi:   #CBB08A;
-  --brass-soft: #E7DDCB;
-
-  /* On-dark text */
-  --paper-on-dark:     #FBF9F5;
-  --ink-soft-on-dark:  #AEB3C9;
-
-  /* Radii */
-  --r:    8px;
-  --r-lg: 12px;
-
-  /* Fonts */
-  --font-display: 'Geogrotesque', 'Sora', sans-serif;
-  --font-body: 'Arbeit', 'Inter', Arial, sans-serif;
-
-  /* Spacing scale */
-  --sp-1: 8px;
-  --sp-2: 16px;
-  --sp-3: 24px;
-  --sp-4: 32px;
-  --sp-5: 48px;
-  --sp-6: 64px;
-  --sp-7: 96px;
-  --sp-8: 140px;
-
-  /* Motion */
-  --ease: cubic-bezier(.4,0,.2,1);
-  --dur: .35s;
-
-  /* Shadow */
-  --shadow-sm: 0 1px 2px rgba(6,8,26,.04);
-  --shadow-md: 0 12px 32px -12px rgba(6,8,26,.14);
-  --shadow-lg: 0 24px 60px -20px rgba(6,8,26,.22);
-
-  --container: 1240px;
+  --paper:#FBF9F5; --paper-2:#F3EFE7; --card:#FFFFFF;
+  --ink:#06081A; --ink-soft:#4A4C58; --ink-faint:#8B8D98;
+  --line:#E4DFD3; --line-2:#EAE6DC;
+  --blue:#0F2A5C; --blue-deep:#030B21; --brass:#B99A72; --brass-hi:#CBB08A; --brass-soft:#E7DDCB;
+  --paper-on-dark:#FBF9F5; --ink-soft-on-dark:#AEB3C9;
+  --r:10px; --r-lg:16px;
+  --font-display:'Geogrotesque','Sora',sans-serif; --font-body:'Arbeit','Inter',Arial,sans-serif; --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:48px; --sp-6:64px; --sp-7:96px; --sp-8:140px;
+  --ease:cubic-bezier(.4,0,.2,1); --dur:.35s;
+  --shadow-sm:0 1px 2px rgba(6,8,26,.04); --shadow-md:0 12px 32px -12px rgba(6,8,26,.14); --shadow-lg:0 28px 70px -24px rgba(6,8,26,.24);
+  --container:1240px;
 }
-
-/* ============================================================
-   1. RESET & BASE
-   ============================================================ */
 *,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{
-  position:relative;
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--font-body);
-  font-size:16px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-}
+html{ scroll-behavior:smooth; scroll-padding-top:92px; }
+body{ position:relative; margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
 img,svg{ display:block; max-width:100%; }
 a{ color:inherit; text-decoration:none; }
 ul{ margin:0; padding:0; list-style:none; }
 h1,h2,h3,h4,p{ margin:0; }
 button,input,select,textarea{ font-family:inherit; font-size:inherit; color:inherit; }
 button{ cursor:pointer; }
-
-h1,h2,h3,h4,.font-display{
-  font-family:var(--font-display);
-  font-weight:700;
-  letter-spacing:-0.03em;
-  line-height:1.05;
-}
-
-.container{
-  max-width:var(--container);
-  margin:0 auto;
-  padding:0 var(--sp-4);
-}
-
+h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.03em; line-height:1.05; }
+.container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
 section{ position:relative; }
-
-/* Focus states — accessible on light & dark */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible{
-  outline:2px solid var(--blue);
-  outline-offset:3px;
-  border-radius:4px;
-}
-.on-dark a:focus-visible,
-.on-dark button:focus-visible,
-.on-dark input:focus-visible,
-.on-dark select:focus-visible,
-.on-dark textarea:focus-visible{
-  outline-color:var(--brass-hi);
-}
-
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:var(--font-body);
-  font-weight:600;
-  font-size:13px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--brass);
-}
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
+.on-dark a:focus-visible, .on-dark button:focus-visible{ outline-color:var(--brass-hi); }
+.eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass); }
 .on-dark .eyebrow{ color:var(--brass-hi); }
 
-.btn{
+/* ============================================================
+   GLASS SYSTEM — the signature of this variant. Two reusable
+   frosted-panel recipes (light / dark) used across nearly every
+   card in the page, always sitting over the ambient glow + grid
+   so the blur has real colour/structure behind it to refract.
+   ============================================================ */
+.glass{
   position:relative;
-  z-index:0;
-  overflow:hidden;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:14px 28px;
-  border-radius:var(--r);
-  font-weight:600;
-  font-size:15px;
-  letter-spacing:-.01em;
-  border:1px solid transparent;
-  transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
-  white-space:nowrap;
+  background:linear-gradient(155deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,.22) 100%);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:var(--r-lg);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 24px 60px -28px rgba(6,8,26,.22), inset 0 1px 0 rgba(255,255,255,.85);
+  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.btn::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%);
-  opacity:0;
-  transition:opacity .45s var(--ease);
-  pointer-events:none;
+.glass:hover{ transform:translateY(-4px); box-shadow:0 30px 70px -26px rgba(6,8,26,.28), inset 0 1px 0 rgba(255,255,255,.9); }
+.glass-dark{
+  position:relative;
+  background:linear-gradient(155deg, rgba(251,249,245,.14) 0%, rgba(251,249,245,.04) 100%);
+  border:1px solid rgba(251,249,245,.18);
+  border-radius:var(--r-lg);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 24px 60px -28px rgba(0,0,0,.5), inset 0 1px 0 rgba(251,249,245,.24);
+  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.btn:hover::before{ opacity:1; }
-.btn-primary{
-  background:var(--blue-deep);
-  color:#fff;
-  box-shadow:var(--shadow-sm);
-}
-.btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
-.btn-ghost{
-  background:transparent;
-  color:var(--ink);
-  border-color:var(--line);
-}
-.btn-ghost:hover{ border-color:var(--ink); }
-.btn-on-dark{
-  background:var(--paper);
-  color:var(--ink);
-}
-.btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.glass-dark:hover{ transform:translateY(-4px); border-color:rgba(203,176,138,.4); }
 
-.link-arrow{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  font-weight:600;
-  font-size:14px;
-  color:var(--blue);
-}
+.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
+.btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
+.btn:hover::before{ opacity:1; }
+.btn-primary{ background:var(--blue-deep); color:#fff; box-shadow:var(--shadow-sm); }
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+.btn-ghost:hover{ border-color:var(--ink); }
+.btn-on-dark{ background:var(--paper); color:var(--ink); }
+.btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; color:var(--blue); }
 .link-arrow svg{ transition:transform var(--dur) var(--ease); }
+.link-arrow:hover svg{ transform:translateX(3px); }
 .on-dark .link-arrow{ color:var(--paper); }
 
 /* ============================================================
-   1B. AMBIENT BACKGROUND — soft faded brand-colour wash behind
-   nav + hero, inspired by the reference mockup. Sits behind
-   everything (DOM-first + z-index:0); nav/hero paint above it
-   since every <section> is position:relative (see base rules).
+   AMBIENT — colour wash the whole page sits on. Extended past the
+   hero (unlike v1) so glass panels further down the page still
+   have something to refract.
    ============================================================ */
-.ambient{
-  position:absolute;
-  top:0; left:0; right:0;
-  height:880px;
-  overflow:hidden;
-  z-index:0;
-  pointer-events:none;
-  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
-  mask-image:linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
-}
-.ambient-blob{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(110px);
-}
-.ambient-blob-brass{
-  width:1640px; height:1040px;
-  top:-260px; left:-180px;
-  background:radial-gradient(circle at 35% 35%, var(--brass-hi), transparent 70%);
-  opacity:.4;
-}
-.ambient-blob-grey{
-  width:1520px; height:1520px;
-  top:-160px; right:-260px;
-  background:radial-gradient(circle at 55% 45%, #8890AC, transparent 70%);
-  opacity:.28;
-}
-.ambient-blob-blue{
-  width:2160px; height:2160px;
-  top:340px; left:8%;
-  background:radial-gradient(circle at 50% 50%, var(--blue), transparent 70%);
-  opacity:.22;
-}
+.ambient{ position:absolute; top:0; left:0; right:0; height:2600px; overflow:hidden; z-index:0; pointer-events:none; -webkit-mask-image:linear-gradient(to bottom, black 0%, black 70%, transparent 100%); mask-image:linear-gradient(to bottom, black 0%, black 70%, transparent 100%); }
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(120px); }
+.ambient-blob-brass{ width:1640px; height:1040px; top:-260px; left:-180px; background:radial-gradient(circle at 35% 35%, var(--brass-hi), transparent 70%); opacity:.38; }
+.ambient-blob-grey{ width:1520px; height:1520px; top:-160px; right:-260px; background:radial-gradient(circle at 55% 45%, #8890AC, transparent 70%); opacity:.26; }
+.ambient-blob-blue{ width:2160px; height:2160px; top:340px; left:8%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 70%); opacity:.2; }
+.ambient-blob-brass2{ width:1400px; height:1400px; top:1500px; right:-10%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 70%); opacity:.18; }
+.ambient-blob-blue2{ width:1600px; height:1600px; top:2100px; left:-15%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 70%); opacity:.16; }
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.85) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.85) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.07; }
 
 /* ============================================================
-   1C. BLUEPRINT GRID — hairline technical grid overlaying the
-   whole page. mix-blend-mode lets one line colour read on both
-   light and dark sections (subtle on light, a touch clearer on
-   dark) without per-section theming. Decorative, non-interactive.
+   NAV
    ============================================================ */
-.blueprint-grid{
-  position:absolute;
-  inset:0;
-  z-index:40;
-  pointer-events:none;
-  /* light, paper-toned hairlines: near-invisible on the light sections (by design),
-     visible as a subtle technical grid once they cross the dark bands.
-     background-size is set explicitly (matching the repeat unit) so the
-     cells render as true squares rather than drifting off-grid. */
-  background-image:
-    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
-    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px);
-  background-size:96px 96px;
-  opacity:.06;
-}
-
-/* ============================================================
-   2. NAVIGATION
-   ============================================================ */
-.nav{
-  position:sticky;
-  top:0;
-  z-index:100;
-  transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease);
-}
-.nav--scrolled{
-  backdrop-filter:blur(14px) saturate(160%);
-  -webkit-backdrop-filter:blur(14px) saturate(160%);
-}
-.nav-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  height:76px;
-}
-.brand{
-  display:flex;
-  align-items:center;
-}
+.nav{ position:sticky; top:0; z-index:100; transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.nav--scrolled{ background:rgba(251,249,245,.6); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border-bottom:1px solid rgba(6,8,26,.06); }
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+.brand{ display:flex; align-items:center; }
 .brand-logo{ height:26px; width:auto; flex:none; }
-.brand-logo .cls-1{ fill:#022e70; }
-.brand-logo .cls-2{ fill:#f0f0f0; }
-.brand-logo .cls-3{ fill:#d6d6d6; }
-.brand-logo .cls-4{ fill:#00001f; }
-.brand-logo .cls-5{ fill:#c2b59b; }
-/* dark-ground variant (footer): the near-black/blue fills would vanish on --ink, so flip them light */
-.brand-logo--on-dark .cls-1,
-.brand-logo--on-dark .cls-4{ fill:var(--paper); }
-
-.nav-menu{
-  display:flex;
-  align-items:center;
-  gap:var(--sp-1);
-}
+.brand-logo .cls-1{ fill:#022e70; } .brand-logo .cls-2{ fill:#f0f0f0; } .brand-logo .cls-3{ fill:#d6d6d6; } .brand-logo .cls-4{ fill:#00001f; } .brand-logo .cls-5{ fill:#c2b59b; }
+.brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
+.nav-menu{ display:flex; align-items:center; gap:var(--sp-1); }
 .nav-item{ position:relative; }
-.nav-link{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:10px 16px;
-  border-radius:var(--r);
-  font-weight:500;
-  font-size:15px;
-  color:var(--ink-soft);
-  transition:color var(--dur) var(--ease), background var(--dur) var(--ease);
-}
-.nav-item:hover > .nav-link,
-.nav-link:focus-visible{ color:var(--ink); background:var(--paper-2); }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:999px; font-weight:500; font-size:15px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--ink); background:rgba(6,8,26,.06); }
 .nav-link .chev{ transition:transform var(--dur) var(--ease); }
 .nav-item:hover .chev{ transform:rotate(180deg); }
-
-.dropdown{
-  position:absolute;
-  top:calc(100% + 6px);
-  left:0;
-  min-width:240px;
-  background:var(--card);
-  border:1px solid var(--line-2);
-  border-radius:var(--r-lg);
-  box-shadow:var(--shadow-lg);
-  padding:var(--sp-1);
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(6px);
-  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur);
-}
-.nav-item:hover .dropdown,
-.nav-item:focus-within .dropdown{
-  opacity:1; visibility:visible; transform:translateY(0);
-}
-.dropdown a{
-  display:block;
-  padding:10px 14px;
-  border-radius:var(--r);
-  font-size:14.5px;
-  font-weight:500;
-  color:var(--ink-soft);
-  transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
-}
-.dropdown a:hover{ background:var(--paper-2); color:var(--ink); }
-
+.dropdown{ position:absolute; top:calc(100% + 8px); left:0; min-width:240px; padding:var(--sp-1); opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
+.dropdown a{ display:block; padding:10px 14px; border-radius:var(--r); font-size:14.5px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a:hover{ background:rgba(6,8,26,.06); color:var(--ink); }
 .nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
-.nav-toggle{
-  display:none;
-  background:none; border:none;
-  width:40px; height:40px;
-  align-items:center; justify-content:center;
-  border-radius:var(--r);
-}
-.nav-toggle:hover{ background:var(--paper-2); }
-.nav-toggle span,
-.nav-toggle span::before,
-.nav-toggle span::after{
-  content:"";
-  display:block;
-  width:20px; height:2px;
-  background:var(--ink);
-  position:relative;
-  transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
+.nav-toggle{ display:none; background:none; border:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
+.nav-toggle:hover{ background:rgba(6,8,26,.06); }
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--ink); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
 .nav-toggle span::before{ position:absolute; top:-6px; }
 .nav-toggle span::after{ position:absolute; top:6px; }
 body.menu-open .nav-toggle span{ background:transparent; }
@@ -414,316 +139,89 @@ body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); backgro
 body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
 
 /* ============================================================
-   3. HERO
+   HERO — unique to v3: product floats in a glass "stage" disc
+   with spec chips catching light around it, instead of v1's
+   plain text + image stack.
    ============================================================ */
-.hero{
-  padding:var(--sp-7) 0 0;
-  text-align:center;
-  overflow:hidden;
-}
-.hero-inner{
-  max-width:820px;
-  margin:0 auto;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:var(--sp-3);
-}
-.hero h1{
-  font-size:clamp(36px, 5.6vw, 72px);
-}
-.hero p{
-  max-width:600px;
-  font-size:clamp(16px,1.6vw,19px);
-  color:var(--ink-soft);
-  line-height:1.65;
-}
-.hero-visual{
-  max-width:840px;
-  margin:var(--sp-6) auto 0;
-  padding:0 var(--sp-4);
-}
-.hero-visual img{
-  width:100%;
-  height:auto;
-  max-height:52vh;
-  object-fit:contain;
-  filter:drop-shadow(0 40px 60px rgba(6,8,26,.16));
-}
+.hero{ padding:var(--sp-6) 0 0; text-align:center; overflow:hidden; }
+.hero-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); position:relative; z-index:2; }
+.hero h1{ font-size:clamp(38px, 5.6vw, 74px); }
+.hero p{ max-width:600px; font-size:clamp(16px,1.6vw,19px); color:var(--ink-soft); line-height:1.65; }
+.hero-stage{ position:relative; max-width:620px; margin:var(--sp-6) auto 0; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; }
+.hero-stage-ring{ position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 50% 42%, rgba(255,255,255,.9) 0%, rgba(255,255,255,.35) 55%, transparent 78%); backdrop-filter:blur(30px) saturate(180%); -webkit-backdrop-filter:blur(30px) saturate(180%); border:1px solid rgba(255,255,255,.8); box-shadow:0 40px 90px -30px rgba(6,8,26,.28), inset 0 1px 0 rgba(255,255,255,.9); }
+.hero-stage img{ position:relative; z-index:2; width:78%; filter:drop-shadow(0 40px 60px rgba(6,8,26,.2)); animation:hero-float 7s ease-in-out infinite; }
+@keyframes hero-float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
+@media (prefers-reduced-motion: reduce){ .hero-stage img{ animation:none; } }
+.hero-chips{ position:relative; z-index:2; display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:calc(var(--sp-6) * -1); padding:0 var(--sp-3) var(--sp-6); }
+.hero-chip{ display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px; font-family:var(--font-mono); font-size:12px; letter-spacing:.03em; color:var(--ink-soft); }
+.hero-chip .dot{ width:5px; height:5px; border-radius:50%; background:var(--brass); flex:none; }
 
 /* ============================================================
-   4. PRODUCT CATEGORIES — hero section of the page
+   CATEGORIES
    ============================================================ */
-.categories{
-  padding:var(--sp-5) 0 var(--sp-8);
-}
-.section-head{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:var(--sp-3);
-  margin-bottom:var(--sp-5);
-  flex-wrap:wrap;
-}
-.section-head h2{
-  font-size:clamp(28px,3.4vw,42px);
-  max-width:600px;
-}
-.section-head p{
-  color:var(--ink-soft);
-  max-width:420px;
-  font-size:15.5px;
-}
-
-.cat-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:var(--sp-4) var(--sp-3);
-}
-.cat-card{
-  position:relative;
-  overflow:hidden;
-  border-radius:var(--r-lg);
-  padding:var(--sp-3);
-  min-height:460px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  background:var(--paper-2);
-  border:1px solid rgba(6,8,26,.08);
-  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
-}
-.cat-card:hover{ border-color:rgba(6,8,26,.14); }
-.cat-card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(to top, rgba(6,8,26,.12) 0%, rgba(6,8,26,.02) 22%, transparent 40%);
-  pointer-events:none;
-}
-.cat-text{
-  position:relative;
-  z-index:2;
-}
-.cat-card h3{
-  font-size:22px;
-  letter-spacing:-.02em;
-  margin-bottom:8px;
-  color:var(--blue-deep);
-}
-.cat-card p{
-  font-size:14px;
-  color:var(--blue);
-  max-width:28ch;
-  line-height:1.55;
-}
-.cat-visual{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  overflow:hidden;
-}
-.cat-visual img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  transition:transform .5s var(--ease);
-}
-.cat-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lg); }
-
-.cat-explore{
-  position:relative;
-  z-index:2;
-  align-self:flex-start;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:11px 18px;
-  border-radius:var(--r);
-  background:linear-gradient(155deg, rgba(6,8,26,.62) 0%, rgba(6,8,26,.4) 100%);
-  border:1px solid rgba(6,8,26,.2);
-  backdrop-filter:blur(14px) saturate(160%);
-  -webkit-backdrop-filter:blur(14px) saturate(160%);
-  box-shadow:0 8px 20px -10px rgba(6,8,26,.45), inset 0 1px 0 rgba(255,255,255,.16);
-  font-weight:600;
-  font-size:13.5px;
-  color:#fff;
-  transition:background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
+.categories{ padding:var(--sp-5) 0 var(--sp-8); }
+.section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
+.section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
+.section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
+.cat-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-4) var(--sp-3); }
+.cat-card{ position:relative; overflow:hidden; border-radius:var(--r-lg); padding:var(--sp-3); min-height:460px; display:flex; flex-direction:column; justify-content:space-between; background:var(--paper-2); border:1px solid rgba(6,8,26,.08); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.cat-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:rgba(6,8,26,.14); }
+.cat-card::after{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(6,8,26,.12) 0%, rgba(6,8,26,.02) 22%, transparent 40%); pointer-events:none; }
+.cat-text{ position:relative; z-index:2; }
+.cat-card h3{ font-size:22px; letter-spacing:-.02em; margin-bottom:8px; color:var(--blue-deep); }
+.cat-card p{ font-size:14px; color:var(--blue); max-width:28ch; line-height:1.55; }
+.cat-visual{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+.cat-visual img{ width:100%; height:100%; object-fit:cover; object-position:center; transition:transform .5s var(--ease); }
+.cat-card:hover .cat-visual img{ transform:scale(1.05); }
+.cat-explore{ position:relative; z-index:2; align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:999px; background:linear-gradient(155deg, rgba(6,8,26,.62) 0%, rgba(6,8,26,.4) 100%); border:1px solid rgba(6,8,26,.2); backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); box-shadow:0 8px 20px -10px rgba(6,8,26,.45), inset 0 1px 0 rgba(255,255,255,.16); font-weight:600; font-size:13.5px; color:#fff; transition:background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 .cat-explore svg{ transition:transform var(--dur) var(--ease); }
-.cat-card:hover .cat-explore{
-  background:linear-gradient(155deg, rgba(6,8,26,.74) 0%, rgba(6,8,26,.5) 100%);
-  transform:translateY(-1px);
-  box-shadow:0 10px 24px -10px rgba(6,8,26,.55), inset 0 1px 0 rgba(255,255,255,.22);
-}
+.cat-card:hover .cat-explore{ background:linear-gradient(155deg, rgba(6,8,26,.74) 0%, rgba(6,8,26,.5) 100%); transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(6,8,26,.55), inset 0 1px 0 rgba(255,255,255,.22); }
 
 /* ============================================================
-   4B. ENGINEERING PROOF — one annotated product, spec callouts
+   ENGINEERING PROOF — now a glass display case around the render
    ============================================================ */
-.proof{
-  background:var(--paper-2);
-  padding:var(--sp-8) 0;
-}
-.proof-grid{
-  display:grid;
-  grid-template-columns:.85fr 1.15fr;
-  gap:var(--sp-6);
-  align-items:center;
-}
-.proof-copy h2{
-  font-size:clamp(26px,3.2vw,38px);
-  margin:var(--sp-2) 0 var(--sp-3);
-  max-width:16ch;
-}
-.proof-copy p{
-  color:var(--ink-soft);
-  font-size:16px;
-  max-width:42ch;
-  margin-bottom:var(--sp-3);
-}
-.proof-visual{
-  position:relative;
-  aspect-ratio:1800 / 1346;
-}
-.proof-img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-.proof-visual .callouts{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-.callout{
-  position:absolute;
-  pointer-events:auto;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:var(--card);
-  border:1px solid var(--line-2);
-  border-radius:999px;
-  padding:8px 14px 8px 10px;
-  font-size:13px;
-  font-weight:500;
-  color:var(--ink);
-  box-shadow:var(--shadow-sm);
-  white-space:nowrap;
-}
-.callout-dot{
-  width:6px; height:6px;
-  border-radius:50%;
-  background:var(--brass);
-  flex:none;
-}
+.proof{ padding:var(--sp-8) 0; }
+.proof-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); align-items:center; }
+.proof-copy h2{ font-size:clamp(26px,3.2vw,38px); margin:var(--sp-2) 0 var(--sp-3); max-width:16ch; }
+.proof-copy p{ color:var(--ink-soft); font-size:16px; max-width:42ch; margin-bottom:var(--sp-3); }
+.proof-visual{ position:relative; aspect-ratio:1800 / 1346; padding:var(--sp-4); }
+.proof-img{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain; }
+.proof-visual .callouts{ position:absolute; inset:0; pointer-events:none; z-index:2; }
+.callout{ position:absolute; pointer-events:auto; display:flex; align-items:center; gap:8px; border-radius:999px; padding:8px 14px 8px 10px; font-size:13px; font-weight:500; color:var(--ink); white-space:nowrap; background:linear-gradient(155deg, rgba(255,255,255,.75) 0%, rgba(255,255,255,.35) 100%); border:1px solid rgba(255,255,255,.85); backdrop-filter:blur(14px) saturate(180%); -webkit-backdrop-filter:blur(14px) saturate(180%); box-shadow:0 10px 24px -14px rgba(6,8,26,.25), inset 0 1px 0 rgba(255,255,255,.9); }
+.callout-dot{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; }
 
 /* ============================================================
-   5. STAT BAND — dark, ui.com-style oversized numerals
+   STATS — glass tiles on dark
    ============================================================ */
-.stats{
-  background:var(--blue-deep);
-  color:var(--paper);
-  padding:var(--sp-6) 0;
-}
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:var(--sp-4);
-}
-.stat-item{
-  padding-left:var(--sp-3);
-}
-.stat-num{
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:clamp(40px,5vw,64px);
-  letter-spacing:-0.04em;
-  line-height:1;
-  color:var(--paper);
-  margin-bottom:10px;
-}
-.stat-label{
-  font-size:14px;
-  color:var(--ink-soft-on-dark);
-  max-width:22ch;
-  line-height:1.5;
-}
+.stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; overflow:hidden; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.stat-item{ padding:var(--sp-4) var(--sp-3); }
+.stat-num{ font-family:var(--font-display); font-weight:800; font-size:clamp(38px,4.6vw,58px); letter-spacing:-0.04em; line-height:1; color:var(--paper); margin-bottom:10px; }
+.stat-label{ font-size:14px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
 
 /* ============================================================
-   6. ABOUT — split layout
+   ABOUT
    ============================================================ */
 .about{ padding:var(--sp-8) 0; }
-.about-grid{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:var(--sp-6);
-  align-items:center;
-}
-.about h2{
-  font-size:clamp(28px,3.6vw,44px);
-  margin-bottom:var(--sp-3);
-  max-width:14ch;
-}
-.about p{
-  color:var(--ink-soft);
-  font-size:16px;
-  max-width:52ch;
-  margin-bottom:var(--sp-3);
-}
-.about-mini-stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:var(--sp-3);
-}
-.mini-stat{
-  padding:var(--sp-3);
-  background:var(--card);
-  border:1px solid var(--line-2);
-  border-radius:var(--r-lg);
-}
-.mini-stat .num{
-  font-family:var(--font-display);
-  font-weight:700;
-  font-size:28px;
-  letter-spacing:-.02em;
-  margin-bottom:4px;
-}
-.mini-stat .label{
-  font-size:13.5px;
-  color:var(--ink-faint);
-}
+.about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
+.about h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); max-width:14ch; }
+.about p{ color:var(--ink-soft); font-size:16px; max-width:52ch; margin-bottom:var(--sp-3); }
+.about-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
+.mini-stat{ padding:var(--sp-3); }
+.mini-stat .num{ font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.02em; margin-bottom:4px; color:var(--blue-deep); }
+.mini-stat .label{ font-size:13.5px; color:var(--ink-faint); }
 
 /* ============================================================
-   6B. THE WAY WE WORK — 4 value-prop cards
+   THE WAY WE WORK
    ============================================================ */
 .work{ background:var(--paper-2); padding:var(--sp-8) 0; overflow:hidden; }
 .work-list{ margin-top:var(--sp-4); display:flex; flex-direction:column; }
-.work-row{
-  display:grid;
-  grid-template-columns:80px 56px 1fr;
-  align-items:center;
-  gap:var(--sp-4);
-  padding:var(--sp-4) var(--sp-2);
-  border-radius:var(--r-lg);
-  opacity:0;
-  transform:translateY(22px);
-  transition:background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), opacity .6s var(--ease), transform .6s var(--ease);
-}
+.work-row{ display:grid; grid-template-columns:80px 56px 1fr; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-2); border-radius:var(--r-lg); opacity:0; transform:translateY(22px); transition:background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), opacity .6s var(--ease), transform .6s var(--ease); }
 .work-row.in-view{ opacity:1; transform:translateY(0); }
-.work-row:hover{ background:var(--card); box-shadow:var(--shadow-md); }
+.work-row:hover{ background:rgba(255,255,255,.55); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:var(--shadow-md); }
 .work-num{ font-family:var(--font-display); font-weight:800; font-size:36px; letter-spacing:-.02em; color:var(--line-2); transition:color var(--dur) var(--ease); }
 .work-row:hover .work-num{ color:var(--brass); }
-.work-icon{
-  width:56px; height:56px; border-radius:50%;
-  background:linear-gradient(155deg, #fff, var(--paper-2));
-  border:1px solid var(--line-2);
-  display:flex; align-items:center; justify-content:center; flex:none;
-  box-shadow:0 1px 2px rgba(6,8,26,.05), inset 0 1px 0 rgba(255,255,255,.7);
-  transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
-}
+.work-icon{ width:56px; height:56px; border-radius:50%; background:linear-gradient(155deg, #fff, var(--paper-2)); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; flex:none; box-shadow:0 1px 2px rgba(6,8,26,.05), inset 0 1px 0 rgba(255,255,255,.7); transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease); }
 .work-icon svg{ stroke:var(--blue); transition:stroke var(--dur) var(--ease); }
 .work-row:hover .work-icon{ border-color:var(--brass); box-shadow:0 10px 22px -10px rgba(185,154,114,.55), inset 0 1px 0 rgba(255,255,255,.7); transform:translateY(-3px); }
 .work-row:hover .work-icon svg{ stroke:var(--brass); }
@@ -731,7 +229,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .work-body p{ font-size:14.5px; color:var(--ink-soft); max-width:56ch; line-height:1.6; }
 
 /* ============================================================
-   6C. GLOBAL PRESENCE — dot-map with location markers
+   GLOBAL PRESENCE — dot-map with glass ripple markers
    ============================================================ */
 .presence{ position:relative; z-index:41; background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; overflow:hidden; }
 .presence-head{ max-width:640px; margin-bottom:var(--sp-5); }
@@ -739,408 +237,121 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .presence-head p{ color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
 .presence-map{ position:relative; width:100%; aspect-ratio:1147.5/514.4; }
 .presence-map img{ width:100%; height:100%; object-fit:contain; opacity:.9; }
-.presence-ripple{
-  position:absolute;
-  width:5px; height:5px;
-  transform:translate(-50%,-50%);
-  z-index:2;
-}
-.presence-ripple .dot{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  background:var(--brass-hi);
-  box-shadow:0 0 5px 1px rgba(203,176,138,.7);
-}
-.presence-ripple .ring{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  border:1px solid var(--brass-hi);
-  animation:presence-ping 4.8s var(--ease) infinite;
-  animation-delay:var(--ripple-delay, 0s);
-  pointer-events:none;
-}
+.presence-ripple{ position:absolute; width:5px; height:5px; transform:translate(-50%,-50%); z-index:2; }
+.presence-ripple .dot{ position:absolute; inset:0; border-radius:50%; background:var(--brass-hi); box-shadow:0 0 5px 1px rgba(203,176,138,.7); }
+.presence-ripple .ring{ position:absolute; inset:0; border-radius:50%; border:1px solid var(--brass-hi); animation:presence-ping 4.8s var(--ease) infinite; animation-delay:var(--ripple-delay, 0s); pointer-events:none; }
 .presence-ripple.hq .dot{ background:var(--paper); box-shadow:0 0 6px 1px rgba(251,249,245,.6); }
 .presence-ripple.hq .ring{ border-color:var(--paper); }
 .presence-ripple.partner .dot{ background:var(--blue); box-shadow:0 0 6px 1px rgba(15,42,92,.65); }
 .presence-ripple.partner .ring{ border-color:var(--blue); }
-.presence-ripple .ripple-label{
-  position:absolute;
-  overflow:hidden;
-  top:calc(100% + 7px); left:50%; transform:translateX(-50%);
-  font-size:11px; white-space:nowrap; color:var(--ink-soft-on-dark);
-  background:linear-gradient(155deg, rgba(251,249,245,.16) 0%, rgba(251,249,245,.03) 100%);
-  padding:5px 12px;
-  border-radius:999px;
-  border:1px solid rgba(251,249,245,.24);
-  backdrop-filter:blur(10px) saturate(160%);
-  -webkit-backdrop-filter:blur(10px) saturate(160%);
-  box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.3);
-  pointer-events:none;
-}
-.presence-ripple.hq .ripple-label{
-  color:var(--paper);
-  font-weight:600;
-  border-color:rgba(203,176,138,.4);
-  background:linear-gradient(155deg, rgba(203,176,138,.22) 0%, rgba(251,249,245,.04) 100%);
-  box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.4);
-}
-.presence-ripple .ripple-label::before{
-  content:"";
-  position:absolute;
-  top:0; left:-60%;
-  width:35%; height:100%;
-  background:linear-gradient(100deg, transparent, rgba(255,255,255,.22), transparent);
-  transform:skewX(-20deg);
-  animation:label-shine 7s ease-in-out infinite;
-  animation-delay:var(--ripple-delay, 0s);
-}
-@keyframes label-shine{
-  0%{ left:-60%; }
-  45%{ left:130%; }
-  100%{ left:130%; }
-}
-@media (prefers-reduced-motion: reduce){
-  .presence-ripple .ripple-label::before{ animation:none; opacity:0; }
-}
+.presence-ripple .ripple-label{ position:absolute; overflow:hidden; top:calc(100% + 7px); left:50%; transform:translateX(-50%); font-size:11px; white-space:nowrap; color:var(--ink-soft-on-dark); background:linear-gradient(155deg, rgba(251,249,245,.16) 0%, rgba(251,249,245,.03) 100%); padding:5px 12px; border-radius:999px; border:1px solid rgba(251,249,245,.24); backdrop-filter:blur(10px) saturate(160%); -webkit-backdrop-filter:blur(10px) saturate(160%); box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.3); pointer-events:none; }
+.presence-ripple.hq .ripple-label{ color:var(--paper); font-weight:600; border-color:rgba(203,176,138,.4); background:linear-gradient(155deg, rgba(203,176,138,.22) 0%, rgba(251,249,245,.04) 100%); box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.4); }
+.presence-ripple .ripple-label::before{ content:""; position:absolute; top:0; left:-60%; width:35%; height:100%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.22), transparent); transform:skewX(-20deg); animation:label-shine 7s ease-in-out infinite; animation-delay:var(--ripple-delay, 0s); }
+@keyframes label-shine{ 0%{ left:-60%; } 45%{ left:130%; } 100%{ left:130%; } }
+@media (prefers-reduced-motion: reduce){ .presence-ripple .ripple-label::before{ animation:none; opacity:0; } }
 .presence-ripple.label-top .ripple-label{ top:auto; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); }
 .presence-ripple.label-left .ripple-label{ top:50%; left:auto; right:calc(100% + 9px); transform:translateY(-50%); }
 .presence-ripple.label-right .ripple-label{ top:50%; left:calc(100% + 9px); right:auto; transform:translateY(-50%); }
-@keyframes presence-ping{
-  0%{ transform:scale(1); opacity:.5; }
-  70%{ transform:scale(7); opacity:0; }
-  100%{ transform:scale(7); opacity:0; }
-}
-@media (prefers-reduced-motion: reduce){
-  .presence-ripple .ring{ animation:none; opacity:0; }
-}
+@keyframes presence-ping{ 0%{ transform:scale(1); opacity:.5; } 70%{ transform:scale(7); opacity:0; } 100%{ transform:scale(7); opacity:0; } }
+@media (prefers-reduced-motion: reduce){ .presence-ripple .ring{ animation:none; opacity:0; } }
 .presence-legend{ display:flex; gap:var(--sp-4); flex-wrap:wrap; margin-top:var(--sp-4); padding-top:var(--sp-3); border-top:1px solid rgba(251,249,245,.14); }
 .presence-legend .item{ display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft-on-dark); }
 .presence-legend .swatch{ width:9px; height:9px; border-radius:50%; flex:none; }
 
 /* ============================================================
-   7. PROCESS — beige section, 6 numbered cards
+   PROCESS — glass tiles
    ============================================================ */
-.process{
-  background:var(--card);
-  padding:var(--sp-8) 0;
-}
-.process-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:var(--sp-3);
-}
-.process-card{
-  background:var(--card);
-  border:1px solid var(--line-2);
-  border-radius:var(--r-lg);
-  padding:var(--sp-4) var(--sp-3);
-  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
-.process-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.process-num{
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:15px;
-  color:var(--brass);
-  margin-bottom:var(--sp-2);
-}
-.process-card h3{
-  font-size:19px;
-  letter-spacing:-.02em;
-  margin-bottom:8px;
-}
-.process-card p{
-  font-size:14.5px;
-  color:var(--ink-soft);
-  line-height:1.55;
-}
+.process{ padding:var(--sp-8) 0; }
+.process-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-3); }
+.process-card{ padding:var(--sp-4) var(--sp-3); }
+.process-num{ font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--brass); margin-bottom:var(--sp-2); }
+.process-card h3{ font-size:19px; letter-spacing:-.02em; margin-bottom:8px; }
+.process-card p{ font-size:14.5px; color:var(--ink-soft); line-height:1.55; }
 
 /* ============================================================
-   8. PRODUCTION — 4 tiles
+   PRODUCTION — glass tiles
    ============================================================ */
 .production{ padding:var(--sp-8) 0; }
-.tile-grid{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:var(--sp-3);
-}
-.tile{
-  border-radius:var(--r-lg);
-  border:1px solid var(--line-2);
-  padding:var(--sp-3);
-  min-height:220px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  background:var(--card);
-  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
-.tile:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.tile-icon{
-  width:40px; height:40px;
-  border-radius:var(--r);
-  background:var(--paper-2);
-  display:flex; align-items:center; justify-content:center;
-}
+.tile-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.tile{ padding:var(--sp-3); min-height:220px; display:flex; flex-direction:column; justify-content:space-between; }
+.tile-icon{ width:40px; height:40px; border-radius:var(--r); background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.7); display:flex; align-items:center; justify-content:center; }
 .tile-icon svg{ stroke:var(--blue); }
 .tile h3{ font-size:17px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
 .tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
 
 /* ============================================================
-   9. BMS SOLUTIONS — 4 cards
+   BMS SOLUTIONS — glass tiles
    ============================================================ */
-.bms{
-  background:var(--card);
-  padding:var(--sp-8) 0;
-}
-.bms-grid{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:var(--sp-3);
-}
-.bms-card{
-  background:var(--card);
-  border-radius:var(--r-lg);
-  border:1px solid var(--line-2);
-  padding:var(--sp-3);
-  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
-}
-.bms-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:transparent; }
-.bms-tag{
-  display:inline-block;
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:var(--blue);
-  background:#EAF0FB;
-  padding:4px 10px;
-  border-radius:999px;
-  margin-bottom:var(--sp-2);
-}
+.bms{ padding:var(--sp-8) 0; }
+.bms-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.bms-card{ padding:var(--sp-3); }
+.bms-tag{ display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); background:rgba(15,42,92,.08); padding:4px 10px; border-radius:999px; margin-bottom:var(--sp-2); }
 .bms-card h3{ font-size:18px; margin-bottom:8px; letter-spacing:-.01em; }
 .bms-card p{ font-size:14px; color:var(--ink-soft); line-height:1.55; }
 
 /* ============================================================
-   10. CONTACT — dark, intentional
+   CONTACT — dark glass form (unchanged recipe, proven elsewhere)
    ============================================================ */
-.contact{
-  background:var(--blue-deep);
-  color:var(--paper);
-  padding:var(--sp-8) 0;
-}
-.contact-grid{
-  display:grid;
-  grid-template-columns:.9fr 1.1fr;
-  gap:var(--sp-6);
-}
-.contact h2{
-  font-size:clamp(28px,3.6vw,44px);
-  margin-bottom:var(--sp-3);
-  color:var(--paper);
-}
-.contact-intro{
-  color:var(--ink-soft-on-dark);
-  font-size:16px;
-  max-width:44ch;
-  margin-bottom:var(--sp-4);
-}
-.contact-detail{
-  display:flex;
-  gap:var(--sp-2);
-  padding:var(--sp-2) 0;
-}
-.contact-detail .k{
-  width:110px;
-  flex:none;
-  font-size:13px;
-  color:var(--ink-soft-on-dark);
-  letter-spacing:.04em;
-  text-transform:uppercase;
-  padding-top:2px;
-}
+.contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; }
+.contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:var(--sp-6); }
+.contact h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); color:var(--paper); }
+.contact-intro{ color:var(--ink-soft-on-dark); font-size:16px; max-width:44ch; margin-bottom:var(--sp-4); }
+.contact-detail{ display:flex; gap:var(--sp-2); padding:var(--sp-2) 0; }
+.contact-detail .k{ width:110px; flex:none; font-size:13px; color:var(--ink-soft-on-dark); letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
 .contact-detail .v{ font-size:16px; font-weight:500; }
 .contact-detail a:hover{ color:var(--brass-hi); }
-
 .form-wrap{ position:relative; }
-.form-glow{
-  position:absolute; inset:-90px; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%),
-    radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%);
-  filter:blur(66px);
-}
-.contact-form{
-  position:relative; z-index:1; overflow:hidden;
-  background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%);
-  border:1px solid rgba(251,249,245,.34);
-  border-radius:var(--r-lg);
-  padding:var(--sp-4);
-  backdrop-filter:blur(24px) saturate(180%);
-  -webkit-backdrop-filter:blur(24px) saturate(180%);
-  box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06);
-}
-.contact-form::before{
-  content:"";
-  position:absolute;
-  top:-70%; left:-30%;
-  width:70%; height:240%;
-  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%);
-  filter:blur(26px);
-  pointer-events:none;
-  z-index:-1;
-}
-.form-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:var(--sp-2);
-  margin-bottom:var(--sp-2);
-}
+.form-glow{ position:absolute; inset:-90px; z-index:0; pointer-events:none; background:radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%), radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%); filter:blur(66px); }
+.contact-form{ position:relative; z-index:1; overflow:hidden; background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%); border:1px solid rgba(251,249,245,.34); border-radius:var(--r-lg); padding:var(--sp-4); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06); }
+.contact-form::before{ content:""; position:absolute; top:-70%; left:-30%; width:70%; height:240%; background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%); filter:blur(26px); pointer-events:none; z-index:-1; }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field.full{ grid-column:1 / -1; }
-.field label{
-  font-size:13px;
-  color:var(--ink-soft-on-dark);
-}
-.field input,
-.field select,
-.field textarea{
-  background:rgba(251,249,245,.14);
-  border:1px solid rgba(251,249,245,.3);
-  border-radius:var(--r);
-  padding:12px 14px;
-  color:var(--paper);
-  width:100%;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1);
-  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
+.field label{ font-size:13px; color:var(--ink-soft-on-dark); }
+.field input, .field select, .field textarea{ background:rgba(251,249,245,.14); border:1px solid rgba(251,249,245,.3); border-radius:var(--r); padding:12px 14px; color:var(--paper); width:100%; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1); transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 .field select option{ color:var(--ink); }
-.field input::placeholder,
-.field textarea::placeholder{ color:var(--ink-soft-on-dark); }
-.field input:hover,
-.field select:hover,
-.field textarea:hover{ border-color:rgba(251,249,245,.46); }
-.field input:focus,
-.field select:focus,
-.field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft-on-dark); }
+.field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
+.field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
 .field textarea{ resize:vertical; min-height:96px; }
-.form-note{
-  font-size:12.5px;
-  color:var(--ink-soft-on-dark);
-  margin-top:var(--sp-1);
-}
-.form-success{
-  display:none;
-  align-items:center;
-  gap:10px;
-  padding:14px 16px;
-  border-radius:var(--r);
-  background:rgba(185,154,114,.14);
-  border:1px solid rgba(185,154,114,.4);
-  font-size:14.5px;
-  margin-top:var(--sp-2);
-}
+.form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
+.form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
 .form-success.show{ display:flex; }
 
 /* ============================================================
-   11. FOOTER
+   FOOTER
    ============================================================ */
-.footer{
-  background:var(--ink);
-  color:var(--paper);
-  padding:var(--sp-6) 0 var(--sp-3);
-}
-.footer-top{
-  display:grid;
-  grid-template-columns:1.4fr repeat(4, 1fr);
-  gap:var(--sp-4);
-  padding-bottom:var(--sp-5);
-}
+.footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); }
 .footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
 .footer-brand .brand-logo{ height:30px; }
 .footer-tagline{ font-size:14.5px; color:#C7CCDE; max-width:32ch; margin-bottom:var(--sp-2); }
 .footer-address{ font-size:13.5px; color:#C7CCDE; line-height:1.7; }
-.footer-col h4{
-  font-size:13px;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:#C7CCDE;
-  margin-bottom:var(--sp-2);
-  font-family:var(--font-body);
-  font-weight:700;
-}
+.footer-col h4{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:#C7CCDE; margin-bottom:var(--sp-2); font-family:var(--font-body); font-weight:700; }
 .footer-col ul li{ margin-bottom:10px; }
 .footer-col a{ font-size:14.5px; color:var(--paper); opacity:.92; transition:opacity var(--dur) var(--ease); }
 .footer-col a:hover{ opacity:1; color:var(--brass-hi); }
-
-.footer-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:var(--sp-2);
-  padding-top:var(--sp-3);
-}
+.footer-bottom{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-2); padding-top:var(--sp-3); }
 .footer-copy{ font-size:13px; color:#C7CCDE; }
 .cert-chips{ display:flex; gap:8px; }
-.cert-chip{
-  font-size:11.5px;
-  font-weight:600;
-  letter-spacing:.04em;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid rgba(251,249,245,.22);
-  color:#C7CCDE;
-}
+.cert-chip{ font-size:11.5px; font-weight:600; letter-spacing:.04em; padding:6px 12px; border-radius:999px; border:1px solid rgba(251,249,245,.22); color:#C7CCDE; }
 
-/* ============================================================
-   12. RESPONSIVE
-   ============================================================ */
 @media (max-width:980px){
   :root{ --sp-8:96px; --sp-7:72px; }
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
   .nav-toggle{ display:flex; }
   .nav-cta{ gap:var(--sp-1); }
-
-  body.menu-open .nav-menu{
-    display:flex;
-    position:fixed;
-    inset:76px 0 0 0;
-    background:var(--paper);
-    flex-direction:column;
-    align-items:stretch;
-    padding:var(--sp-3);
-    gap:0;
-    overflow-y:auto;
-    z-index:99;
-  }
+  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
   body.menu-open .nav-item{ border-bottom:1px solid var(--line-2); }
-  body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
-  body.menu-open .dropdown{
-    position:static;
-    opacity:1; visibility:visible; transform:none;
-    box-shadow:none; border:none; display:none;
-    background:var(--paper-2);
-    margin-bottom:8px;
-  }
+  body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; border-radius:var(--r); }
+  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; backdrop-filter:none; -webkit-backdrop-filter:none; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
-
   .cat-grid{ grid-template-columns:repeat(2, 1fr); }
   .proof-grid{ grid-template-columns:1fr; }
   .proof-visual{ min-height:320px; }
-  .proof-visual .callouts{
-    position:static;
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:var(--sp-3);
-  }
+  .proof-visual .callouts{ position:static; display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--sp-3); }
   .callout{ position:static; }
-  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
+  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-3); }
   .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
   .work-row{ grid-template-columns:56px 44px 1fr; gap:var(--sp-2); }
   .work-num{ font-size:28px; }
@@ -1151,7 +362,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
-
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
   .cat-grid{ grid-template-columns:1fr; }
@@ -1165,22 +375,21 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .form-row{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
+  .hero-chips{ margin-top:var(--sp-3); }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css">
 </head>
 <body>
 
-<!-- Ambient gradient wash behind nav + hero — faded brand-colour blobs, low opacity -->
 <div class="ambient" aria-hidden="true">
   <span class="ambient-blob ambient-blob-brass"></span>
   <span class="ambient-blob ambient-blob-grey"></span>
   <span class="ambient-blob ambient-blob-blue"></span>
+  <span class="ambient-blob ambient-blob-brass2"></span>
+  <span class="ambient-blob ambient-blob-blue2"></span>
 </div>
 
-<!-- ============================================================
-     NAVIGATION
-     ============================================================ -->
 <header class="nav">
   <div class="container nav-inner">
     <a href="#top" class="brand">
@@ -1211,7 +420,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <ul class="nav-menu">
         <li class="nav-item">
           <a href="#categories" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
+          <div class="dropdown glass">
             <a href="#categories">Industrial Automation</a>
             <a href="#categories">Energy &amp; Infrastructure</a>
             <a href="#categories">Mobility</a>
@@ -1220,7 +429,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </li>
         <li class="nav-item">
           <a href="#process" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
+          <div class="dropdown glass">
             <a href="#process">Idea &amp; Requirements</a>
             <a href="#process">Feasibility Study</a>
             <a href="#process">Prototype &amp; Testing</a>
@@ -1231,7 +440,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </li>
         <li class="nav-item">
           <a href="#production" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
+          <div class="dropdown glass">
             <a href="#production">Production Facility</a>
             <a href="#production">Quality Assurance</a>
             <a href="#production">Testing</a>
@@ -1240,7 +449,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </li>
         <li class="nav-item">
           <a href="#bms" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
+          <div class="dropdown glass">
             <a href="#bms">Low Voltage</a>
             <a href="#bms">High Voltage</a>
             <a href="#bms">Fast Charge</a>
@@ -1249,7 +458,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </li>
         <li class="nav-item">
           <a href="#about" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
+          <div class="dropdown glass">
             <a href="#about">Company</a>
             <a href="#about">Partner Network</a>
             <a href="#about">Global Presence</a>
@@ -1280,13 +489,20 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <p>Custom lithium battery systems engineered for demanding applications. From concept and certification to scalable production, every solution is tailored to meet the performance, safety and reliability requirements of your product.</p>
     <a href="#contact" class="btn btn-primary">Get in touch</a>
   </div>
-  <div class="hero-visual">
+  <div class="hero-stage">
+    <div class="hero-stage-ring" aria-hidden="true"></div>
     <img src="assets/products/renders/crop/xug_transparant_print.png" alt="WS Technicals custom lithium battery module with visible cell stack and CANBUS connectors">
+  </div>
+  <div class="container hero-chips">
+    <span class="hero-chip glass"><span class="dot"></span>Custom cell chemistry</span>
+    <span class="hero-chip glass"><span class="dot"></span>In-house BMS</span>
+    <span class="hero-chip glass"><span class="dot"></span>CE · UN 38.3 · RoHS</span>
+    <span class="hero-chip glass"><span class="dot"></span>Built in Aarhus</span>
   </div>
 </section>
 
 <!-- ============================================================
-     PRODUCT CATEGORIES — hero of the page
+     PRODUCT CATEGORIES
      ============================================================ -->
 <section class="categories" id="categories">
   <div class="container">
@@ -1296,98 +512,72 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     </div>
 
     <div class="cat-grid">
-
-      <!-- 01 Drone -->
       <article class="cat-card">
         <div class="cat-text">
         <h3>Drone</h3>
         <p>High energy-density packs engineered for flight time, weight budgets, and rapid field swaps.</p>
         </div>
-        <div class="cat-visual">
-          <img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone">
-        </div>
+        <div class="cat-visual"><img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone"></div>
         <a href="#" class="cat-explore">Explore
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </article>
-
-      <!-- 02 Material Handling -->
       <article class="cat-card">
         <div class="cat-text">
         <h3>Material Handling</h3>
         <p>Robust battery systems for AGVs, AMRs, and pallet handling in continuous industrial operation.</p>
         </div>
-        <div class="cat-visual">
-          <img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform">
-        </div>
+        <div class="cat-visual"><img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform"></div>
         <a href="#" class="cat-explore">Explore
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </article>
-
-      <!-- 03 Robotics -->
       <article class="cat-card">
         <div class="cat-text">
         <h3>Robotics</h3>
         <p>Compact, high-cycle packs built for precision robotics and collaborative automation.</p>
         </div>
-        <div class="cat-visual">
-          <img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot">
-        </div>
+        <div class="cat-visual"><img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot"></div>
         <a href="#" class="cat-explore">Explore
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </article>
-
-      <!-- 04 Maritime -->
       <article class="cat-card">
         <div class="cat-text">
         <h3>Maritime</h3>
         <p>Marine-certified lithium systems engineered for vibration, moisture, and long duty cycles at sea.</p>
         </div>
-        <div class="cat-visual">
-          <img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel">
-        </div>
+        <div class="cat-visual"><img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel"></div>
         <a href="#" class="cat-explore">Explore
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </article>
-
-      <!-- 05 UPS -->
       <article class="cat-card">
         <div class="cat-text">
         <h3>UPS</h3>
         <p>Reliable backup power systems engineered for critical infrastructure and continuous uptime.</p>
         </div>
-        <div class="cat-visual">
-          <img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power">
-        </div>
+        <div class="cat-visual"><img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power"></div>
         <a href="#" class="cat-explore">Explore
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </article>
-
-      <!-- 06 Heavy Machinery -->
       <article class="cat-card">
         <div class="cat-text">
         <h3>Heavy Machinery</h3>
         <p>High-capacity packs engineered for torque, duty cycles, and the demands of off-road machinery.</p>
         </div>
-        <div class="cat-visual">
-          <img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery">
-        </div>
+        <div class="cat-visual"><img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery"></div>
         <a href="#" class="cat-explore">Explore
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </article>
-
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     ENGINEERING PROOF — a single product, annotated, showing the
-     custom-engineering claim instead of stating it
+     ENGINEERING PROOF
      ============================================================ -->
 <section class="proof" id="proof">
   <div class="container proof-grid">
@@ -1399,7 +589,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div class="proof-visual">
+    <div class="proof-visual glass">
       <img src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
       <div class="callouts">
         <div class="callout" style="top:12%; left:35%;"><span class="callout-dot"></span>Custom BMS &amp; relay module</div>
@@ -1412,23 +602,23 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 </section>
 
 <!-- ============================================================
-     STAT BAND — dark
+     STAT BAND
      ============================================================ -->
 <section class="stats on-dark">
   <div class="container stats-grid">
-    <div class="stat-item">
+    <div class="stat-item glass-dark">
       <div class="stat-num">19+</div>
       <div class="stat-label">Years engineering custom power systems</div>
     </div>
-    <div class="stat-item">
+    <div class="stat-item glass-dark">
       <div class="stat-num">6</div>
       <div class="stat-label">Application categories served</div>
     </div>
-    <div class="stat-item">
+    <div class="stat-item glass-dark">
       <div class="stat-num">100%</div>
       <div class="stat-label">In-house BMS &amp; compliance testing</div>
     </div>
-    <div class="stat-item">
+    <div class="stat-item glass-dark">
       <div class="stat-num">DK</div>
       <div class="stat-label">Designed and built in Aarhus</div>
     </div>
@@ -1449,10 +639,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </a>
     </div>
     <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">19+</div><div class="label">Years in operation</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering &amp; production</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
+      <div class="mini-stat glass"><div class="num">19+</div><div class="label">Years in operation</div></div>
+      <div class="mini-stat glass"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
+      <div class="mini-stat glass"><div class="num">Aarhus</div><div class="label">Engineering &amp; production</div></div>
+      <div class="mini-stat glass"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
     </div>
   </div>
 </section>
@@ -1561,36 +751,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <p>A structured process that keeps performance, safety and cost aligned from the first sketch to the production line.</p>
     </div>
     <div class="process-grid">
-      <div class="process-card">
-        <div class="process-num">01</div>
-        <h3>Idea &amp; Requirements</h3>
-        <p>We define performance, environment, and certification requirements alongside your engineering team.</p>
-      </div>
-      <div class="process-card">
-        <div class="process-num">02</div>
-        <h3>Feasibility Study</h3>
-        <p>Cell chemistry, form factor, and BMS architecture are evaluated against your constraints.</p>
-      </div>
-      <div class="process-card">
-        <div class="process-num">03</div>
-        <h3>Prototype &amp; Testing</h3>
-        <p>Working prototypes are built and validated under real operating and abuse conditions.</p>
-      </div>
-      <div class="process-card">
-        <div class="process-num">04</div>
-        <h3>Industrialization</h3>
-        <p>The design is engineered for repeatable, cost-efficient manufacturing at scale.</p>
-      </div>
-      <div class="process-card">
-        <div class="process-num">05</div>
-        <h3>Compliance</h3>
-        <p>CE, UN 38.3, and RoHS testing are handled in-house ahead of production release.</p>
-      </div>
-      <div class="process-card">
-        <div class="process-num">06</div>
-        <h3>Mass Production</h3>
-        <p>Packs move into production with full traceability and consistent quality control.</p>
-      </div>
+      <div class="process-card glass"><div class="process-num">01</div><h3>Idea &amp; Requirements</h3><p>We define performance, environment, and certification requirements alongside your engineering team.</p></div>
+      <div class="process-card glass"><div class="process-num">02</div><h3>Feasibility Study</h3><p>Cell chemistry, form factor, and BMS architecture are evaluated against your constraints.</p></div>
+      <div class="process-card glass"><div class="process-num">03</div><h3>Prototype &amp; Testing</h3><p>Working prototypes are built and validated under real operating and abuse conditions.</p></div>
+      <div class="process-card glass"><div class="process-num">04</div><h3>Industrialization</h3><p>The design is engineered for repeatable, cost-efficient manufacturing at scale.</p></div>
+      <div class="process-card glass"><div class="process-num">05</div><h3>Compliance</h3><p>CE, UN 38.3, and RoHS testing are handled in-house ahead of production release.</p></div>
+      <div class="process-card glass"><div class="process-num">06</div><h3>Mass Production</h3><p>Packs move into production with full traceability and consistent quality control.</p></div>
     </div>
   </div>
 </section>
@@ -1605,41 +771,21 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <p>Manufacturing, quality assurance, and testing all run under one roof in Aarhus.</p>
     </div>
     <div class="tile-grid">
-      <div class="tile">
-        <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg>
-        </div>
-        <div>
-          <h3>Production Facility</h3>
-          <p>A dedicated Aarhus facility for custom pack assembly and low-to-mid volume production.</p>
-        </div>
+      <div class="tile glass">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
+        <div><h3>Production Facility</h3><p>A dedicated Aarhus facility for custom pack assembly and low-to-mid volume production.</p></div>
       </div>
-      <div class="tile">
-        <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg>
-        </div>
-        <div>
-          <h3>Quality Assurance</h3>
-          <p>Every batch is tracked and inspected against documented process and material standards.</p>
-        </div>
+      <div class="tile glass">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
+        <div><h3>Quality Assurance</h3><p>Every batch is tracked and inspected against documented process and material standards.</p></div>
       </div>
-      <div class="tile">
-        <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2v4M10 14v4M2 10h4M14 10h4"/><circle cx="10" cy="10" r="4"/></svg>
-        </div>
-        <div>
-          <h3>Testing</h3>
-          <p>In-house electrical, thermal, and mechanical testing validates every design before release.</p>
-        </div>
+      <div class="tile glass">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2v4M10 14v4M2 10h4M14 10h4"/><circle cx="10" cy="10" r="4"/></svg></div>
+        <div><h3>Testing</h3><p>In-house electrical, thermal, and mechanical testing validates every design before release.</p></div>
       </div>
-      <div class="tile">
-        <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="14" cy="6" r="2.5"/><circle cx="10" cy="15" r="2.5"/><path d="M8 7.5 9 13M12 7.5 11 13"/></svg>
-        </div>
-        <div>
-          <h3>Supply Chain</h3>
-          <p>Qualified cell and component suppliers with traceability from raw material to finished pack.</p>
-        </div>
+      <div class="tile glass">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="14" cy="6" r="2.5"/><circle cx="10" cy="15" r="2.5"/><path d="M8 7.5 9 13M12 7.5 11 13"/></svg></div>
+        <div><h3>Supply Chain</h3><p>Qualified cell and component suppliers with traceability from raw material to finished pack.</p></div>
       </div>
     </div>
   </div>
@@ -1655,26 +801,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <p>Our BMS team designs the electronics and firmware around your pack — not the other way around.</p>
     </div>
     <div class="bms-grid">
-      <div class="bms-card">
-        <span class="bms-tag">01</span>
-        <h3>Low Voltage</h3>
-        <p>BMS platforms for compact packs in robotics, drones, and portable equipment.</p>
-      </div>
-      <div class="bms-card">
-        <span class="bms-tag">02</span>
-        <h3>High Voltage</h3>
-        <p>Robust architectures for heavy machinery, marine, and industrial power systems.</p>
-      </div>
-      <div class="bms-card">
-        <span class="bms-tag">03</span>
-        <h3>Fast Charge</h3>
-        <p>Charge management engineered for minimal downtime in continuous operation.</p>
-      </div>
-      <div class="bms-card">
-        <span class="bms-tag">04</span>
-        <h3>Custom Development</h3>
-        <p>Application-specific firmware and CANBUS integration built around your control system.</p>
-      </div>
+      <div class="bms-card glass"><span class="bms-tag">01</span><h3>Low Voltage</h3><p>BMS platforms for compact packs in robotics, drones, and portable equipment.</p></div>
+      <div class="bms-card glass"><span class="bms-tag">02</span><h3>High Voltage</h3><p>Robust architectures for heavy machinery, marine, and industrial power systems.</p></div>
+      <div class="bms-card glass"><span class="bms-tag">03</span><h3>Fast Charge</h3><p>Charge management engineered for minimal downtime in continuous operation.</p></div>
+      <div class="bms-card glass"><span class="bms-tag">04</span><h3>Custom Development</h3><p>Application-specific firmware and CANBUS integration built around your control system.</p></div>
     </div>
   </div>
 </section>
@@ -1682,7 +812,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 </main>
 
 <!-- ============================================================
-     CONTACT — dark, intentional
+     CONTACT
      ============================================================ -->
 <section class="contact on-dark" id="contact">
   <div class="container contact-grid">
@@ -1769,25 +899,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="footer-brand">
         <a href="#top" class="brand">
           <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
-            <g>
-              <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
-              <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-              <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
-              <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
-              <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-              <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
-              <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
-              <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
-              <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-              <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
-              <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
-              <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-            </g>
+            <g><path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/><path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/><path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/><path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/><path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/><path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/><path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/><path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/><path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/><path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/><path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/><path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/></g>
             <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
             <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
             <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
             <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
-            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
           </svg>
         </a>
         <p class="footer-tagline">Quality made affordable.</p>
@@ -1860,7 +977,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   onScroll();
   window.addEventListener('scroll', onScroll, {passive:true});
 
-  // Mobile accordion for dropdowns
   document.querySelectorAll('.nav-item').forEach(function(item){
     var link = item.querySelector('.nav-link');
     link.addEventListener('click', function(e){
@@ -1873,7 +989,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     });
   });
 
-  // Close mobile menu on nav link click (leaf links)
   document.querySelectorAll('.dropdown a, .nav-cta a').forEach(function(a){
     a.addEventListener('click', function(){
       body.classList.remove('menu-open');
@@ -1881,7 +996,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     });
   });
 
-  // Contact form — front-end only placeholder (no backend wired up)
   var form = document.getElementById('contactForm');
   var success = document.getElementById('formSuccess');
   form.addEventListener('submit', function(e){
@@ -1889,7 +1003,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     success.classList.add('show');
   });
 
-  // "The way we work" — rows fade up into view, staggered
   var workRows = document.querySelectorAll('.work-row');
   if (workRows.length) {
     var workObserver = new IntersectionObserver(function(entries){

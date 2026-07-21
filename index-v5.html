@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WS Technicals — Danish Battery Engineering</title>
+<meta name="description" content="Danish-engineered custom lithium battery systems. High-trust, high-precision power for the technology that's building what's next.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+@font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-medium.woff') format('woff'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-semi-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-semi-bold.woff') format('woff'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-bold.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
+
+:root{
+  --paper:#FBF9F5; --paper-2:#F3EFE7; --card:#FFFFFF;
+  --ink:#06081A; --ink-soft:#4A4C58; --ink-faint:#8B8D98;
+  --line:#E4DFD3; --line-2:#EAE6DC;
+  --blue:#0F2A5C; --blue-deep:#030B21; --brass:#B99A72; --brass-hi:#CBB08A; --brass-soft:#E7DDCB;
+  --ink-soft-on-dark:#AEB3C9;
+  --r:4px; --r-lg:8px;
+  --font-display:'Geogrotesque','Sora',sans-serif; --font-body:'Arbeit','Inter',Arial,sans-serif; --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:48px; --sp-6:64px; --sp-7:96px; --sp-8:140px;
+  --ease:cubic-bezier(.4,0,.2,1); --ease-out:cubic-bezier(.22,1,.36,1); --dur:.35s;
+  --shadow-sm:0 1px 2px rgba(6,8,26,.04); --shadow-md:0 12px 32px -12px rgba(6,8,26,.14); --shadow-lg:0 28px 70px -24px rgba(6,8,26,.24);
+  --container:1280px;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top:92px; }
+body{ position:relative; margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+h1,h2,h3,h4,p{ margin:0; }
+button,input,select,textarea{ font-family:inherit; font-size:inherit; color:inherit; }
+button{ cursor:pointer; background:none; border:none; }
+h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.03em; line-height:1.03; }
+.container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
+section{ position:relative; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+.on-dark a:focus-visible, .on-dark button:focus-visible{ outline-color:var(--brass-hi); }
+
+.mono{ font-family:var(--font-mono); }
+.spec-line{ display:flex; align-items:center; gap:12px; }
+.spec-line .idx{ font-family:var(--font-mono); font-weight:500; font-size:12.5px; color:var(--brass); flex:none; }
+.spec-line .rule{ width:36px; height:1px; background:var(--line-2); flex:none; }
+.spec-line .label{ font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+.on-dark .spec-line .label{ color:var(--ink-soft-on-dark); }
+.on-dark .spec-line .rule{ background:rgba(251,249,245,.2); }
+
+.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
+.btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
+.btn:hover::before{ opacity:1; }
+.btn-primary{ background:var(--blue-deep); color:#fff; box-shadow:var(--shadow-sm); }
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line-2); }
+.btn-ghost:hover{ border-color:var(--ink); }
+.btn-on-dark{ background:var(--paper); color:var(--ink); }
+.btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; color:var(--blue); }
+.link-arrow svg{ transition:transform var(--dur) var(--ease); }
+.link-arrow:hover svg{ transform:translateX(3px); }
+.on-dark .link-arrow{ color:var(--paper); }
+
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+.reveal.in-view{ opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.85) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.85) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.07; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{ position:sticky; top:0; z-index:100; transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.nav--scrolled{ background:rgba(251,249,245,.72); backdrop-filter:blur(16px) saturate(160%); -webkit-backdrop-filter:blur(16px) saturate(160%); border-bottom:1px solid rgba(6,8,26,.06); }
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-logo{ height:24px; width:auto; flex:none; }
+.brand-logo .cls-1{ fill:#022e70; } .brand-logo .cls-2{ fill:#f0f0f0; } .brand-logo .cls-3{ fill:#d6d6d6; } .brand-logo .cls-4{ fill:#00001f; } .brand-logo .cls-5{ fill:#c2b59b; }
+.brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
+.brand-flag{ width:16px; height:12px; flex:none; }
+.nav-menu{ display:flex; align-items:center; gap:2px; }
+.nav-item{ position:relative; }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 15px; border-radius:var(--r); font-weight:500; font-size:14.5px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--ink); background:var(--paper-2); }
+.nav-link .chev{ transition:transform var(--dur) var(--ease); }
+.nav-item:hover .chev{ transform:rotate(180deg); }
+.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:220px; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r); box-shadow:var(--shadow-lg); padding:6px; opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
+.dropdown a{ display:block; padding:9px 12px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a:hover{ background:var(--paper-2); color:var(--ink); }
+.nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
+.nav-toggle{ display:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
+.nav-toggle:hover{ background:var(--paper-2); }
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--ink); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.nav-toggle span::before{ position:absolute; top:-6px; }
+.nav-toggle span::after{ position:absolute; top:6px; }
+body.menu-open .nav-toggle span{ background:transparent; }
+body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
+body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
+
+/* ============================================================
+   HERO — technical schematic, self-drawing blueprint lines
+   ============================================================ */
+.hero{ padding:var(--sp-6) 0 var(--sp-7); overflow:hidden; }
+.hero-top{ display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:var(--sp-4); }
+.hero-badge{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); border:1px solid var(--line-2); padding:6px 14px; border-radius:999px; background:var(--card); }
+.hero-badge .flag{ width:15px; height:11px; flex:none; }
+.hero-inner{ max-width:900px; margin:0 auto; text-align:center; position:relative; z-index:2; }
+.hero h1{ font-size:clamp(38px, 5.6vw, 76px); letter-spacing:-0.04em; }
+.hero p{ max-width:620px; margin:var(--sp-3) auto 0; font-size:clamp(16px,1.5vw,18px); color:var(--ink-soft); line-height:1.65; }
+.hero-cta{ display:flex; gap:12px; justify-content:center; margin-top:var(--sp-4); flex-wrap:wrap; }
+.hero-diagram{ position:relative; max-width:920px; margin:var(--sp-6) auto 0; aspect-ratio:16/8.6; }
+.hero-diagram svg.lines{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.hero-diagram svg.lines path{ fill:none; stroke:var(--line-2); stroke-width:1; stroke-dasharray:6 6; stroke-dashoffset:600; transition:stroke-dashoffset 1.8s var(--ease-out); }
+.hero-diagram.in-view svg.lines path{ stroke-dashoffset:0; }
+.hero-diagram-img{ position:relative; z-index:2; width:56%; margin:0 auto; }
+.hero-diagram-img img{ width:100%; filter:drop-shadow(0 30px 50px rgba(6,8,26,.16)); }
+.hero-node{ position:absolute; display:flex; align-items:center; gap:8px; opacity:0; transition:opacity .5s var(--ease-out); }
+.hero-diagram.in-view .hero-node{ opacity:1; }
+.hero-node .pt{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; }
+.hero-node .txt{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); white-space:nowrap; background:var(--paper); padding:2px 8px; border:1px solid var(--line-2); }
+@media (prefers-reduced-motion: reduce){ .hero-diagram svg.lines path{ transition:none; stroke-dashoffset:0; } .hero-node{ opacity:1; } }
+
+/* ============================================================
+   MANIFESTO — one big statement, word-by-word reveal on scroll
+   ============================================================ */
+.manifesto{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-7) 0; overflow:hidden; }
+.manifesto-inner{ max-width:1000px; margin:0 auto; text-align:center; }
+.manifesto h2{ font-size:clamp(28px,4.2vw,54px); letter-spacing:-0.03em; line-height:1.2; }
+.manifesto .w{ display:inline-block; opacity:.16; transition:opacity .5s var(--ease); }
+.manifesto .w.lit{ opacity:1; }
+.manifesto .stat-inline{ color:var(--brass-hi); }
+
+/* ============================================================
+   CAPABILITY EXPLORER — tab list + single large preview
+   ============================================================ */
+.explorer{ padding:var(--sp-8) 0; }
+.section-head{ max-width:640px; margin:0 auto var(--sp-6); text-align:center; }
+.section-head h2{ font-size:clamp(28px,3.4vw,42px); margin-top:var(--sp-2); }
+.section-head p{ color:var(--ink-soft); font-size:16px; margin-top:var(--sp-2); }
+.explorer-grid{ display:grid; grid-template-columns:.8fr 1.2fr; gap:var(--sp-5); align-items:stretch; }
+.explorer-tabs{ display:flex; flex-direction:column; border-top:1px solid var(--line-2); }
+.explorer-tab{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); padding:var(--sp-3) var(--sp-2); border-bottom:1px solid var(--line-2); text-align:left; transition:background var(--dur) var(--ease); }
+.explorer-tab:hover{ background:var(--paper-2); }
+.explorer-tab.is-active{ background:var(--paper-2); }
+.explorer-tab .idx{ font-family:var(--font-mono); font-size:12px; color:var(--brass); flex:none; width:28px; }
+.explorer-tab .name{ flex:1; }
+.explorer-tab h3{ font-size:19px; letter-spacing:-.015em; margin-bottom:4px; transition:color var(--dur) var(--ease); }
+.explorer-tab.is-active h3{ color:var(--blue-deep); }
+.explorer-tab p{ font-size:13px; color:var(--ink-faint); }
+.explorer-tab .go{ flex:none; width:26px; height:26px; border-radius:50%; border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.explorer-tab.is-active .go{ background:var(--blue-deep); border-color:var(--blue-deep); color:#fff; transform:rotate(45deg); }
+.explorer-stage{ position:relative; border-radius:var(--r-lg); overflow:hidden; background:var(--paper-2); border:1px solid var(--line-2); min-height:420px; }
+.explorer-panel{ position:absolute; inset:0; opacity:0; transition:opacity .5s var(--ease); display:flex; flex-direction:column; justify-content:flex-end; }
+.explorer-panel.is-active{ opacity:1; }
+.explorer-panel img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.explorer-panel::after{ content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(6,8,26,.5) 0%, transparent 45%); }
+.explorer-panel-body{ position:relative; z-index:2; padding:var(--sp-4); color:#fff; }
+.explorer-panel-body .tag{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.24); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); padding:5px 11px; border-radius:999px; margin-bottom:10px; }
+.explorer-panel-body h3{ font-size:26px; margin-bottom:6px; }
+.explorer-panel-body p{ font-size:14px; max-width:44ch; color:rgba(251,249,245,.85); }
+
+/* ============================================================
+   TECHNOLOGY DEEP-DIVE — tabbed spec explorer over the render
+   ============================================================ */
+.tech{ background:var(--card); padding:var(--sp-8) 0; }
+.tech-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
+.tech-visual{ position:relative; aspect-ratio:1391/1307; }
+.tech-exploded{ position:absolute; inset:0; }
+.tech-layer{
+  position:absolute; inset:0;
+  background-image:url('assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png');
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  opacity:0;
+  transform:translateY(-16px);
+  transition:opacity .7s var(--ease-out), transform .7s var(--ease-out);
+}
+.tech-layer.in-view{ opacity:1; transform:translateY(0); }
+.tech-layer.shadow{ transform:translateY(10px); }
+.tech-layer.shadow.in-view{ transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){ .tech-layer{ opacity:1; transform:none; transition:none; } }
+.tech-point{ position:absolute; width:12px; height:12px; border-radius:50%; border:2px solid var(--line-2); background:var(--paper); transform:translate(-50%,-50%) scale(0); opacity:0; transition:border-color var(--dur) var(--ease), background var(--dur) var(--ease), transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.tech-point.in-view{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+.tech-point.is-active{ border-color:var(--brass); background:var(--brass-hi); transform:translate(-50%,-50%) scale(1.3); }
+.tech-copy .spec-line{ margin-bottom:var(--sp-3); }
+.tech-copy h2{ font-size:clamp(26px,3.2vw,36px); max-width:14ch; margin-bottom:var(--sp-3); }
+.tech-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:var(--sp-3); }
+.tech-tab{ font-family:var(--font-mono); font-size:12.5px; letter-spacing:.03em; padding:9px 14px; border:1px solid var(--line-2); color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.tech-tab.is-active{ background:var(--blue-deep); border-color:var(--blue-deep); color:#fff; }
+.tech-panel{ display:none; }
+.tech-panel.is-active{ display:block; }
+.tech-panel p{ color:var(--ink-soft); font-size:15px; line-height:1.65; max-width:46ch; }
+
+/* ============================================================
+   TRUST WALL — certification seals + metrics, dark
+   ============================================================ */
+.trust{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-7) 0; }
+.trust-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-4); margin-top:var(--sp-5); }
+.seal{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--sp-2); }
+.seal-ring{ width:88px; height:88px; border-radius:50%; border:1px solid rgba(251,249,245,.24); display:flex; align-items:center; justify-content:center; position:relative; }
+.seal-ring::before{ content:""; position:absolute; inset:6px; border-radius:50%; border:1px dashed rgba(251,249,245,.2); }
+.seal-ring .mark{ font-family:var(--font-display); font-weight:800; font-size:16px; letter-spacing:-.01em; }
+.seal .label{ font-size:13px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
+
+/* ============================================================
+   PROCESS — vertical spine, alternating steps
+   ============================================================ */
+.process{ padding:var(--sp-8) 0; }
+.spine{ position:relative; max-width:900px; margin:var(--sp-6) auto 0; }
+.spine-line{ position:absolute; top:0; bottom:0; left:50%; width:1px; background:var(--line-2); transform:translateX(-50%); overflow:hidden; }
+.spine-line span{ display:block; width:100%; height:0%; background:var(--brass); transition:height 1.8s var(--ease-out); }
+.spine.in-view .spine-line span{ height:100%; }
+.spine-step{ position:relative; display:grid; grid-template-columns:1fr 40px 1fr; align-items:center; gap:var(--sp-4); padding:var(--sp-4) 0; }
+.spine-node{ width:14px; height:14px; border-radius:50%; background:var(--paper); border:2px solid var(--line-2); justify-self:center; z-index:2; transition:border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.spine-step.in-view .spine-node{ border-color:var(--brass); background:var(--brass-soft); }
+.spine-card{ opacity:0; transform:translateY(16px); transition:opacity .55s var(--ease-out), transform .55s var(--ease-out); }
+.spine-step.in-view .spine-card{ opacity:1; transform:translateY(0); }
+.spine-step:nth-child(even) .spine-card.right{ grid-column:1; }
+.spine-idx{ font-family:var(--font-mono); font-size:12px; color:var(--brass); margin-bottom:6px; display:block; }
+.spine-card h3{ font-size:19px; letter-spacing:-.01em; margin-bottom:6px; }
+.spine-card p{ font-size:14px; color:var(--ink-soft); line-height:1.55; }
+.spine-step .spine-card.left{ text-align:right; }
+.spine-step .spine-card.spacer{ visibility:hidden; }
+
+/* ============================================================
+   GLOBAL PRESENCE
+   ============================================================ */
+.presence{ position:relative; z-index:41; background:var(--card); padding:var(--sp-8) 0; overflow:hidden; }
+.presence-head{ max-width:640px; margin:0 auto var(--sp-5); text-align:center; }
+.presence-head h2{ font-size:clamp(28px,3.4vw,42px); margin-top:var(--sp-2); }
+.presence-head p{ color:var(--ink-soft); font-size:16px; margin-top:var(--sp-2); }
+.presence-globe-wrap{ position:relative; width:100%; max-width:680px; aspect-ratio:1; margin:calc(var(--sp-3) * -1) auto 0; }
+.presence-globe{ position:relative; z-index:3; width:100%; height:100%; display:block; cursor:grab; touch-action:none; opacity:0; transition:opacity 1s var(--ease-out); }
+.presence-globe-wrap.globe-ready .presence-globe{ opacity:1; }
+.presence-globe:active{ cursor:grabbing; }
+.globe-fallback{ position:absolute; inset:7%; z-index:2; overflow:hidden; border-radius:50%; background:var(--blue-deep); box-shadow:0 36px 80px -40px rgba(3,11,33,.58), inset -38px -16px 60px rgba(0,0,0,.3), inset 18px 8px 30px rgba(255,255,255,.055); opacity:1; transition:opacity .8s var(--ease-out), transform 1.1s var(--ease-out); }
+.globe-fallback::after{ content:""; position:absolute; inset:0; border-radius:inherit; background:radial-gradient(circle at 32% 25%, rgba(255,255,255,.13), transparent 29%), linear-gradient(90deg, rgba(3,11,33,.6), transparent 17%, transparent 78%, rgba(3,11,33,.78)); pointer-events:none; }
+.globe-fallback-map{ position:absolute; width:152%; height:100%; left:-26%; top:0; object-fit:contain; opacity:.72; filter:none; }
+.globe-fallback-location{ position:absolute; z-index:2; width:8px; height:8px; border-radius:50%; background:var(--brass-hi); box-shadow:0 0 0 4px rgba(203,176,138,.16), 0 0 24px rgba(203,176,138,.6); }
+.globe-fallback-location.hq{ width:10px; height:10px; background:var(--paper); box-shadow:0 0 0 5px rgba(251,249,245,.16), 0 0 28px rgba(251,249,245,.72); }
+.globe-fallback-location::after{ content:""; position:absolute; inset:-6px; border:1px solid currentColor; border-radius:50%; opacity:.34; animation:globePulse 4.8s ease-out infinite; }
+.globe-fallback-location:nth-of-type(3)::after{ animation-delay:1.1s; }
+.globe-fallback-location:nth-of-type(4)::after{ animation-delay:2.2s; }
+.globe-fallback-location:nth-of-type(5)::after{ animation-delay:3.3s; }
+.presence-globe-wrap.globe-ready .globe-fallback{ opacity:0; transform:scale(.985); pointer-events:none; }
+@keyframes globePulse{ 0%,55%{ transform:scale(.45); opacity:0; } 70%{ opacity:.32; } 100%{ transform:scale(2.4); opacity:0; } }
+.globe-hint{ position:absolute; bottom:6px; left:50%; transform:translateX(-50%); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); opacity:0; transition:opacity var(--dur) var(--ease); pointer-events:none; }
+.presence-globe-wrap:hover .globe-hint{ opacity:1; }
+.presence-stats{ display:flex; justify-content:center; gap:var(--sp-6); flex-wrap:wrap; margin-top:var(--sp-5); padding-top:var(--sp-4); border-top:1px solid var(--line-2); }
+.presence-stat{ text-align:center; }
+.presence-stat .num{ font-family:var(--font-display); font-weight:800; font-size:32px; letter-spacing:-.02em; color:var(--blue-deep); }
+.presence-stat .label{ font-size:12.5px; color:var(--ink-faint); font-family:var(--font-mono); letter-spacing:.04em; text-transform:uppercase; margin-top:4px; }
+
+/* ============================================================
+   FUTURE STATEMENT — closing forward-looking band
+   ============================================================ */
+.future{ padding:var(--sp-8) 0; text-align:center; background:var(--paper-2); }
+.future h2{ font-size:clamp(28px,3.6vw,44px); max-width:18ch; margin:var(--sp-2) auto 0; }
+.future p{ color:var(--ink-soft); max-width:56ch; margin:var(--sp-3) auto 0; font-size:16px; line-height:1.65; }
+.future .btn{ margin-top:var(--sp-4); }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; }
+.contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:var(--sp-6); }
+.contact h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); color:var(--paper); }
+.contact-intro{ color:var(--ink-soft-on-dark); font-size:16px; max-width:44ch; margin-bottom:var(--sp-4); }
+.contact-detail{ display:flex; gap:var(--sp-2); padding:var(--sp-2) 0; }
+.contact-detail .k{ width:110px; flex:none; font-size:13px; color:var(--ink-soft-on-dark); letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
+.contact-detail .v{ font-size:16px; font-weight:500; }
+.contact-detail a:hover{ color:var(--brass-hi); }
+.form-wrap{ position:relative; }
+.form-glow{ position:absolute; inset:-90px; z-index:0; pointer-events:none; background:radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%), radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%); filter:blur(66px); }
+.contact-form{ position:relative; z-index:1; overflow:hidden; background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%); border:1px solid rgba(251,249,245,.34); border-radius:var(--r-lg); padding:var(--sp-4); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06); }
+.contact-form::before{ content:""; position:absolute; top:-70%; left:-30%; width:70%; height:240%; background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%); filter:blur(26px); pointer-events:none; z-index:-1; }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-size:13px; color:var(--ink-soft-on-dark); }
+.field input, .field select, .field textarea{ background:rgba(251,249,245,.14); border:1px solid rgba(251,249,245,.3); border-radius:var(--r); padding:12px 14px; color:var(--paper); width:100%; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1); transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.field select option{ color:var(--ink); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft-on-dark); }
+.field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
+.field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
+.field textarea{ resize:vertical; min-height:96px; }
+.form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
+.form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
+.form-success.show{ display:flex; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); }
+.footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
+.footer-brand .brand-logo{ height:28px; }
+.footer-tagline{ font-size:14.5px; color:#C7CCDE; max-width:32ch; margin-bottom:var(--sp-2); }
+.footer-address{ font-size:13.5px; color:#C7CCDE; line-height:1.7; }
+.footer-col h4{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:#C7CCDE; margin-bottom:var(--sp-2); font-weight:500; }
+.footer-col ul li{ margin-bottom:10px; }
+.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.92; transition:opacity var(--dur) var(--ease); }
+.footer-col a:hover{ opacity:1; color:var(--brass-hi); }
+.footer-bottom{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-2); padding-top:var(--sp-3); }
+.footer-copy{ font-family:var(--font-mono); font-size:12px; color:#C7CCDE; }
+.cert-chips{ display:flex; gap:8px; }
+.cert-chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:6px 12px; border:1px solid rgba(251,249,245,.22); color:#C7CCDE; }
+
+@media (max-width:980px){
+  :root{ --sp-8:96px; --sp-7:72px; }
+  .nav-menu, .nav-cta .btn-ghost{ display:none; }
+  .nav-toggle{ display:flex; }
+  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
+  body.menu-open .nav-item{ border-bottom:1px solid var(--line-2); }
+  body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
+  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
+  body.menu-open .nav-item.open .dropdown{ display:block; }
+  .explorer-grid{ grid-template-columns:1fr; }
+  .tech-grid{ grid-template-columns:1fr; }
+  .trust-grid{ grid-template-columns:repeat(2, 1fr); }
+  .spine-line{ left:20px; }
+  .spine-step{ grid-template-columns:40px 1fr; }
+  .spine-node{ justify-self:start; }
+  .spine-step .spine-card.left, .spine-step .spine-card.right{ grid-column:2; text-align:left; }
+  .spine-step .spine-card.spacer{ display:none; }
+  .contact-grid{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:repeat(3, 1fr); }
+  .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
+}
+@media (max-width:640px){
+  .container{ padding:0 var(--sp-2); }
+  .hero-diagram{ display:none; }
+  .trust-grid{ grid-template-columns:1fr 1fr; }
+  .form-row{ grid-template-columns:1fr; }
+  .footer-top{ grid-template-columns:1fr 1fr; }
+  .footer-bottom{ flex-direction:column; align-items:flex-start; }
+  .presence-stats{ gap:var(--sp-4); }
+}
+</style>
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+        <g>
+          <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
+          <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+          <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
+          <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
+          <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
+          <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
+          <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
+          <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
+          <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
+          <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
+          <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
+        </g>
+        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+      </svg>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#explorer" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="#explorer">Drone</a><a href="#explorer">Maritime</a><a href="#explorer">Robotics</a><a href="#explorer">Material Handling</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#process" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown">
+            <a href="#process">Idea &amp; Requirements</a><a href="#process">Feasibility</a><a href="#process">Prototype</a><a href="#process">Compliance</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="#tech" class="nav-link">Technology</a></li>
+        <li class="nav-item"><a href="#trust" class="nav-link">Trust &amp; Quality</a></li>
+        <li class="nav-item"><a href="#presence" class="nav-link">Global Presence</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================
+     HERO — schematic
+     ============================================================ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-top">
+      <span class="hero-badge">
+        <svg class="flag" viewBox="0 0 28 21"><rect width="28" height="21" fill="#C8102E"/><rect x="10" width="4" height="21" fill="#fff"/><rect y="9" width="28" height="3" fill="#fff"/></svg>
+        Danish Battery Engineering — Est. Aarhus
+      </span>
+    </div>
+    <div class="hero-inner">
+      <h1>Precision power, engineered to be trusted.</h1>
+      <p>Custom lithium battery systems designed, certified and manufactured for the technology that's defining what comes next — built in Denmark, to a standard that doesn't compromise.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Get in touch</a>
+        <a href="#explorer" class="btn btn-ghost">Explore applications</a>
+      </div>
+    </div>
+    <div class="hero-diagram" id="heroDiagram">
+      <svg class="lines" viewBox="0 0 920 500" preserveAspectRatio="none">
+        <path d="M460,250 L140,120" pathLength="600"/>
+        <path d="M460,250 L120,250" pathLength="600"/>
+        <path d="M460,250 L150,380" pathLength="600"/>
+        <path d="M460,250 L780,120" pathLength="600"/>
+        <path d="M460,250 L800,250" pathLength="600"/>
+        <path d="M460,250 L770,380" pathLength="600"/>
+      </svg>
+      <div class="hero-diagram-img"><img src="assets/products/renders/crop/xwd_egholm_closed_transparent_02_print.png" alt="WS Technicals custom lithium battery pack, sealed enclosure"></div>
+      <div class="hero-node" style="left:14%; top:22%;"><span class="pt"></span><span class="txt">IP67 Sealed Enclosure</span></div>
+      <div class="hero-node" style="left:5%; top:48%;"><span class="pt"></span><span class="txt">Custom Cell Chemistry</span></div>
+      <div class="hero-node" style="left:12%; top:75%;"><span class="pt"></span><span class="txt">In-house BMS</span></div>
+      <div class="hero-node" style="left:78%; top:22%; flex-direction:row-reverse;"><span class="pt"></span><span class="txt">CANBUS Integration</span></div>
+      <div class="hero-node" style="left:82%; top:48%; flex-direction:row-reverse;"><span class="pt"></span><span class="txt">CE · UN 38.3 · RoHS</span></div>
+      <div class="hero-node" style="left:76%; top:75%; flex-direction:row-reverse;"><span class="pt"></span><span class="txt">Full Traceability</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MANIFESTO — word-reveal statement
+     ============================================================ -->
+<section class="manifesto">
+  <div class="container manifesto-inner">
+    <h2 id="manifestoText">Every battery we build carries a name, a country, and <span class="stat-inline">19 years</span> of engineering behind it — because trust isn't a feature, it's the foundation.</h2>
+  </div>
+</section>
+
+<!-- ============================================================
+     CAPABILITY EXPLORER — tabs + single large preview
+     ============================================================ -->
+<section class="explorer" id="explorer">
+  <div class="container">
+    <div class="section-head">
+      <div class="spec-line" style="justify-content:center;"><span class="idx">INDEX</span><span class="rule"></span><span class="label">Applications</span></div>
+      <h2>Six sectors. One engineering process.</h2>
+      <p>Select an application to see how the same rigorous process adapts to it.</p>
+    </div>
+    <div class="explorer-grid">
+      <div class="explorer-tabs" id="explorerTabs">
+        <button class="explorer-tab is-active" data-tab="0">
+          <span class="idx">01</span>
+          <span class="name"><h3>Drone</h3><p>High energy-density, weight-critical packs.</p></span>
+          <span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="explorer-tab" data-tab="1">
+          <span class="idx">02</span>
+          <span class="name"><h3>Maritime</h3><p>Marine-certified, vibration and moisture resistant.</p></span>
+          <span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="explorer-tab" data-tab="2">
+          <span class="idx">03</span>
+          <span class="name"><h3>Robotics</h3><p>Compact, high-cycle packs for collaborative automation.</p></span>
+          <span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="explorer-tab" data-tab="3">
+          <span class="idx">04</span>
+          <span class="name"><h3>UPS</h3><p>Reliable backup power for critical infrastructure.</p></span>
+          <span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="explorer-tab" data-tab="4">
+          <span class="idx">05</span>
+          <span class="name"><h3>Heavy Machinery</h3><p>High-torque packs for off-road duty cycles.</p></span>
+          <span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button class="explorer-tab" data-tab="5">
+          <span class="idx">06</span>
+          <span class="name"><h3>Material Handling</h3><p>Robust systems for AGVs, AMRs and pallet handling.</p></span>
+          <span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+      <div class="explorer-stage" id="explorerStage">
+        <div class="explorer-panel is-active" data-tab="0"><img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone"><div class="explorer-panel-body"><span class="tag">01 / 06</span><h3>Drone</h3><p>High energy-density packs engineered for flight time, weight budgets, and rapid field swaps.</p></div></div>
+        <div class="explorer-panel" data-tab="1"><img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel"><div class="explorer-panel-body"><span class="tag">02 / 06</span><h3>Maritime</h3><p>Marine-certified lithium systems engineered for vibration, moisture, and long duty cycles at sea.</p></div></div>
+        <div class="explorer-panel" data-tab="2"><img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot"><div class="explorer-panel-body"><span class="tag">03 / 06</span><h3>Robotics</h3><p>Compact, high-cycle packs built for precision robotics and collaborative automation.</p></div></div>
+        <div class="explorer-panel" data-tab="3"><img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power"><div class="explorer-panel-body"><span class="tag">04 / 06</span><h3>UPS</h3><p>Reliable backup power systems engineered for critical infrastructure and continuous uptime.</p></div></div>
+        <div class="explorer-panel" data-tab="4"><img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery"><div class="explorer-panel-body"><span class="tag">05 / 06</span><h3>Heavy Machinery</h3><p>High-capacity packs engineered for torque, duty cycles, and the demands of off-road machinery.</p></div></div>
+        <div class="explorer-panel" data-tab="5"><img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform"><div class="explorer-panel-body"><span class="tag">06 / 06</span><h3>Material Handling</h3><p>Robust battery systems for AGVs, AMRs, and pallet handling in continuous industrial operation.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TECHNOLOGY DEEP-DIVE — tabbed spec explorer
+     ============================================================ -->
+<section class="tech" id="tech">
+  <div class="container tech-grid">
+    <div class="tech-visual" id="techVisual" role="img" aria-label="Exploded view of a WS Technicals custom battery pack, showing the top cover and connector assembly, mounting brackets, the matched cell block, the thermal interface layer, and the enclosure with BMS panel">
+      <div class="tech-exploded" aria-hidden="true">
+        <div class="tech-layer shadow" data-order="0" style="clip-path:inset(80% 0 0% 0);"></div>
+        <div class="tech-layer" data-order="1" style="clip-path:inset(0% 0 73% 0);"></div>
+        <div class="tech-layer" data-order="2" style="clip-path:inset(27% 0 64% 0);"></div>
+        <div class="tech-layer" data-order="3" style="clip-path:inset(36% 0 45% 0);"></div>
+        <div class="tech-layer" data-order="4" style="clip-path:inset(55% 0 40% 0);"></div>
+        <div class="tech-layer" data-order="5" style="clip-path:inset(60% 0 20% 0);"></div>
+      </div>
+      <span class="tech-point is-active" data-tab="0" style="left:50%; top:22%;"></span>
+      <span class="tech-point" data-tab="1" style="left:50%; top:48%;"></span>
+      <span class="tech-point" data-tab="2" style="left:35%; top:60%;"></span>
+      <span class="tech-point" data-tab="3" style="left:65%; top:75%;"></span>
+    </div>
+    <div class="tech-copy">
+      <div class="spec-line"><span class="idx">DEEP-DIVE</span><span class="rule"></span><span class="label">Technology</span></div>
+      <h2>What's actually inside a WS Technicals pack.</h2>
+      <div class="tech-tabs" id="techTabs">
+        <button class="tech-tab is-active" data-tab="0">BMS &amp; Electronics</button>
+        <button class="tech-tab" data-tab="1">Cell Chemistry</button>
+        <button class="tech-tab" data-tab="2">Thermal Management</button>
+        <button class="tech-tab" data-tab="3">Firmware &amp; CANBUS</button>
+      </div>
+      <div class="tech-panels">
+        <div class="tech-panel is-active" data-tab="0"><p>Our in-house BMS platform handles cell-level monitoring, protection and balancing — designed around your pack's electrical architecture, not adapted from a generic module.</p></div>
+        <div class="tech-panel" data-tab="1"><p>Cell chemistry and form factor are selected against your duty cycle and environment — energy density, cycle life and safety margin tuned to the application, not a catalogue default.</p></div>
+        <div class="tech-panel" data-tab="2"><p>Thermal interface layers and enclosure design are engineered together, so the pack holds its performance envelope across the full operating temperature range.</p></div>
+        <div class="tech-panel" data-tab="3"><p>Application-specific firmware and CANBUS integration are built around your control system — the pack speaks your vehicle's language from day one.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST WALL — certification seals + metrics
+     ============================================================ -->
+<section class="trust on-dark" id="trust">
+  <div class="container">
+    <div class="section-head">
+      <div class="spec-line" style="justify-content:center;"><span class="idx">CREDENTIALS</span><span class="rule"></span><span class="label">Trust &amp; Quality</span></div>
+      <h2 style="color:var(--paper);">Certified where it matters. Trusted because of it.</h2>
+      <p style="color:var(--ink-soft-on-dark);">Every pack that leaves Aarhus carries full documentation, traceability and third-party certification.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="seal reveal"><div class="seal-ring"><span class="mark">CE</span></div><span class="label">Conformité Européenne — EU health, safety and environmental compliance.</span></div>
+      <div class="seal reveal"><div class="seal-ring"><span class="mark">UN 38.3</span></div><span class="label">Certified for the safe transport of lithium batteries.</span></div>
+      <div class="seal reveal"><div class="seal-ring"><span class="mark">RoHS</span></div><span class="label">Restriction of Hazardous Substances compliant.</span></div>
+      <div class="seal reveal"><div class="seal-ring"><span class="mark">19+</span></div><span class="label">Years engineering custom power systems in Denmark.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS — vertical spine, alternating
+     ============================================================ -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-head">
+      <div class="spec-line" style="justify-content:center;"><span class="idx">PROCESS</span><span class="rule"></span><span class="label">From Idea to Production</span></div>
+      <h2>Six stages. One accountable team.</h2>
+    </div>
+    <div class="spine" id="spine">
+      <div class="spine-line"><span></span></div>
+      <div class="spine-step">
+        <div class="spine-card left"><span class="spine-idx">01</span><h3>Idea &amp; Requirements</h3><p>We define performance, environment, and certification requirements alongside your engineering team.</p></div>
+        <div class="spine-node"></div>
+        <div class="spine-card spacer"></div>
+      </div>
+      <div class="spine-step">
+        <div class="spine-card spacer"></div>
+        <div class="spine-node"></div>
+        <div class="spine-card right"><span class="spine-idx">02</span><h3>Feasibility Study</h3><p>Cell chemistry, form factor, and BMS architecture are evaluated against your constraints.</p></div>
+      </div>
+      <div class="spine-step">
+        <div class="spine-card left"><span class="spine-idx">03</span><h3>Prototype &amp; Testing</h3><p>Working prototypes are built and validated under real operating and abuse conditions.</p></div>
+        <div class="spine-node"></div>
+        <div class="spine-card spacer"></div>
+      </div>
+      <div class="spine-step">
+        <div class="spine-card spacer"></div>
+        <div class="spine-node"></div>
+        <div class="spine-card right"><span class="spine-idx">04</span><h3>Industrialization</h3><p>The design is engineered for repeatable, cost-efficient manufacturing at scale.</p></div>
+      </div>
+      <div class="spine-step">
+        <div class="spine-card left"><span class="spine-idx">05</span><h3>Compliance</h3><p>CE, UN 38.3, and RoHS testing are handled in-house ahead of production release.</p></div>
+        <div class="spine-node"></div>
+        <div class="spine-card spacer"></div>
+      </div>
+      <div class="spine-step">
+        <div class="spine-card spacer"></div>
+        <div class="spine-node"></div>
+        <div class="spine-card right"><span class="spine-idx">06</span><h3>Mass Production</h3><p>Packs move into production with full traceability and consistent quality control.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GLOBAL PRESENCE — light, minimal, stat-forward
+     ============================================================ -->
+<section class="presence" id="presence">
+  <div class="container">
+    <div class="presence-head">
+      <div class="spec-line" style="justify-content:center;"><span class="idx">REACH</span><span class="rule"></span><span class="label">Global Presence</span></div>
+      <h2>Engineered in Denmark. Delivered worldwide.</h2>
+      <p>From our Aarhus headquarters to our production partner in China, we support customers across Europe, the Americas and Asia.</p>
+    </div>
+    <div class="presence-globe-wrap">
+      <div class="globe-fallback" aria-hidden="true">
+        <img class="globe-fallback-map" src="assets/map/wst-map.svg" alt="">
+        <span class="globe-fallback-location hq" style="left:52.5%; top:29%;"></span>
+        <span class="globe-fallback-location" style="left:47%; top:30%;"></span>
+        <span class="globe-fallback-location" style="left:24%; top:39%;"></span>
+        <span class="globe-fallback-location" style="left:76%; top:39%;"></span>
+        <span class="globe-fallback-location" style="left:31%; top:63%;"></span>
+      </div>
+      <canvas id="globeCanvas" class="presence-globe" role="img" aria-label="Rotating 3D globe showing WS Technicals' engineering headquarters in Aarhus, production partner in China, and served regions across the UK, United States and South America"></canvas>
+      <div class="globe-hint mono">Drag to rotate</div>
+    </div>
+    <div class="presence-stats">
+      <div class="presence-stat"><div class="num">DK</div><div class="label">Headquarters</div></div>
+      <div class="presence-stat"><div class="num">6</div><div class="label">Regions served</div></div>
+      <div class="presence-stat"><div class="num">1</div><div class="label">Production partner</div></div>
+      <div class="presence-stat"><div class="num">100%</div><div class="label">Traceable supply chain</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FUTURE STATEMENT
+     ============================================================ -->
+<section class="future">
+  <div class="container">
+    <div class="spec-line" style="justify-content:center;"><span class="idx">WHAT'S NEXT</span><span class="rule"></span><span class="label">Built for the future</span></div>
+    <h2 class="reveal">The technology you're building doesn't exist yet. The battery inside it shouldn't either.</h2>
+    <p class="reveal">Whatever you're engineering — a new class of robot, a next-generation drone, a vehicle that doesn't exist as a category yet — we build the power system around it, not the other way around.</p>
+    <a href="#contact" class="btn btn-primary">Talk to our engineering team</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="contact on-dark" id="contact">
+  <div class="container contact-grid">
+    <div>
+      <div class="spec-line"><span class="idx">CONTACT</span><span class="rule"></span><span class="label">Get in touch</span></div>
+      <h2 style="margin-top:16px;">Let's talk about your application.</h2>
+      <p class="contact-intro">Tell us about your requirements and a member of our engineering team will get back to you.</p>
+      <div class="contact-detail"><span class="k">Phone</span><a class="v" href="tel:+4588618388">+45 88 61 83 88</a></div>
+      <div class="contact-detail"><span class="k">Email</span><a class="v" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></div>
+      <div class="contact-detail"><span class="k">Address</span><span class="v">Gjellerupvej 89A, 8230 Aarhus, Denmark</span></div>
+    </div>
+    <div class="form-wrap">
+    <div class="form-glow" aria-hidden="true"></div>
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" name="name" placeholder="Jane Doe"></div>
+        <div class="field"><label for="f-company">Company</label><input type="text" id="f-company" name="company" placeholder="Company name"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" placeholder="jane@company.com"></div>
+        <div class="field"><label for="f-country">Country</label><input type="text" id="f-country" name="country" placeholder="Country"></div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-application">Application</label>
+          <select id="f-application" name="application">
+            <option value="">Select an application</option>
+            <option>Drone</option><option>Material Handling</option><option>Robotics</option><option>Maritime</option><option>UPS</option><option>Heavy Machinery</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Tell us about your project"></textarea></div>
+      </div>
+      <button type="submit" class="btn btn-on-dark" style="width:100%;">Send message</button>
+      <p class="form-note">All fields optional. We'll only use this to respond to your enquiry.</p>
+      <div class="form-success" id="formSuccess">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#B99A72" stroke-width="1.8"><path d="M4 10l4 4 8-8"/></svg>
+        <span>Thanks — we'll be in touch shortly.</span>
+      </div>
+    </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+            <g><path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/><path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/><path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/><path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/><path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/><path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/><path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/><path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/><path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/><path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/><path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/><path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/></g>
+            <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+            <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+            <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+            <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+          </svg>
+        </a>
+        <p class="footer-tagline">Danish battery engineering, built to be trusted.</p>
+        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>
+      </div>
+      <div class="footer-col"><h4>Solutions</h4><ul>
+        <li><a href="#explorer">Drone</a></li><li><a href="#explorer">Maritime</a></li><li><a href="#explorer">Robotics</a></li><li><a href="#explorer">Material Handling</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Development</h4><ul>
+        <li><a href="#process">Idea &amp; Requirements</a></li><li><a href="#process">Feasibility Study</a></li><li><a href="#process">Prototype &amp; Testing</a></li><li><a href="#process">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="#tech">Technology</a></li><li><a href="#trust">Trust &amp; Quality</a></li><li><a href="#presence">Global Presence</a></li><li><a href="#contact">Contact</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
+      <div class="cert-chips"><span class="cert-chip">CE</span><span class="cert-chip">UN 38.3</span><span class="cert-chip">RoHS</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', function(){
+    var open = body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  var nav = document.querySelector('.nav');
+  function onScroll(){ nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    var link = item.querySelector('.nav-link');
+    link.addEventListener('click', function(e){
+      if (window.innerWidth <= 980 && item.querySelector('.dropdown')) {
+        e.preventDefault();
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item.open').forEach(function(o){ o.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      }
+    });
+  });
+  document.querySelectorAll('.dropdown a, .nav-cta a').forEach(function(a){
+    a.addEventListener('click', function(){
+      body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    success.classList.add('show');
+  });
+
+  // Generic reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length) {
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.2 });
+    revealEls.forEach(function(el, i){ el.style.transitionDelay = (i % 4 * 0.08) + 's'; revealObserver.observe(el); });
+  }
+
+  // Hero diagram — draw-in on load/scroll
+  var heroDiagram = document.getElementById('heroDiagram');
+  if (heroDiagram) {
+    var heroObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.3 });
+    heroObserver.observe(heroDiagram);
+  }
+
+  // Manifesto — word-by-word light-up on scroll
+  var manifestoEl = document.getElementById('manifestoText');
+  if (manifestoEl) {
+    var original = manifestoEl.innerHTML;
+    var words = original.split(/(<span[^>]*>.*?<\/span>|\s+)/).filter(function(w){ return w.length; });
+    var html = '';
+    words.forEach(function(w){
+      if (w.indexOf('<span') === 0) { html += w; }
+      else if (/^\s+$/.test(w)) { html += w; }
+      else { html += '<span class="w">' + w + '</span>'; }
+    });
+    manifestoEl.innerHTML = html;
+    var wordEls = manifestoEl.querySelectorAll('.w');
+    var manifestoObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          wordEls.forEach(function(w, i){ setTimeout(function(){ w.classList.add('lit'); }, i * 40); });
+          manifestoObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    manifestoObserver.observe(manifestoEl);
+  }
+
+  // Capability explorer — tabs
+  var explorerTabs = document.querySelectorAll('.explorer-tab');
+  var explorerPanels = document.querySelectorAll('.explorer-panel');
+  explorerTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var t = tab.dataset.tab;
+      explorerTabs.forEach(function(b){ b.classList.toggle('is-active', b === tab); });
+      explorerPanels.forEach(function(p){ p.classList.toggle('is-active', p.dataset.tab === t); });
+    });
+  });
+
+  // Technology deep-dive — tabs + highlight point
+  var techTabs = document.querySelectorAll('.tech-tab');
+  var techPanels = document.querySelectorAll('.tech-panel');
+  var techPoints = document.querySelectorAll('.tech-point');
+  techTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var t = tab.dataset.tab;
+      techTabs.forEach(function(b){ b.classList.toggle('is-active', b === tab); });
+      techPanels.forEach(function(p){ p.classList.toggle('is-active', p.dataset.tab === t); });
+      techPoints.forEach(function(p){ p.classList.toggle('is-active', p.dataset.tab === t); });
+    });
+  });
+
+  // Technology deep-dive — exploded view assembles in, layer by layer, on scroll
+  var techVisual = document.getElementById('techVisual');
+  if (techVisual) {
+    var techLayers = Array.prototype.slice.call(techVisual.querySelectorAll('.tech-layer'))
+      .sort(function(a, b){ return parseInt(a.dataset.order, 10) - parseInt(b.dataset.order, 10); });
+    var techVisualObserver = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        techLayers.forEach(function(layer, i){
+          setTimeout(function(){ layer.classList.add('in-view'); }, i * 220);
+        });
+        setTimeout(function(){
+          techPoints.forEach(function(p){ p.classList.add('in-view'); });
+        }, techLayers.length * 220 + 200);
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.35 });
+    techVisualObserver.observe(techVisual);
+  }
+
+  // Process spine — reveal on scroll
+  var spine = document.getElementById('spine');
+  var spineSteps = document.querySelectorAll('.spine-step');
+  if (spine) {
+    var spineObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.3 });
+    spineObserver.observe(spine);
+    var stepObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.4 });
+    spineSteps.forEach(function(s){ stepObserver.observe(s); });
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('globeCanvas');
+  if (true) return; // Replaced by the dependency-free projected globe below.
+  var wrap = canvas.parentElement;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 0, 2.72);
+
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+  function resize(){
+    var size = wrap.clientWidth;
+    if (!size) return;
+    renderer.setSize(size, size, false);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var RADIUS = 1;
+  var globeGroup = new THREE.Group();
+  globeGroup.rotation.x = -0.18;
+  globeGroup.rotation.y = 0.4;
+  scene.add(globeGroup);
+
+  // Solid body — occludes far-side dots and gives the globe its colour
+  var body = new THREE.Mesh(
+    new THREE.SphereGeometry(RADIUS * 0.985, 48, 48),
+    new THREE.MeshBasicMaterial({ color: 0x030B21 })
+  );
+  globeGroup.add(body);
+
+  // Faint latitude/longitude wire for a technical, "instrument" feel
+  var wire = new THREE.Mesh(
+    new THREE.SphereGeometry(RADIUS * 0.992, 24, 16),
+    new THREE.MeshBasicMaterial({ color: 0xFBF9F5, wireframe: true, transparent: true, opacity: 0.05 })
+  );
+  globeGroup.add(wire);
+
+  function circleTexture(color){
+    var size = 64;
+    var c = document.createElement('canvas');
+    c.width = c.height = size;
+    var ctx = c.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, size / 2 - 4, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    return new THREE.CanvasTexture(c);
+  }
+
+  function latLongToVector3(lat, lon, radius){
+    var phi = (90 - lat) * Math.PI / 180;
+    var theta = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+      -radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.cos(phi),
+      radius * Math.sin(phi) * Math.sin(theta)
+    );
+  }
+
+  var markers = [
+    { left: 52.305, top: 24.358, color: '#FBF9F5', size: 0.05 },
+    { left: 47.704, top: 24.358, color: '#CBB08A', size: 0.038 },
+    { left: 23.181, top: 34.623, color: '#CBB08A', size: 0.038 },
+    { left: 13.987, top: 34.623, color: '#CBB08A', size: 0.038 },
+    { left: 29.316, top: 61.975, color: '#CBB08A', size: 0.038 },
+    { left: 78.353, top: 34.623, color: '#0F2A5C', size: 0.042 }
+  ];
+
+  fetch('assets/map/wst-map.svg').then(function(r){ return r.text(); }).then(function(svgText){
+    var points = [];
+    var circleRe = /cx="([\d.]+)" cy="([\d.]+)"/g;
+    var m;
+    while ((m = circleRe.exec(svgText))) points.push([parseFloat(m[1]), parseFloat(m[2])]);
+    var pathRe = /d="M([\d.]+),([\d.]+)/g;
+    while ((m = pathRe.exec(svgText))) points.push([parseFloat(m[1]) + 2.2, parseFloat(m[2])]);
+
+    var positions = [];
+    points.forEach(function(p){
+      var lon = (p[0] / 1147.5) * 360 - 180;
+      var lat = 90 - (p[1] / 514.4) * 180;
+      var v = latLongToVector3(lat, lon, RADIUS * 1.006);
+      positions.push(v.x, v.y, v.z);
+    });
+
+    var dotGeo = new THREE.BufferGeometry();
+    dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    var dotMat = new THREE.PointsMaterial({
+      size: 0.024, color: 0xFBF9F5, map: circleTexture('#FBF9F5'),
+      transparent: true, opacity: .9, alphaTest: .15,
+      depthWrite: false, sizeAttenuation: true
+    });
+    globeGroup.add(new THREE.Points(dotGeo, dotMat));
+
+    markers.forEach(function(mk){
+      var lon = (mk.left / 100) * 360 - 180;
+      var lat = 90 - (mk.top / 100) * 180;
+      var v = latLongToVector3(lat, lon, RADIUS * 1.02);
+      var sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: circleTexture(mk.color), transparent: true, depthWrite: false
+      }));
+      sprite.position.copy(v);
+      sprite.scale.set(mk.size * 1.45, mk.size * 1.45, 1);
+      globeGroup.add(sprite);
+    });
+
+    wrap.classList.add('globe-ready');
+    startLoop();
+  }).catch(function(){
+    canvas.style.display = 'none';
+  });
+
+  var isDragging = false, prevX = 0, prevY = 0, rotY = globeGroup.rotation.y, rotX = globeGroup.rotation.x;
+  var autoRotateSpeed = reduceMotion ? 0 : 0.0022;
+
+  function onDown(x, y){ isDragging = true; prevX = x; prevY = y; }
+  function onMove(x, y){
+    if (!isDragging) return;
+    rotY += (x - prevX) * 0.006;
+    rotX += (y - prevY) * 0.006;
+    rotX = Math.max(-1.1, Math.min(1.1, rotX));
+    prevX = x; prevY = y;
+  }
+  function onUp(){ isDragging = false; }
+
+  canvas.addEventListener('mousedown', function(e){ onDown(e.clientX, e.clientY); });
+  window.addEventListener('mousemove', function(e){ onMove(e.clientX, e.clientY); });
+  window.addEventListener('mouseup', onUp);
+  canvas.addEventListener('touchstart', function(e){ onDown(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  window.addEventListener('touchmove', function(e){ onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  window.addEventListener('touchend', onUp);
+
+  var started = false;
+  function startLoop(){
+    if (started) return;
+    started = true;
+    function tick(){
+      requestAnimationFrame(tick);
+      if (!isDragging) rotY += autoRotateSpeed;
+      globeGroup.rotation.y = rotY;
+      globeGroup.rotation.x = rotX;
+      renderer.render(scene, camera);
+    }
+    tick();
+  }
+})();
+</script>
+
+<script src="assets/scripts/dot-globe.js" defer></script>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/section-labels.js" defer></script>
+<script src="assets/scripts/enterprise-motion.js" defer></script>
+</body>
+</html>
