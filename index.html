@@ -541,7 +541,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   z-index:2;
 }
 .cat-card h3{
-  font-size:24px;
+  font-size:clamp(26px, 2vw, 30px);
   letter-spacing:-.025em;
   margin-bottom:10px;
   color:var(--blue-deep);
@@ -1214,6 +1214,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .categories .section-head h2{ font-size:clamp(31px, 10vw, 42px); }
   .cat-grid{ grid-template-columns:1fr; gap:20px; }
   .cat-card{ min-height:500px; padding:24px; }
+  .cat-card h3{ font-size:27px; }
   .stats-grid{ grid-template-columns:1fr 1fr; }
   .work-row{ grid-template-columns:40px 1fr; }
   .work-num{ display:none; }
