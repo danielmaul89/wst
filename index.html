@@ -468,7 +468,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .section-head{
   display:flex;
-  align-items:flex-end;
+  align-items:flex-start;
   justify-content:space-between;
   gap:var(--sp-3);
   margin-bottom:var(--sp-5);
@@ -482,6 +482,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   color:var(--ink-soft);
   max-width:420px;
   font-size:15.5px;
+}
+.categories .section-head p{
+  margin-top:4px;
+  color:#5C5E68;
+  line-height:1.58;
 }
 
 .cat-grid{
@@ -519,11 +524,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   font-size:22px;
   letter-spacing:-.02em;
   margin-bottom:8px;
-  color:var(--blue-deep);
+  color:var(--ink);
 }
 .cat-card p{
   font-size:14px;
-  color:var(--blue);
+  color:var(--ink-soft);
   max-width:28ch;
   line-height:1.55;
 }
