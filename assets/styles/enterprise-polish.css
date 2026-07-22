@@ -491,16 +491,24 @@ textarea:focus {
 
 .on-dark .contact-form,
 .contact .contact-form {
-  background: linear-gradient(
-    155deg,
-    rgba(251, 249, 245, .14) 0%,
-    rgba(251, 249, 245, .045) 46%,
-    rgba(251, 249, 245, .08) 100%
-  ) !important;
-  border-color: rgba(251, 249, 245, .42) !important;
+  background:
+    linear-gradient(
+      155deg,
+      rgba(251, 249, 245, .14) 0%,
+      rgba(251, 249, 245, .045) 46%,
+      rgba(251, 249, 245, .08) 100%
+    ) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, .62) 0%,
+      rgba(255, 255, 255, .2) 24%,
+      rgba(255, 255, 255, .07) 58%,
+      rgba(203, 176, 138, .2) 100%
+    ) border-box !important;
+  border-color: transparent !important;
   box-shadow:
     0 28px 64px -24px rgba(0, 0, 0, .52),
-    inset 0 1px 0 rgba(255, 255, 255, .28) !important;
+    inset 0 1px 0 rgba(255, 255, 255, .22) !important;
 }
 
 .on-dark .contact-form::before,
