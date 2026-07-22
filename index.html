@@ -538,6 +538,20 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   background:linear-gradient(to top, rgba(6,8,26,.085) 0%, rgba(6,8,26,.012) 20%, transparent 36%);
   pointer-events:none;
 }
+.cat-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(
+    to bottom,
+    rgba(255,255,255,.76) 0%,
+    rgba(255,255,255,.52) 17%,
+    rgba(255,255,255,.18) 31%,
+    transparent 47%
+  );
+  pointer-events:none;
+}
 .cat-text{
   position:relative;
   z-index:2;
