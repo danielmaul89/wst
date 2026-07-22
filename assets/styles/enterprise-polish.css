@@ -748,6 +748,10 @@ textarea:focus {
 .footer .brand-logo .cls-5{
   fill:#fff !important;
 }
+.footer .footer-col h4{
+  color:#9da4b8 !important;
+  font-weight:600 !important;
+}
 
 @media (max-width:640px){
   .footer{
