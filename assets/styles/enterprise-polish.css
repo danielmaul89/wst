@@ -705,6 +705,17 @@ textarea:focus {
 
 .footer-col a {
   opacity: .92 !important;
+  transition:
+    color 320ms var(--motion-ease),
+    opacity 320ms var(--motion-ease),
+    text-shadow 420ms var(--motion-ease) !important;
+}
+@media (hover:hover){
+  .footer-col a:hover{
+    color:#f2eee7 !important;
+    opacity:1 !important;
+    text-shadow:0 0 16px rgba(203,176,138,.2);
+  }
 }
 
 /* Footer rhythm and a locally anchored blueprint grid. */
