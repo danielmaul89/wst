@@ -7,10 +7,53 @@
   function setupButtonLighting() {
     var buttons = document.querySelectorAll('.btn, .nav-contact, .card-cta, .glass-cta, .cat-explore');
     buttons.forEach(function (button) {
+      var currentX;
+      var currentY;
+      var targetX;
+      var targetY;
+      var animationFrame;
+
+      function setDefaultPosition() {
+        var rect = button.getBoundingClientRect();
+        targetX = rect.width * .18;
+        targetY = rect.height * .18;
+        if (currentX === undefined) {
+          currentX = targetX;
+          currentY = targetY;
+          button.style.setProperty('--button-light-x', currentX + 'px');
+          button.style.setProperty('--button-light-y', currentY + 'px');
+        }
+      }
+
+      function animateLight() {
+        currentX += (targetX - currentX) * .16;
+        currentY += (targetY - currentY) * .16;
+        button.style.setProperty('--button-light-x', currentX + 'px');
+        button.style.setProperty('--button-light-y', currentY + 'px');
+
+        if (Math.abs(targetX - currentX) > .15 || Math.abs(targetY - currentY) > .15) {
+          animationFrame = window.requestAnimationFrame(animateLight);
+        } else {
+          animationFrame = null;
+        }
+      }
+
+      function moveLight() {
+        if (!animationFrame) animationFrame = window.requestAnimationFrame(animateLight);
+      }
+
+      setDefaultPosition();
+
       button.addEventListener('pointermove', function (event) {
         var rect = button.getBoundingClientRect();
-        button.style.setProperty('--button-light-x', (event.clientX - rect.left) + 'px');
-        button.style.setProperty('--button-light-y', (event.clientY - rect.top) + 'px');
+        targetX = event.clientX - rect.left;
+        targetY = event.clientY - rect.top;
+        moveLight();
+      });
+
+      button.addEventListener('pointerleave', function () {
+        setDefaultPosition();
+        moveLight();
       });
     });
   }

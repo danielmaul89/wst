@@ -356,7 +356,7 @@ textarea {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;
+  opacity: .72;
   background: radial-gradient(
     105px circle at var(--button-light-x, 18%) var(--button-light-y, 18%),
     rgba(255, 255, 255, .34) 0%,
@@ -383,7 +383,7 @@ textarea {
   .card-cta:hover::after,
   .glass-cta:hover::after,
   .cat-explore:hover::after {
-    opacity: 1;
+    opacity: .92;
   }
 
   .btn:hover,
@@ -400,7 +400,7 @@ textarea {
 .card-cta:focus-visible::after,
 .glass-cta:focus-visible::after,
 .cat-explore:focus-visible::after {
-  opacity: .72;
+  opacity: .92;
 }
 
 .btn::before,
