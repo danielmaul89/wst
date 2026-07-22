@@ -12,6 +12,28 @@ body {
   font-variant-ligatures: common-ligatures;
 }
 
+/* Navigation remains clear at the top and gains a milky glass tint on scroll. */
+.nav{
+  background:transparent;
+  border-bottom:1px solid transparent;
+  transition:
+    background-color 420ms var(--motion-ease),
+    border-color 420ms var(--motion-ease),
+    box-shadow 420ms var(--motion-ease),
+    backdrop-filter 420ms var(--motion-ease),
+    -webkit-backdrop-filter 420ms var(--motion-ease) !important;
+}
+body:not(.on-dark) .nav--scrolled{
+  background:rgba(251,249,245,.72);
+  border-bottom-color:rgba(255,255,255,.5);
+  box-shadow:0 10px 30px -24px rgba(3,11,33,.22);
+}
+body.on-dark .nav--scrolled{
+  background:rgba(251,249,245,.075);
+  border-bottom-color:rgba(251,249,245,.12);
+  box-shadow:0 10px 30px -24px rgba(0,0,0,.38);
+}
+
 /* Motion language ------------------------------------------------------- */
 :root {
   --motion-ease: cubic-bezier(.22, 1, .36, 1);
