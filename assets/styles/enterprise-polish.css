@@ -512,13 +512,20 @@ textarea:focus {
   padding: 1px;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, .62) 0%,
-    rgba(255, 255, 255, .2) 24%,
-    rgba(255, 255, 255, .07) 58%,
-    rgba(203, 176, 138, .2) 100%
-  );
+  background:
+    radial-gradient(
+      ellipse 72% 28% at 50% 0%,
+      rgba(255, 255, 255, .48) 0%,
+      rgba(255, 255, 255, .16) 48%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, .18) 0%,
+      rgba(255, 255, 255, .08) 38%,
+      rgba(255, 255, 255, .025) 70%,
+      transparent 100%
+    );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
