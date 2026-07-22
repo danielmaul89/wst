@@ -214,6 +214,19 @@ html.home-motion .tech-visual {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
+.exploded-sequence.is-story-active .exploded-part{
+  opacity:.2;
+  filter:saturate(.72) blur(.35px);
+  transform:translate3d(0, 0, 0) scale(.995);
+  transition-delay:0ms;
+}
+.exploded-sequence.is-story-active .exploded-part.story-active{
+  z-index:2;
+  opacity:1;
+  filter:saturate(1.04) blur(0);
+  transform:translate3d(0, 0, 0) scale(1.012);
+}
+
 .proof-visual.has-exploded-sequence .callout {
   z-index: 21;
   opacity: 0;

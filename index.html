@@ -646,7 +646,74 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   color:var(--ink-soft);
   font-size:16px;
   max-width:42ch;
-  margin-bottom:var(--sp-3);
+  margin-bottom:0;
+}
+.proof-story{
+  margin:var(--sp-3) 0;
+  border-top:1px solid var(--line);
+}
+.proof-step{
+  position:relative;
+  width:100%;
+  display:grid;
+  grid-template-columns:34px 1fr;
+  column-gap:12px;
+  padding:14px 4px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:transparent;
+  color:var(--ink-faint);
+  text-align:left;
+  cursor:pointer;
+  transition:color .5s var(--ease), padding .5s var(--ease);
+}
+.proof-step::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:14px;
+  bottom:14px;
+  width:2px;
+  border-radius:2px;
+  background:var(--brass);
+  transform:scaleY(0);
+  transform-origin:top;
+  transition:transform .55s var(--ease);
+}
+.proof-step-index{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:var(--brass);
+  padding-top:3px;
+}
+.proof-step-title{
+  font-family:var(--font-display);
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:-.01em;
+}
+.proof-step-detail{
+  grid-column:2;
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(-4px);
+  color:var(--ink-soft);
+  font-size:13.5px;
+  line-height:1.55;
+  transition:max-height .6s var(--ease), opacity .45s var(--ease), transform .55s var(--ease), margin .55s var(--ease);
+}
+.proof-step.is-active{
+  color:var(--blue-deep);
+  padding-left:10px;
+}
+.proof-step.is-active::before{ transform:scaleY(1); }
+.proof-step.is-active .proof-step-detail{
+  max-height:72px;
+  margin-top:6px;
+  opacity:1;
+  transform:translateY(0);
 }
 .proof-visual{
   position:relative;
@@ -1280,7 +1347,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .component-library-intro .container{ flex-direction:column; gap:10px; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=sectiongrid1">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=proofstory1">
 </head>
 <body>
 
@@ -1508,18 +1575,34 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <span class="eyebrow">Engineered, not assembled</span>
       <h2>Every detail is built around your application — not pulled off a shelf.</h2>
       <p>From cell chemistry to firmware, every layer of the pack is a decision made for your duty cycle, environment and certification requirements — designed and tested in-house, not sourced from a catalogue.</p>
+      <div class="proof-story" aria-label="How a custom battery system takes shape">
+        <button class="proof-step is-active" type="button" data-proof-step="0">
+          <span class="proof-step-index">01</span>
+          <span class="proof-step-title">Requirements become architecture</span>
+          <span class="proof-step-detail">Voltage, duty cycle, available space and operating environment define the system before hardware is selected.</span>
+        </button>
+        <button class="proof-step" type="button" data-proof-step="1">
+          <span class="proof-step-index">02</span>
+          <span class="proof-step-title">The cell stack is matched</span>
+          <span class="proof-step-detail">Chemistry and cell configuration are balanced around energy, power, lifetime and the realities of your application.</span>
+        </button>
+        <button class="proof-step" type="button" data-proof-step="2">
+          <span class="proof-step-index">03</span>
+          <span class="proof-step-title">Heat and movement are controlled</span>
+          <span class="proof-step-detail">Thermal interfaces and mechanical protection are engineered to preserve performance through real operating conditions.</span>
+        </button>
+        <button class="proof-step" type="button" data-proof-step="3">
+          <span class="proof-step-index">04</span>
+          <span class="proof-step-title">Intelligence completes the system</span>
+          <span class="proof-step-detail">BMS, firmware, communications and connectors are developed around the machine they must work with.</span>
+        </button>
+      </div>
       <a href="#contact" class="link-arrow">Talk to our engineering team
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="proof-visual">
       <img src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
-      <div class="callouts">
-        <div class="callout" style="top:12%; left:35%;"><span class="callout-dot"></span>Custom BMS &amp; relay module</div>
-        <div class="callout" style="top:45%; left:0%;"><span class="callout-dot"></span>Matched cell stack</div>
-        <div class="callout" style="top:57%; left:2%;"><span class="callout-dot"></span>Thermal interface layer</div>
-        <div class="callout" style="top:76%; left:40%;"><span class="callout-dot"></span>Connector &amp; wiring harness</div>
-      </div>
     </div>
   </div>
 </section>
@@ -2034,6 +2117,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/scripts/section-labels.js" defer></script>
-<script src="assets/scripts/enterprise-motion.js?v=sectiongrid1" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=proofstory1" defer></script>
 </body>
 </html>
