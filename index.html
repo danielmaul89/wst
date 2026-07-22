@@ -1148,6 +1148,38 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 
 /* ============================================================
+   COMPONENT LIBRARY — concepts intentionally parked after footer
+   ============================================================ */
+.component-library{
+  position:relative;
+  background:var(--paper);
+}
+.component-library-intro{
+  background:var(--paper-2);
+  padding:32px 0;
+  border-bottom:1px solid var(--line);
+}
+.component-library-intro .container{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:var(--sp-4);
+}
+.component-library-kicker{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--brass-text, #765c3f);
+}
+.component-library-intro p{
+  max-width:52ch;
+  color:var(--ink-soft);
+  font-size:14px;
+  line-height:1.55;
+}
+
+/* ============================================================
    12. RESPONSIVE
    ============================================================ */
 @media (max-width:980px){
@@ -1230,6 +1262,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .form-row{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
+  .component-library-intro .container{ flex-direction:column; gap:10px; }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=wcag1">
@@ -1914,6 +1947,20 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <script>
 (function(){
   var body = document.body;
+
+  // Keep the public homepage focused on five sections. Existing concepts stay
+  // available below the footer as a visual component library for evaluation.
+  var footer = document.querySelector('.footer');
+  var librarySections = document.querySelectorAll('.stats, .work, .presence, .process, .production, .bms');
+  if (footer && librarySections.length) {
+    var library = document.createElement('div');
+    library.className = 'component-library';
+    library.setAttribute('aria-label', 'Alternative homepage section concepts');
+    library.innerHTML = '<div class="component-library-intro"><div class="container"><span class="component-library-kicker">Component library</span><p>Alternative homepage sections kept below the finished page for comparison and final component selection.</p></div></div>';
+    footer.insertAdjacentElement('afterend', library);
+    librarySections.forEach(function(section){ library.appendChild(section); });
+  }
+
   var toggle = document.getElementById('navToggle');
   toggle.addEventListener('click', function(){
     var open = body.classList.toggle('menu-open');
