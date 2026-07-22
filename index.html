@@ -632,8 +632,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .proof-grid{
   display:grid;
-  grid-template-columns:.85fr 1.15fr;
-  gap:var(--sp-6);
+  max-width:1400px;
+  grid-template-columns:.62fr 1.38fr;
+  gap:clamp(48px,6vw,96px);
   align-items:center;
 }
 .proof-copy h2{
