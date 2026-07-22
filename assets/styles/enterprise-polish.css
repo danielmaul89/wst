@@ -707,6 +707,51 @@ textarea:focus {
   opacity: .92 !important;
 }
 
+/* Footer rhythm and a locally anchored blueprint grid. */
+.footer{
+  position:relative;
+  z-index:41;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:480px;
+  padding:72px 0 40px !important;
+}
+.footer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px);
+  background-size:96px 96px;
+  background-position:0 0;
+  opacity:.06;
+  box-shadow:
+    inset 0 1px 0 rgba(251,249,245,.75),
+    inset 0 -1px 0 rgba(251,249,245,.75);
+}
+.footer > .container{
+  position:relative;
+  z-index:1;
+  min-height:368px;
+  display:flex;
+  flex-direction:column;
+}
+.footer .footer-top{ padding-bottom:56px !important; }
+.footer .footer-bottom{ margin-top:auto; }
+
+@media (max-width:640px){
+  .footer{
+    min-height:auto;
+    padding:64px 0 36px !important;
+  }
+  .footer > .container{ min-height:auto; }
+  .footer .footer-top{ padding-bottom:0 !important; }
+  .footer .footer-bottom{ margin-top:48px; }
+}
+
 /* Dark contact forms use a single brighter border as their focus state. */
 .on-dark .contact-form input:focus,
 .on-dark .contact-form select:focus,
