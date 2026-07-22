@@ -19,6 +19,10 @@ body {
   --motion-fast: 320ms;
   --motion-base: 620ms;
   --motion-slow: 900ms;
+  /* WCAG-safe secondary text values on the project's light and dark grounds. */
+  --ink-faint: #666a76;
+  --ink-soft-on-dark: #c7cbd8;
+  --brass-text: #765c3f;
 }
 
 html.motion-ready [data-reveal] {
@@ -297,6 +301,17 @@ li {
   text-wrap: pretty;
 }
 
+/* Brass remains decorative; small text uses a darker accessible variant. */
+.eyebrow {
+  color: var(--brass-text) !important;
+}
+
+.on-dark .eyebrow,
+.contact .eyebrow,
+.footer .eyebrow {
+  color: var(--brass-hi, #cbb08a) !important;
+}
+
 img,
 svg {
   shape-rendering: geometricPrecision;
@@ -364,12 +379,12 @@ textarea {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: .72;
+  opacity: .38;
   background: radial-gradient(
-    105px circle at var(--button-light-x, 18%) var(--button-light-y, 18%),
-    rgba(255, 255, 255, .34) 0%,
-    rgba(203, 176, 138, .14) 34%,
-    transparent 72%
+    115px circle at var(--button-light-x, 18%) var(--button-light-y, 18%),
+    rgba(255, 255, 255, .22) 0%,
+    rgba(203, 176, 138, .07) 36%,
+    transparent 74%
   );
   mix-blend-mode: screen;
   transition: opacity 420ms var(--motion-ease);
@@ -377,10 +392,10 @@ textarea {
 
 .btn-on-dark::after {
   background: radial-gradient(
-    105px circle at var(--button-light-x, 18%) var(--button-light-y, 18%),
-    rgba(203, 176, 138, .3) 0%,
-    rgba(15, 42, 92, .08) 38%,
-    transparent 72%
+    115px circle at var(--button-light-x, 18%) var(--button-light-y, 18%),
+    rgba(203, 176, 138, .18) 0%,
+    rgba(15, 42, 92, .05) 40%,
+    transparent 74%
   );
   mix-blend-mode: multiply;
 }
@@ -391,7 +406,7 @@ textarea {
   .card-cta:hover::after,
   .glass-cta:hover::after,
   .cat-explore:hover::after {
-    opacity: .92;
+    opacity: .58;
   }
 
   .btn:hover,
@@ -408,7 +423,7 @@ textarea {
 .card-cta:focus-visible::after,
 .glass-cta:focus-visible::after,
 .cat-explore:focus-visible::after {
-  opacity: .92;
+  opacity: .58;
 }
 
 .btn::before,
@@ -465,6 +480,68 @@ textarea:focus {
   box-shadow:
     0 12px 34px rgba(3, 11, 33, .08),
     inset 0 1px 0 rgba(255, 255, 255, .3);
+}
+
+/* Accessible dark-glass forms: quieter illumination and AA-safe copy. */
+.on-dark .form-glow,
+.contact .form-glow {
+  opacity: .34 !important;
+  filter: blur(82px) !important;
+}
+
+.on-dark .contact-form,
+.contact .contact-form {
+  background: linear-gradient(
+    155deg,
+    rgba(251, 249, 245, .14) 0%,
+    rgba(251, 249, 245, .045) 46%,
+    rgba(251, 249, 245, .08) 100%
+  ) !important;
+  border-color: rgba(251, 249, 245, .42) !important;
+  box-shadow:
+    0 28px 64px -24px rgba(0, 0, 0, .52),
+    inset 0 1px 0 rgba(255, 255, 255, .28) !important;
+}
+
+.on-dark .contact-form::before,
+.contact .contact-form::before {
+  opacity: .28 !important;
+  filter: blur(44px) !important;
+}
+
+.on-dark .field label,
+.contact .field label,
+.on-dark .form-note,
+.contact .form-note {
+  color: #dfe2ea !important;
+}
+
+.on-dark .field input,
+.on-dark .field select,
+.on-dark .field textarea,
+.contact .field input,
+.contact .field select,
+.contact .field textarea {
+  color: #fff !important;
+  background: rgba(251, 249, 245, .11) !important;
+  border-color: rgba(251, 249, 245, .42) !important;
+}
+
+.on-dark .field input::placeholder,
+.on-dark .field textarea::placeholder,
+.contact .field input::placeholder,
+.contact .field textarea::placeholder {
+  color: #d5d9e3 !important;
+  opacity: 1;
+}
+
+.on-dark .field select,
+.contact .field select {
+  color: #f7f7f5 !important;
+}
+
+.footer-col a {
+  opacity: .92 !important;
 }
 
 /* Dark contact forms use a single brighter border as their focus state. */
