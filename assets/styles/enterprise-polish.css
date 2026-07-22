@@ -34,6 +34,44 @@ body.on-dark .nav--scrolled{
   box-shadow:0 10px 30px -24px rgba(0,0,0,.38);
 }
 
+/* Slow ambient movement keeps the hero colour field gently alive. */
+.ambient-blob{
+  transform-origin:50% 50%;
+  will-change:transform;
+  animation:ambient-drift-a 32s cubic-bezier(.45,0,.55,1) infinite alternate;
+}
+.ambient-blob:nth-child(2n){
+  animation-name:ambient-drift-b;
+  animation-duration:38s;
+  animation-delay:-13s;
+}
+.ambient-blob:nth-child(3n){
+  animation-name:ambient-drift-c;
+  animation-duration:35s;
+  animation-delay:-21s;
+}
+@keyframes ambient-drift-a{
+  0%{ transform:translate3d(-1.2%,-.5%,0) scale(1); }
+  50%{ transform:translate3d(1.4%,1%,0) scale(1.035); }
+  100%{ transform:translate3d(.2%,-1.1%,0) scale(1.015); }
+}
+@keyframes ambient-drift-b{
+  0%{ transform:translate3d(1%,-.8%,0) scale(1.025); }
+  50%{ transform:translate3d(-1.5%,.7%,0) scale(.99); }
+  100%{ transform:translate3d(.7%,1.2%,0) scale(1.04); }
+}
+@keyframes ambient-drift-c{
+  0%{ transform:translate3d(-.6%,1%,0) scale(.995); }
+  50%{ transform:translate3d(1.2%,-1.2%,0) scale(1.03); }
+  100%{ transform:translate3d(-1.3%,.2%,0) scale(1.015); }
+}
+@media (prefers-reduced-motion:reduce){
+  .ambient-blob{
+    animation:none !important;
+    transform:none !important;
+  }
+}
+
 /* Motion language ------------------------------------------------------- */
 :root {
   --motion-ease: cubic-bezier(.22, 1, .36, 1);
