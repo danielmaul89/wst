@@ -741,6 +741,13 @@ textarea:focus {
 }
 .footer .footer-top{ padding-bottom:56px !important; }
 .footer .footer-bottom{ margin-top:auto; }
+.footer .brand-logo .cls-1,
+.footer .brand-logo .cls-2,
+.footer .brand-logo .cls-3,
+.footer .brand-logo .cls-4,
+.footer .brand-logo .cls-5{
+  fill:#fff !important;
+}
 
 @media (max-width:640px){
   .footer{
