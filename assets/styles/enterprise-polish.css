@@ -400,6 +400,15 @@ textarea {
   mix-blend-mode: multiply;
 }
 
+.btn.button-light-leaving::after,
+.nav-contact.button-light-leaving::after,
+.card-cta.button-light-leaving::after,
+.glass-cta.button-light-leaving::after,
+.cat-explore.button-light-leaving::after {
+  opacity: 0 !important;
+  transition-duration: 280ms !important;
+}
+
 @media (hover:hover) {
   .btn:hover::after,
   .nav-contact:hover::after,

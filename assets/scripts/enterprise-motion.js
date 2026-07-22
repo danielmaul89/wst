@@ -12,6 +12,7 @@
       var targetX;
       var targetY;
       var animationFrame;
+      var resetTimer;
 
       function setDefaultPosition() {
         var rect = button.getBoundingClientRect();
@@ -45,15 +46,42 @@
       setDefaultPosition();
 
       button.addEventListener('pointermove', function (event) {
+        window.clearTimeout(resetTimer);
+        button.classList.remove('button-light-leaving');
         var rect = button.getBoundingClientRect();
         targetX = event.clientX - rect.left;
         targetY = event.clientY - rect.top;
         moveLight();
       });
 
-      button.addEventListener('pointerleave', function () {
-        setDefaultPosition();
+      button.addEventListener('pointerleave', function (event) {
+        var rect = button.getBoundingClientRect();
+        var exitX = event.clientX - rect.left;
+        var exitY = event.clientY - rect.top;
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var deltaX = exitX - centerX;
+        var deltaY = exitY - centerY;
+        var distance = Math.max(Math.abs(deltaX), Math.abs(deltaY), 1);
+        var extension = 52 / distance;
+
+        targetX = centerX + deltaX * (1 + extension);
+        targetY = centerY + deltaY * (1 + extension);
+        button.classList.add('button-light-leaving');
         moveLight();
+
+        window.clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(function () {
+          targetX = rect.width * .18;
+          targetY = rect.height * .18;
+          currentX = targetX;
+          currentY = targetY;
+          button.style.setProperty('--button-light-x', currentX + 'px');
+          button.style.setProperty('--button-light-y', currentY + 'px');
+          window.requestAnimationFrame(function () {
+            button.classList.remove('button-light-leaving');
+          });
+        }, 300);
       });
     });
   }
