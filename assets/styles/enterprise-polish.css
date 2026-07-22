@@ -789,11 +789,13 @@ textarea:focus {
 
 /* Footer rhythm and a locally anchored blueprint grid. */
 .footer{
+  --footer-grid-unit:96px;
   position:relative;
   z-index:41;
   isolation:isolate;
   overflow:hidden;
-  min-height:480px;
+  height:calc(var(--footer-grid-unit) * 5);
+  min-height:calc(var(--footer-grid-unit) * 5);
   padding:72px 0 40px !important;
 }
 .footer::before{
@@ -803,11 +805,12 @@ textarea:focus {
   z-index:0;
   pointer-events:none;
   background-image:
-    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
-    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px);
-  background-size:96px 96px;
+    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px var(--footer-grid-unit)),
+    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px var(--footer-grid-unit));
+  background-size:var(--footer-grid-unit) var(--footer-grid-unit);
   background-position:0 0;
   opacity:.06;
+  background-origin:border-box;
   box-shadow:
     inset 0 1px 0 rgba(251,249,245,.75),
     inset 0 -1px 0 rgba(251,249,245,.75);
@@ -835,6 +838,7 @@ textarea:focus {
 
 @media (max-width:640px){
   .footer{
+    height:auto;
     min-height:auto;
     padding:64px 0 36px !important;
   }
