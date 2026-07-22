@@ -34,6 +34,33 @@ body.on-dark .nav--scrolled{
   box-shadow:none;
 }
 
+/* Restart the blueprint grid inside dark contact bands so their edge meets
+   the footer on a complete 96px row instead of clipping the page-wide grid. */
+.contact.on-dark{
+  --section-grid-unit:96px;
+  position:relative;
+  z-index:41;
+  isolation:isolate;
+  overflow:hidden;
+}
+.contact.on-dark::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px var(--section-grid-unit)),
+    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px var(--section-grid-unit));
+  background-size:var(--section-grid-unit) var(--section-grid-unit);
+  background-position:0 0;
+  opacity:.06;
+}
+.contact.on-dark > .container{
+  position:relative;
+  z-index:1;
+}
+
 /* Slow ambient movement keeps the hero colour field gently alive. */
 .ambient-blob{
   transform-origin:50% 50%;

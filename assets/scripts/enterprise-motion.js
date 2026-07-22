@@ -404,4 +404,23 @@
       });
     });
   });
+
+  /* Keep dark contact bands on complete blueprint rows. Their locally
+     anchored 96px grid then meets the footer without a clipped cell. */
+  var griddedContactSections = document.querySelectorAll('.contact.on-dark');
+  var gridAlignTimer;
+  function alignContactGridRows() {
+    griddedContactSections.forEach(function (section) {
+      section.style.minHeight = '';
+      var sectionHeight = Math.ceil(section.getBoundingClientRect().height);
+      section.style.minHeight = Math.ceil(sectionHeight / 96) * 96 + 'px';
+    });
+  }
+  if (griddedContactSections.length) {
+    alignContactGridRows();
+    window.addEventListener('resize', function () {
+      window.clearTimeout(gridAlignTimer);
+      gridAlignTimer = window.setTimeout(alignContactGridRows, 140);
+    }, { passive:true });
+  }
 })();
