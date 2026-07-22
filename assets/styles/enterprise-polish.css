@@ -662,7 +662,6 @@ textarea:focus {
   font-size:14.5px;
   transition:background-color 180ms var(--motion-ease), color 180ms var(--motion-ease);
 }
-.select-option:first-child,
 .select-option:last-child{ grid-column:1 / -1; }
 .select-option:hover,
 .select-option:focus-visible{
@@ -677,14 +676,22 @@ textarea:focus {
 
 @media (hover:hover){
   .contact-form .btn-on-dark:hover{
-    background:linear-gradient(145deg, #fff 0%, #e3ddd2 100%) !important;
+    background:linear-gradient(145deg, #fff 0%, var(--paper, #fbf9f5) 100%) !important;
     box-shadow:
-      0 16px 34px -18px rgba(0,0,0,.62),
-      inset 0 0 0 1px rgba(3,11,33,.16),
-      inset 0 -14px 28px rgba(185,154,114,.1),
-      inset 0 1px 0 rgba(255,255,255,.98) !important;
+      0 14px 34px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9) !important;
   }
   .contact-form .btn-on-dark:hover::after{ opacity:.84; }
+}
+
+.contact-form .btn-on-dark::after{
+  background:radial-gradient(
+    100px circle at var(--button-light-x, 18%) var(--button-light-y, 18%),
+    rgba(185,154,114,.32) 0%,
+    rgba(15,42,92,.1) 38%,
+    transparent 72%
+  );
+  mix-blend-mode:multiply;
 }
 
 .footer-col a {

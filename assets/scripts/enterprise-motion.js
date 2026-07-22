@@ -98,6 +98,7 @@
       if (label) menu.setAttribute('aria-labelledby', label.id);
 
       Array.from(select.options).forEach(function (nativeOption, optionIndex) {
+        if (nativeOption.value === '') return;
         var option = document.createElement('button');
         option.type = 'button';
         option.className = 'select-option';
