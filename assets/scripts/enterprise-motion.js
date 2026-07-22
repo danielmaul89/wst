@@ -60,6 +60,132 @@
 
   if (!reduceMotion) setupButtonLighting();
 
+  function setupCustomSelects() {
+    var selects = document.querySelectorAll('.contact-form select');
+
+    selects.forEach(function (select, selectIndex) {
+      if (select.dataset.customized === 'true') return;
+      select.dataset.customized = 'true';
+      select.classList.add('select-native');
+
+      var label = document.querySelector('label[for="' + select.id + '"]');
+      var labelId = (select.id || 'custom-select-' + selectIndex) + '-label';
+      var menuId = (select.id || 'custom-select-' + selectIndex) + '-menu';
+      var valueId = (select.id || 'custom-select-' + selectIndex) + '-value';
+      if (label) label.id = label.id || labelId;
+
+      var shell = document.createElement('div');
+      shell.className = 'select-shell';
+
+      var trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'select-trigger';
+      trigger.setAttribute('aria-haspopup', 'listbox');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-controls', menuId);
+      if (label) trigger.setAttribute('aria-labelledby', label.id + ' ' + valueId);
+
+      var value = document.createElement('span');
+      value.id = valueId;
+      value.textContent = select.options[select.selectedIndex].text;
+      trigger.appendChild(value);
+      trigger.insertAdjacentHTML('beforeend', '<svg width="12" height="8" viewBox="0 0 12 8" aria-hidden="true"><path d="m2 2 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+
+      var menu = document.createElement('div');
+      menu.className = 'select-menu';
+      menu.id = menuId;
+      menu.setAttribute('role', 'listbox');
+      if (label) menu.setAttribute('aria-labelledby', label.id);
+
+      Array.from(select.options).forEach(function (nativeOption, optionIndex) {
+        var option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'select-option';
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', nativeOption.selected ? 'true' : 'false');
+        option.dataset.value = nativeOption.value;
+        option.dataset.index = optionIndex;
+        option.textContent = nativeOption.text;
+        menu.appendChild(option);
+      });
+
+      select.parentNode.insertBefore(shell, select);
+      shell.appendChild(select);
+      shell.appendChild(trigger);
+      shell.appendChild(menu);
+
+      if (label) {
+        label.addEventListener('click', function (event) {
+          event.preventDefault();
+          trigger.focus();
+        });
+      }
+
+      function options() { return Array.from(menu.querySelectorAll('.select-option')); }
+      function closeMenu(returnFocus) {
+        shell.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        if (returnFocus) trigger.focus();
+      }
+      function openMenu() {
+        document.querySelectorAll('.select-shell.is-open').forEach(function (openShell) {
+          if (openShell !== shell) {
+            openShell.classList.remove('is-open');
+            openShell.querySelector('.select-trigger').setAttribute('aria-expanded', 'false');
+          }
+        });
+        shell.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+      function choose(option) {
+        select.value = option.dataset.value;
+        value.textContent = option.textContent;
+        options().forEach(function (item) {
+          item.setAttribute('aria-selected', item === option ? 'true' : 'false');
+        });
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        closeMenu(true);
+      }
+
+      trigger.addEventListener('click', function () {
+        if (shell.classList.contains('is-open')) closeMenu(false);
+        else openMenu();
+      });
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openMenu();
+          var selected = menu.querySelector('[aria-selected="true"]') || options()[0];
+          if (selected) selected.focus();
+        }
+      });
+      menu.addEventListener('click', function (event) {
+        var option = event.target.closest('.select-option');
+        if (option) choose(option);
+      });
+      menu.addEventListener('keydown', function (event) {
+        var items = options();
+        var current = items.indexOf(document.activeElement);
+        var next = current;
+        if (event.key === 'ArrowDown') next = Math.min(current + 1, items.length - 1);
+        else if (event.key === 'ArrowUp') next = Math.max(current - 1, 0);
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = items.length - 1;
+        else if (event.key === 'Escape') { event.preventDefault(); closeMenu(true); return; }
+        else if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); if (current > -1) choose(items[current]); return; }
+        else return;
+        event.preventDefault();
+        if (items[next]) items[next].focus();
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!shell.contains(event.target)) closeMenu(false);
+      });
+    });
+  }
+
+  setupCustomSelects();
+
   if (reduceMotion || !('IntersectionObserver' in window)) return;
 
   root.classList.add('motion-ready');
