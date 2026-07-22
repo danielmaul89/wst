@@ -811,27 +811,34 @@ textarea:focus {
 }
 
 .footer-col a {
+  position:relative;
   display:inline-block;
   opacity: .92 !important;
-  background-image:linear-gradient(90deg, rgba(203,176,138,.72), rgba(255,255,255,.72));
-  background-repeat:no-repeat;
-  background-position:0 100%;
-  background-size:0 1px;
   transition:
     color 320ms var(--motion-ease),
-    opacity 320ms var(--motion-ease),
-    text-shadow 420ms var(--motion-ease),
-    transform 420ms var(--motion-ease),
-    background-size 520ms var(--motion-ease) !important;
+    opacity 320ms var(--motion-ease) !important;
+}
+.footer-col a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:1px;
+  background:rgba(255,255,255,.8);
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform 520ms var(--motion-ease);
+  pointer-events:none;
 }
 @media (hover:hover){
   .footer-col a:hover{
-    color:#fff !important;
-    opacity:1 !important;
-    text-shadow:0 0 18px rgba(203,176,138,.16);
-    transform:translateX(2px);
-    background-size:100% 1px;
+    color:var(--paper, #fbf9f5) !important;
+    opacity:.92 !important;
+    text-shadow:none;
+    transform:none;
   }
+  .footer-col a:hover::after{ transform:scaleX(1); }
 }
 
 /* Footer rhythm and a locally anchored blueprint grid. */
