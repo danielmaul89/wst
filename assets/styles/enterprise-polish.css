@@ -415,8 +415,9 @@ textarea {
 .nav-contact::before,
 .card-cta::before,
 .glass-cta::before {
-  transition-duration: 520ms;
-  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+  background: none !important;
+  opacity: 0 !important;
+  transition: none !important;
 }
 
 @media (hover:hover) {
