@@ -12,6 +12,13 @@ body {
   font-variant-ligatures: common-ligatures;
 }
 
+/* Keep the primary brand mark equally authoritative in navigation and footer. */
+.nav .brand-logo,
+.footer .brand-logo{
+  height:30px !important;
+  width:auto;
+}
+
 /* Navigation remains clear at the top and gains a milky glass tint on scroll. */
 .nav{
   background:transparent;
