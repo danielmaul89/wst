@@ -324,6 +324,14 @@ textarea {
   transition-timing-function: cubic-bezier(.22, 1, .36, 1);
 }
 
+/* The navigation action stays deliberately quieter than page CTAs. */
+.nav-cta .btn,
+.nav-contact {
+  min-height: 42px;
+  padding: 10px 19px;
+  font-size: 13.5px;
+}
+
 .btn-primary,
 .nav-contact,
 .card-cta,
