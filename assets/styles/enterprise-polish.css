@@ -26,12 +26,12 @@ body {
 body:not(.on-dark) .nav--scrolled{
   background:rgba(251,249,245,.72);
   border-bottom-color:rgba(255,255,255,.5);
-  box-shadow:0 10px 30px -24px rgba(3,11,33,.22);
+  box-shadow:none;
 }
 body.on-dark .nav--scrolled{
   background:rgba(251,249,245,.075);
   border-bottom-color:rgba(251,249,245,.12);
-  box-shadow:0 10px 30px -24px rgba(0,0,0,.38);
+  box-shadow:none;
 }
 
 /* Slow ambient movement keeps the hero colour field gently alive. */
