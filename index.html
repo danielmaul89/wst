@@ -742,79 +742,109 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   position:relative;
   isolation:isolate;
   overflow:hidden;
-  padding:clamp(34px,4vw,54px);
+  min-height:560px;
+  padding:clamp(32px,4vw,52px);
   border-radius:12px;
-  color:var(--paper);
+  color:var(--blue-deep);
   background:
-    radial-gradient(circle at 94% 5%, rgba(203,176,138,.16), transparent 35%),
-    linear-gradient(145deg, #0d2450 0%, var(--blue-deep) 72%);
-  box-shadow:0 30px 70px -46px rgba(3,11,33,.55), inset 0 1px 0 rgba(255,255,255,.13);
+    radial-gradient(circle at 82% 16%, rgba(203,176,138,.14), transparent 30%),
+    linear-gradient(145deg, rgba(255,255,255,.9), rgba(243,239,231,.72));
+  border:1px solid rgba(6,8,26,.07);
+  box-shadow:0 30px 70px -52px rgba(3,11,33,.4), inset 0 1px 0 rgba(255,255,255,.9);
 }
 .about-story-kicker{
   display:block;
-  margin-bottom:10px;
-  color:var(--brass-hi);
+  margin-bottom:8px;
+  color:var(--brass-text);
   font-size:11px;
   font-weight:700;
   letter-spacing:.1em;
   text-transform:uppercase;
 }
 .about-story h3{
-  max-width:17ch;
-  margin-bottom:var(--sp-4);
-  color:var(--paper);
-  font-size:clamp(25px,3vw,36px);
+  max-width:16ch;
+  margin:0;
+  color:var(--blue-deep);
+  font-size:clamp(25px,3vw,35px);
   line-height:1.12;
   letter-spacing:-.025em;
 }
-.about-track{
+.about-sketch{
   position:relative;
-  padding-left:36px;
+  min-height:390px;
+  margin-top:18px;
 }
-.about-track::before,
-.about-track::after{
-  content:"";
+.about-sketch-lines{
   position:absolute;
-  left:7px;
-  top:7px;
-  bottom:8px;
-  width:1px;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
 }
-.about-track::before{ background:rgba(255,255,255,.16); }
-.about-track::after{
-  background:linear-gradient(to bottom, var(--brass-hi), rgba(255,255,255,.72));
-  transform:scaleY(0);
-  transform-origin:top;
-  transition:transform 1.8s var(--ease);
+.about-sketch-path,
+.about-sketch-path-ghost{
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
-.about-story.is-visible .about-track::after{ transform:scaleY(1); }
-.about-stage{
-  position:relative;
-  padding:0 0 25px;
+.about-sketch-path-ghost{
+  stroke:rgba(15,42,92,.12);
+  stroke-width:5;
+}
+.about-sketch-path{
+  stroke:var(--blue);
+  stroke-width:2;
+  stroke-dasharray:1100;
+  stroke-dashoffset:1100;
+  transition:stroke-dashoffset 2.4s var(--ease);
+}
+.about-story.is-visible .about-sketch-path{ stroke-dashoffset:0; }
+.about-sketch-arrow{
+  fill:none;
+  stroke:var(--brass);
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
   opacity:0;
-  transform:translateY(14px);
+  transition:opacity .6s var(--ease);
+}
+.about-story.is-visible .about-sketch-arrow{ opacity:1; transition-delay:1.7s; }
+.about-stage{
+  position:absolute;
+  width:min(230px,44%);
+  opacity:0;
+  transform:translateY(12px) rotate(var(--stage-tilt,0deg));
   transition:opacity .75s var(--ease), transform .85s var(--ease);
 }
-.about-stage:last-child{ padding-bottom:0; }
-.about-stage::before{
-  content:"";
-  position:absolute;
-  left:-34px;
-  top:6px;
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  border:2px solid var(--blue-deep);
-  background:var(--brass-hi);
-  box-shadow:0 0 0 4px rgba(203,176,138,.12);
+.about-stage:nth-of-type(1){ left:1%; top:3%; --stage-tilt:-1deg; }
+.about-stage:nth-of-type(2){ right:0; top:38%; --stage-tilt:1deg; }
+.about-stage:nth-of-type(3){ left:8%; bottom:1%; --stage-tilt:-.7deg; }
+.about-story.is-visible .about-stage{ opacity:1; transform:translateY(0) rotate(var(--stage-tilt,0deg)); }
+.about-story.is-visible .about-stage:nth-of-type(1){ transition-delay:.18s; }
+.about-story.is-visible .about-stage:nth-of-type(2){ transition-delay:.72s; }
+.about-story.is-visible .about-stage:nth-of-type(3){ transition-delay:1.28s; }
+.about-stage-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:7px;
 }
-.about-story.is-visible .about-stage{ opacity:1; transform:translateY(0); }
-.about-story.is-visible .about-stage:nth-child(1){ transition-delay:.18s; }
-.about-story.is-visible .about-stage:nth-child(2){ transition-delay:.42s; }
-.about-story.is-visible .about-stage:nth-child(3){ transition-delay:.66s; }
+.about-stage-num{
+  width:38px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  flex:none;
+  color:var(--brass-text);
+  font-size:11px;
+  font-weight:700;
+  border:1.5px solid var(--brass);
+  border-radius:48% 52% 43% 57% / 55% 44% 56% 45%;
+  transform:rotate(-5deg);
+}
 .about-stage h4{
-  margin-bottom:5px;
-  color:var(--paper);
+  margin:0;
+  color:var(--blue-deep);
   font-family:var(--font-display);
   font-size:16px;
   letter-spacing:-.01em;
@@ -822,33 +852,32 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .about-stage p{
   max-width:48ch;
   margin:0;
-  color:var(--ink-soft-on-dark);
+  color:var(--ink-soft);
   font-size:13.5px;
   line-height:1.55;
 }
 .about-result{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  gap:18px;
+  position:absolute;
+  right:clamp(24px,4vw,52px);
+  bottom:clamp(24px,3vw,38px);
+  display:flex;
+  gap:10px;
   align-items:center;
-  margin-top:var(--sp-4);
-  padding-top:var(--sp-3);
-  border-top:1px solid rgba(255,255,255,.14);
+  color:var(--ink-faint);
+  font-size:11px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
 }
 .about-result-num{
-  color:var(--paper);
+  color:var(--blue-deep);
   font-family:var(--font-display);
-  font-size:36px;
+  font-size:22px;
   font-weight:700;
   letter-spacing:-.04em;
   line-height:1;
 }
-.about-result-copy{
-  color:var(--ink-soft-on-dark);
-  font-size:12.5px;
-  line-height:1.5;
-}
-.about-result-copy strong{ display:block; color:var(--paper); font-size:13.5px; }
+.about-result-copy{ color:var(--ink-faint); }
+.about-result-copy strong{ color:var(--blue-deep); font-weight:600; }
 
 /* ============================================================
    6B. THE WAY WE WORK — 4 value-prop cards
@@ -1356,6 +1385,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .cat-grid{ grid-template-columns:1fr; gap:20px; }
   .cat-card{ min-height:500px; padding:24px; }
   .cat-card h3{ font-size:27px; }
+  .about-story{ min-height:690px; padding:30px 24px; }
+  .about-sketch{ min-height:510px; }
+  .about-stage{ width:78%; }
+  .about-stage:nth-of-type(1){ left:0; top:2%; }
+  .about-stage:nth-of-type(2){ right:0; top:36%; }
+  .about-stage:nth-of-type(3){ left:3%; bottom:8%; }
+  .about-result{ right:24px; bottom:22px; }
   .stats-grid{ grid-template-columns:1fr 1fr; }
   .work-row{ grid-template-columns:40px 1fr; }
   .work-num{ display:none; }
@@ -1651,25 +1687,30 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </a>
     </div>
     <div class="about-story">
-      <span class="about-story-kicker">One continuous responsibility</span>
-      <h3>From the first conversation to production release.</h3>
-      <div class="about-track">
+      <span class="about-story-kicker">From brief to production</span>
+      <h3>One continuous responsibility.</h3>
+      <div class="about-sketch">
+        <svg class="about-sketch-lines" viewBox="0 0 620 390" aria-hidden="true">
+          <path class="about-sketch-path-ghost" d="M86 68 C184 24 258 82 296 135 C345 204 501 142 529 210 C558 281 443 312 348 283 C239 250 174 293 118 346"/>
+          <path class="about-sketch-path" d="M84 65 C183 27 252 79 294 137 C343 205 500 145 526 211 C554 279 441 307 349 280 C241 248 169 295 115 344"/>
+          <path class="about-sketch-arrow" d="M111 330 L115 344 L128 337"/>
+        </svg>
         <div class="about-stage">
-          <h4>We begin inside your application</h4>
+          <div class="about-stage-head"><span class="about-stage-num">01</span><h4>Inside your application</h4></div>
           <p>Duty cycle, environment, interfaces and commercial targets establish what the battery must achieve.</p>
         </div>
         <div class="about-stage">
-          <h4>Every engineering decision stays connected</h4>
+          <div class="about-stage-head"><span class="about-stage-num">02</span><h4>One integrated system</h4></div>
           <p>Cell selection, mechanics, thermal design, BMS and firmware are developed as one integrated system in Aarhus.</p>
         </div>
         <div class="about-stage">
-          <h4>The design is proven before it scales</h4>
+          <div class="about-stage-head"><span class="about-stage-num">03</span><h4>Proven before scale</h4></div>
           <p>Prototype validation, compliance and end-of-line test criteria are resolved before production release.</p>
         </div>
       </div>
       <div class="about-result">
         <span class="about-result-num">19+</span>
-        <span class="about-result-copy"><strong>Years of accountable engineering</strong>CE · UN 38.3 · RoHS validated</span>
+        <span class="about-result-copy"><strong>years</strong> · CE · UN 38.3 · RoHS</span>
       </div>
     </div>
   </div>
