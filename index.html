@@ -646,74 +646,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   color:var(--ink-soft);
   font-size:16px;
   max-width:42ch;
-  margin-bottom:0;
-}
-.proof-story{
-  margin:var(--sp-3) 0;
-  border-top:1px solid var(--line);
-}
-.proof-step{
-  position:relative;
-  width:100%;
-  display:grid;
-  grid-template-columns:34px 1fr;
-  column-gap:12px;
-  padding:14px 4px;
-  border:0;
-  border-bottom:1px solid var(--line);
-  background:transparent;
-  color:var(--ink-faint);
-  text-align:left;
-  cursor:pointer;
-  transition:color .5s var(--ease), padding .5s var(--ease);
-}
-.proof-step::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:14px;
-  bottom:14px;
-  width:2px;
-  border-radius:2px;
-  background:var(--brass);
-  transform:scaleY(0);
-  transform-origin:top;
-  transition:transform .55s var(--ease);
-}
-.proof-step-index{
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.08em;
-  color:var(--brass);
-  padding-top:3px;
-}
-.proof-step-title{
-  font-family:var(--font-display);
-  font-size:15px;
-  font-weight:700;
-  letter-spacing:-.01em;
-}
-.proof-step-detail{
-  grid-column:2;
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-4px);
-  color:var(--ink-soft);
-  font-size:13.5px;
-  line-height:1.55;
-  transition:max-height .6s var(--ease), opacity .45s var(--ease), transform .55s var(--ease), margin .55s var(--ease);
-}
-.proof-step.is-active{
-  color:var(--blue-deep);
-  padding-left:10px;
-}
-.proof-step.is-active::before{ transform:scaleY(1); }
-.proof-step.is-active .proof-step-detail{
-  max-height:72px;
-  margin-top:6px;
-  opacity:1;
-  transform:translateY(0);
+  margin-bottom:var(--sp-3);
 }
 .proof-visual{
   position:relative;
@@ -787,11 +720,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* ============================================================
    6. ABOUT — split layout
    ============================================================ */
-.about{ padding:var(--sp-8) 0; }
+.about{ padding:var(--sp-8) 0; background:var(--card); overflow:hidden; }
 .about-grid{
   display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:var(--sp-6);
+  grid-template-columns:.82fr 1.18fr;
+  gap:clamp(56px,7vw,110px);
   align-items:center;
 }
 .about h2{
@@ -805,28 +738,117 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   max-width:52ch;
   margin-bottom:var(--sp-3);
 }
-.about-mini-stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:var(--sp-3);
+.about-story{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(34px,4vw,54px);
+  border-radius:12px;
+  color:var(--paper);
+  background:
+    radial-gradient(circle at 94% 5%, rgba(203,176,138,.16), transparent 35%),
+    linear-gradient(145deg, #0d2450 0%, var(--blue-deep) 72%);
+  box-shadow:0 30px 70px -46px rgba(3,11,33,.55), inset 0 1px 0 rgba(255,255,255,.13);
 }
-.mini-stat{
-  padding:var(--sp-3);
-  background:var(--card);
-  border:1px solid var(--line-2);
-  border-radius:var(--r-lg);
-}
-.mini-stat .num{
-  font-family:var(--font-display);
+.about-story-kicker{
+  display:block;
+  margin-bottom:10px;
+  color:var(--brass-hi);
+  font-size:11px;
   font-weight:700;
-  font-size:28px;
-  letter-spacing:-.02em;
-  margin-bottom:4px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
 }
-.mini-stat .label{
+.about-story h3{
+  max-width:17ch;
+  margin-bottom:var(--sp-4);
+  color:var(--paper);
+  font-size:clamp(25px,3vw,36px);
+  line-height:1.12;
+  letter-spacing:-.025em;
+}
+.about-track{
+  position:relative;
+  padding-left:36px;
+}
+.about-track::before,
+.about-track::after{
+  content:"";
+  position:absolute;
+  left:7px;
+  top:7px;
+  bottom:8px;
+  width:1px;
+}
+.about-track::before{ background:rgba(255,255,255,.16); }
+.about-track::after{
+  background:linear-gradient(to bottom, var(--brass-hi), rgba(255,255,255,.72));
+  transform:scaleY(0);
+  transform-origin:top;
+  transition:transform 1.8s var(--ease);
+}
+.about-story.is-visible .about-track::after{ transform:scaleY(1); }
+.about-stage{
+  position:relative;
+  padding:0 0 25px;
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .75s var(--ease), transform .85s var(--ease);
+}
+.about-stage:last-child{ padding-bottom:0; }
+.about-stage::before{
+  content:"";
+  position:absolute;
+  left:-34px;
+  top:6px;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  border:2px solid var(--blue-deep);
+  background:var(--brass-hi);
+  box-shadow:0 0 0 4px rgba(203,176,138,.12);
+}
+.about-story.is-visible .about-stage{ opacity:1; transform:translateY(0); }
+.about-story.is-visible .about-stage:nth-child(1){ transition-delay:.18s; }
+.about-story.is-visible .about-stage:nth-child(2){ transition-delay:.42s; }
+.about-story.is-visible .about-stage:nth-child(3){ transition-delay:.66s; }
+.about-stage h4{
+  margin-bottom:5px;
+  color:var(--paper);
+  font-family:var(--font-display);
+  font-size:16px;
+  letter-spacing:-.01em;
+}
+.about-stage p{
+  max-width:48ch;
+  margin:0;
+  color:var(--ink-soft-on-dark);
   font-size:13.5px;
-  color:var(--ink-faint);
+  line-height:1.55;
 }
+.about-result{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:18px;
+  align-items:center;
+  margin-top:var(--sp-4);
+  padding-top:var(--sp-3);
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.about-result-num{
+  color:var(--paper);
+  font-family:var(--font-display);
+  font-size:36px;
+  font-weight:700;
+  letter-spacing:-.04em;
+  line-height:1;
+}
+.about-result-copy{
+  color:var(--ink-soft-on-dark);
+  font-size:12.5px;
+  line-height:1.5;
+}
+.about-result-copy strong{ display:block; color:var(--paper); font-size:13.5px; }
 
 /* ============================================================
    6B. THE WAY WE WORK — 4 value-prop cards
@@ -1347,7 +1369,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .component-library-intro .container{ flex-direction:column; gap:10px; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footerline1">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
 </head>
 <body>
 
@@ -1575,34 +1597,18 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <span class="eyebrow">Engineered, not assembled</span>
       <h2>Every detail is built around your application — not pulled off a shelf.</h2>
       <p>From cell chemistry to firmware, every layer of the pack is a decision made for your duty cycle, environment and certification requirements — designed and tested in-house, not sourced from a catalogue.</p>
-      <div class="proof-story" aria-label="How a custom battery system takes shape">
-        <button class="proof-step is-active" type="button" data-proof-step="0">
-          <span class="proof-step-index">01</span>
-          <span class="proof-step-title">Requirements become architecture</span>
-          <span class="proof-step-detail">Voltage, duty cycle, available space and operating environment define the system before hardware is selected.</span>
-        </button>
-        <button class="proof-step" type="button" data-proof-step="1">
-          <span class="proof-step-index">02</span>
-          <span class="proof-step-title">The cell stack is matched</span>
-          <span class="proof-step-detail">Chemistry and cell configuration are balanced around energy, power, lifetime and the realities of your application.</span>
-        </button>
-        <button class="proof-step" type="button" data-proof-step="2">
-          <span class="proof-step-index">03</span>
-          <span class="proof-step-title">Heat and movement are controlled</span>
-          <span class="proof-step-detail">Thermal interfaces and mechanical protection are engineered to preserve performance through real operating conditions.</span>
-        </button>
-        <button class="proof-step" type="button" data-proof-step="3">
-          <span class="proof-step-index">04</span>
-          <span class="proof-step-title">Intelligence completes the system</span>
-          <span class="proof-step-detail">BMS, firmware, communications and connectors are developed around the machine they must work with.</span>
-        </button>
-      </div>
       <a href="#contact" class="link-arrow">Talk to our engineering team
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="proof-visual">
       <img src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
+      <div class="callouts">
+        <div class="callout" style="top:12%; left:35%;"><span class="callout-dot"></span>Custom BMS &amp; relay module</div>
+        <div class="callout" style="top:45%; left:0%;"><span class="callout-dot"></span>Matched cell stack</div>
+        <div class="callout" style="top:57%; left:2%;"><span class="callout-dot"></span>Thermal interface layer</div>
+        <div class="callout" style="top:76%; left:40%;"><span class="callout-dot"></span>Connector &amp; wiring harness</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1636,7 +1642,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
      ============================================================ -->
 <section class="about" id="about">
   <div class="container about-grid">
-    <div>
+    <div class="about-copy">
       <span class="eyebrow">About WS Technicals</span>
       <h2 style="margin-top:16px;">Quality made affordable — by people who've done it for 19 years.</h2>
       <p>We engineer and manufacture custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated.</p>
@@ -1644,11 +1650,27 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">19+</div><div class="label">Years in operation</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering &amp; production</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
+    <div class="about-story">
+      <span class="about-story-kicker">One continuous responsibility</span>
+      <h3>From the first conversation to production release.</h3>
+      <div class="about-track">
+        <div class="about-stage">
+          <h4>We begin inside your application</h4>
+          <p>Duty cycle, environment, interfaces and commercial targets establish what the battery must achieve.</p>
+        </div>
+        <div class="about-stage">
+          <h4>Every engineering decision stays connected</h4>
+          <p>Cell selection, mechanics, thermal design, BMS and firmware are developed as one integrated system in Aarhus.</p>
+        </div>
+        <div class="about-stage">
+          <h4>The design is proven before it scales</h4>
+          <p>Prototype validation, compliance and end-of-line test criteria are resolved before production release.</p>
+        </div>
+      </div>
+      <div class="about-result">
+        <span class="about-result-num">19+</span>
+        <span class="about-result-copy"><strong>Years of accountable engineering</strong>CE · UN 38.3 · RoHS validated</span>
+      </div>
     </div>
   </div>
 </section>
@@ -2117,6 +2139,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/scripts/section-labels.js" defer></script>
-<script src="assets/scripts/enterprise-motion.js?v=proofstory1" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=aboutstory1" defer></script>
 </body>
 </html>

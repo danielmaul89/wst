@@ -257,73 +257,18 @@
 
       visual.classList.add('has-exploded-sequence');
 
-      var proofSection = visual.closest('.proof');
-      var storySteps = proofSection ? proofSection.querySelectorAll('.proof-step') : [];
-      var parts = sequence.querySelectorAll('.exploded-part');
-      var partGroups = [[0, 1], [2], [3, 4], [5]];
-      var activeStoryStep = 0;
-      var storyTimer;
-      var storyPaused = false;
-
-      function activateStoryStep(stepIndex) {
-        activeStoryStep = stepIndex;
-        sequence.classList.add('is-story-active');
-        storySteps.forEach(function (step, index) {
-          var isActive = index === stepIndex;
-          step.classList.toggle('is-active', isActive);
-          step.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-        parts.forEach(function (part, index) {
-          part.classList.toggle('story-active', partGroups[stepIndex].indexOf(index) !== -1);
-        });
-      }
-
-      function stopStory() {
-        window.clearInterval(storyTimer);
-      }
-
-      function startStory() {
-        stopStory();
-        if (storyPaused || !storySteps.length) return;
-        storyTimer = window.setInterval(function () {
-          activateStoryStep((activeStoryStep + 1) % storySteps.length);
-        }, 3200);
-      }
-
-      storySteps.forEach(function (step, index) {
-        step.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
-        step.addEventListener('click', function () {
-          activateStoryStep(index);
-          startStory();
-        });
-        step.addEventListener('focus', function () {
-          activateStoryStep(index);
-          stopStory();
-        });
-      });
-
-      if (proofSection && storySteps.length) {
-        proofSection.addEventListener('pointerenter', function () {
-          storyPaused = true;
-          stopStory();
-        });
-        proofSection.addEventListener('pointerleave', function () {
-          storyPaused = false;
-          startStory();
-        });
-      }
-
       var sequenceObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           sequence.classList.add('is-assembled');
 
-          if (storySteps.length) {
+          var callouts = visual.querySelectorAll('.callout');
+          var calloutDelays = [620, 1080, 1260, 1480];
+          callouts.forEach(function (callout, index) {
             window.setTimeout(function () {
-              activateStoryStep(0);
-              startStory();
-            }, 1050);
-          }
+              callout.classList.add('part-visible');
+            }, calloutDelays[index] || 1480);
+          });
 
           sequenceObserver.disconnect();
         });
@@ -346,6 +291,7 @@
     '.section-head',
     '.spec-line',
     '.about-copy',
+    '.about-story',
     '.contact-copy',
     '.manifesto-copy',
     '.future-copy',
