@@ -87,8 +87,8 @@
   --ink-soft-on-dark:  #AEB3C9;
 
   /* Radii */
-  --r:    8px;
-  --r-lg: 12px;
+  --r:    6px;
+  --r-lg: 10px;
 
   /* Fonts */
   --font-display: 'Geogrotesque', 'Sora', sans-serif;
@@ -518,7 +518,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .cat-card{
   position:relative;
   overflow:hidden;
-  border-radius:16px;
+  border-radius:var(--r-lg);
   padding:32px;
   min-height:510px;
   display:flex;
@@ -598,7 +598,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:8px;
   margin-top:20px;
   padding:12px 19px;
-  border-radius:10px;
+  border-radius:var(--r-lg);
   background:linear-gradient(145deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.46) 100%);
   border:1px solid rgba(255,255,255,.86);
   backdrop-filter:blur(14px) saturate(160%);
@@ -1066,7 +1066,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .contact-detail{
   display:flex;
   gap:var(--sp-2);
-  padding:var(--sp-2) 0;
+  padding:7px 0;
 }
 .contact-detail .k{
   width:110px;
