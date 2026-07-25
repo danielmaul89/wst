@@ -740,78 +740,33 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .about-story{
   position:relative;
-  isolation:isolate;
-  overflow:hidden;
-  min-height:560px;
-  padding:clamp(32px,4vw,52px);
-  border-radius:12px;
   color:var(--blue-deep);
-  background:
-    radial-gradient(circle at 82% 16%, rgba(203,176,138,.14), transparent 30%),
-    linear-gradient(145deg, rgba(255,255,255,.9), rgba(243,239,231,.72));
-  border:1px solid rgba(6,8,26,.07);
-  box-shadow:0 30px 70px -52px rgba(3,11,33,.4), inset 0 1px 0 rgba(255,255,255,.9);
-}
-.about-story-kicker{
-  display:block;
-  margin-bottom:8px;
-  color:var(--brass-text);
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-}
-.about-story h3{
-  max-width:16ch;
-  margin:0;
-  color:var(--blue-deep);
-  font-size:clamp(25px,3vw,35px);
-  line-height:1.12;
-  letter-spacing:-.025em;
 }
 .about-sketch{
   position:relative;
-  min-height:390px;
-  margin-top:18px;
+  min-height:560px;
 }
-.about-sketch-lines{
+.about-sketch-image{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  overflow:visible;
-}
-.about-sketch-path,
-.about-sketch-path-ghost{
-  fill:none;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.about-sketch-path-ghost{
-  stroke:rgba(15,42,92,.12);
-  stroke-width:5;
-}
-.about-sketch-path{
-  stroke:var(--blue);
-  stroke-width:2;
-  stroke-dasharray:1100;
-  stroke-dashoffset:1100;
-  transition:stroke-dashoffset 2.4s var(--ease);
-}
-.about-story.is-visible .about-sketch-path{ stroke-dashoffset:0; }
-.about-sketch-arrow{
-  fill:none;
-  stroke:var(--brass);
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+  object-fit:contain;
   opacity:0;
-  transition:opacity .6s var(--ease);
+  transform:scale(.96);
+  transition:opacity 1.1s var(--ease), transform 1.1s var(--ease);
 }
-.about-story.is-visible .about-sketch-arrow{ opacity:1; transition-delay:1.7s; }
+.about-story.is-visible .about-sketch-image{ opacity:1; transform:scale(1); }
 .about-stage{
   position:absolute;
   width:min(230px,44%);
+  padding:12px 14px;
+  background:rgba(251,249,245,.94);
+  border:1px solid var(--line-2);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-md);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
   opacity:0;
   transform:translateY(12px) rotate(var(--stage-tilt,0deg));
   transition:opacity .75s var(--ease), transform .85s var(--ease);
@@ -856,28 +811,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   font-size:13.5px;
   line-height:1.55;
 }
-.about-result{
-  position:absolute;
-  right:clamp(24px,4vw,52px);
-  bottom:clamp(24px,3vw,38px);
-  display:flex;
-  gap:10px;
-  align-items:center;
-  color:var(--ink-faint);
-  font-size:11px;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-}
-.about-result-num{
-  color:var(--blue-deep);
-  font-family:var(--font-display);
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:-.04em;
-  line-height:1;
-}
-.about-result-copy{ color:var(--ink-faint); }
-.about-result-copy strong{ color:var(--blue-deep); font-weight:600; }
 
 /* ============================================================
    6B. THE WAY WE WORK — 4 value-prop cards
@@ -1385,13 +1318,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .cat-grid{ grid-template-columns:1fr; gap:20px; }
   .cat-card{ min-height:500px; padding:24px; }
   .cat-card h3{ font-size:27px; }
-  .about-story{ min-height:690px; padding:30px 24px; }
-  .about-sketch{ min-height:510px; }
+  .about-sketch{ min-height:620px; }
   .about-stage{ width:78%; }
   .about-stage:nth-of-type(1){ left:0; top:2%; }
   .about-stage:nth-of-type(2){ right:0; top:36%; }
   .about-stage:nth-of-type(3){ left:3%; bottom:8%; }
-  .about-result{ right:24px; bottom:22px; }
   .stats-grid{ grid-template-columns:1fr 1fr; }
   .work-row{ grid-template-columns:40px 1fr; }
   .work-num{ display:none; }
@@ -1655,8 +1586,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="stats on-dark">
   <div class="container stats-grid">
     <div class="stat-item">
-      <div class="stat-num">19+</div>
-      <div class="stat-label">Years engineering custom power systems</div>
+      <div class="stat-num">2015</div>
+      <div class="stat-label">Founded as an intra-logistics spin-off</div>
     </div>
     <div class="stat-item">
       <div class="stat-num">6</div>
@@ -1680,21 +1611,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   <div class="container about-grid">
     <div class="about-copy">
       <span class="eyebrow">About WS Technicals</span>
-      <h2 style="margin-top:16px;">Quality made affordable — by people who've done it for 19 years.</h2>
+      <h2 style="margin-top:16px;">Quality made affordable — focused on custom battery systems since 2015.</h2>
       <p>We engineer and manufacture custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated.</p>
       <a href="#contact" class="link-arrow">Get in touch
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="about-story">
-      <span class="about-story-kicker">From brief to production</span>
-      <h3>One continuous responsibility.</h3>
       <div class="about-sketch">
-        <svg class="about-sketch-lines" viewBox="0 0 620 390" aria-hidden="true">
-          <path class="about-sketch-path-ghost" d="M86 68 C184 24 258 82 296 135 C345 204 501 142 529 210 C558 281 443 312 348 283 C239 250 174 293 118 346"/>
-          <path class="about-sketch-path" d="M84 65 C183 27 252 79 294 137 C343 205 500 145 526 211 C554 279 441 307 349 280 C241 248 169 295 115 344"/>
-          <path class="about-sketch-arrow" d="M111 330 L115 344 L128 337"/>
-        </svg>
+        <img class="about-sketch-image" src="assets/sketches/xwd_egholm_exploded_transparent_print_sketch.png" alt="Hand-illustrated exploded view of a WS Technicals battery pack — enclosure, cell block, thermal layer and BMS" loading="lazy">
         <div class="about-stage">
           <div class="about-stage-head"><span class="about-stage-num">01</span><h4>Inside your application</h4></div>
           <p>Duty cycle, environment, interfaces and commercial targets establish what the battery must achieve.</p>
@@ -1707,10 +1632,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <div class="about-stage-head"><span class="about-stage-num">03</span><h4>Proven before scale</h4></div>
           <p>Prototype validation, compliance and end-of-line test criteria are resolved before production release.</p>
         </div>
-      </div>
-      <div class="about-result">
-        <span class="about-result-num">19+</span>
-        <span class="about-result-copy"><strong>years</strong> · CE · UN 38.3 · RoHS</span>
       </div>
     </div>
   </div>

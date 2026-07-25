@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>About us — WS Technicals</title>
-<meta name="description" content="Founded in 2015 as a spin-off from the intra-logistics sector, WS Technicals engineers custom lithium battery systems from Aarhus, Denmark.">
+<title>BMS Solutions — WS Technicals</title>
+<meta name="description" content="In-house battery management systems — i-BMS, n-BMS, n3-BMS and c-BMS24x — engineered around your pack, not the other way around.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,7 +70,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .ambient-blob-6{ width:2000px; height:2000px; top:52%; right:-15%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.48; }
 .ambient-blob-7{ width:2240px; height:2240px; top:65%; left:-16%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.42; }
 .ambient-blob-8{ width:1920px; height:1920px; top:78%; right:-13%; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 66%); opacity:.4; }
-.about-section .container{ position:relative; z-index:1; }
 
 .blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
 
@@ -107,35 +106,36 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .page-hero h1{ font-size:clamp(34px, 5vw, 60px); letter-spacing:-0.035em; }
 .page-hero p{ max-width:600px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft); line-height:1.65; }
 
-.about-section{ padding:var(--sp-3) 0 var(--sp-8); }
-.about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
-.about-grid h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); max-width:16ch; }
-.about-grid p{ color:var(--ink-soft); font-size:16px; max-width:52ch; margin-bottom:var(--sp-3); }
-.about-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
-.mini-stat{ padding:var(--sp-3); background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); }
-.mini-stat .num{ font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.02em; margin-bottom:4px; }
-.mini-stat .label{ font-size:13.5px; color:var(--ink-faint); }
-
 .section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
 .section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
 .section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
 
-.work{ background:var(--card); padding:var(--sp-8) 0; }
-.work-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.work-card{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.work-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.work-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-2); }
-.work-icon svg{ stroke:var(--blue); }
-.work-card h3{ font-size:17px; margin-bottom:6px; letter-spacing:-.01em; }
-.work-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+/* Signature moment: a platform switcher. Instead of four flat cards, the
+   visitor steps through the platforms one at a time — the tag/name strip
+   drives a detail panel with a per-platform glyph, so the choice of
+   platform feels like a deliberate selection rather than a scan. */
+.bms{ padding:var(--sp-3) 0 var(--sp-8); }
+.platform-switch{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-2); margin-bottom:var(--sp-4); }
+.platform-tab{ position:relative; text-align:left; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-3); transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.platform-tab:hover{ transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+.platform-tab .tag{ display:block; font-family:var(--font-mono); font-size:10.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+.platform-tab .name{ display:block; font-family:var(--font-display); font-weight:700; font-size:19px; letter-spacing:-.02em; }
+.platform-tab::after{ content:""; position:absolute; left:var(--sp-3); right:var(--sp-3); bottom:0; height:2px; background:var(--brass); transform:scaleX(0); transform-origin:left center; transition:transform .4s var(--ease); }
+.platform-tab[aria-selected="true"]{ border-color:var(--brass); box-shadow:var(--shadow-md); }
+.platform-tab[aria-selected="true"] .tag{ color:var(--brass); }
+.platform-tab[aria-selected="true"]::after{ transform:scaleX(1); }
 
-.career{ background:var(--paper-2); padding:var(--sp-8) 0; }
-.career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
-.career-grid h2{ font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); max-width:14ch; }
-.career-grid p{ color:var(--ink-soft); font-size:16px; max-width:48ch; margin-bottom:var(--sp-3); }
-.career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
-.career-card h3{ font-size:18px; margin-bottom:8px; }
-.career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
+.platform-panels{ position:relative; }
+.platform-panel{ display:none; grid-template-columns:auto 1fr; gap:var(--sp-4); align-items:flex-start; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); scroll-margin-top:100px; }
+.platform-panel[data-active="true"]{ display:grid; animation:panel-in .5s var(--ease); }
+@keyframes panel-in{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+.platform-glyph{ width:64px; height:64px; border-radius:50%; background:var(--paper-2); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; flex:none; }
+.platform-glyph svg{ stroke:var(--blue); }
+.platform-copy h3{ font-size:24px; margin-bottom:8px; letter-spacing:-.02em; }
+.platform-copy .desc{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:var(--sp-3); max-width:56ch; }
+.bms-points{ display:flex; flex-direction:column; gap:8px; }
+.bms-points li{ font-size:14px; color:var(--ink-soft); padding-left:18px; position:relative; }
+.bms-points li::before{ content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--brass); }
 
 .cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
@@ -166,15 +166,14 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
-  .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
-  .work-grid{ grid-template-columns:repeat(2, 1fr); }
-  .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .platform-switch{ grid-template-columns:1fr 1fr; }
+  .platform-panel{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
-  .work-grid{ grid-template-columns:1fr; }
+  .platform-switch{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
@@ -253,16 +252,16 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <a href="production.html#supply-chain">Supply Chain</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a href="bms.html" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <li class="nav-item current">
+          <a href="bms-v2.html" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="bms.html#i-bms">i-BMS</a>
-            <a href="bms.html#n-bms">n-BMS</a>
-            <a href="bms.html#n3-bms">n3-BMS</a>
-            <a href="bms.html#c-bms24x">c-BMS24x</a>
+            <a href="bms-v2.html#i-bms">i-BMS</a>
+            <a href="bms-v2.html#n-bms">n-BMS</a>
+            <a href="bms-v2.html#n3-bms">n3-BMS</a>
+            <a href="bms-v2.html#c-bms24x">c-BMS24x</a>
           </div>
         </li>
-        <li class="nav-item current">
+        <li class="nav-item">
           <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="about.html#company">Company</a>
@@ -285,84 +284,93 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <section class="page-hero">
   <div class="container page-hero-inner">
-    <span class="eyebrow">About WS Technicals</span>
-    <h1>Custom battery engineering — focused since 2015.</h1>
-    <p>We deliver complete lithium battery solutions — from concept to certified production — combining speed, innovation and efficiency with state-of-the-art manufacturing technology.</p>
+    <span class="eyebrow">BMS Solutions</span>
+    <h1>Battery management systems, engineered in-house.</h1>
+    <p>Our BMS team designs the electronics and firmware around your pack — not the other way around. Four platforms cover the full range, from compact low-voltage packs to highly specialized, safety-critical systems.</p>
   </div>
 </section>
 
-<section class="about-section" id="company">
-  <div class="container about-grid">
-    <div>
-      <h2>Engineering-led, from Aarhus.</h2>
-      <p>WS Technicals designs and manufactures custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated. Lithium batteries from WS Technicals power applications across every sector: AGVs and AMRs, drones, forklifts, cleaning machines, ground support equipment, heavy-duty construction equipment and small last-mile delivery robots.</p>
-      <a href="contact.html" class="link-arrow">Get in touch
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">2015</div><div class="label">Founded as an intra-logistics spin-off</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering headquarters</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="work">
+<section class="bms" id="bms-grid">
   <div class="container">
-    <div class="section-head">
-      <h2>The way we work.</h2>
-      <p>Four principles that carry through every project, regardless of application or volume.</p>
-    </div>
-    <div class="work-grid">
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
-        <h3>Turn-Key Solutions</h3>
-        <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
-        <h3>Competitive Solution</h3>
-        <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
-        <h3>State of the Art Technology</h3>
-        <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
-        <h3>End-of-Line Testing</h3>
-        <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="career" id="career">
-  <div class="container career-grid">
-    <div>
-      <span class="eyebrow">Career</span>
-      <h2 style="margin-top:16px;">Build custom battery systems with us.</h2>
-      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications — not just spec sheets — we'd like to hear from you.</p>
-      <a href="contact.html" class="link-arrow">Get in touch about opportunities
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+    <div class="platform-switch" id="platformSwitch" role="tablist" aria-label="BMS platforms">
+      <button class="platform-tab" role="tab" data-target="i-bms" aria-selected="false" aria-controls="i-bms">
+        <span class="tag">Low Voltage</span><span class="name">i-BMS</span>
+      </button>
+      <button class="platform-tab" role="tab" data-target="n-bms" aria-selected="false" aria-controls="n-bms">
+        <span class="tag">High Voltage</span><span class="name">n-BMS</span>
+      </button>
+      <button class="platform-tab" role="tab" data-target="n3-bms" aria-selected="false" aria-controls="n3-bms">
+        <span class="tag">Fast Charge</span><span class="name">n3-BMS</span>
+      </button>
+      <button class="platform-tab" role="tab" data-target="c-bms24x" aria-selected="false" aria-controls="c-bms24x">
+        <span class="tag">Highly Specialized</span><span class="name">c-BMS24x</span>
+      </button>
     </div>
-    <div class="career-card">
-      <h3>Open positions</h3>
-      <p>We don't have specific openings listed here yet — but we're always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
-      <a href="contact.html" class="btn btn-primary">Send an open application</a>
+
+    <div class="platform-panels" id="platformPanels">
+
+      <article class="platform-panel" id="i-bms" role="tabpanel">
+        <div class="platform-glyph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></div>
+        <div class="platform-copy">
+          <h3>i-BMS</h3>
+          <p class="desc">Our entry platform for compact, low-voltage packs — sized for robotics, drones and portable equipment where every gram and cubic centimetre counts.</p>
+          <ul class="bms-points">
+            <li>Compact form factor for space-constrained packs</li>
+            <li>Cell balancing and protection tuned for small-format cells</li>
+            <li>CANBUS / UART communication as standard</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="platform-panel" id="n-bms" role="tabpanel">
+        <div class="platform-glyph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 20V10M9 20V4M14 20v-7M19 20v-11"/></svg></div>
+        <div class="platform-copy">
+          <h3>n-BMS</h3>
+          <p class="desc">A high-voltage platform built for heavy machinery, marine and industrial power systems that need to run all day, every day.</p>
+          <ul class="bms-points">
+            <li>Scales across multi-module, high-voltage pack architectures</li>
+            <li>Robust protection for demanding duty cycles</li>
+            <li>Designed for integration with vehicle and machine control systems</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="platform-panel" id="n3-bms" role="tabpanel">
+        <div class="platform-glyph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke-linejoin="round"/></svg></div>
+        <div class="platform-copy">
+          <h3>n3-BMS</h3>
+          <p class="desc">Optimized for high-current fast-charge applications, where minimizing downtime between shifts or routes is the whole point.</p>
+          <ul class="bms-points">
+            <li>Charge management engineered for minimal downtime</li>
+            <li>Thermal monitoring tuned for high-current charge cycles</li>
+            <li>Suited to material handling and last-mile delivery fleets</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="platform-panel" id="c-bms24x" role="tabpanel">
+        <div class="platform-glyph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 3 4 6v6c0 4.5 3 7.5 8 9 5-1.5 8-4.5 8-9V6l-8-3Z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="platform-copy">
+          <h3>c-BMS24x</h3>
+          <p class="desc">A configurable platform for specialized or highly regulated applications — defense, maritime and continuous-duty systems that need custom firmware.</p>
+          <ul class="bms-points">
+            <li>Application-specific firmware development</li>
+            <li>Built for continuous, always-on monitoring</li>
+            <li>Custom protocol and integration work on request</li>
+          </ul>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
 
 <section class="cta-band">
   <div class="container">
-    <h2>Want to know more about WS Technicals?</h2>
-    <p>Whether it's a project, a partnership, or a career conversation — get in touch.</p>
-    <a href="contact.html" class="btn btn-on-dark">Contact us</a>
+    <h2>Not sure which platform fits?</h2>
+    <p>Tell us about your voltage class, duty cycle and charge requirements — we'll recommend the right BMS platform, or build a custom one.</p>
+    <a href="contact.html" class="btn btn-on-dark">Talk to a BMS engineer</a>
   </div>
 </section>
 
@@ -421,7 +429,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <li><a href="production.html#facility">Production Facility</a></li>
           <li><a href="production.html#quality">Quality &amp; Testing</a></li>
           <li><a href="production.html#passport">Battery Passport</a></li>
-          <li><a href="bms.html">BMS Solutions</a></li>
+          <li><a href="bms-v2.html">BMS Solutions</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -472,6 +480,44 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       body.classList.remove('menu-open');
       toggle.setAttribute('aria-expanded', 'false');
     });
+  });
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.platform-tab'));
+  var panels = {};
+  document.querySelectorAll('.platform-panel').forEach(function(panel){ panels[panel.id] = panel; });
+
+  function activate(id, opts){
+    opts = opts || {};
+    tabs.forEach(function(tab){
+      var isMatch = tab.dataset.target === id;
+      tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      tab.tabIndex = isMatch ? 0 : -1;
+    });
+    Object.keys(panels).forEach(function(key){
+      panels[key].removeAttribute('data-active');
+    });
+    if (panels[id]) panels[id].setAttribute('data-active', 'true');
+    if (opts.scroll && panels[id]) panels[id].scrollIntoView({ block: 'start' });
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ activate(tab.dataset.target); });
+    tab.addEventListener('keydown', function(e){
+      var idx = tabs.indexOf(tab);
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(idx + 1) % tabs.length];
+      else if (e.key === 'ArrowLeft') next = tabs[(idx - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); next.focus(); activate(next.dataset.target); }
+    });
+  });
+
+  var initial = (window.location.hash || '').replace('#', '');
+  if (!panels[initial]) initial = 'i-bms';
+  activate(initial, { scroll: !!window.location.hash });
+
+  window.addEventListener('hashchange', function(){
+    var id = (window.location.hash || '').replace('#', '');
+    if (panels[id]) activate(id, { scroll: true });
   });
 })();
 </script>

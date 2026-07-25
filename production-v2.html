@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>About us — WS Technicals</title>
-<meta name="description" content="Founded in 2015 as a spin-off from the intra-logistics sector, WS Technicals engineers custom lithium battery systems from Aarhus, Denmark.">
+<title>Production — WS Technicals</title>
+<meta name="description" content="State-of-the-art turn-key lithium battery production with our trusted partner HAIDI in China — quality, traceability and scale.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,7 +70,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .ambient-blob-6{ width:2000px; height:2000px; top:52%; right:-15%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.48; }
 .ambient-blob-7{ width:2240px; height:2240px; top:65%; left:-16%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.42; }
 .ambient-blob-8{ width:1920px; height:1920px; top:78%; right:-13%; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 66%); opacity:.4; }
-.about-section .container{ position:relative; z-index:1; }
+.about .container, .production .container{ position:relative; z-index:1; }
 
 .blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
 
@@ -103,43 +103,69 @@ body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); backgro
 body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
 
 .page-hero{ padding:var(--sp-6) 0 var(--sp-5); text-align:center; overflow:hidden; }
-.page-hero-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
+.page-hero-inner{ max-width:780px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
 .page-hero h1{ font-size:clamp(34px, 5vw, 60px); letter-spacing:-0.035em; }
-.page-hero p{ max-width:600px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft); line-height:1.65; }
+.page-hero p{ max-width:620px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft); line-height:1.65; }
 
-.about-section{ padding:var(--sp-3) 0 var(--sp-8); }
-.about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
-.about-grid h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); max-width:16ch; }
-.about-grid p{ color:var(--ink-soft); font-size:16px; max-width:52ch; margin-bottom:var(--sp-3); }
-.about-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
-.mini-stat{ padding:var(--sp-3); background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); }
-.mini-stat .num{ font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.02em; margin-bottom:4px; }
-.mini-stat .label{ font-size:13.5px; color:var(--ink-faint); }
+.media-frame{ position:relative; aspect-ratio:21/8; overflow:hidden; border:1px solid var(--line-2); margin-bottom:var(--sp-2); }
+.media-frame img{ width:100%; height:100%; object-fit:cover; }
+.media-frame::after{ content:""; position:absolute; inset:0; background:linear-gradient(100deg, rgba(3,11,33,.55) 0%, rgba(3,11,33,.05) 45%, transparent 65%); }
+.media-frame .banner-copy{ position:absolute; left:var(--sp-4); bottom:var(--sp-4); color:var(--paper); max-width:34ch; z-index:2; }
+.media-frame .banner-copy .spec-line .label{ color:var(--ink-soft-on-dark); }
+.media-frame .banner-copy .spec-line .rule{ background:rgba(251,249,245,.3); }
+.media-frame .banner-copy p{ font-size:14.5px; line-height:1.5; color:var(--ink-soft-on-dark); }
+.corner{ position:absolute; width:16px; height:16px; border-color:var(--brass-hi); border-style:solid; border-width:0; z-index:3; pointer-events:none; }
+.corner.tl{ top:0; left:0; border-top-width:1.5px; border-left-width:1.5px; }
+.corner.tr{ top:0; right:0; border-top-width:1.5px; border-right-width:1.5px; }
+.corner.bl{ bottom:0; left:0; border-bottom-width:1.5px; border-left-width:1.5px; }
+.corner.br{ bottom:0; right:0; border-bottom-width:1.5px; border-right-width:1.5px; }
+.spec-line{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.spec-line .idx{ font-family:var(--font-mono); font-weight:500; font-size:12.5px; color:var(--brass-hi); flex:none; }
+.spec-line .rule{ width:36px; height:1px; background:var(--line-2); flex:none; }
+.spec-line .label{ font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+.journey-media{ padding:0 0 var(--sp-6); }
+
+.stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-4); }
+.stat-item{ padding-left:var(--sp-3); }
+.stat-num{ font-family:var(--font-display); font-weight:800; font-size:clamp(36px,4.6vw,60px); letter-spacing:-0.04em; line-height:1; color:var(--paper); margin-bottom:10px; }
+.stat-label{ font-size:14px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
+
+/* Signature moment: capacity figures count up into place as the strip
+   scrolls into view, so the scale of the facility reads as a moment
+   rather than a static label. */
+.stat-num[data-count]{ opacity:0; transform:translateY(10px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.stat-num[data-count].counted{ opacity:1; transform:translateY(0); }
+
+/* Signature moment: capability tiles and traceability cards rise into
+   view in sequence, echoing the step-by-step nature of the process. */
+.tile, .info-card{ opacity:0; transform:translateY(16px); transition:opacity .6s var(--ease), transform .6s var(--ease), box-shadow var(--dur) var(--ease); }
+.tile.in-view, .info-card.in-view{ opacity:1; transform:translateY(0); }
 
 .section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
 .section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
 .section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
 
-.work{ background:var(--card); padding:var(--sp-8) 0; }
-.work-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.work-card{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.work-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.work-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-2); }
-.work-icon svg{ stroke:var(--blue); }
-.work-card h3{ font-size:17px; margin-bottom:6px; letter-spacing:-.01em; }
-.work-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.production{ padding:var(--sp-8) 0; }
+.tile-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-3); }
+.tile{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); min-height:180px; display:flex; flex-direction:column; justify-content:space-between; background:var(--card); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.tile:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
+.tile-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--paper-2); display:flex; align-items:center; justify-content:center; }
+.tile-icon svg{ stroke:var(--blue); }
+.tile h3{ font-size:17px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
+.tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
 
-.career{ background:var(--paper-2); padding:var(--sp-8) 0; }
-.career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
-.career-grid h2{ font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); max-width:14ch; }
-.career-grid p{ color:var(--ink-soft); font-size:16px; max-width:48ch; margin-bottom:var(--sp-3); }
-.career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
-.career-card h3{ font-size:18px; margin-bottom:8px; }
-.career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
+.traceability{ background:var(--paper-2); padding:var(--sp-8) 0; }
+.card-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-3); }
+.info-card{ background:var(--card); border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-4) var(--sp-3); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); scroll-margin-top:100px; }
+.info-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
+.info-tag{ display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); border:1px solid var(--line-2); padding:4px 10px; margin-bottom:var(--sp-2); }
+.info-card h3{ font-size:19px; margin-bottom:8px; letter-spacing:-.01em; }
+.info-card p{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
 
-.cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
+.cta-band{ background:var(--card); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
-.cta-band p{ color:var(--ink-soft-on-dark); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
+.cta-band p{ color:var(--ink-soft); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
 
 .footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
 .footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); border-bottom:1px solid rgba(251,249,245,.12); }
@@ -166,15 +192,17 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
-  .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
-  .work-grid{ grid-template-columns:repeat(2, 1fr); }
-  .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
+  .tile-grid{ grid-template-columns:repeat(2, 1fr); }
+  .card-grid{ grid-template-columns:repeat(2, 1fr); }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
-  .work-grid{ grid-template-columns:1fr; }
+  .stats-grid{ grid-template-columns:1fr 1fr; }
+  .tile-grid{ grid-template-columns:1fr; }
+  .card-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
@@ -244,13 +272,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <a href="development.html#mass-production">Mass Production</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a href="production.html" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <li class="nav-item current">
+          <a href="production-v2.html" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="production.html#facility">Production Facility</a>
-            <a href="production.html#quality">Quality &amp; Testing</a>
-            <a href="production.html#passport">Battery Passport</a>
-            <a href="production.html#supply-chain">Supply Chain</a>
+            <a href="production-v2.html#facility">Production Facility</a>
+            <a href="production-v2.html#quality">Quality &amp; Testing</a>
+            <a href="production-v2.html#passport">Battery Passport</a>
+            <a href="production-v2.html#supply-chain">Supply Chain</a>
           </div>
         </li>
         <li class="nav-item">
@@ -262,7 +290,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <a href="bms.html#c-bms24x">c-BMS24x</a>
           </div>
         </li>
-        <li class="nav-item current">
+        <li class="nav-item">
           <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="about.html#company">Company</a>
@@ -285,84 +313,106 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <section class="page-hero">
   <div class="container page-hero-inner">
-    <span class="eyebrow">About WS Technicals</span>
-    <h1>Custom battery engineering — focused since 2015.</h1>
-    <p>We deliver complete lithium battery solutions — from concept to certified production — combining speed, innovation and efficiency with state-of-the-art manufacturing technology.</p>
+    <span class="eyebrow">Production</span>
+    <h1>With a state-of-the-art production base in China, we manufacture turn-key lithium battery packs to your specifications.</h1>
+    <p>We seek to become the preferred partner for industrial OEMs in Europe — production is handled by our trusted partner, HAIDI, with full traceability back to WS Technicals' engineering.</p>
   </div>
 </section>
 
-<section class="about-section" id="company">
-  <div class="container about-grid">
-    <div>
-      <h2>Engineering-led, from Aarhus.</h2>
-      <p>WS Technicals designs and manufactures custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated. Lithium batteries from WS Technicals power applications across every sector: AGVs and AMRs, drones, forklifts, cleaning machines, ground support equipment, heavy-duty construction equipment and small last-mile delivery robots.</p>
-      <a href="contact.html" class="link-arrow">Get in touch
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">2015</div><div class="label">Founded as an intra-logistics spin-off</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering headquarters</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
+<section class="journey-media">
+  <div class="container">
+    <div class="media-frame">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <img src="assets/unsplash/production-line-web.jpg" alt="Automated lithium battery production line">
+      <div class="banner-copy">
+        <div class="spec-line"><span class="idx">HAIDI FACILITY</span><span class="rule"></span><span class="label">Production Partner</span></div>
+        <p>Automated assembly, welding and end-of-line testing — the same quality process regardless of order volume.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="work">
+<section class="stats on-dark" id="facility">
+  <div class="container stats-grid">
+    <div class="stat-item"><div class="stat-num" data-count="30000" data-suffix="+">0</div><div class="stat-label">m² of production floor</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="200000" data-suffix="+">0</div><div class="stat-label">Packs produced per year</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="3">0</div><div class="stat-label">Assembly line types — manual, semi- and fully automatic</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="3">0</div><div class="stat-label">Weld processes — spot, laser and automated testing lines</div></div>
+  </div>
+</section>
+
+<section class="production" id="quality">
   <div class="container">
     <div class="section-head">
-      <h2>The way we work.</h2>
-      <p>Four principles that carry through every project, regardless of application or volume.</p>
+      <h2>Capabilities built for volume — without losing control.</h2>
+      <p>Manual, semi- and fully automatic lines flex to your order size, while every pack is welded, tested and traced the same way regardless of volume.</p>
     </div>
-    <div class="work-grid">
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
-        <h3>Turn-Key Solutions</h3>
-        <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
+    <div class="tile-grid">
+      <div class="tile">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
+        <div>
+          <h3>Assembly Lines</h3>
+          <p>Manual, semi-, and fully automatic assembly lines scale from prototype runs to volume production.</p>
+        </div>
       </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
-        <h3>Competitive Solution</h3>
-        <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
+      <div class="tile">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2v16M4 6l6-4 6 4M4 14l6 4 6-4"/></svg></div>
+        <div>
+          <h3>Welding</h3>
+          <p>Spot-welding and laser-welding processes matched to cell format and pack architecture.</p>
+        </div>
       </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
-        <h3>State of the Art Technology</h3>
-        <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
-        <h3>End-of-Line Testing</h3>
-        <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
+      <div class="tile">
+        <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
+        <div>
+          <h3>Testing</h3>
+          <p>High-voltage testing, air-leak testing and electrical safety testing on every unit before release.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="career" id="career">
-  <div class="container career-grid">
-    <div>
-      <span class="eyebrow">Career</span>
-      <h2 style="margin-top:16px;">Build custom battery systems with us.</h2>
-      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications — not just spec sheets — we'd like to hear from you.</p>
-      <a href="contact.html" class="link-arrow">Get in touch about opportunities
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+<section class="traceability" id="passport">
+  <div class="container">
+    <div class="section-head">
+      <h2>Traceability &amp; compliance, built into the process.</h2>
+      <p>Every pack carries a documented history — from cell to finished product.</p>
     </div>
-    <div class="career-card">
-      <h3>Open positions</h3>
-      <p>We don't have specific openings listed here yet — but we're always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
-      <a href="contact.html" class="btn btn-primary">Send an open application</a>
+    <div class="card-grid">
+      <div class="info-card">
+        <span class="info-tag">EOL</span>
+        <h3>End-of-Line Testing</h3>
+        <p>Every pack is automatically tested at the end of the line — voltage, capacity, insulation and safety checks against its agreed specification — before it's approved for shipment.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-tag">FLOW</span>
+        <h3>Production Flow Control</h3>
+        <p>Each unit is tracked through every production step, so we know exactly which components, operators and test results are tied to a given serial number.</p>
+      </div>
+      <div class="info-card" id="passport-card">
+        <span class="info-tag">Battery Passport</span>
+        <h3>Digital Battery Passport</h3>
+        <p>In line with the EU Battery Regulation, we prepare packs for digital passport requirements — origin, materials, carbon footprint and lifecycle data, ready for compliance from 2027 onward.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats on-dark" id="supply-chain">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:var(--sp-4);">
+      <h2 style="color:var(--paper);">Supply chain, secured.</h2>
+      <p style="color:var(--ink-soft-on-dark);">Qualified cell and component suppliers, with traceability from raw material to finished pack.</p>
     </div>
   </div>
 </section>
 
 <section class="cta-band">
   <div class="container">
-    <h2>Want to know more about WS Technicals?</h2>
-    <p>Whether it's a project, a partnership, or a career conversation — get in touch.</p>
-    <a href="contact.html" class="btn btn-on-dark">Contact us</a>
+    <h2>Want to see the production floor?</h2>
+    <p>Talk to us about volumes, lead times and what a production partnership with WS Technicals looks like.</p>
+    <a href="contact.html" class="btn btn-primary">Get in touch</a>
   </div>
 </section>
 
@@ -418,9 +468,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="footer-col">
         <h4>Production</h4>
         <ul>
-          <li><a href="production.html#facility">Production Facility</a></li>
-          <li><a href="production.html#quality">Quality &amp; Testing</a></li>
-          <li><a href="production.html#passport">Battery Passport</a></li>
+          <li><a href="production-v2.html#facility">Production Facility</a></li>
+          <li><a href="production-v2.html#quality">Quality &amp; Testing</a></li>
+          <li><a href="production-v2.html#passport">Battery Passport</a></li>
           <li><a href="bms.html">BMS Solutions</a></li>
         </ul>
       </div>
@@ -473,6 +523,48 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Capacity stats — count up with a dotted thousands separator when scrolled into view
+  var statNums = document.querySelectorAll('.stat-num[data-count]');
+  if (statNums.length) {
+    var statObserver = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.dataset.count, 10);
+        var suffix = el.dataset.suffix || '';
+        var start = performance.now();
+        var duration = 1200;
+        el.classList.add('counted');
+        function format(n){
+          return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        function tick(now){
+          var progress = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = format(target * eased) + (progress >= 1 ? suffix : '');
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    statNums.forEach(function(el){ statObserver.observe(el); });
+  }
+
+  // Capability tiles / traceability cards — fade up on scroll, staggered
+  var revealCards = document.querySelectorAll('.tile, .info-card');
+  if (revealCards.length) {
+    var cardObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.2 });
+    revealCards.forEach(function(el, i){
+      el.style.transitionDelay = (i % 3 * 0.1) + 's';
+      cardObserver.observe(el);
+    });
+  }
 })();
 </script>
 

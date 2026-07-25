@@ -141,6 +141,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .sol-wide .tile-img{ flex:0 0 38%; min-height:auto; }
 .sol-wide .tile-body{ flex:1; display:flex; flex-direction:column; justify-content:center; }
 
+/* Signature moment: the sector grid rises into place in reading order
+   as it scrolls into view — six domains arriving one at a time, rather
+   than appearing as a flat, static index. */
+.sol-tile, .sol-stat-panel{ opacity:0; transform:translateY(18px) scale(.98); transition:opacity .6s var(--ease), transform .6s var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.sol-tile.in-view, .sol-stat-panel.in-view{ opacity:1; transform:translateY(0) scale(1); }
+.sol-stat-panel .big[data-count]{ font-variant-numeric:tabular-nums; }
+
 .stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; }
 .stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-4); }
 .stat-item{ padding-left:var(--sp-3); }
@@ -231,14 +238,14 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <nav aria-label="Primary">
       <ul class="nav-menu">
         <li class="nav-item current">
-          <a href="solutions.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="solutions-v2.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="solutions.html#robotics">Robotics</a>
-            <a href="solutions.html#maritime">Maritime</a>
-            <a href="solutions.html#ups">UPS</a>
-            <a href="solutions.html#heavy-machinery">Heavy Machinery</a>
-            <a href="solutions.html#defense">Defense</a>
-            <a href="solutions.html#material-handling">Material Handling</a>
+            <a href="solutions-v2.html#robotics">Robotics</a>
+            <a href="solutions-v2.html#maritime">Maritime</a>
+            <a href="solutions-v2.html#ups">UPS</a>
+            <a href="solutions-v2.html#heavy-machinery">Heavy Machinery</a>
+            <a href="solutions-v2.html#defense">Defense</a>
+            <a href="solutions-v2.html#material-handling">Material Handling</a>
           </div>
         </li>
         <li class="nav-item">
@@ -317,7 +324,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="sol-stat-panel">
         <div>
           <div class="spec-line"><span class="idx">SCOPE</span><span class="rule"></span><span class="label">All sectors</span></div>
-          <div class="big">6</div>
+          <div class="big" data-count="6">0</div>
           <div class="cap">Application domains — one engineering process, tailored to each</div>
         </div>
         <div class="foot">Don't see your application? We likely still build for it.</div>
@@ -362,9 +369,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <section class="stats on-dark">
   <div class="container stats-grid">
-    <div class="stat-item"><span class="mono-cap">Metric 01</span><div class="stat-num">6</div><div class="stat-label">Application domains served</div></div>
+    <div class="stat-item"><span class="mono-cap">Metric 01</span><div class="stat-num" data-count="6">0</div><div class="stat-label">Application domains served</div></div>
     <div class="stat-item"><span class="mono-cap">Metric 02</span><div class="stat-num">2015</div><div class="stat-label">Company founded in Denmark</div></div>
-    <div class="stat-item"><span class="mono-cap">Metric 03</span><div class="stat-num">100%</div><div class="stat-label">In-house BMS &amp; compliance testing</div></div>
+    <div class="stat-item"><span class="mono-cap">Metric 03</span><div class="stat-num" data-count="100" data-suffix="%">0</div><div class="stat-label">In-house BMS &amp; compliance testing</div></div>
     <div class="stat-item"><span class="mono-cap">Metric 04</span><div class="stat-num">DK</div><div class="stat-label">Designed in Aarhus, built at scale</div></div>
   </div>
 </section>
@@ -396,10 +403,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
       </div>
       <div class="footer-col"><h4>Solutions</h4><ul>
-        <li><a href="solutions.html#robotics">Robotics</a></li>
-        <li><a href="solutions.html#maritime">Maritime</a></li>
-        <li><a href="solutions.html#heavy-machinery">Heavy Machinery</a></li>
-        <li><a href="solutions.html#material-handling">Material Handling</a></li>
+        <li><a href="solutions-v2.html#robotics">Robotics</a></li>
+        <li><a href="solutions-v2.html#maritime">Maritime</a></li>
+        <li><a href="solutions-v2.html#heavy-machinery">Heavy Machinery</a></li>
+        <li><a href="solutions-v2.html#material-handling">Material Handling</a></li>
       </ul></div>
       <div class="footer-col"><h4>Development</h4><ul>
         <li><a href="development.html#use-case">Use Case &amp; Requirements</a></li>
@@ -455,6 +462,44 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Sector tiles — rise into view in reading order
+  var tiles = document.querySelectorAll('.sol-tile, .sol-stat-panel');
+  if (tiles.length) {
+    var tileObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.15 });
+    tiles.forEach(function(el, i){
+      el.style.transitionDelay = (i % 4 * 0.08) + 's';
+      tileObserver.observe(el);
+    });
+  }
+
+  // Metric counters — count up when scrolled into view
+  var metricNums = document.querySelectorAll('.big[data-count], .stat-num[data-count]');
+  if (metricNums.length) {
+    var metricObserver = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.dataset.count, 10);
+        var suffix = el.dataset.suffix || '';
+        var start = performance.now();
+        var duration = 900;
+        function tick(now){
+          var progress = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased) + (progress >= 1 ? suffix : '');
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    metricNums.forEach(function(el){ metricObserver.observe(el); });
+  }
 })();
 </script>
 

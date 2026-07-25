@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>About us — WS Technicals</title>
-<meta name="description" content="Founded in 2015 as a spin-off from the intra-logistics sector, WS Technicals engineers custom lithium battery systems from Aarhus, Denmark.">
+<title>Development — WS Technicals</title>
+<meta name="description" content="From idea to mass production — how WS Technicals develops custom lithium battery packs, step by step.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,7 +70,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .ambient-blob-6{ width:2000px; height:2000px; top:52%; right:-15%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.48; }
 .ambient-blob-7{ width:2240px; height:2240px; top:65%; left:-16%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.42; }
 .ambient-blob-8{ width:1920px; height:1920px; top:78%; right:-13%; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 66%); opacity:.4; }
-.about-section .container{ position:relative; z-index:1; }
 
 .blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
 
@@ -107,39 +106,72 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .page-hero h1{ font-size:clamp(34px, 5vw, 60px); letter-spacing:-0.035em; }
 .page-hero p{ max-width:600px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft); line-height:1.65; }
 
-.about-section{ padding:var(--sp-3) 0 var(--sp-8); }
-.about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
-.about-grid h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); max-width:16ch; }
-.about-grid p{ color:var(--ink-soft); font-size:16px; max-width:52ch; margin-bottom:var(--sp-3); }
-.about-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
-.mini-stat{ padding:var(--sp-3); background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); }
-.mini-stat .num{ font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.02em; margin-bottom:4px; }
-.mini-stat .label{ font-size:13.5px; color:var(--ink-faint); }
+/* ============================================================
+   PINNED SCROLL STORY — right-hand image stays sticky in view
+   while the left-hand step list scrolls past; the active step
+   (whichever crosses the viewport's centre line) is highlighted
+   and its image crossfades in. Same interaction as terminal-
+   industries.com's benefit list.
 
-.section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
-.section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
-.section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
+   Signature refinement: each step number/title is now also a
+   direct jump link, so a visitor who already knows which stage
+   they care about doesn't have to scroll past the others.
+   ============================================================ */
+.pinned{ padding:var(--sp-4) 0 var(--sp-8); }
+.pinned-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); align-items:start; }
 
-.work{ background:var(--card); padding:var(--sp-8) 0; }
-.work-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.work-card{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.work-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.work-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-2); }
-.work-icon svg{ stroke:var(--blue); }
-.work-card h3{ font-size:17px; margin-bottom:6px; letter-spacing:-.01em; }
-.work-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.pinned-text-col{ display:flex; flex-direction:column; }
+.pinned-item{
+  min-height:74vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:var(--sp-4) 0;
+  scroll-margin-top:100px;
+}
+.pinned-item:last-child{ min-height:50vh; }
+.pinned-item-head{ display:block; }
+.pinned-jump{ display:inline-block; background:none; border:none; padding:0; margin-bottom:var(--sp-3); text-align:left; cursor:pointer; }
+.pinned-num{ font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--line-2); transition:color .4s var(--ease); }
+.pinned-item.active .pinned-num{ color:var(--brass); }
+.pinned-jump:hover .pinned-num, .pinned-item-head:hover .pinned-num{ color:var(--brass-hi); }
+.pinned-item h3{ font-size:clamp(24px,3vw,34px); letter-spacing:-.02em; margin-bottom:14px; color:var(--line-2); transition:color .4s var(--ease); cursor:pointer; }
+.pinned-item.active h3{ color:var(--ink); }
+.pinned-item-head:hover h3{ color:var(--ink); }
+.pinned-lead{ font-size:16.5px; font-weight:500; margin-bottom:10px; max-width:48ch; color:var(--line-2); transition:color .4s var(--ease); }
+.pinned-item.active .pinned-lead{ color:var(--ink-soft); }
+.pinned-points{ display:flex; flex-direction:column; gap:7px; margin-bottom:10px; }
+.pinned-points li{ font-size:14.5px; line-height:1.6; padding-left:18px; position:relative; max-width:52ch; color:var(--line-2); transition:color .4s var(--ease); }
+.pinned-points li::before{ content:""; position:absolute; left:0; top:9px; width:5px; height:5px; border-radius:50%; background:var(--line-2); transition:background .4s var(--ease); }
+.pinned-item.active .pinned-points li{ color:var(--ink-soft); }
+.pinned-item.active .pinned-points li::before{ background:var(--brass); }
+.pinned-note{ font-size:14.5px; max-width:48ch; color:var(--line-2); transition:color .4s var(--ease); }
+.pinned-item.active .pinned-note{ color:var(--ink-soft); }
 
-.career{ background:var(--paper-2); padding:var(--sp-8) 0; }
-.career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
-.career-grid h2{ font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); max-width:14ch; }
-.career-grid p{ color:var(--ink-soft); font-size:16px; max-width:48ch; margin-bottom:var(--sp-3); }
-.career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
-.career-card h3{ font-size:18px; margin-bottom:8px; }
-.career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
+.pinned-visual-col{ position:relative; }
+.pinned-sticky{ position:sticky; top:100px; height:80vh; }
+.pinned-stack{ position:relative; width:100%; height:100%; overflow:hidden; border:1px solid var(--line-2); background:var(--blue-deep); clip-path:polygon(0 8%, 6% 8%, 6% 0%, 100% 0%, 100% 100%, 0 100%); }
+.pinned-frame{ position:absolute; inset:0; opacity:0; transition:opacity .6s var(--ease); }
+.pinned-frame.active{ opacity:1; }
+.pinned-frame img{ width:100%; height:100%; object-fit:cover; }
+.pinned-frame.contain img{ object-fit:contain; padding:var(--sp-6); }
+.pinned-frame.cert{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--sp-3); padding:var(--sp-4); }
+.pinned-tag{ position:absolute; top:var(--sp-3); left:var(--sp-3); z-index:2; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--ink-soft-on-dark); background:rgba(3,11,33,.5); border:1px solid rgba(251,249,245,.16); padding:5px 10px; }
+.pinned-tag .dot{ width:5px; height:5px; background:var(--brass-hi); flex:none; }
 
-.cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
+.pinned-cert-badge{ display:flex; align-items:center; gap:14px; width:100%; max-width:300px; padding:14px 18px; border:1px solid rgba(251,249,245,.18); background:rgba(251,249,245,.04); }
+.pinned-cert-badge .mark{ font-family:var(--font-display); font-weight:800; font-size:20px; color:var(--paper); letter-spacing:-.01em; flex:none; }
+.pinned-cert-badge .desc{ font-size:12px; color:var(--ink-soft-on-dark); line-height:1.4; }
+
+.stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-4); }
+.stat-item{ padding-left:var(--sp-3); }
+.stat-num{ font-family:var(--font-display); font-weight:800; font-size:clamp(40px,5vw,64px); letter-spacing:-0.04em; line-height:1; color:var(--paper); margin-bottom:10px; }
+.stat-label{ font-size:14px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
+
+.cta-band{ background:var(--paper-2); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
-.cta-band p{ color:var(--ink-soft-on-dark); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
+.cta-band p{ color:var(--ink-soft); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
 
 .footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
 .footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); border-bottom:1px solid rgba(251,249,245,.12); }
@@ -166,15 +198,18 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
-  .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
-  .work-grid{ grid-template-columns:repeat(2, 1fr); }
-  .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .pinned-grid{ grid-template-columns:1fr; }
+  .pinned-visual-col{ order:-1; }
+  .pinned-sticky{ position:sticky; top:76px; height:42vh; margin-bottom:var(--sp-3); }
+  .pinned-item{ min-height:auto; padding:var(--sp-3) 0; }
+  .pinned-item:last-child{ min-height:auto; }
+  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
-  .work-grid{ grid-template-columns:1fr; }
+  .stats-grid{ grid-template-columns:1fr 1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
@@ -233,15 +268,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <a href="solutions.html#material-handling">Material Handling</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a href="development.html" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <li class="nav-item current">
+          <a href="development-v2.html" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="development.html#use-case">Use Case / Application</a>
-            <a href="development.html#feasibility">Feasibility Study</a>
-            <a href="development.html#prototype">Prototype &amp; Testing</a>
-            <a href="development.html#industrialization">Industrialization</a>
-            <a href="development.html#compliance">Market Compliance</a>
-            <a href="development.html#mass-production">Mass Production</a>
+            <a href="development-v2.html#use-case">Use Case / Application</a>
+            <a href="development-v2.html#feasibility">Feasibility Study</a>
+            <a href="development-v2.html#prototype">Prototype &amp; Testing</a>
+            <a href="development-v2.html#industrialization">Industrialization</a>
+            <a href="development-v2.html#compliance">Market Compliance</a>
+            <a href="development-v2.html#mass-production">Mass Production</a>
           </div>
         </li>
         <li class="nav-item">
@@ -262,7 +297,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <a href="bms.html#c-bms24x">c-BMS24x</a>
           </div>
         </li>
-        <li class="nav-item current">
+        <li class="nav-item">
           <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="about.html#company">Company</a>
@@ -285,84 +320,141 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <section class="page-hero">
   <div class="container page-hero-inner">
-    <span class="eyebrow">About WS Technicals</span>
-    <h1>Custom battery engineering — focused since 2015.</h1>
-    <p>We deliver complete lithium battery solutions — from concept to certified production — combining speed, innovation and efficiency with state-of-the-art manufacturing technology.</p>
+    <span class="eyebrow">From Idea to Mass Production</span>
+    <h1>We are a full-service custom battery pack manufacturer.</h1>
+    <p>We design lithium battery packs according to your specifications, with design, engineering and manufacturing competences under one roof — this page walks through the customer journey, from first conversation to volume production.</p>
   </div>
 </section>
 
-<section class="about-section" id="company">
-  <div class="container about-grid">
-    <div>
-      <h2>Engineering-led, from Aarhus.</h2>
-      <p>WS Technicals designs and manufactures custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated. Lithium batteries from WS Technicals power applications across every sector: AGVs and AMRs, drones, forklifts, cleaning machines, ground support equipment, heavy-duty construction equipment and small last-mile delivery robots.</p>
-      <a href="contact.html" class="link-arrow">Get in touch
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+<section class="pinned" id="journey">
+  <div class="container pinned-grid">
+
+    <div class="pinned-text-col">
+
+      <div class="pinned-item active" id="use-case" data-step="1">
+        <div class="pinned-item-head">
+          <button type="button" class="pinned-jump" data-jump="1"><span class="pinned-num">Step 01 / 06</span></button>
+          <h3 data-jump="1">Use Case / Application</h3>
+        </div>
+        <p class="pinned-lead">We start by understanding your application.</p>
+        <ul class="pinned-points">
+          <li>What are the performance requirements?</li>
+          <li>Which environment will the battery operate in?</li>
+          <li>What are your expectations for lifetime, safety, and integration?</li>
+        </ul>
+        <p class="pinned-note">Through a focused dialogue, we define the right foundation for your solution.</p>
+      </div>
+
+      <div class="pinned-item" id="feasibility" data-step="2">
+        <div class="pinned-item-head">
+          <button type="button" class="pinned-jump" data-jump="2"><span class="pinned-num">Step 02 / 06</span></button>
+          <h3 data-jump="2">Design Fase / Feasibility Study</h3>
+        </div>
+        <p class="pinned-lead">We translate your requirements into a viable solution.</p>
+        <ul class="pinned-points">
+          <li>Technical feasibility, cost, and integration are evaluated early.</li>
+          <li>The result is a battery design optimized for performance, reliability, and production.</li>
+        </ul>
+      </div>
+
+      <div class="pinned-item" id="prototype" data-step="3">
+        <div class="pinned-item-head">
+          <button type="button" class="pinned-jump" data-jump="3"><span class="pinned-num">Step 03 / 06</span></button>
+          <h3 data-jump="3">Prototype and Testing</h3>
+        </div>
+        <p class="pinned-lead">We develop and deliver a working prototype.</p>
+        <ul class="pinned-points">
+          <li>Together, we test it in your real-world application.</li>
+          <li>This ensures the solution performs as expected — before moving forward.</li>
+        </ul>
+      </div>
+
+      <div class="pinned-item" id="industrialization" data-step="4">
+        <div class="pinned-item-head">
+          <button type="button" class="pinned-jump" data-jump="4"><span class="pinned-num">Step 04 / 06</span></button>
+          <h3 data-jump="4">Industrialization and Quality Management (EOL)</h3>
+        </div>
+        <p class="pinned-lead">We prepare the design for scalable production.</p>
+        <ul class="pinned-points">
+          <li>Focus is on Design for Manufacturing (DFM) and robust processes.</li>
+          <li>Quality assurance and end-of-line (EOL) testing procedures are implemented from the start.</li>
+        </ul>
+      </div>
+
+      <div class="pinned-item" id="compliance" data-step="5">
+        <div class="pinned-item-head">
+          <button type="button" class="pinned-jump" data-jump="5"><span class="pinned-num">Step 05 / 06</span></button>
+          <h3 data-jump="5">Market Compliance</h3>
+        </div>
+        <p class="pinned-lead">We ensure your solution meets all relevant standards.</p>
+        <ul class="pinned-points">
+          <li>From testing to documentation and approvals.</li>
+          <li>Your product is ready for global markets.</li>
+        </ul>
+      </div>
+
+      <div class="pinned-item" id="mass-production" data-step="6">
+        <div class="pinned-item-head">
+          <button type="button" class="pinned-jump" data-jump="6"><span class="pinned-num">Step 06 / 06</span></button>
+          <h3 data-jump="6">Mass Production / SOP</h3>
+        </div>
+        <p class="pinned-lead">Production is handled by our trusted partner, HAIDI, in China.</p>
+        <ul class="pinned-points">
+          <li>We ensure consistent quality, scalability, and full traceability.</li>
+          <li>Ready for delivery — at the right volume and cost.</li>
+        </ul>
+      </div>
+
     </div>
-    <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">2015</div><div class="label">Founded as an intra-logistics spin-off</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering headquarters</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
+
+    <div class="pinned-visual-col">
+      <div class="pinned-sticky">
+        <div class="pinned-stack">
+
+          <div class="pinned-tag"><span class="dot"></span><span id="pinnedTagText">Step 01 / 06 — Use Case</span></div>
+
+          <div class="pinned-frame contain active" data-step="1">
+            <img src="assets/products/renders/crop/xug_transparant_print.png" alt="Custom lithium battery module — the starting point of every application conversation">
+          </div>
+          <div class="pinned-frame contain" data-step="2">
+            <img src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="Exploded engineering view — translating requirements into a viable battery design">
+          </div>
+          <div class="pinned-frame contain" data-step="3">
+            <img src="assets/products/renders/crop/qkw_print.png" alt="A working prototype battery pack, ready for real-world testing">
+          </div>
+          <div class="pinned-frame" data-step="4">
+            <img src="assets/unsplash/production-line-web.jpg" alt="Automated production line — preparing the design for scalable manufacturing" style="object-position:left;">
+          </div>
+          <div class="pinned-frame cert" data-step="5">
+            <div class="pinned-cert-badge"><span class="mark">CE</span><span class="desc">Conformité Européenne — meets EU health, safety and environmental requirements.</span></div>
+            <div class="pinned-cert-badge"><span class="mark">UN 38.3</span><span class="desc">Certified for the safe transport of lithium batteries.</span></div>
+            <div class="pinned-cert-badge"><span class="mark">RoHS</span><span class="desc">Restriction of Hazardous Substances compliant.</span></div>
+          </div>
+          <div class="pinned-frame" data-step="6">
+            <img src="assets/unsplash/production-line-web.jpg" alt="HAIDI production facility in China — mass production with full traceability" style="object-position:right;">
+          </div>
+
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
-<section class="work">
-  <div class="container">
-    <div class="section-head">
-      <h2>The way we work.</h2>
-      <p>Four principles that carry through every project, regardless of application or volume.</p>
-    </div>
-    <div class="work-grid">
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
-        <h3>Turn-Key Solutions</h3>
-        <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
-        <h3>Competitive Solution</h3>
-        <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
-        <h3>State of the Art Technology</h3>
-        <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
-        <h3>End-of-Line Testing</h3>
-        <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="career" id="career">
-  <div class="container career-grid">
-    <div>
-      <span class="eyebrow">Career</span>
-      <h2 style="margin-top:16px;">Build custom battery systems with us.</h2>
-      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications — not just spec sheets — we'd like to hear from you.</p>
-      <a href="contact.html" class="link-arrow">Get in touch about opportunities
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="career-card">
-      <h3>Open positions</h3>
-      <p>We don't have specific openings listed here yet — but we're always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
-      <a href="contact.html" class="btn btn-primary">Send an open application</a>
-    </div>
+<section class="stats on-dark">
+  <div class="container stats-grid">
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Steps, one continuous process</div></div>
+    <div class="stat-item"><div class="stat-num">2015</div><div class="stat-label">Founded as an intra-logistics spin-off</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">In-house BMS &amp; compliance testing</div></div>
+    <div class="stat-item"><div class="stat-num">DK</div><div class="stat-label">Designed in Aarhus, built at scale</div></div>
   </div>
 </section>
 
 <section class="cta-band">
   <div class="container">
-    <h2>Want to know more about WS Technicals?</h2>
-    <p>Whether it's a project, a partnership, or a career conversation — get in touch.</p>
-    <a href="contact.html" class="btn btn-on-dark">Contact us</a>
+    <h2>Ready to start the conversation?</h2>
+    <p>Tell us about your application and we'll walk you through what a custom pack looks like for you.</p>
+    <a href="contact.html" class="btn btn-primary">Get in touch</a>
   </div>
 </section>
 
@@ -397,6 +489,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </a>
         <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
       </div>
+
       <div class="footer-col">
         <h4>Solutions</h4>
         <ul>
@@ -409,10 +502,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="footer-col">
         <h4>Development</h4>
         <ul>
-          <li><a href="development.html#use-case">Use Case &amp; Requirements</a></li>
-          <li><a href="development.html#feasibility">Feasibility Study</a></li>
-          <li><a href="development.html#prototype">Prototype &amp; Testing</a></li>
-          <li><a href="development.html#compliance">Compliance</a></li>
+          <li><a href="development-v2.html#use-case">Use Case &amp; Requirements</a></li>
+          <li><a href="development-v2.html#feasibility">Feasibility Study</a></li>
+          <li><a href="development-v2.html#prototype">Prototype &amp; Testing</a></li>
+          <li><a href="development-v2.html#compliance">Compliance</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -433,6 +526,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
       <div class="cert-chips">
@@ -471,6 +565,39 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     a.addEventListener('click', function(){
       body.classList.remove('menu-open');
       toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var pinnedItems = document.querySelectorAll('.pinned-item');
+  var pinnedFrames = document.querySelectorAll('.pinned-frame');
+  var pinnedTagText = document.getElementById('pinnedTagText');
+  if (pinnedItems.length) {
+    var pinnedLabels = {
+      1: 'Step 01 / 06 — Use Case',
+      2: 'Step 02 / 06 — Feasibility',
+      3: 'Step 03 / 06 — Prototype',
+      4: 'Step 04 / 06 — Industrialization',
+      5: 'Step 05 / 06 — Compliance',
+      6: 'Step 06 / 06 — Mass Production'
+    };
+    var pinnedObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var step = entry.target.dataset.step;
+          pinnedItems.forEach(function(i){ i.classList.toggle('active', i === entry.target); });
+          pinnedFrames.forEach(function(f){ f.classList.toggle('active', f.dataset.step === step); });
+          if (pinnedTagText) pinnedTagText.textContent = pinnedLabels[step] || '';
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    pinnedItems.forEach(function(item){ pinnedObserver.observe(item); });
+  }
+
+  document.querySelectorAll('.pinned-jump, .pinned-item h3[data-jump]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var step = el.getAttribute('data-jump');
+      var target = document.querySelector('.pinned-item[data-step="' + step + '"]');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
 })();

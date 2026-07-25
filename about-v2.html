@@ -102,10 +102,35 @@ body.menu-open .nav-toggle span{ background:transparent; }
 body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
 body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
 
-.page-hero{ padding:var(--sp-6) 0 var(--sp-5); text-align:center; overflow:hidden; }
-.page-hero-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
-.page-hero h1{ font-size:clamp(34px, 5vw, 60px); letter-spacing:-0.035em; }
-.page-hero p{ max-width:600px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft); line-height:1.65; }
+/* CEO letter hero — two-column intro: headline + letter copy + signature
+   on the left, portrait on the right. Replaces the plain centered hero. */
+.ceo-hero{ padding:var(--sp-7) 0 var(--sp-6); overflow:hidden; }
+.ceo-hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:var(--sp-7); align-items:center; }
+.ceo-copy h1{ font-size:clamp(32px,4.2vw,50px); letter-spacing:-0.03em; margin:14px 0 var(--sp-3); max-width:14ch; }
+.ceo-copy p{ color:var(--ink-soft); font-size:15.5px; line-height:1.75; max-width:52ch; margin-bottom:var(--sp-3); }
+.ceo-signature{ margin-top:var(--sp-4); }
+.ceo-signature svg{ height:44px; width:auto; margin-bottom:10px; stroke:var(--ink); }
+.ceo-signature .name{ font-weight:600; font-size:14.5px; }
+.ceo-signature .role{ font-size:13px; color:var(--ink-faint); margin-top:2px; }
+
+/* No frame, no card edge — a soft atmosphere that dissolves into the page
+   so the portrait reads as sitting in the same space as the text, not
+   boxed off behind it. */
+.ceo-portrait{ position:relative; aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; }
+.ceo-portrait::before{
+  content:"";
+  position:absolute;
+  inset:-22% -12% -22% -42%;
+  background:radial-gradient(58% 52% at 70% 40%, var(--brass-hi) 0%, var(--brass-soft) 34%, rgba(243,239,231,.45) 60%, rgba(251,249,245,0) 82%);
+  filter:blur(56px);
+  z-index:-1;
+  pointer-events:none;
+}
+.ceo-portrait .mark{ width:32%; opacity:.32; }
+.ceo-portrait .mark .cls-1, .ceo-portrait .mark .cls-4{ fill:var(--ink); }
+.ceo-portrait .mark .cls-2, .ceo-portrait .mark .cls-3, .ceo-portrait .mark .cls-5{ fill:var(--ink); opacity:.6; }
+.placeholder-tag{ position:absolute; left:50%; bottom:6%; transform:translateX(-50%); z-index:2; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; color:var(--ink-soft); background:rgba(255,255,255,.7); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border:1px solid rgba(6,8,26,.1); padding:6px 11px; border-radius:999px; white-space:nowrap; }
+.placeholder-tag .dot{ width:5px; height:5px; border-radius:50%; background:var(--brass); flex:none; }
 
 .about-section{ padding:var(--sp-3) 0 var(--sp-8); }
 .about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
@@ -120,14 +145,29 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
 .section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
 
-.work{ background:var(--card); padding:var(--sp-8) 0; }
-.work-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.work-card{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.work-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.work-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-2); }
-.work-icon svg{ stroke:var(--blue); }
-.work-card h3{ font-size:17px; margin-bottom:6px; letter-spacing:-.01em; }
-.work-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+/* Signature moment: the four working principles rendered as a connected
+   capability path — a line that draws itself across the section as it
+   enters view, lighting up each stop in sequence. */
+.way-we-work{ background:var(--card); padding:var(--sp-8) 0; overflow:hidden; }
+.capability-path{ position:relative; display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); padding-top:64px; }
+.capability-path::before{ content:""; position:absolute; top:32px; left:12.5%; right:12.5%; height:2px; background:var(--line-2); }
+.capability-path::after{ content:""; position:absolute; top:32px; left:12.5%; height:2px; width:0; background:linear-gradient(90deg, var(--brass), var(--blue)); transition:width 1.3s var(--ease); }
+.capability-path.in-view::after{ width:75%; }
+.capability-node{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--sp-2); opacity:0; transform:translateY(16px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.capability-path.in-view .capability-node{ opacity:1; transform:translateY(0); }
+.capability-path.in-view .capability-node:nth-child(2){ transition-delay:.18s; }
+.capability-path.in-view .capability-node:nth-child(3){ transition-delay:.5s; }
+.capability-path.in-view .capability-node:nth-child(4){ transition-delay:.82s; }
+.capability-path.in-view .capability-node:nth-child(5){ transition-delay:1.14s; }
+.capability-dot{ position:relative; z-index:2; width:44px; height:44px; border-radius:50%; background:var(--paper); border:2px solid var(--line-2); display:flex; align-items:center; justify-content:center; transition:border-color .5s var(--ease), box-shadow .5s var(--ease), transform .5s var(--ease); }
+.capability-dot svg{ stroke:var(--blue); transition:stroke .5s var(--ease); }
+.capability-path.in-view .capability-node:nth-child(2) .capability-dot{ transition-delay:.18s; }
+.capability-path.in-view .capability-node:nth-child(3) .capability-dot{ transition-delay:.5s; }
+.capability-path.in-view .capability-node:nth-child(4) .capability-dot{ transition-delay:.82s; }
+.capability-path.in-view .capability-node:nth-child(5) .capability-dot{ transition-delay:1.14s; }
+.capability-path.in-view .capability-node .capability-dot{ border-color:var(--brass); box-shadow:0 0 0 5px var(--brass-soft); }
+.capability-node h3{ font-size:17px; letter-spacing:-.01em; }
+.capability-node p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; max-width:24ch; }
 
 .career{ background:var(--paper-2); padding:var(--sp-8) 0; }
 .career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
@@ -166,15 +206,21 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
+  .ceo-hero-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .ceo-portrait{ aspect-ratio:16/10; order:-1; }
   .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
-  .work-grid{ grid-template-columns:repeat(2, 1fr); }
+  .capability-path{ grid-template-columns:1fr; gap:var(--sp-5); padding-top:0; }
+  .capability-path::before, .capability-path::after{ top:0; bottom:0; left:21px; right:auto; width:2px; height:auto; }
+  .capability-path::after{ width:2px; height:0; }
+  .capability-path.in-view::after{ height:100%; width:2px; }
+  .capability-node{ flex-direction:row; text-align:left; padding-left:0; }
+  .capability-node p{ max-width:none; }
   .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
-  .work-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
@@ -263,10 +309,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           </div>
         </li>
         <li class="nav-item current">
-          <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="about-v2.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="about.html#company">Company</a>
-            <a href="about.html#career">Career</a>
+            <a href="about-v2.html#company">Company</a>
+            <a href="about-v2.html#career">Career</a>
           </div>
         </li>
       </ul>
@@ -283,11 +329,29 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <main id="top">
 
-<section class="page-hero">
-  <div class="container page-hero-inner">
-    <span class="eyebrow">About WS Technicals</span>
-    <h1>Custom battery engineering — focused since 2015.</h1>
-    <p>We deliver complete lithium battery solutions — from concept to certified production — combining speed, innovation and efficiency with state-of-the-art manufacturing technology.</p>
+<section class="ceo-hero">
+  <div class="container ceo-hero-grid">
+    <div class="ceo-copy">
+      <span class="eyebrow">A Letter From Our CEO</span>
+      <h1>Quality is something we build together.</h1>
+      <p>At WS Technicals, we believe the best battery systems aren't engineered in isolation — they're built together. Since founding the company in 2015, we've grown by listening closely to the people who depend on our packs every day, and by treating every project as a shared responsibility rather than a transaction.</p>
+      <p>The battery industry moves fast, and no single company has all the answers. That's why we favour close collaboration over rigid spec sheets: real conversations with our customers, honesty about what's possible, and a genuine commitment to getting it right together — for the application in front of us, and for the wider industry we're all building.</p>
+      <div class="ceo-signature">
+        <svg viewBox="0 0 180 60" fill="none" aria-hidden="true"><path d="M6 42c8-6 14-18 20-18s4 22 12 22 10-28 18-28-2 30 8 30 14-20 22-20c6 0 2 16 10 16 6 0 12-10 20-10 4 0 6 4 10 4 6 0 10-6 16-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="name">[CEO Name]</div>
+        <div class="role">Chief Executive Officer, WS Technicals</div>
+      </div>
+    </div>
+    <div class="ceo-portrait">
+      <span class="placeholder-tag"><span class="dot"></span>Portrait — replace with real photo</span>
+      <svg class="mark" viewBox="0 0 66.14 66.05" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
+        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
+        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
+        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
+        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -309,30 +373,30 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   </div>
 </section>
 
-<section class="work">
+<section class="way-we-work">
   <div class="container">
     <div class="section-head">
       <h2>The way we work.</h2>
       <p>Four principles that carry through every project, regardless of application or volume.</p>
     </div>
-    <div class="work-grid">
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
+    <div class="capability-path" id="capabilityPath">
+      <div class="capability-node">
+        <div class="capability-dot"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
         <h3>Turn-Key Solutions</h3>
         <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
       </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
+      <div class="capability-node">
+        <div class="capability-dot"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
         <h3>Competitive Solution</h3>
         <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
       </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
+      <div class="capability-node">
+        <div class="capability-dot"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
         <h3>State of the Art Technology</h3>
         <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
       </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
+      <div class="capability-node">
+        <div class="capability-dot"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
         <h3>End-of-Line Testing</h3>
         <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
       </div>
@@ -427,8 +491,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="about.html#company">About us</a></li>
-          <li><a href="about.html#career">Career</a></li>
+          <li><a href="about-v2.html#company">About us</a></li>
+          <li><a href="about-v2.html#career">Career</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
@@ -473,6 +537,23 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  var path = document.getElementById('capabilityPath');
+  if (path && 'IntersectionObserver' in window) {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      path.classList.add('in-view');
+    } else {
+      var pathObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          path.classList.add('in-view');
+          pathObserver.disconnect();
+        });
+      }, { threshold: .3, rootMargin: '0px 0px -8% 0px' });
+      pathObserver.observe(path);
+    }
+  }
 })();
 </script>
 

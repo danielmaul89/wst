@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>About us — WS Technicals</title>
-<meta name="description" content="Founded in 2015 as a spin-off from the intra-logistics sector, WS Technicals engineers custom lithium battery systems from Aarhus, Denmark.">
+<title>Contact — WS Technicals</title>
+<meta name="description" content="Get in touch with WS Technicals about a sales inquiry, a purchase, or a general question — or find your way to our support center.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
 }
 *,*::before,*::after{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; scroll-padding-top:92px; }
-body{ position:relative; margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body{ position:relative; margin:0; background:var(--blue-deep); color:var(--paper); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
 img,svg{ display:block; max-width:100%; }
 a{ color:inherit; text-decoration:none; }
 ul{ margin:0; padding:0; list-style:none; }
@@ -44,7 +44,7 @@ h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; let
 .container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
 section{ position:relative; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
-.on-dark a:focus-visible, .on-dark button:focus-visible{ outline-color:var(--brass-hi); }
+.on-dark a:focus-visible, .on-dark button:focus-visible, .on-dark input:focus-visible, .on-dark select:focus-visible, .on-dark textarea:focus-visible{ outline-color:var(--brass-hi); }
 .eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
 .on-dark .eyebrow{ color:var(--ink-soft-on-dark); }
 .btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
@@ -67,10 +67,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .ambient-blob-blue{ width:2480px; height:2480px; top:7%; left:6%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.5; }
 .ambient-blob-4{ width:2000px; height:2000px; top:22%; right:-16%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.5; }
 .ambient-blob-5{ width:2240px; height:2240px; top:37%; left:-17%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.42; }
-.ambient-blob-6{ width:2000px; height:2000px; top:52%; right:-15%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.48; }
-.ambient-blob-7{ width:2240px; height:2240px; top:65%; left:-16%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.42; }
-.ambient-blob-8{ width:1920px; height:1920px; top:78%; right:-13%; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 66%); opacity:.4; }
-.about-section .container{ position:relative; z-index:1; }
 
 .blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
 
@@ -83,66 +79,118 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
 .nav-menu{ display:flex; align-items:center; gap:var(--sp-1); }
 .nav-item{ position:relative; }
-.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:var(--r); font-weight:500; font-size:15px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
-.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--ink); background:var(--paper-2); }
-.nav-item.current > .nav-link{ color:var(--ink); }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:var(--r); font-weight:500; font-size:15px; color:var(--ink-soft-on-dark); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--paper); background:rgba(251,249,245,.08); }
+.nav-item.current > .nav-link{ color:var(--paper); }
 .nav-link .chev{ transition:transform var(--dur) var(--ease); }
 .nav-item:hover .chev{ transform:rotate(180deg); }
-.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:240px; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); box-shadow:var(--shadow-lg); padding:var(--sp-1); opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:240px; background:var(--blue); border:1px solid rgba(251,249,245,.14); border-radius:var(--r-lg); box-shadow:var(--shadow-lg); padding:var(--sp-1); opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
 .nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
-.dropdown a{ display:block; padding:10px 14px; border-radius:var(--r); font-size:14.5px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
-.dropdown a:hover{ background:var(--paper-2); color:var(--ink); }
+.dropdown a{ display:block; padding:10px 14px; border-radius:var(--r); font-size:14.5px; font-weight:500; color:var(--ink-soft-on-dark); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a:hover{ background:rgba(251,249,245,.08); color:var(--paper); }
 .nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
 .nav-toggle{ display:none; background:none; border:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
-.nav-toggle:hover{ background:var(--paper-2); }
-.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--ink); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.nav-toggle:hover{ background:rgba(251,249,245,.08); }
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:""; display:block; width:20px; height:2px; background:var(--paper); position:relative; transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
 .nav-toggle span::before{ position:absolute; top:-6px; }
 .nav-toggle span::after{ position:absolute; top:6px; }
 body.menu-open .nav-toggle span{ background:transparent; }
-body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
-body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
+body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--paper); }
+body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--paper); }
 
-.page-hero{ padding:var(--sp-6) 0 var(--sp-5); text-align:center; overflow:hidden; }
-.page-hero-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
-.page-hero h1{ font-size:clamp(34px, 5vw, 60px); letter-spacing:-0.035em; }
-.page-hero p{ max-width:600px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft); line-height:1.65; }
+.page-hero{ padding:var(--sp-6) 0 var(--sp-4); text-align:center; overflow:hidden; }
+.page-hero-inner{ max-width:700px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
+.page-hero h1{ font-size:clamp(34px, 5vw, 56px); letter-spacing:-0.035em; }
+.page-hero p{ max-width:560px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft-on-dark); line-height:1.65; }
 
-.about-section{ padding:var(--sp-3) 0 var(--sp-8); }
-.about-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:var(--sp-6); align-items:center; }
-.about-grid h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:var(--sp-3); max-width:16ch; }
-.about-grid p{ color:var(--ink-soft); font-size:16px; max-width:52ch; margin-bottom:var(--sp-3); }
-.about-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
-.mini-stat{ padding:var(--sp-3); background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); }
-.mini-stat .num{ font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.02em; margin-bottom:4px; }
-.mini-stat .label{ font-size:13.5px; color:var(--ink-faint); }
+.contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0 var(--sp-8); }
+.contact-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); }
 
-.section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-5); flex-wrap:wrap; }
-.section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
-.section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
+/* Signature moment: contact details become one-tap "channels" — each has
+   its own glyph and a copy action, so reaching us doesn't require retyping
+   a phone number or address by hand. */
+.contact-channels{ display:flex; flex-direction:column; gap:10px; margin-bottom:var(--sp-3); }
+.channel-card{ display:flex; align-items:center; gap:var(--sp-2); padding:14px; border-radius:var(--r-lg); border:1px solid rgba(251,249,245,.14); background:rgba(251,249,245,.03); transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.channel-card:hover{ background:rgba(251,249,245,.06); border-color:rgba(251,249,245,.24); }
+.channel-icon{ width:38px; height:38px; border-radius:50%; background:rgba(251,249,245,.06); border:1px solid rgba(251,249,245,.16); display:flex; align-items:center; justify-content:center; flex:none; }
+.channel-icon svg{ stroke:var(--brass-hi); }
+.channel-body{ display:flex; flex-direction:column; gap:2px; min-width:0; flex:1; }
+.channel-label{ font-size:12px; color:var(--ink-soft-on-dark); letter-spacing:.04em; text-transform:uppercase; }
+.channel-value{ font-size:15.5px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.channel-value:hover{ color:var(--brass-hi); }
+.channel-copy{ position:relative; flex:none; width:36px; height:36px; border-radius:var(--r); border:1px solid rgba(251,249,245,.18); background:transparent; display:flex; align-items:center; justify-content:center; color:var(--ink-soft-on-dark); transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.channel-copy:hover{ background:rgba(251,249,245,.08); color:var(--paper); }
+.channel-copy svg{ position:absolute; transition:opacity .25s var(--ease), transform .25s var(--ease); }
+.channel-copy .icon-copy{ opacity:1; transform:scale(1); }
+.channel-copy .icon-check{ opacity:0; transform:scale(.6); stroke:var(--brass-hi); }
+.channel-copy.copied .icon-copy{ opacity:0; transform:scale(.6); }
+.channel-copy.copied .icon-check{ opacity:1; transform:scale(1); }
+.channel-copy.copied{ border-color:var(--brass-hi); }
 
-.work{ background:var(--card); padding:var(--sp-8) 0; }
-.work-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.work-card{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.work-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.work-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-2); }
-.work-icon svg{ stroke:var(--blue); }
-.work-card h3{ font-size:17px; margin-bottom:6px; letter-spacing:-.01em; }
-.work-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.support-card{ margin-top:var(--sp-4); background:rgba(251,249,245,.04); border:1px solid rgba(251,249,245,.14); border-radius:var(--r-lg); padding:var(--sp-3); }
+.support-card h3{ font-size:16px; margin-bottom:6px; }
+.support-card p{ font-size:13.5px; color:var(--ink-soft-on-dark); margin-bottom:var(--sp-2); max-width:36ch; }
 
-.career{ background:var(--paper-2); padding:var(--sp-8) 0; }
-.career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
-.career-grid h2{ font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); max-width:14ch; }
-.career-grid p{ color:var(--ink-soft); font-size:16px; max-width:48ch; margin-bottom:var(--sp-3); }
-.career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
-.career-card h3{ font-size:18px; margin-bottom:8px; }
-.career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
+.form-wrap{ position:relative; }
+.form-glow{
+  position:absolute; inset:-90px; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 14% 4%, rgba(203,176,138,.34), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(30,66,140,.58), transparent 55%);
+  filter:blur(66px);
+}
+.contact-form{
+  position:relative; z-index:1; overflow:hidden;
+  background:linear-gradient(155deg, rgba(251,249,245,.24) 0%, rgba(251,249,245,.05) 42%, rgba(251,249,245,.12) 100%);
+  border:1px solid rgba(251,249,245,.34);
+  border-radius:var(--r-lg);
+  padding:var(--sp-4);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 32px 70px -18px rgba(0,0,0,.6), inset 0 1px 0 rgba(251,249,245,.5), inset 0 0 0 1px rgba(251,249,245,.06);
+}
+.contact-form::before{
+  content:"";
+  position:absolute;
+  top:-70%; left:-30%;
+  width:70%; height:240%;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%);
+  filter:blur(26px);
+  pointer-events:none;
+  z-index:-1;
+}
+.type-toggle{ display:flex; gap:8px; margin-bottom:var(--sp-3); flex-wrap:wrap; }
+.type-btn{ flex:1; min-width:110px; padding:12px 14px; border-radius:var(--r); border:1px solid rgba(251,249,245,.26); background:rgba(251,249,245,.09); color:var(--ink-soft-on-dark); font-size:14px; font-weight:600; text-align:center; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.type-btn.active{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-size:13px; color:var(--ink-soft-on-dark); }
+.field input, .field select, .field textarea{
+  background:rgba(251,249,245,.14);
+  border:1px solid rgba(251,249,245,.3);
+  border-radius:var(--r);
+  padding:12px 14px;
+  color:var(--paper);
+  width:100%;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(251,249,245,.1);
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.field select option{ color:var(--ink); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft-on-dark); }
+.field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
+.field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
+.field textarea{ resize:vertical; min-height:96px; }
+.sales-fields{ display:none; }
+.sales-fields.show{ display:contents; }
+.form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
+.form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
+.form-success.show{ display:flex; }
 
-.cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
-.cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
-.cta-band p{ color:var(--ink-soft-on-dark); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
-
-.footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
-.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); border-bottom:1px solid rgba(251,249,245,.12); }
+.footer{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); }
 .footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
 .footer-brand .brand-logo{ height:30px; }
 .footer-tagline{ font-size:14.5px; color:var(--ink-soft-on-dark); max-width:32ch; margin-bottom:var(--sp-2); }
@@ -161,43 +209,31 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
   .nav-toggle{ display:flex; }
   .nav-cta{ gap:var(--sp-1); }
-  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
-  body.menu-open .nav-item{ border-bottom:1px solid var(--line-2); }
+  body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--blue-deep); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
+  body.menu-open .nav-item{ border-bottom:1px solid rgba(251,249,245,.14); }
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
-  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
+  body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:rgba(251,249,245,.05); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
-  .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
-  .work-grid{ grid-template-columns:repeat(2, 1fr); }
-  .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .contact-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
-  .work-grid{ grid-template-columns:1fr; }
+  .form-row{ grid-template-columns:1fr; }
+  .channel-value{ white-space:normal; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
 </head>
-<body>
-
-<div class="ambient" aria-hidden="true">
-  <span class="ambient-blob ambient-blob-brass"></span>
-  <span class="ambient-blob ambient-blob-grey"></span>
-  <span class="ambient-blob ambient-blob-blue"></span>
-  <span class="ambient-blob ambient-blob-4"></span>
-  <span class="ambient-blob ambient-blob-5"></span>
-  <span class="ambient-blob ambient-blob-6"></span>
-  <span class="ambient-blob ambient-blob-7"></span>
-  <span class="ambient-blob ambient-blob-8"></span>
-</div>
+<body class="on-dark">
 
 <header class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
-      <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
+      <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
         <g>
           <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
           <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
@@ -262,7 +298,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <a href="bms.html#c-bms24x">c-BMS24x</a>
           </div>
         </li>
-        <li class="nav-item current">
+        <li class="nav-item">
           <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="about.html#company">Company</a>
@@ -273,7 +309,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     </nav>
 
     <div class="nav-cta">
-      <a href="contact.html" class="btn btn-primary">Get in touch</a>
+      <a href="contact-v2.html" class="btn btn-on-dark">Get in touch</a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
         <span></span>
       </button>
@@ -285,84 +321,113 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <section class="page-hero">
   <div class="container page-hero-inner">
-    <span class="eyebrow">About WS Technicals</span>
-    <h1>Custom battery engineering — focused since 2015.</h1>
-    <p>We deliver complete lithium battery solutions — from concept to certified production — combining speed, innovation and efficiency with state-of-the-art manufacturing technology.</p>
+    <span class="eyebrow">Contact</span>
+    <h1>Let's talk about your application.</h1>
+    <p>Tell us what you need — a sales conversation, a purchase, or a general question — and the right person will get back to you.</p>
   </div>
 </section>
 
-<section class="about-section" id="company">
-  <div class="container about-grid">
+<section class="contact on-dark" id="contact-form">
+  <div class="container contact-grid">
     <div>
-      <h2>Engineering-led, from Aarhus.</h2>
-      <p>WS Technicals designs and manufactures custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated. Lithium batteries from WS Technicals power applications across every sector: AGVs and AMRs, drones, forklifts, cleaning machines, ground support equipment, heavy-duty construction equipment and small last-mile delivery robots.</p>
-      <a href="contact.html" class="link-arrow">Get in touch
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">2015</div><div class="label">Founded as an intra-logistics spin-off</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering headquarters</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
-    </div>
-  </div>
-</section>
+      <div class="contact-channels">
+        <div class="channel-card">
+          <div class="channel-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 4h3l2 5-2 1a9 9 0 0 0 5 5l1-2 5 2v3a2 2 0 0 1-2 2C9 20 2 13 2 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg></div>
+          <div class="channel-body">
+            <span class="channel-label">Phone</span>
+            <a class="channel-value" href="tel:+4588618386">+45 88 61 83 86</a>
+          </div>
+          <button type="button" class="channel-copy" data-copy="+45 88 61 83 86" aria-label="Copy phone number">
+            <svg class="icon-copy" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg>
+            <svg class="icon-check" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="channel-card">
+          <div class="channel-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5"/><path d="m3 5.5 7 5.5 7-5.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="channel-body">
+            <span class="channel-label">Email</span>
+            <a class="channel-value" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a>
+          </div>
+          <button type="button" class="channel-copy" data-copy="wstech@wstech.dk" aria-label="Copy email address">
+            <svg class="icon-copy" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg>
+            <svg class="icon-check" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="channel-card">
+          <div class="channel-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 18s6-5.5 6-10a6 6 0 0 0-12 0c0 4.5 6 10 6 10Z" stroke-linejoin="round"/><circle cx="10" cy="8" r="2"/></svg></div>
+          <div class="channel-body">
+            <span class="channel-label">Address</span>
+            <span class="channel-value">Gjellerupvej 89D, 8230 Åbyhøj</span>
+          </div>
+          <button type="button" class="channel-copy" data-copy="Gjellerupvej 89D, 8230 Åbyhøj, Denmark" aria-label="Copy address">
+            <svg class="icon-copy" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg>
+            <svg class="icon-check" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
 
-<section class="work">
-  <div class="container">
-    <div class="section-head">
-      <h2>The way we work.</h2>
-      <p>Four principles that carry through every project, regardless of application or volume.</p>
-    </div>
-    <div class="work-grid">
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
-        <h3>Turn-Key Solutions</h3>
-        <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
-        <h3>Competitive Solution</h3>
-        <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
-        <h3>State of the Art Technology</h3>
-        <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
-        <h3>End-of-Line Testing</h3>
-        <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
+      <div class="support-card">
+        <h3>Already a customer?</h3>
+        <p>For technical support on an existing product, use our Support Center instead of the form — you'll get a faster, more specific answer.</p>
+        <a href="mailto:wstech@wstech.dk?subject=Support%20request" class="link-arrow">Go to Support Center
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="career" id="career">
-  <div class="container career-grid">
-    <div>
-      <span class="eyebrow">Career</span>
-      <h2 style="margin-top:16px;">Build custom battery systems with us.</h2>
-      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications — not just spec sheets — we'd like to hear from you.</p>
-      <a href="contact.html" class="link-arrow">Get in touch about opportunities
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="career-card">
-      <h3>Open positions</h3>
-      <p>We don't have specific openings listed here yet — but we're always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
-      <a href="contact.html" class="btn btn-primary">Send an open application</a>
-    </div>
-  </div>
-</section>
+    <div class="form-wrap">
+    <div class="form-glow" aria-hidden="true"></div>
+    <form class="contact-form" id="contactForm">
+      <div class="type-toggle" role="group" aria-label="Inquiry type">
+        <button type="button" class="type-btn active" data-type="sales">Sales</button>
+        <button type="button" class="type-btn" data-type="buy">Buy</button>
+        <button type="button" class="type-btn" data-type="general">General</button>
+      </div>
+      <input type="hidden" name="inquiry_type" id="inquiryType" value="sales">
 
-<section class="cta-band">
-  <div class="container">
-    <h2>Want to know more about WS Technicals?</h2>
-    <p>Whether it's a project, a partnership, or a career conversation — get in touch.</p>
-    <a href="contact.html" class="btn btn-on-dark">Contact us</a>
+      <div class="form-row">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input type="text" id="f-name" name="name" placeholder="Jane Doe">
+        </div>
+        <div class="field">
+          <label for="f-company">Company</label>
+          <input type="text" id="f-company" name="company" placeholder="Company name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" placeholder="jane@company.com">
+        </div>
+      </div>
+
+      <div class="form-row sales-fields show" id="salesFields">
+        <div class="field">
+          <label for="f-usecase">Use Case</label>
+          <input type="text" id="f-usecase" name="use_case" placeholder="e.g. AGV, drone, marine">
+        </div>
+        <div class="field">
+          <label for="f-capacity">Capacity</label>
+          <input type="text" id="f-capacity" name="capacity" placeholder="e.g. voltage / Ah / annual volume">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" placeholder="Tell us about your project"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-on-dark" style="width:100%;">Send message</button>
+      <p class="form-note">All fields optional. We'll only use this to respond to your enquiry.</p>
+      <div class="form-success" id="formSuccess">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#B99A72" stroke-width="1.8"><path d="M4 10l4 4 8-8"/></svg>
+        <span>Thanks — we'll be in touch shortly.</span>
+      </div>
+    </form>
+    </div>
   </div>
 </section>
 
@@ -429,7 +494,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         <ul>
           <li><a href="about.html#company">About us</a></li>
           <li><a href="about.html#career">Career</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact-v2.html">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -471,6 +536,65 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     a.addEventListener('click', function(){
       body.classList.remove('menu-open');
       toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Inquiry type toggle — shows Use Case / Capacity only for Sales
+  var typeBtns = document.querySelectorAll('.type-btn');
+  var inquiryType = document.getElementById('inquiryType');
+  var salesFields = document.getElementById('salesFields');
+  typeBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      typeBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var type = btn.getAttribute('data-type');
+      inquiryType.value = type;
+      salesFields.classList.toggle('show', type === 'sales');
+    });
+  });
+
+  // Contact form — front-end only placeholder (no backend wired up)
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    success.classList.add('show');
+  });
+
+  // Copy-to-clipboard for phone / email / address
+  function copyText(text){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function(){ return legacyCopy(text); });
+    }
+    return legacyCopy(text);
+  }
+  function legacyCopy(text){
+    return new Promise(function(resolve, reject){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? resolve() : reject(new Error('execCommand failed'));
+      } catch (err) {
+        document.body.removeChild(ta);
+        reject(err);
+      }
+    });
+  }
+  document.querySelectorAll('.channel-copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      copyText(text).then(function(){
+        btn.classList.add('copied');
+        window.clearTimeout(btn._copyTimer);
+        btn._copyTimer = window.setTimeout(function(){ btn.classList.remove('copied'); }, 1800);
+      }).catch(function(){ /* clipboard unavailable — no-op */ });
     });
   });
 })();

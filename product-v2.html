@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Solutions — WS Technicals</title>
-<meta name="description" content="Custom lithium battery solutions for robotics, maritime, UPS, heavy machinery, defense and material handling applications.">
+<title>XWD-48 Modular Pack — WS Technicals</title>
+<meta name="description" content="XWD-48 Modular Pack — a custom 48V LiFePO4 battery system engineered for compact utility vehicles, with an interactive exploded-view walkthrough and case study.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +55,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid va
 .corner.tr{ top:0; right:0; border-top-width:1.5px; border-right-width:1.5px; }
 .corner.bl{ bottom:0; left:0; border-bottom-width:1.5px; border-left-width:1.5px; }
 .corner.br{ bottom:0; right:0; border-bottom-width:1.5px; border-right-width:1.5px; }
+.corner.on-dark{ border-color:var(--brass-hi); }
 .btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 26px; border-radius:var(--r); font-weight:600; font-size:14.5px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
 .btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
 .btn:hover::before{ opacity:1; }
@@ -107,46 +108,106 @@ body.menu-open .nav-toggle span{ background:transparent; }
 body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
 body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
 
-.page-hero{ padding:var(--sp-6) 0 var(--sp-4); overflow:hidden; }
-.page-hero-inner{ max-width:60ch; }
-.page-hero h1{ font-size:clamp(34px, 4.4vw, 58px); letter-spacing:-0.035em; max-width:16ch; margin-bottom:var(--sp-3); }
-.page-hero p{ max-width:62ch; font-size:16.5px; color:var(--ink-soft); line-height:1.65; }
+/* Breadcrumb */
+.breadcrumb{ padding:var(--sp-3) 0 0; }
+.breadcrumb ol{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.breadcrumb li{ display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; letter-spacing:.03em; color:var(--ink-faint); }
+.breadcrumb a{ color:var(--ink-faint); transition:color var(--dur) var(--ease); }
+.breadcrumb a:hover{ color:var(--ink); }
+.breadcrumb li.current{ color:var(--ink-soft); }
+.breadcrumb .sep{ color:var(--line-2); }
 
-.solutions{ padding:var(--sp-4) 0 var(--sp-8); }
-.bento-top{ display:grid; grid-template-columns:1.6fr 1fr; gap:var(--sp-3); margin-bottom:var(--sp-3); }
-.bento-row{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.sol-tile{ position:relative; border:1px solid var(--line-2); background:var(--card); display:flex; flex-direction:column; transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); overflow:hidden; scroll-margin-top:100px; }
+/* ============================================================
+   PRODUCT HERO — interactive stage (closed/exploded toggle +
+   mouse-tilt "3D" parallax) on the left, spec panel on the right.
+   ============================================================ */
+.product-hero{ padding:var(--sp-4) 0 var(--sp-7); overflow:hidden; }
+.product-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:var(--sp-6); align-items:start; }
+
+.stage-wrap{ position:sticky; top:100px; }
+.product-stage{ position:relative; aspect-ratio:1/1; background:radial-gradient(circle at 50% 42%, var(--card) 0%, var(--paper-2) 78%); border:1px solid var(--line-2); overflow:hidden; perspective:1200px; }
+.stage-inner{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition:transform .25s var(--ease); transform-style:preserve-3d; will-change:transform; }
+.stage-img{ position:absolute; width:78%; max-width:520px; opacity:0; transform:scale(.94); transition:opacity .55s var(--ease), transform .55s var(--ease); animation:stageFloat 6s ease-in-out infinite; pointer-events:none; }
+.stage-img.active{ opacity:1; transform:scale(1); }
+@keyframes stageFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
+.stage-img.active{ animation:stageFloat 6s ease-in-out infinite; }
+.stage-badge{ position:absolute; top:var(--sp-3); left:var(--sp-3); z-index:3; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); background:rgba(255,255,255,.7); backdrop-filter:blur(6px); border:1px solid var(--line-2); padding:6px 11px; }
+.stage-badge .dot{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+.stage-toggle{ position:absolute; bottom:var(--sp-3); left:50%; transform:translateX(-50%); z-index:3; display:flex; gap:2px; background:rgba(255,255,255,.85); backdrop-filter:blur(8px); border:1px solid var(--line-2); padding:3px; }
+.stage-toggle button{ padding:9px 16px; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.stage-toggle button.active{ background:var(--blue-deep); color:#fff; }
+.stage-hint{ position:absolute; bottom:var(--sp-3); right:var(--sp-3); z-index:3; display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.04em; color:var(--ink-faint); opacity:0; transition:opacity var(--dur) var(--ease); }
+.product-stage:hover .stage-hint{ opacity:1; }
+.product-stage:hover .stage-img{ animation-play-state:paused; }
+
+.product-info{ padding-top:var(--sp-1); }
+.product-info h1{ font-size:clamp(30px,3.6vw,46px); letter-spacing:-.035em; margin-bottom:10px; }
+.product-sub{ font-size:15.5px; color:var(--ink-soft); max-width:44ch; line-height:1.6; margin-bottom:var(--sp-4); }
+.product-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:var(--sp-5); }
+
+.spec-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1px; background:var(--line-2); border:1px solid var(--line-2); margin-bottom:var(--sp-4); }
+.spec-cell{ position:relative; background:var(--card); padding:16px 18px; cursor:pointer; transition:background var(--dur) var(--ease); }
+.spec-cell:hover, .spec-cell:focus-visible{ background:var(--paper-2); }
+.spec-cell:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
+.spec-cell .k{ display:block; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+.spec-cell .v{ font-family:var(--font-display); font-weight:700; font-size:22px; letter-spacing:-.02em; color:var(--ink); }
+.spec-cell .v .unit{ font-family:var(--font-mono); font-weight:500; font-size:13px; color:var(--ink-soft); letter-spacing:0; margin-left:2px; }
+/* Signature refinement: every spec is copyable, so an engineer building
+   an RFQ can lift the exact value straight into their own document. */
+.spec-cell .copy-flag{ position:absolute; top:10px; right:10px; display:flex; align-items:center; color:var(--ink-faint); opacity:0; transform:translateY(-3px); transition:opacity .3s var(--ease), transform .3s var(--ease), color .3s var(--ease); }
+.spec-cell:hover .copy-flag, .spec-cell:focus-visible .copy-flag{ opacity:1; transform:translateY(0); }
+.spec-cell .copy-flag svg{ position:absolute; transition:opacity .2s var(--ease), transform .2s var(--ease); }
+.spec-cell .copy-flag .icon-copy{ opacity:1; transform:scale(1); }
+.spec-cell .copy-flag .icon-check{ opacity:0; transform:scale(.6); stroke:var(--brass); }
+.spec-cell.copied .copy-flag{ opacity:1; transform:translateY(0); color:var(--brass); }
+.spec-cell.copied .copy-flag .icon-copy{ opacity:0; transform:scale(.6); }
+.spec-cell.copied .copy-flag .icon-check{ opacity:1; transform:scale(1); }
+
+.cert-row{ display:flex; align-items:center; gap:var(--sp-2); flex-wrap:wrap; }
+.cert-row .cert-chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:6px 12px; border:1px solid var(--line-2); color:var(--ink-soft); }
+.cert-row .note{ font-size:12.5px; color:var(--ink-faint); }
+
+/* ============================================================
+   CASE STUDY
+   ============================================================ */
+.case-study{ padding:var(--sp-7) 0; background:var(--card); border-top:1px solid var(--line-2); border-bottom:1px solid var(--line-2); }
+.case-head{ max-width:64ch; margin-bottom:var(--sp-5); }
+.case-head h2{ font-size:clamp(26px,3.2vw,40px); letter-spacing:-.03em; margin-bottom:var(--sp-2); }
+.case-head p{ font-size:16px; color:var(--ink-soft); line-height:1.65; max-width:58ch; }
+.case-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); align-items:center; margin-bottom:var(--sp-6); }
+.case-media{ position:relative; aspect-ratio:4/5; background-size:cover; background-position:center; border:1px solid var(--line-2); }
+.case-media .tag{ position:absolute; top:var(--sp-2); left:var(--sp-2); z-index:2; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:#fff; background:rgba(6,8,26,.45); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,.3); padding:6px 11px; }
+.case-media .tag .dot{ width:5px; height:5px; background:var(--brass-hi); flex:none; }
+.case-copy blockquote{ font-family:var(--font-display); font-weight:700; font-size:clamp(20px,2.2vw,27px); letter-spacing:-.02em; line-height:1.28; margin-bottom:var(--sp-3); }
+.case-copy blockquote::before{ content:'“'; color:var(--brass); }
+.case-copy blockquote::after{ content:'”'; color:var(--brass); }
+.case-copy p.attn{ font-size:14px; color:var(--ink-faint); font-family:var(--font-mono); letter-spacing:.02em; }
+
+.case-steps{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-3); }
+.case-step{ border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); opacity:0; transform:translateY(18px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.case-step.in-view{ opacity:1; transform:translateY(0); }
+.case-step .num{ font-family:var(--font-mono); font-size:12px; color:var(--brass); margin-bottom:10px; display:block; }
+.case-step h3{ font-size:17px; letter-spacing:-.02em; margin-bottom:8px; }
+.case-step p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+
+/* ============================================================
+   RELATED APPLICATIONS
+   ============================================================ */
+.related{ padding:var(--sp-7) 0 var(--sp-8); }
+.related-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap; margin-bottom:var(--sp-4); }
+.related-head h2{ font-size:clamp(24px,2.8vw,34px); letter-spacing:-.03em; }
+.related-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
+.sol-tile{ position:relative; border:1px solid var(--line-2); background:var(--card); display:flex; flex-direction:column; transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease); overflow:hidden; }
 .sol-tile:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:var(--ink); }
-.sol-tile .tile-img{ position:relative; flex:1; min-height:200px; background-size:cover; background-position:center; -webkit-mask-image:radial-gradient(ellipse 92% 88% at center, black 60%, transparent 100%); mask-image:radial-gradient(ellipse 92% 88% at center, black 60%, transparent 100%); }
+.sol-tile .tile-img{ position:relative; min-height:170px; background-size:cover; background-position:center; -webkit-mask-image:radial-gradient(ellipse 92% 88% at center, black 60%, transparent 100%); mask-image:radial-gradient(ellipse 92% 88% at center, black 60%, transparent 100%); }
 .sol-tile .tile-body{ padding:var(--sp-3); }
 .sol-tile .tag{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink-faint); display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .sol-tile .tag .dot{ width:5px; height:5px; background:var(--brass); }
-.sol-tile h3{ font-size:19px; letter-spacing:-.02em; margin-bottom:6px; }
-.sol-tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
-.sol-tile .go{ position:absolute; top:var(--sp-2); right:var(--sp-2); width:30px; height:30px; border:1px solid rgba(255,255,255,.5); background:rgba(6,8,26,.35); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:#fff; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease); z-index:2; }
+.sol-tile h3{ font-size:17px; letter-spacing:-.02em; margin-bottom:6px; }
+.sol-tile p{ font-size:13px; color:var(--ink-soft); line-height:1.5; }
+.sol-tile .go{ position:absolute; top:var(--sp-2); right:var(--sp-2); width:28px; height:28px; border:1px solid rgba(255,255,255,.5); background:rgba(6,8,26,.35); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:#fff; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease); z-index:2; }
 .sol-tile:hover .go{ transform:translate(3px,-3px); background:var(--blue-deep); }
-.sol-featured{ min-height:420px; }
-.sol-featured .tile-img{ min-height:280px; }
-.sol-featured h3{ font-size:26px; }
-.sol-featured p{ font-size:14.5px; max-width:38ch; }
-.sol-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
-.sol-chip{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.03em; padding:4px 9px; border:1px solid var(--line-2); color:var(--ink-soft); }
-.sol-stat-panel{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-4); display:flex; flex-direction:column; justify-content:space-between; min-height:420px; }
-.sol-stat-panel .spec-line .label{ color:var(--ink-soft-on-dark); }
-.sol-stat-panel .spec-line .rule{ background:rgba(251,249,245,.18); }
-.sol-stat-panel .big{ font-family:var(--font-display); font-weight:800; font-size:clamp(48px,6vw,84px); letter-spacing:-.04em; line-height:.92; }
-.sol-stat-panel .cap{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft-on-dark); margin-top:12px; max-width:22ch; }
-.sol-stat-panel .foot{ font-size:14px; color:var(--ink-soft-on-dark); border-top:1px solid rgba(251,249,245,.16); padding-top:var(--sp-2); margin-top:var(--sp-3); }
-.sol-wide{ flex-direction:row; min-height:180px; }
-.sol-wide .tile-img{ flex:0 0 38%; min-height:auto; }
-.sol-wide .tile-body{ flex:1; display:flex; flex-direction:column; justify-content:center; }
-
-.stats{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; }
-.stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-4); }
-.stat-item{ padding-left:var(--sp-3); }
-.stat-item .mono-cap{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--brass-hi); margin-bottom:10px; display:block; }
-.stat-num{ font-family:var(--font-display); font-weight:800; font-size:clamp(40px,5vw,64px); letter-spacing:-0.04em; line-height:1; color:var(--paper); margin-bottom:10px; }
-.stat-label{ font-size:14px; color:var(--ink-soft-on-dark); max-width:22ch; line-height:1.5; }
 
 .cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
@@ -176,17 +237,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
-  .bento-top{ grid-template-columns:1fr; }
-  .bento-row{ grid-template-columns:repeat(2, 1fr); }
-  .sol-wide{ flex-direction:column; }
-  .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
+  .product-grid{ grid-template-columns:1fr; }
+  .stage-wrap{ position:static; }
+  .case-grid{ grid-template-columns:1fr; }
+  .case-media{ aspect-ratio:16/9; }
+  .case-steps{ grid-template-columns:1fr; }
+  .related-grid{ grid-template-columns:repeat(2, 1fr); }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
-  .bento-row{ grid-template-columns:1fr; }
-  .stats-grid{ grid-template-columns:1fr 1fr; }
+  .spec-grid{ grid-template-columns:1fr 1fr; }
+  .related-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
@@ -230,7 +293,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     </a>
     <nav aria-label="Primary">
       <ul class="nav-menu">
-        <li class="nav-item current">
+        <li class="nav-item">
           <a href="solutions.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="solutions.html#robotics">Robotics</a>
@@ -288,91 +351,131 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <main id="top">
 
-<section class="page-hero">
-  <div class="container">
-    <div class="page-hero-inner">
-      <div class="spec-line"><span class="idx">INDEX 01—06</span><span class="rule"></span><span class="label">Solutions</span></div>
-      <h1>Custom lithium battery solutions for every industrial sector.</h1>
-      <p>Lithium batteries are used for many purposes — AGVs and AMRs, drones, forklifts, cleaning machines and ground support equipment. From heavy-duty construction equipment to small last-mile delivery robots, we design, certify and mass produce the battery your application needs.</p>
-    </div>
-  </div>
-</section>
+<nav class="breadcrumb container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="index.html">Home</a></li>
+    <li class="sep">/</li>
+    <li><a href="solutions.html">Solutions</a></li>
+    <li class="sep">/</li>
+    <li><a href="solutions.html#heavy-machinery">Heavy Machinery</a></li>
+    <li class="sep">/</li>
+    <li class="current">XWD-48 Modular Pack</li>
+  </ol>
+</nav>
 
-<section class="solutions" id="categories">
-  <div class="container">
+<section class="product-hero">
+  <div class="container product-grid">
 
-    <div class="bento-top">
-      <article class="sol-tile sol-featured" id="robotics">
-        <div class="tile-img" style="background-image:url('assets/products/cards/robotics.jpg')">
-          <span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <div class="stage-wrap">
+      <div class="product-stage frame" id="productStage">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <div class="stage-badge"><span class="dot"></span>Interactive view</div>
+        <div class="stage-inner" id="stageInner">
+          <img class="stage-img active" data-view="closed" src="assets/products/renders/crop/xwd_egholm_closed_transparent_02_print.png" alt="XWD-48 Modular Pack — assembled, sealed enclosure">
+          <img class="stage-img" data-view="exploded" src="assets/products/renders/crop/xwd_egholm_exploded_transparent_print2.png" alt="XWD-48 Modular Pack — exploded view showing cell modules, BMS and enclosure layers">
         </div>
-        <div class="tile-body">
-          <span class="tag"><span class="dot"></span>APPLICATION 01 / 06</span>
-          <h3>Robotics</h3>
-          <p>Compact, high-cycle packs built for precision robotics and collaborative automation, including humanoid platforms.</p>
-          <div class="sol-chips"><span class="sol-chip">Humanoid robots</span><span class="sol-chip">Cobots</span></div>
+        <div class="stage-toggle" role="group" aria-label="Product view">
+          <button type="button" class="active" data-view="closed">Assembled</button>
+          <button type="button" data-view="exploded">Exploded</button>
         </div>
-      </article>
-
-      <div class="sol-stat-panel">
-        <div>
-          <div class="spec-line"><span class="idx">SCOPE</span><span class="rule"></span><span class="label">All sectors</span></div>
-          <div class="big">6</div>
-          <div class="cap">Application domains — one engineering process, tailored to each</div>
+        <div class="stage-hint">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Move to tilt
         </div>
-        <div class="foot">Don't see your application? We likely still build for it.</div>
       </div>
     </div>
 
-    <div class="bento-row">
-      <article class="sol-tile" id="maritime">
-        <div class="tile-img" style="background-image:url('assets/products/cards/maritime.jpg')"><span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        <div class="tile-body"><span class="tag"><span class="dot"></span>02 / 06</span><h3>Maritime</h3><p>Marine-certified lithium systems engineered for vibration, moisture, and long duty cycles at sea.</p></div>
-      </article>
-      <article class="sol-tile" id="ups">
-        <div class="tile-img" style="background-image:url('assets/products/cards/ups.jpg')"><span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        <div class="tile-body"><span class="tag"><span class="dot"></span>03 / 06</span><h3>UPS</h3><p>Uninterrupted power supply systems engineered for critical infrastructure and continuous uptime.</p></div>
-      </article>
-      <article class="sol-tile" id="heavy-machinery">
-        <a href="product.html" class="tile-img" style="background-image:url('assets/products/cards/heavy-machinery.jpg')"><span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-        <div class="tile-body"><span class="tag"><span class="dot"></span>04 / 06</span><h3>Heavy Machinery</h3><p>High-capacity packs engineered for torque and duty cycles in construction, agriculture and cranes.</p><a href="product.html" class="link-arrow" style="margin-top:10px;">View product case study <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
-      </article>
-      <article class="sol-tile" id="defense">
-        <div class="tile-img" style="background-image:url('assets/products/cards/drone.jpg')"><span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        <div class="tile-body">
-          <span class="tag"><span class="dot"></span>05 / 06</span><h3>Defense</h3><p>High energy-density packs for unmanned platforms across air, surface, underwater and ground domains.</p>
-          <div class="sol-chips"><span class="sol-chip">UAV</span><span class="sol-chip">USV</span><span class="sol-chip">UUV</span><span class="sol-chip">UGV</span></div>
-        </div>
-      </article>
+    <div class="product-info">
+      <div class="spec-line"><span class="idx">CASE STUDY 04 / 06</span><span class="rule"></span><span class="label">Heavy Machinery</span></div>
+      <h1>XWD-48 Modular Pack</h1>
+      <p class="product-sub">A custom 48V LiFePO4 battery system engineered to drop into an existing compact utility vehicle chassis — sealed, fast-charging, and built to run a full shift in the field, every season.</p>
+
+      <div class="spec-grid">
+        <div class="spec-cell" tabindex="0" role="button" data-copy="48V" aria-label="Nominal voltage 48V — click to copy"><span class="k">Nominal Voltage</span><span class="v" data-count="48">0<span class="unit">V</span></span><span class="copy-flag"><svg class="icon-copy" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg><svg class="icon-check" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="spec-cell" tabindex="0" role="button" data-copy="105Ah" aria-label="Capacity 105Ah — click to copy"><span class="k">Capacity</span><span class="v" data-count="105">0<span class="unit">Ah</span></span><span class="copy-flag"><svg class="icon-copy" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg><svg class="icon-check" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="spec-cell" tabindex="0" role="button" data-copy="5.04kWh" aria-label="Energy 5.04kWh — click to copy"><span class="k">Energy</span><span class="v" data-count="5.04" data-decimals="2">0<span class="unit">kWh</span></span><span class="copy-flag"><svg class="icon-copy" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg><svg class="icon-check" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="spec-cell" tabindex="0" role="button" data-copy="LFP" aria-label="Chemistry LFP — click to copy"><span class="k">Chemistry</span><span class="v">LFP</span><span class="copy-flag"><svg class="icon-copy" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg><svg class="icon-check" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="spec-cell" tabindex="0" role="button" data-copy="3000+ cycles @ 80%" aria-label="Cycle life 3000 plus at 80 percent — click to copy"><span class="k">Cycle Life</span><span class="v" data-count="3000">0<span class="unit">+ @ 80%</span></span><span class="copy-flag"><svg class="icon-copy" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg><svg class="icon-check" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="spec-cell" tabindex="0" role="button" data-copy="IP67" aria-label="IP rating IP67 — click to copy"><span class="k">IP Rating</span><span class="v">IP67</span><span class="copy-flag"><svg class="icon-copy" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg><svg class="icon-check" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+
+      <div class="cert-row" style="margin-bottom:var(--sp-4);">
+        <span class="cert-chip">CE</span><span class="cert-chip">UN 38.3</span><span class="cert-chip">RoHS</span>
+        <span class="note">Integrated i-BMS — see <a href="bms.html#i-bms" class="link-arrow" style="display:inline-flex;">BMS spec <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
+      </div>
+
+      <div class="product-cta">
+        <a href="contact.html" class="btn btn-primary">Request a similar solution</a>
+        <a href="development.html" class="btn btn-ghost">See how we build it</a>
+      </div>
     </div>
 
-    <div class="bento-row" style="margin-top:var(--sp-3); grid-template-columns:1fr;">
-      <article class="sol-tile sol-wide" id="material-handling">
-        <div class="tile-img" style="background-image:url('assets/products/cards/material-handling.jpg')"><span class="go"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        <div class="tile-body">
-          <span class="tag"><span class="dot"></span>06 / 06</span>
-          <h3>Material Handling</h3>
-          <p>Robust battery systems for continuous industrial operation — AGVs, AMRs and forklifts.</p>
-          <div class="sol-chips"><span class="sol-chip">AGV / AMR</span><span class="sol-chip">Forklifts (LEV)</span></div>
-        </div>
-      </article>
+  </div>
+</section>
+
+<section class="case-study" id="case-study">
+  <div class="container">
+    <div class="case-head">
+      <div class="spec-line"><span class="idx">FIELD REPORT</span><span class="rule"></span><span class="label">Case Study</span></div>
+      <h2>Built for compact utility vehicles.</h2>
+      <p>The XWD-48 replaces a heavier, slower-charging power system inside the same chassis footprint — engineered to withstand vibration, moisture and temperature swings across a full working season.</p>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-media frame" style="background-image:url('assets/products/cards/heavy-machinery.jpg')">
+        <span class="corner tl on-dark"></span><span class="corner br on-dark"></span>
+        <span class="tag"><span class="dot"></span>Heavy Machinery — Field Application</span>
+      </div>
+      <div class="case-copy">
+        <blockquote>The pack had to fit the existing chassis, survive a full outdoor season, and charge fast enough to keep the fleet moving.</blockquote>
+        <p class="attn">Engineering brief — compact utility &amp; multi-tool carrier platform</p>
+      </div>
+    </div>
+
+    <div class="case-steps">
+      <div class="case-step"><span class="num">01 — Challenge</span><h3>Same footprint, more demand</h3><p>The vehicle's compact chassis left no room to grow — the new pack had to match the original envelope while delivering more usable energy per shift.</p></div>
+      <div class="case-step"><span class="num">02 — Approach</span><h3>Sealed, modular, monitored</h3><p>A modular 48V LFP pack with an IP67 enclosure and integrated i-BMS, designed for cell-level monitoring and thermal protection in an outdoor duty cycle.</p></div>
+      <div class="case-step"><span class="num">03 — Result</span><h3>Full-shift, all-season reliability</h3><p>Consistent runtime across temperature swings, fast-charge turnaround between shifts, and a lighter overall vehicle for easier handling.</p></div>
     </div>
   </div>
 </section>
 
-<section class="stats on-dark">
-  <div class="container stats-grid">
-    <div class="stat-item"><span class="mono-cap">Metric 01</span><div class="stat-num">6</div><div class="stat-label">Application domains served</div></div>
-    <div class="stat-item"><span class="mono-cap">Metric 02</span><div class="stat-num">2015</div><div class="stat-label">Company founded in Denmark</div></div>
-    <div class="stat-item"><span class="mono-cap">Metric 03</span><div class="stat-num">100%</div><div class="stat-label">In-house BMS &amp; compliance testing</div></div>
-    <div class="stat-item"><span class="mono-cap">Metric 04</span><div class="stat-num">DK</div><div class="stat-label">Designed in Aarhus, built at scale</div></div>
+<section class="related" id="related">
+  <div class="container">
+    <div class="related-head">
+      <div>
+        <div class="spec-line" style="margin-bottom:8px;"><span class="idx">EXPLORE</span><span class="rule"></span><span class="label">Related applications</span></div>
+        <h2>Similar solutions, other sectors.</h2>
+      </div>
+      <a href="solutions.html" class="link-arrow">All applications
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="related-grid">
+      <a class="sol-tile" href="solutions.html#robotics">
+        <div class="tile-img" style="background-image:url('assets/products/cards/robotics.jpg')"><span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="tile-body"><span class="tag"><span class="dot"></span>01 / 06</span><h3>Robotics</h3><p>Compact, high-cycle packs for precision robotics and cobots.</p></div>
+      </a>
+      <a class="sol-tile" href="solutions.html#maritime">
+        <div class="tile-img" style="background-image:url('assets/products/cards/maritime.jpg')"><span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="tile-body"><span class="tag"><span class="dot"></span>02 / 06</span><h3>Maritime</h3><p>Marine-certified systems for vibration, moisture and long duty cycles.</p></div>
+      </a>
+      <a class="sol-tile" href="solutions.html#ups">
+        <div class="tile-img" style="background-image:url('assets/products/cards/ups.jpg')"><span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="tile-body"><span class="tag"><span class="dot"></span>03 / 06</span><h3>UPS</h3><p>Uninterrupted power for critical infrastructure.</p></div>
+      </a>
+      <a class="sol-tile" href="solutions.html#material-handling">
+        <div class="tile-img" style="background-image:url('assets/products/cards/material-handling.jpg')"><span class="go"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M4 10 10 4M4.5 4h5.5v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="tile-body"><span class="tag"><span class="dot"></span>06 / 06</span><h3>Material Handling</h3><p>Robust systems for AGVs, AMRs and forklifts.</p></div>
+      </a>
+    </div>
   </div>
 </section>
 
 <section class="cta-band">
   <div class="container">
-    <h2>Don't see your application listed?</h2>
-    <p>We build custom packs for sectors beyond this list — if it needs a battery, we can likely engineer it.</p>
+    <h2>Need a battery built around your machine?</h2>
+    <p>Every pack starts with your chassis, your duty cycle and your certification targets — not the other way around.</p>
     <a href="contact.html" class="btn btn-on-dark">Talk to our engineering team</a>
   </div>
 </section>
@@ -455,6 +558,113 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Product stage — closed/exploded toggle
+  var stageImgs = document.querySelectorAll('.stage-img');
+  var stageBtns = document.querySelectorAll('.stage-toggle button');
+  stageBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var view = btn.getAttribute('data-view');
+      stageBtns.forEach(function(b){ b.classList.toggle('active', b === btn); });
+      stageImgs.forEach(function(img){ img.classList.toggle('active', img.dataset.view === view); });
+    });
+  });
+
+  // Product stage — mouse-tilt "3D" parallax
+  var stage = document.getElementById('productStage');
+  var stageInner = document.getElementById('stageInner');
+  if (stage && stageInner && window.matchMedia('(hover: hover)').matches) {
+    stage.addEventListener('mousemove', function(e){
+      var rect = stage.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      stageInner.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (y * -14) + 'deg)';
+    });
+    stage.addEventListener('mouseleave', function(){
+      stageInner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  }
+
+  // Spec counters — count up when scrolled into view
+  var counters = document.querySelectorAll('[data-count]');
+  if (counters.length) {
+    var counterObserver = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseFloat(el.dataset.count);
+        var decimals = parseInt(el.dataset.decimals || '0', 10);
+        var unit = el.querySelector('.unit');
+        var unitHTML = unit ? unit.outerHTML : '';
+        var start = performance.now();
+        var duration = 1100;
+        function tick(now){
+          var progress = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var val = (target * eased).toFixed(decimals);
+          el.innerHTML = val + unitHTML;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function(el){ counterObserver.observe(el); });
+  }
+
+  // Spec cells — click to copy the value
+  function copyText(text){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function(){ return legacyCopy(text); });
+    }
+    return legacyCopy(text);
+  }
+  function legacyCopy(text){
+    return new Promise(function(resolve, reject){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? resolve() : reject(new Error('execCommand failed'));
+      } catch (err) {
+        document.body.removeChild(ta);
+        reject(err);
+      }
+    });
+  }
+  document.querySelectorAll('.spec-cell[data-copy]').forEach(function(cell){
+    function doCopy(){
+      copyText(cell.getAttribute('data-copy')).then(function(){
+        cell.classList.add('copied');
+        window.clearTimeout(cell._copyTimer);
+        cell._copyTimer = window.setTimeout(function(){ cell.classList.remove('copied'); }, 1600);
+      }).catch(function(){ /* clipboard unavailable — no-op */ });
+    }
+    cell.addEventListener('click', doCopy);
+    cell.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doCopy(); }
+    });
+  });
+
+  // Case study steps — fade up on scroll
+  var steps = document.querySelectorAll('.case-step');
+  if (steps.length) {
+    var stepObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.2 });
+    steps.forEach(function(el, i){
+      el.style.transitionDelay = (i * 0.08) + 's';
+      stepObserver.observe(el);
+    });
+  }
 })();
 </script>
 
