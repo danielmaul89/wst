@@ -234,6 +234,25 @@ main > .cta-band{ display:none; }
 .solution-tag::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--brass); flex:none; }
 @media (hover:hover){ .solution-tile:hover img{ transform:scale(1.025); } .solution-tile:hover::after{ opacity:.28; } }
 
+.architecture-node{ text-align:left; cursor:pointer; }
+.architecture-node.is-active{ background:var(--blue-deep); color:var(--paper); box-shadow:0 20px 48px -36px rgba(3,11,33,.72); }
+.architecture-node.is-active span{ color:rgba(251,249,245,.68); }
+.architecture-node.is-active::before{ background:var(--brass-hi); box-shadow:0 0 0 6px var(--blue-deep); }
+.family-explorer{ display:grid; grid-template-columns:.7fr 1.3fr; gap:clamp(40px,6vw,88px); align-items:center; min-height:570px; padding:clamp(28px,4vw,54px); border-radius:var(--r-lg); background:var(--paper-2); overflow:hidden; }
+.explorer-copy h3{ max-width:13ch; margin:15px 0 18px; color:var(--blue-deep); font-size:clamp(32px,4vw,50px); letter-spacing:-.04em; }
+.explorer-copy > p{ max-width:44ch; color:var(--ink-soft); font-size:15px; line-height:1.68; }
+.explorer-list{ display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 28px; }
+.explorer-list span{ padding:7px 10px; border:1px solid rgba(6,8,26,.09); border-radius:7px; background:rgba(255,255,255,.64); color:var(--blue-deep); font-size:11.5px; font-weight:600; }
+.explorer-visual{ display:grid; grid-template-columns:minmax(0,1.55fr) minmax(150px,.65fr); gap:14px; min-height:470px; transition:opacity 260ms ease,transform 500ms var(--motion-ease); }
+.family-explorer.is-changing .explorer-visual{ opacity:.18; transform:scale(.992); }
+.explorer-main,.explorer-examples a{ position:relative; overflow:hidden; border-radius:var(--r-lg); background:#dedee1; }
+.explorer-main img,.explorer-examples img{ width:100%; height:100%; object-fit:cover; transition:transform 800ms var(--motion-ease); }
+.explorer-main .solution-tag{ left:18px; bottom:18px; }
+.explorer-examples{ display:grid; grid-template-rows:repeat(3,1fr); gap:14px; min-height:0; }
+.explorer-examples a{ min-height:0; }
+.explorer-examples span{ position:absolute; z-index:2; left:10px; bottom:10px; padding:6px 8px; border:1px solid rgba(255,255,255,.65); border-radius:6px; background:rgba(255,255,255,.68); backdrop-filter:blur(12px); color:var(--blue-deep); font-size:10.5px; font-weight:600; }
+@media (hover:hover){ .explorer-main:hover img,.explorer-examples a:hover img{ transform:scale(1.025); } }
+
 .solutions-close{ padding:96px 0; background:var(--blue-deep); color:var(--paper); }
 .solutions-close-grid{ display:grid; grid-template-columns:1fr auto; gap:50px; align-items:center; }
 .solutions-close h2{ max-width:18ch; color:var(--paper); font-size:clamp(32px,4vw,48px); }
@@ -249,6 +268,8 @@ main > .cta-band{ display:none; }
   .showcase-content{ width:60%; }
   .architecture-nav{ grid-template-columns:repeat(3,1fr); margin-bottom:72px; }
   .architecture-nav::before{ display:none; }
+  .family-explorer{ grid-template-columns:1fr; }
+  .explorer-copy h3{ max-width:17ch; }
   .solution-tile,.solution-tile.wide{ --tile-span:6; }
   .family-heading{ grid-template-columns:1fr; gap:12px; align-items:start; }
   .family-heading p{ justify-self:start; }
@@ -270,6 +291,10 @@ main > .cta-band{ display:none; }
   .architecture-nav{ grid-template-columns:repeat(2,1fr); gap:9px; margin-bottom:64px; }
   .architecture-node{ min-height:92px; }
   .architecture-node::before{ margin-bottom:15px; }
+  .family-explorer{ min-height:0; padding:22px; gap:30px; }
+  .explorer-visual{ grid-template-columns:1fr; min-height:0; }
+  .explorer-main{ min-height:370px; }
+  .explorer-examples{ grid-template-columns:repeat(3,1fr); grid-template-rows:none; min-height:120px; }
   .solution-atlas{ gap:72px; }
   .family-gallery{ gap:11px; }
   .solution-tile,.solution-tile.wide,.solution-tile.large{ --tile-span:12; min-height:310px; }
@@ -439,89 +464,39 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
       <p>Start with the machine and its operating environment. Each category leads to the applications, requirements and battery architecture most relevant to your engineering team.</p>
     </div>
 
-    <nav class="architecture-nav" aria-label="Solution categories" data-sv-reveal>
-      <a class="architecture-node" href="#drones"><strong>Drones &amp; unmanned</strong><span>Air · Surface · Underwater · Ground</span></a>
-      <a class="architecture-node" href="#material-handling"><strong>Material Handling</strong><span>AGV · AMR · LEV</span></a>
-      <a class="architecture-node" href="#robotics"><strong>Robotics</strong><span>Humanoid · Industrial</span></a>
-      <a class="architecture-node" href="#maritime"><strong>Maritime</strong><span>Workboats · Leisure craft</span></a>
-      <a class="architecture-node" href="#ups"><strong>UPS</strong><span>Critical infrastructure</span></a>
-      <a class="architecture-node" href="#heavy-machinery"><strong>Heavy Machinery</strong><span>Outdoor · Construction · Agriculture</span></a>
-    </nav>
-
-    <div class="solution-atlas">
-      <section class="solution-family" id="drones">
-        <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Drones &amp; unmanned systems</span><h3>Power without payload compromise.</h3></div>
-          <p>High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.</p>
-        </div>
-        <div class="family-gallery">
-          <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor unmanned aerial vehicle"><span class="solution-tag">UAV · Multirotor</span></a>
-          <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-wing unmanned aerial vehicle"><span class="solution-tag">UAV · Fixed-wing</span></a>
-          <a class="solution-tile wide" href="product-drone.html" data-sv-reveal><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL unmanned aerial vehicle"><span class="solution-tag">UAV · VTOL</span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span class="solution-tag">USV · Surface</span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle"><span class="solution-tag">UGV · Ground</span></a>
-        </div>
-      </section>
-
-      <section class="solution-family" id="material-handling">
-        <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Material Handling</span><h3>Uptime engineered into the fleet.</h3></div>
-          <p>Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.</p>
-        </div>
-        <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/agv_scaled02.jpg" alt="Automated guided vehicle"><span class="solution-tag">AGV · AMR</span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/pallet-truck.jpg" alt="Electric pallet truck"><span class="solution-tag">LEV · Pallet truck</span></a>
-          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/forklift.jpg" alt="Electric forklift"><span class="solution-tag">LEV · Forklift</span></a>
-        </div>
-      </section>
-
-      <section class="solution-family" id="robotics">
-        <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Robotics</span><h3>Compact energy for intelligent machines.</h3></div>
-          <p>High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.</p>
-        </div>
-        <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/humanoid02.jpg" alt="Humanoid robot"><span class="solution-tag">Humanoid robotics</span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/robotic-arm.jpg" alt="Mobile industrial robotic arm"><span class="solution-tag">Industrial robotics</span></a>
-        </div>
-      </section>
-
-      <section class="solution-family" id="maritime">
-        <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Maritime</span><h3>Built for duty cycles at sea.</h3></div>
-          <p>Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.</p>
-        </div>
-        <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/boat.jpg" alt="Electric marine application"><span class="solution-tag">Marine · Workboat</span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous marine platform"><span class="solution-tag">Marine · Autonomous platform</span></a>
-        </div>
-      </section>
-
-      <section class="solution-family" id="ups">
-        <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Uninterruptible Power Supply</span><h3>Stored energy when availability is critical.</h3></div>
-          <p>Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.</p>
-        </div>
-        <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system.jpg" alt="Modular UPS battery cabinet"><span class="solution-tag">UPS · Modular cabinet</span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system02.jpg" alt="Large-scale UPS installation"><span class="solution-tag">UPS · Infrastructure bank</span></a>
-        </div>
-      </section>
-
-      <section class="solution-family" id="heavy-machinery">
-        <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Heavy Machinery</span><h3>High-capacity systems for work outside.</h3></div>
-          <p>Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.</p>
-        </div>
-        <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/lawn-mover.jpg" alt="Professional electric lawn mower"><span class="solution-tag">Outdoor maintenance</span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/utility-vehicle.jpg" alt="Electric utility vehicle"><span class="solution-tag">Utility vehicle</span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/fejemaskine.jpg" alt="Professional street sweeper"><span class="solution-tag">Municipal maintenance</span></a>
-          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/excavator02.jpg" alt="Electric excavator"><span class="solution-tag">Construction · Excavator</span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/traktor01.jpg" alt="Agricultural tractor"><span class="solution-tag">Agriculture · Tractor</span></a>
-        </div>
-      </section>
+    <div class="architecture-nav" role="tablist" aria-label="Solution categories" data-sv-reveal>
+      <button class="architecture-node is-active" id="drones" type="button" role="tab" aria-selected="true" data-family="drones"><strong>Drones &amp; unmanned</strong><span>Air · Surface · Underwater · Ground</span></button>
+      <button class="architecture-node" id="material-handling" type="button" role="tab" aria-selected="false" data-family="material"><strong>Material Handling</strong><span>AGV · AMR · LEV</span></button>
+      <button class="architecture-node" id="robotics" type="button" role="tab" aria-selected="false" data-family="robotics"><strong>Robotics</strong><span>Humanoid · Industrial</span></button>
+      <button class="architecture-node" id="maritime" type="button" role="tab" aria-selected="false" data-family="maritime"><strong>Maritime</strong><span>Workboats · Autonomous</span></button>
+      <button class="architecture-node" id="ups" type="button" role="tab" aria-selected="false" data-family="ups"><strong>UPS</strong><span>Critical infrastructure</span></button>
+      <button class="architecture-node" id="heavy-machinery" type="button" role="tab" aria-selected="false" data-family="heavy"><strong>Heavy Machinery</strong><span>Outdoor · Construction · Agriculture</span></button>
     </div>
+
+    <section class="family-explorer" id="family-explorer" aria-live="polite" data-sv-reveal>
+      <div class="explorer-copy">
+        <span class="family-kicker" id="explorerKicker">Drones &amp; unmanned systems</span>
+        <h3 id="explorerTitle">Power without payload compromise.</h3>
+        <p id="explorerDescription">High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.</p>
+        <div class="explorer-list" id="explorerList">
+          <span>UAV · Multirotor</span><span>UAV · Fixed-wing</span><span>UAV · VTOL</span><span>USV · Surface</span><span>UGV · Ground</span>
+        </div>
+        <a class="link-arrow explorer-link" id="explorerLink" href="product-drone.html">Explore this application family
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="explorer-visual">
+        <a class="explorer-main" id="explorerMainLink" href="product-drone.html">
+          <img id="explorerMainImage" src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor unmanned aerial vehicle">
+          <span class="solution-tag" id="explorerMainTag">UAV · Multirotor</span>
+        </a>
+        <div class="explorer-examples" id="explorerExamples">
+          <a href="product-drone.html"><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-wing unmanned aerial vehicle"><span>Fixed-wing UAV</span></a>
+          <a href="product-drone.html"><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL unmanned aerial vehicle"><span>VTOL UAV</span></a>
+          <a href="contact.html"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span>Surface vehicle</span></a>
+        </div>
+      </div>
+    </section>
   </div>
 </section>
 
@@ -918,6 +893,117 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   document.querySelectorAll('[data-sector-jump]').forEach(function(card){
     card.addEventListener('click', function(){ activateSector(card.dataset.sectorJump); });
   });
+
+  var architectureData = {
+    drones:{
+      kicker:'Drones & unmanned systems', title:'Power without payload compromise.',
+      description:'High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.',
+      main:['assets/products/web/hexacopter-grounded_scaled.jpg','Multirotor unmanned aerial vehicle','UAV · Multirotor','product-drone.html'],
+      examples:[
+        ['assets/products/web/fixed-wing-uav02.jpg','Fixed-wing unmanned aerial vehicle','Fixed-wing UAV','product-drone.html'],
+        ['assets/products/web/vtol-uav02.jpg','VTOL unmanned aerial vehicle','VTOL UAV','product-drone.html'],
+        ['assets/products/web/usv_unmanned-surface-vehicle.jpg','Unmanned surface vehicle','Surface vehicle','contact.html']
+      ],
+      items:['UAV · Multirotor','UAV · Fixed-wing','UAV · VTOL','USV · Surface','UUV · Underwater','UGV · Ground'], href:'product-drone.html'
+    },
+    material:{
+      kicker:'Material Handling', title:'Uptime engineered into the fleet.',
+      description:'Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.',
+      main:['assets/products/web/agv_scaled02.jpg','Automated guided vehicle','AGV · AMR','contact.html'],
+      examples:[
+        ['assets/products/web/pallet-truck.jpg','Electric pallet truck','Pallet truck','contact.html'],
+        ['assets/products/web/forklift.jpg','Electric forklift','Forklift','contact.html'],
+        ['assets/products/web/robotic-arm.jpg','Automated warehouse handling','Automated handling','contact.html']
+      ],
+      items:['AGV · Automated guided vehicle','AMR · Autonomous mobile robot','LEV · Pallet truck','LEV · Forklift'], href:'contact.html'
+    },
+    robotics:{
+      kicker:'Robotics', title:'Compact energy for intelligent machines.',
+      description:'High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.',
+      main:['assets/products/web/humanoid02.jpg','Humanoid robot','Humanoid robotics','contact.html'],
+      examples:[
+        ['assets/products/web/robotic-arm.jpg','Mobile industrial robotic arm','Industrial robotics','contact.html'],
+        ['assets/products/web/ugv.jpg','Autonomous mobile robot','Mobile robotics','contact.html']
+      ],
+      items:['Humanoid robotics','Industrial robotics','Mobile robotics'], href:'contact.html'
+    },
+    maritime:{
+      kicker:'Maritime', title:'Built for duty cycles at sea.',
+      description:'Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.',
+      main:['assets/products/web/boat.jpg','Electric marine application','Marine · Workboat','contact.html'],
+      examples:[
+        ['assets/products/web/usv_unmanned-surface-vehicle.jpg','Autonomous marine platform','Autonomous platform','contact.html'],
+        ['assets/products/web/boat.jpg','Leisure marine craft','Leisure craft','contact.html']
+      ],
+      items:['Workboats','Leisure craft','Autonomous surface platforms'], href:'contact.html'
+    },
+    ups:{
+      kicker:'Uninterruptible Power Supply', title:'Stored energy when availability is critical.',
+      description:'Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.',
+      main:['assets/products/web/ups-system.jpg','Modular UPS battery cabinet','UPS · Modular cabinet','contact.html'],
+      examples:[
+        ['assets/products/web/ups-system02.jpg','Large-scale UPS installation','Infrastructure bank','contact.html'],
+        ['assets/products/web/ups-system.jpg','Serviceable UPS rack','Rack system','contact.html']
+      ],
+      items:['Modular cabinet','Rack battery bank','Critical infrastructure'], href:'contact.html'
+    },
+    heavy:{
+      kicker:'Heavy Machinery', title:'High-capacity systems for work outside.',
+      description:'Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.',
+      main:['assets/products/web/lawn-mover.jpg','Professional electric lawn mower','Outdoor maintenance','contact.html'],
+      examples:[
+        ['assets/products/web/utility-vehicle.jpg','Electric utility vehicle','Utility vehicle','contact.html'],
+        ['assets/products/web/excavator02.jpg','Electric excavator','Excavator','contact.html'],
+        ['assets/products/web/traktor01.jpg','Agricultural tractor','Tractor','contact.html']
+      ],
+      items:['Outdoor maintenance','Utility vehicles','Municipal equipment','Construction','Agriculture','Cranes'], href:'contact.html'
+    }
+  };
+  var architectureTabs = Array.prototype.slice.call(document.querySelectorAll('.architecture-node[data-family]'));
+  var explorer = document.querySelector('.family-explorer');
+  var explorerTimer;
+  function renderFamily(key){
+    var data = architectureData[key];
+    if (!data || !explorer) return;
+    window.clearTimeout(explorerTimer);
+    architectureTabs.forEach(function(tab){
+      var active = tab.dataset.family === key;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    explorer.classList.add('is-changing');
+    explorerTimer = window.setTimeout(function(){
+      document.getElementById('explorerKicker').textContent = data.kicker;
+      document.getElementById('explorerTitle').textContent = data.title;
+      document.getElementById('explorerDescription').textContent = data.description;
+      var mainImage = document.getElementById('explorerMainImage');
+      mainImage.src = data.main[0]; mainImage.alt = data.main[1];
+      document.getElementById('explorerMainTag').textContent = data.main[2];
+      document.getElementById('explorerMainLink').href = data.main[3];
+      document.getElementById('explorerLink').href = data.href;
+      var list = document.getElementById('explorerList');
+      list.replaceChildren.apply(list, data.items.map(function(label){ var span=document.createElement('span'); span.textContent=label; return span; }));
+      var examples = document.getElementById('explorerExamples');
+      examples.replaceChildren.apply(examples, data.examples.map(function(example){
+        var link=document.createElement('a'); link.href=example[3];
+        var image=document.createElement('img'); image.src=example[0]; image.alt=example[1];
+        var label=document.createElement('span'); label.textContent=example[2];
+        link.appendChild(image); link.appendChild(label); return link;
+      }));
+      explorer.classList.remove('is-changing');
+    }, 190);
+  }
+  architectureTabs.forEach(function(tab,index){
+    tab.addEventListener('click',function(){ renderFamily(tab.dataset.family); });
+    tab.addEventListener('keydown',function(event){
+      if(event.key!=='ArrowRight' && event.key!=='ArrowLeft') return;
+      event.preventDefault();
+      var next=event.key==='ArrowRight' ? (index+1)%architectureTabs.length : (index-1+architectureTabs.length)%architectureTabs.length;
+      architectureTabs[next].focus(); renderFamily(architectureTabs[next].dataset.family);
+    });
+  });
+  var hashFamily = {'#drones':'drones','#material-handling':'material','#robotics':'robotics','#maritime':'maritime','#ups':'ups','#heavy-machinery':'heavy'}[window.location.hash];
+  if(hashFamily) renderFamily(hashFamily);
 
   // Scroll reveal — only ever hides content once we've confirmed we can
   // reveal it again. If IntersectionObserver isn't supported (or motion
