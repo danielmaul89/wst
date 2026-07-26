@@ -204,6 +204,36 @@ main > .cta-band{ display:none; }
 .showcase-products{ display:flex; flex-wrap:wrap; gap:8px; margin:25px 0 30px; }
 .showcase-products span{ padding:7px 11px; border-radius:7px; background:rgba(255,255,255,.66); border:1px solid rgba(6,8,26,.08); color:var(--blue-deep); font-size:12px; font-weight:600; backdrop-filter:blur(8px); }
 
+/* Application architecture — categories first, illustrated use cases below */
+.architecture{ padding:112px 0 132px; background:var(--card); }
+.architecture-intro{ display:grid; grid-template-columns:1fr .72fr; gap:var(--sp-6); align-items:start; margin-bottom:58px; }
+.architecture-intro h2{ max-width:15ch; font-size:clamp(36px,4.5vw,56px); letter-spacing:-.04em; }
+.architecture-intro p{ max-width:47ch; padding-top:8px; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.architecture-nav{ position:relative; display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:94px; }
+.architecture-nav::before{ content:""; position:absolute; top:25px; left:7%; right:7%; height:1px; background:linear-gradient(90deg,transparent,rgba(15,42,92,.2) 8%,rgba(15,42,92,.2) 92%,transparent); }
+.architecture-node{ position:relative; z-index:1; min-height:104px; padding:17px 14px 14px; border:1px solid rgba(6,8,26,.08); border-radius:var(--r-lg); background:rgba(251,249,245,.76); backdrop-filter:blur(12px) saturate(130%); color:var(--blue-deep); transition:background 450ms var(--motion-ease),transform 450ms var(--motion-ease),box-shadow 450ms var(--motion-ease); }
+.architecture-node::before{ content:""; display:block; width:8px; height:8px; margin:4px 0 23px; border-radius:50%; background:var(--brass); box-shadow:0 0 0 6px var(--card); }
+.architecture-node strong{ display:block; font-family:var(--font-display); font-size:14px; line-height:1.25; }
+.architecture-node span{ display:block; margin-top:5px; color:var(--ink-faint); font-size:11.5px; line-height:1.35; }
+@media (hover:hover){ .architecture-node:hover{ transform:translateY(-3px); background:var(--card); box-shadow:0 18px 42px -34px rgba(3,11,33,.42); } }
+
+.solution-atlas{ display:flex; flex-direction:column; gap:108px; }
+.solution-family{ scroll-margin-top:112px; }
+.family-heading{ display:grid; grid-template-columns:minmax(210px,.42fr) 1fr; gap:42px; align-items:end; margin-bottom:26px; }
+.family-kicker{ display:flex; align-items:center; gap:10px; color:var(--brass-text); font-family:var(--font-mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; }
+.family-kicker::before{ content:""; width:18px; height:1px; background:currentColor; }
+.family-heading h3{ margin-top:10px; color:var(--blue-deep); font-size:clamp(29px,3.2vw,42px); }
+.family-heading p{ max-width:53ch; justify-self:end; color:var(--ink-soft); font-size:14.5px; line-height:1.65; }
+.family-gallery{ display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
+.solution-tile{ --tile-span:3; position:relative; grid-column:span var(--tile-span); min-height:310px; overflow:hidden; border-radius:var(--r-lg); background:linear-gradient(145deg,#eeedef,#d8d8db); isolation:isolate; }
+.solution-tile.wide{ --tile-span:5; }
+.solution-tile.large{ --tile-span:6; min-height:390px; }
+.solution-tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 900ms cubic-bezier(.22,1,.36,1),filter 600ms ease; }
+.solution-tile::after{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(to top,rgba(3,11,33,.35),transparent 38%); opacity:.52; transition:opacity 500ms ease; }
+.solution-tag{ position:absolute; z-index:2; left:16px; bottom:16px; display:inline-flex; align-items:center; gap:8px; max-width:calc(100% - 32px); padding:9px 12px; border:1px solid rgba(255,255,255,.7); border-radius:8px; background:rgba(255,255,255,.68); backdrop-filter:blur(16px) saturate(145%); box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 14px 28px -24px rgba(3,11,33,.58); color:var(--blue-deep); font-size:12px; font-weight:600; }
+.solution-tag::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--brass); flex:none; }
+@media (hover:hover){ .solution-tile:hover img{ transform:scale(1.025); } .solution-tile:hover::after{ opacity:.28; } }
+
 .solutions-close{ padding:96px 0; background:var(--blue-deep); color:var(--paper); }
 .solutions-close-grid{ display:grid; grid-template-columns:1fr auto; gap:50px; align-items:center; }
 .solutions-close h2{ max-width:18ch; color:var(--paper); font-size:clamp(32px,4vw,48px); }
@@ -217,6 +247,11 @@ main > .cta-band{ display:none; }
   .solution-logic-copy{ position:static; }
   .showcase-frame{ min-height:540px; }
   .showcase-content{ width:60%; }
+  .architecture-nav{ grid-template-columns:repeat(3,1fr); margin-bottom:72px; }
+  .architecture-nav::before{ display:none; }
+  .solution-tile,.solution-tile.wide{ --tile-span:6; }
+  .family-heading{ grid-template-columns:1fr; gap:12px; align-items:start; }
+  .family-heading p{ justify-self:start; }
 }
 @media (max-width:640px){
   .solutions-hero{ padding:54px 0 80px; }
@@ -230,6 +265,14 @@ main > .cta-band{ display:none; }
   .showcase-frame{ min-height:650px; }
   .showcase-frame::before{ background:linear-gradient(to bottom, rgba(255,255,255,.96) 0%, rgba(255,255,255,.78) 46%, rgba(255,255,255,.14) 72%, transparent 90%); }
   .showcase-content{ width:100%; padding:30px 24px; }
+  .architecture{ padding:82px 0 96px; }
+  .architecture-intro{ grid-template-columns:1fr; gap:18px; margin-bottom:38px; }
+  .architecture-nav{ grid-template-columns:repeat(2,1fr); gap:9px; margin-bottom:64px; }
+  .architecture-node{ min-height:92px; }
+  .architecture-node::before{ margin-bottom:15px; }
+  .solution-atlas{ gap:72px; }
+  .family-gallery{ gap:11px; }
+  .solution-tile,.solution-tile.wide,.solution-tile.large{ --tile-span:12; min-height:310px; }
   .solutions-close-grid{ grid-template-columns:1fr; gap:28px; }
 }
 
@@ -389,43 +432,95 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   </div>
 </section>
 
-<section class="application-overview" id="applications">
+<section class="architecture" id="applications">
   <div class="container">
-    <div class="overview-head" data-sv-reveal>
-      <h2>Six environments. No standard answer.</h2>
-      <p>The application changes everything: energy density, charge strategy, thermal behaviour, communications and certification. Start with the environment closest to yours.</p>
+    <div class="architecture-intro" data-sv-reveal>
+      <h2>One architecture. Six application families.</h2>
+      <p>Start with the machine and its operating environment. Each category leads to the applications, requirements and battery architecture most relevant to your engineering team.</p>
     </div>
-    <div class="application-grid">
-      <a class="application-card" id="drones" href="#sector-showcase" data-sector-jump="drone" data-sv-reveal>
-        <img src="assets/products/cards/drone.jpg" alt="Drone application">
-        <div class="application-card-copy"><span class="application-card-index">01 / 06</span><h3>Drones</h3><p>High energy density with strict limits on mass, geometry and mission time.</p></div>
-        <span class="application-card-cta">View sector <span>→</span></span>
-      </a>
-      <a class="application-card" id="material-handling" href="#sector-showcase" data-sector-jump="material" data-sv-reveal>
-        <img src="assets/products/cards/material-handling.jpg" alt="Material handling application">
-        <div class="application-card-copy"><span class="application-card-index">02 / 06</span><h3>Material Handling</h3><p>Continuous-duty systems for AGVs, AMRs and warehouse fleets.</p></div>
-        <span class="application-card-cta">View sector <span>→</span></span>
-      </a>
-      <a class="application-card" id="robotics" href="#sector-showcase" data-sector-jump="robotics" data-sv-reveal>
-        <img src="assets/products/cards/robotics.jpg" alt="Robotics application">
-        <div class="application-card-copy"><span class="application-card-index">03 / 06</span><h3>Robotics</h3><p>Compact, high-cycle packs integrated into precision platforms.</p></div>
-        <span class="application-card-cta">View sector <span>→</span></span>
-      </a>
-      <a class="application-card" id="maritime" href="#sector-showcase" data-sector-jump="maritime" data-sv-reveal>
-        <img src="assets/products/cards/maritime.jpg" alt="Maritime application">
-        <div class="application-card-copy"><span class="application-card-index">04 / 06</span><h3>Maritime</h3><p>Marine systems engineered for vibration, moisture and long duty cycles.</p></div>
-        <span class="application-card-cta">View sector <span>→</span></span>
-      </a>
-      <a class="application-card" id="ups" href="#sector-showcase" data-sector-jump="ups" data-sv-reveal>
-        <img src="assets/products/cards/ups.jpg" alt="UPS application">
-        <div class="application-card-copy"><span class="application-card-index">05 / 06</span><h3>UPS</h3><p>Reliable stored energy for critical infrastructure and instant failover.</p></div>
-        <span class="application-card-cta">View sector <span>→</span></span>
-      </a>
-      <a class="application-card" id="heavy-machinery" href="#sector-showcase" data-sector-jump="heavy" data-sv-reveal>
-        <img src="assets/products/cards/heavy-machinery.jpg" alt="Heavy machinery application">
-        <div class="application-card-copy"><span class="application-card-index">06 / 06</span><h3>Heavy Machinery</h3><p>High-capacity systems for torque, outdoor operation and demanding cycles.</p></div>
-        <span class="application-card-cta">View sector <span>→</span></span>
-      </a>
+
+    <nav class="architecture-nav" aria-label="Solution categories" data-sv-reveal>
+      <a class="architecture-node" href="#drones"><strong>Drones &amp; unmanned</strong><span>Air · Surface · Underwater · Ground</span></a>
+      <a class="architecture-node" href="#material-handling"><strong>Material Handling</strong><span>AGV · AMR · LEV</span></a>
+      <a class="architecture-node" href="#robotics"><strong>Robotics</strong><span>Humanoid · Industrial</span></a>
+      <a class="architecture-node" href="#maritime"><strong>Maritime</strong><span>Workboats · Leisure craft</span></a>
+      <a class="architecture-node" href="#ups"><strong>UPS</strong><span>Critical infrastructure</span></a>
+      <a class="architecture-node" href="#heavy-machinery"><strong>Heavy Machinery</strong><span>Outdoor · Construction · Agriculture</span></a>
+    </nav>
+
+    <div class="solution-atlas">
+      <section class="solution-family" id="drones">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Drones &amp; unmanned systems</span><h3>Power without payload compromise.</h3></div>
+          <p>High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor unmanned aerial vehicle"><span class="solution-tag">UAV · Multirotor</span></a>
+          <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-wing unmanned aerial vehicle"><span class="solution-tag">UAV · Fixed-wing</span></a>
+          <a class="solution-tile wide" href="product-drone.html" data-sv-reveal><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL unmanned aerial vehicle"><span class="solution-tag">UAV · VTOL</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span class="solution-tag">USV · Surface</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle"><span class="solution-tag">UGV · Ground</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="material-handling">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Material Handling</span><h3>Uptime engineered into the fleet.</h3></div>
+          <p>Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/agv_scaled02.jpg" alt="Automated guided vehicle"><span class="solution-tag">AGV · AMR</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/pallet-truck.jpg" alt="Electric pallet truck"><span class="solution-tag">LEV · Pallet truck</span></a>
+          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/forklift.jpg" alt="Electric forklift"><span class="solution-tag">LEV · Forklift</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="robotics">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Robotics</span><h3>Compact energy for intelligent machines.</h3></div>
+          <p>High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/humanoid02.jpg" alt="Humanoid robot"><span class="solution-tag">Humanoid robotics</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/robotic-arm.jpg" alt="Mobile industrial robotic arm"><span class="solution-tag">Industrial robotics</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="maritime">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Maritime</span><h3>Built for duty cycles at sea.</h3></div>
+          <p>Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/boat.jpg" alt="Electric marine application"><span class="solution-tag">Marine · Workboat</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous marine platform"><span class="solution-tag">Marine · Autonomous platform</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="ups">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Uninterruptible Power Supply</span><h3>Stored energy when availability is critical.</h3></div>
+          <p>Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system.jpg" alt="Modular UPS battery cabinet"><span class="solution-tag">UPS · Modular cabinet</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system02.jpg" alt="Large-scale UPS installation"><span class="solution-tag">UPS · Infrastructure bank</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="heavy-machinery">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Heavy Machinery</span><h3>High-capacity systems for work outside.</h3></div>
+          <p>Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/lawn-mover.jpg" alt="Professional electric lawn mower"><span class="solution-tag">Outdoor maintenance</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/utility-vehicle.jpg" alt="Electric utility vehicle"><span class="solution-tag">Utility vehicle</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/fejemaskine.jpg" alt="Professional street sweeper"><span class="solution-tag">Municipal maintenance</span></a>
+          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/excavator02.jpg" alt="Electric excavator"><span class="solution-tag">Construction · Excavator</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/traktor01.jpg" alt="Agricultural tractor"><span class="solution-tag">Agriculture · Tractor</span></a>
+        </div>
+      </section>
     </div>
   </div>
 </section>
@@ -442,33 +537,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
       <div class="logic-row"><span class="num">02</span><div><h3>Physical environment</h3><p>Geometry, temperature, vibration, ingress protection and service access shape the mechanical system.</p></div><span class="signal"></span></div>
       <div class="logic-row"><span class="num">03</span><div><h3>Machine integration</h3><p>BMS, CAN communication, connectors and control logic are engineered around your platform.</p></div><span class="signal"></span></div>
       <div class="logic-row"><span class="num">04</span><div><h3>Release and scale</h3><p>Compliance, end-of-line testing, traceability and manufacturability are resolved before production.</p></div><span class="signal"></span></div>
-    </div>
-  </div>
-</section>
-
-<section class="sector-showcase" id="sector-showcase">
-  <div class="container">
-    <div class="showcase-head" data-sv-reveal>
-      <h2>See the requirement through the sector.</h2>
-      <p>Switch between application environments to see what changes—and which product types WS Technicals can support.</p>
-    </div>
-    <div class="showcase-tabs" role="tablist" aria-label="Application sectors" data-sv-reveal>
-      <button class="showcase-tab" type="button" role="tab" aria-selected="true" data-sector="drone">Drones</button>
-      <button class="showcase-tab" type="button" role="tab" aria-selected="false" data-sector="material">Material Handling</button>
-      <button class="showcase-tab" type="button" role="tab" aria-selected="false" data-sector="robotics">Robotics</button>
-      <button class="showcase-tab" type="button" role="tab" aria-selected="false" data-sector="maritime">Maritime</button>
-      <button class="showcase-tab" type="button" role="tab" aria-selected="false" data-sector="ups">UPS</button>
-      <button class="showcase-tab" type="button" role="tab" aria-selected="false" data-sector="heavy">Heavy Machinery</button>
-    </div>
-    <div class="showcase-frame" data-sv-reveal>
-      <img class="showcase-image" src="assets/products/cards/drone.jpg" alt="Drone application environment">
-      <div class="showcase-content">
-        <span class="showcase-count">Application 01 / 06</span>
-        <h3>Drones</h3>
-        <p>High energy density with strict control of mass, geometry and mission duration.</p>
-        <div class="showcase-products"><span>Multirotor UAV</span><span>Fixed-wing UAV</span><span>USV / UUV / UGV</span></div>
-        <a class="btn btn-primary showcase-link" href="product-drone.html">View drone solution</a>
-      </div>
     </div>
   </div>
 </section>
