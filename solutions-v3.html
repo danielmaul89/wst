@@ -209,14 +209,15 @@ main > .cta-band{ display:none; }
 .architecture-intro{ display:grid; grid-template-columns:1fr .72fr; gap:var(--sp-6); align-items:start; margin-bottom:58px; }
 .architecture-intro h2{ max-width:15ch; font-size:clamp(36px,4.5vw,56px); letter-spacing:-.04em; }
 .architecture-intro p{ max-width:47ch; padding-top:8px; color:var(--ink-soft); font-size:16px; line-height:1.7; }
-.architecture-nav{ position:relative; display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(14px,2vw,30px); margin-bottom:82px; }
-.architecture-nav::before{ content:""; position:absolute; top:25px; left:7%; right:7%; height:1px; background:linear-gradient(90deg,transparent,rgba(15,42,92,.2) 8%,rgba(15,42,92,.2) 92%,transparent); }
-.architecture-node{ position:relative; z-index:1; min-height:104px; padding:17px 0 14px; border:0; border-radius:0; background:transparent; color:var(--blue-deep); opacity:.54; transition:opacity 400ms ease,transform 450ms var(--motion-ease); }
-.architecture-node::before{ content:""; display:block; width:8px; height:8px; margin:4px 0 23px; border-radius:50%; background:var(--brass); box-shadow:0 0 0 6px var(--card); }
+.architecture-nav{ position:relative; display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(12px,1.5vw,22px); margin-bottom:82px; }
+.architecture-nav::before{ display:none; }
+.architecture-node{ position:relative; z-index:1; min-height:176px; padding:0 0 14px; border:0; border-radius:0; background:transparent; color:var(--blue-deep); opacity:.58; transition:opacity 400ms ease,transform 450ms var(--motion-ease); }
+.architecture-node::before{ content:""; position:absolute; z-index:2; top:12px; left:12px; width:7px; height:7px; border-radius:50%; background:var(--brass); box-shadow:0 0 0 5px rgba(255,255,255,.72); }
 .architecture-node::after{ content:""; position:absolute; left:0; right:100%; bottom:0; height:1px; background:var(--blue-deep); transition:right 500ms var(--motion-ease); }
+.architecture-node img{ display:block; width:100%; height:106px; margin-bottom:14px; border-radius:var(--r-lg); object-fit:cover; filter:saturate(.82) contrast(.96); transition:filter 500ms ease,transform 700ms var(--motion-ease),box-shadow 500ms ease; }
 .architecture-node strong{ display:block; font-family:var(--font-display); font-size:14px; line-height:1.25; }
 .architecture-node span{ display:block; margin-top:5px; color:var(--ink-faint); font-size:11.5px; line-height:1.35; }
-@media (hover:hover){ .architecture-node:hover{ transform:translateY(-2px); opacity:.82; } }
+@media (hover:hover){ .architecture-node:hover{ transform:translateY(-2px); opacity:.86; } .architecture-node:hover img{ filter:saturate(.95) contrast(1); } }
 
 .solution-atlas{ display:flex; flex-direction:column; gap:108px; }
 .solution-family{ scroll-margin-top:112px; }
@@ -238,8 +239,9 @@ main > .cta-band{ display:none; }
 .architecture-node{ text-align:left; cursor:pointer; }
 .architecture-node.is-active{ background:transparent; color:var(--blue-deep); opacity:1; box-shadow:none; }
 .architecture-node.is-active span{ color:var(--ink-soft); }
-.architecture-node.is-active::before{ background:var(--brass); box-shadow:0 0 0 6px var(--card),0 0 0 7px rgba(185,154,114,.2); }
+.architecture-node.is-active::before{ background:var(--brass); box-shadow:0 0 0 5px rgba(255,255,255,.82),0 0 0 6px rgba(185,154,114,.28); }
 .architecture-node.is-active::after{ right:0; }
+.architecture-node.is-active img{ filter:saturate(1) contrast(1); box-shadow:0 18px 38px -32px rgba(3,11,33,.55); }
 .family-explorer{ display:grid; grid-template-columns:.7fr 1.3fr; gap:clamp(46px,7vw,104px); align-items:center; min-height:570px; padding:0; border-radius:0; background:transparent; overflow:visible; }
 .explorer-copy h3{ max-width:13ch; margin:15px 0 18px; color:var(--blue-deep); font-size:clamp(32px,4vw,50px); letter-spacing:-.04em; }
 .explorer-copy > p{ max-width:44ch; color:var(--ink-soft); font-size:15px; line-height:1.68; }
@@ -292,8 +294,8 @@ main > .cta-band{ display:none; }
   .architecture{ padding:82px 0 96px; }
   .architecture-intro{ grid-template-columns:1fr; gap:18px; margin-bottom:38px; }
   .architecture-nav{ grid-template-columns:repeat(2,1fr); gap:9px; margin-bottom:64px; }
-  .architecture-node{ min-height:92px; }
-  .architecture-node::before{ margin-bottom:15px; }
+  .architecture-node{ min-height:162px; }
+  .architecture-node img{ height:94px; }
   .family-explorer{ min-height:0; padding:0; gap:30px; }
   .explorer-visual{ grid-template-columns:1fr; min-height:0; }
   .explorer-main{ min-height:370px; }
@@ -468,12 +470,12 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     </div>
 
     <div class="architecture-nav" role="tablist" aria-label="Solution categories" data-sv-reveal>
-      <button class="architecture-node is-active" id="drones" type="button" role="tab" aria-selected="true" data-family="drones"><strong>Drones &amp; unmanned</strong><span>Air · Surface · Underwater · Ground</span></button>
-      <button class="architecture-node" id="material-handling" type="button" role="tab" aria-selected="false" data-family="material"><strong>Material Handling</strong><span>AGV · AMR · LEV</span></button>
-      <button class="architecture-node" id="robotics" type="button" role="tab" aria-selected="false" data-family="robotics"><strong>Robotics</strong><span>Humanoid · Industrial</span></button>
-      <button class="architecture-node" id="maritime" type="button" role="tab" aria-selected="false" data-family="maritime"><strong>Maritime</strong><span>Workboats · Autonomous</span></button>
-      <button class="architecture-node" id="ups" type="button" role="tab" aria-selected="false" data-family="ups"><strong>UPS</strong><span>Critical infrastructure</span></button>
-      <button class="architecture-node" id="heavy-machinery" type="button" role="tab" aria-selected="false" data-family="heavy"><strong>Heavy Machinery</strong><span>Outdoor · Construction · Agriculture</span></button>
+      <button class="architecture-node is-active" id="drones" type="button" role="tab" aria-selected="true" data-family="drones"><img src="assets/products/cards/drone.jpg" alt=""><strong>Drones &amp; unmanned</strong><span>Air · Surface · Underwater · Ground</span></button>
+      <button class="architecture-node" id="material-handling" type="button" role="tab" aria-selected="false" data-family="material"><img src="assets/products/cards/material-handling.jpg" alt=""><strong>Material Handling</strong><span>AGV · AMR · LEV</span></button>
+      <button class="architecture-node" id="robotics" type="button" role="tab" aria-selected="false" data-family="robotics"><img src="assets/products/cards/robotics.jpg" alt=""><strong>Robotics</strong><span>Humanoid · Industrial</span></button>
+      <button class="architecture-node" id="maritime" type="button" role="tab" aria-selected="false" data-family="maritime"><img src="assets/products/cards/maritime.jpg" alt=""><strong>Maritime</strong><span>Workboats · Autonomous</span></button>
+      <button class="architecture-node" id="ups" type="button" role="tab" aria-selected="false" data-family="ups"><img src="assets/products/cards/ups.jpg" alt=""><strong>UPS</strong><span>Critical infrastructure</span></button>
+      <button class="architecture-node" id="heavy-machinery" type="button" role="tab" aria-selected="false" data-family="heavy"><img src="assets/products/cards/heavy-machinery.jpg" alt=""><strong>Heavy Machinery</strong><span>Outdoor · Construction · Agriculture</span></button>
     </div>
 
     <section class="family-explorer" id="family-explorer" aria-live="polite" data-sv-reveal>
