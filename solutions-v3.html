@@ -29,7 +29,7 @@
   --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:48px; --sp-6:64px; --sp-7:96px; --sp-8:140px;
   --ease:cubic-bezier(.4,0,.2,1); --dur:.35s;
   --shadow-sm:0 1px 2px rgba(6,8,26,.04); --shadow-md:0 12px 32px -12px rgba(6,8,26,.14); --shadow-lg:0 24px 60px -20px rgba(6,8,26,.22);
-  --container:1280px;
+  --container:1240px;
 }
 *,*::before,*::after{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; scroll-padding-top:92px; }
@@ -45,7 +45,7 @@ h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; let
 section{ position:relative; }
 a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
 .eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--brass-text); }
-.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 26px; border-radius:var(--r); font-weight:600; font-size:14.5px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
+.btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
 .btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
 .btn:hover::before{ opacity:1; }
 .btn-primary{ background:var(--blue-deep); color:#fff; box-shadow:var(--shadow-sm); }
@@ -72,19 +72,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid va
 .nav--scrolled{ backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); }
 .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
 .brand{ display:flex; align-items:center; }
-.brand-logo{ height:24px; width:auto; flex:none; }
+.brand-logo{ height:26px; width:auto; flex:none; }
 .brand-logo .cls-1{ fill:#022e70; } .brand-logo .cls-2{ fill:#f0f0f0; } .brand-logo .cls-3{ fill:#d6d6d6; } .brand-logo .cls-4{ fill:#00001f; } .brand-logo .cls-5{ fill:#c2b59b; }
 .brand-logo--on-dark .cls-1, .brand-logo--on-dark .cls-4{ fill:var(--paper); }
-.nav-menu{ display:flex; align-items:center; gap:2px; }
+.nav-menu{ display:flex; align-items:center; gap:var(--sp-1); }
 .nav-item{ position:relative; }
-.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 15px; border-radius:var(--r); font-weight:500; font-size:14.5px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.nav-link{ display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:var(--r); font-weight:500; font-size:15px; color:var(--ink-soft); transition:color var(--dur) var(--ease), background var(--dur) var(--ease); }
 .nav-item:hover > .nav-link, .nav-link:focus-visible{ color:var(--ink); background:var(--paper-2); }
-.nav-item.current > .nav-link{ color:var(--ink); }
 .nav-link .chev{ transition:transform var(--dur) var(--ease); }
 .nav-item:hover .chev{ transform:rotate(180deg); }
-.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:220px; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); box-shadow:var(--shadow-lg); padding:6px; opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
+.dropdown{ position:absolute; top:calc(100% + 6px); left:0; min-width:240px; background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); box-shadow:var(--shadow-lg); padding:var(--sp-1); opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur); }
 .nav-item:hover .dropdown, .nav-item:focus-within .dropdown{ opacity:1; visibility:visible; transform:translateY(0); }
-.dropdown a{ display:block; padding:9px 12px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.dropdown a{ display:block; padding:10px 14px; border-radius:var(--r); font-size:14.5px; font-weight:500; color:var(--ink-soft); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
 .dropdown a:hover{ background:var(--paper-2); color:var(--ink); }
 .nav-cta{ display:flex; align-items:center; gap:var(--sp-2); }
 .nav-toggle{ display:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--r); }
@@ -313,18 +312,18 @@ main > .solutions-hero{ display:none; }
 }
 
 .footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
-.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); border-bottom:1px solid rgba(251,249,245,.12); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:var(--sp-4); padding-bottom:var(--sp-5); }
 .footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
-.footer-brand .brand-logo{ height:28px; }
-.footer-address{ font-size:13.5px; color:var(--ink-soft-on-dark); line-height:1.7; }
-.footer-col h4{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft-on-dark); margin-bottom:var(--sp-2); font-weight:500; }
+.footer-brand .brand-logo{ height:30px; }
+.footer-address{ font-size:13.5px; color:#C7CCDE; line-height:1.7; }
+.footer-col h4{ font-family:var(--font-body); font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:#C7CCDE; margin-bottom:var(--sp-2); font-weight:700; }
 .footer-col ul li{ margin-bottom:10px; }
-.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.82; transition:opacity var(--dur) var(--ease); }
+.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.92; transition:opacity var(--dur) var(--ease); }
 .footer-col a:hover{ opacity:1; color:var(--brass-hi); }
 .footer-bottom{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-2); padding-top:var(--sp-3); }
-.footer-copy{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft-on-dark); }
+.footer-copy{ font-size:13px; color:#C7CCDE; }
 .cert-chips{ display:flex; gap:8px; }
-.cert-chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:6px 12px; border:1px solid rgba(251,249,245,.22); color:var(--ink-soft-on-dark); }
+.cert-chip{ font-size:11.5px; font-weight:600; letter-spacing:.04em; padding:6px 12px; border-radius:999px; border:1px solid rgba(251,249,245,.22); color:#C7CCDE; }
 
 /* Scroll reveal — gated behind .motion-ready, added by JS only once
    IntersectionObserver support is confirmed. If JS fails for any
@@ -336,6 +335,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   :root{ --sp-8:96px; --sp-7:72px; }
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
   .nav-toggle{ display:flex; }
+  .nav-cta{ gap:var(--sp-1); }
   body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
   body.menu-open .nav-item{ border-bottom:1px solid var(--line-2); }
   body.menu-open .nav-link{ padding:16px 8px; justify-content:space-between; width:100%; }
@@ -392,43 +392,51 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     </a>
     <nav aria-label="Primary">
       <ul class="nav-menu">
-        <li class="nav-item current">
+        <li class="nav-item">
           <a href="solutions-v3.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="solutions-v3.html#drones">Drones</a>
-            <a href="solutions-v3.html#material-handling">Material Handling</a>
-            <a href="solutions-v3.html#robotics">Robotics</a>
-            <a href="solutions-v3.html#maritime">Maritime</a>
-            <a href="solutions-v3.html#ups">UPS</a>
-            <a href="solutions-v3.html#heavy-machinery">Heavy Machinery</a>
+            <a href="solutions-v3.html#material-handling">Industrial Automation</a>
+            <a href="solutions-v3.html#ups">Energy &amp; Infrastructure</a>
+            <a href="solutions-v3.html#maritime">Mobility</a>
+            <a href="solutions-v3.html#drones">Custom Battery Solutions</a>
           </div>
         </li>
         <li class="nav-item">
           <a href="development.html" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="development.html#use-case">Use Case / Application</a>
+            <a href="development.html#use-case">Idea &amp; Requirements</a>
             <a href="development.html#feasibility">Feasibility Study</a>
+            <a href="development.html#prototype">Prototype &amp; Testing</a>
+            <a href="development.html#industrialization">Industrialization</a>
+            <a href="development.html#compliance">Compliance</a>
+            <a href="development.html#mass-production">Mass Production</a>
           </div>
         </li>
         <li class="nav-item">
           <a href="production.html" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="production.html#facility">Production Facility</a>
-            <a href="production.html#quality">Quality &amp; Testing</a>
+            <a href="production.html#quality">Quality Assurance</a>
+            <a href="production.html#testing">Testing</a>
+            <a href="production.html#supply-chain">Supply Chain</a>
           </div>
         </li>
         <li class="nav-item">
           <a href="bms.html" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
-            <a href="bms.html#i-bms">i-BMS</a>
-            <a href="bms.html#n-bms">n-BMS</a>
+            <a href="bms.html#i-bms">Low Voltage</a>
+            <a href="bms.html#n-bms">High Voltage</a>
+            <a href="bms.html#fast-charge">Fast Charge</a>
+            <a href="bms.html#custom-development">Custom Development</a>
           </div>
         </li>
         <li class="nav-item">
           <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <div class="dropdown">
             <a href="about.html#company">Company</a>
-            <a href="about.html#career">Career</a>
+            <a href="about.html#partners">Partner Network</a>
+            <a href="about.html#global">Global Presence</a>
+            <a href="about.html#career">Careers</a>
           </div>
         </li>
       </ul>
@@ -848,28 +856,31 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
             <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
           </svg>
         </a>
-        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
+        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>
       </div>
       <div class="footer-col"><h4>Solutions</h4><ul>
-        <li><a href="solutions-v3.html#drones">Drones</a></li>
-        <li><a href="solutions-v3.html#material-handling">Material Handling</a></li>
-        <li><a href="solutions-v3.html#robotics">Robotics</a></li>
-        <li><a href="solutions-v3.html#heavy-machinery">Heavy Machinery</a></li>
+        <li><a href="solutions-v3.html#material-handling">Industrial Automation</a></li>
+        <li><a href="solutions-v3.html#ups">Energy &amp; Infrastructure</a></li>
+        <li><a href="solutions-v3.html#maritime">Mobility</a></li>
+        <li><a href="solutions-v3.html#drones">Custom Battery Solutions</a></li>
       </ul></div>
       <div class="footer-col"><h4>Development</h4><ul>
         <li><a href="development.html#use-case">Use Case &amp; Requirements</a></li>
         <li><a href="development.html#feasibility">Feasibility Study</a></li>
         <li><a href="development.html#prototype">Prototype &amp; Testing</a></li>
+        <li><a href="development.html#compliance">Compliance</a></li>
       </ul></div>
       <div class="footer-col"><h4>Production</h4><ul>
         <li><a href="production.html#facility">Production Facility</a></li>
-        <li><a href="production.html#quality">Quality &amp; Testing</a></li>
-        <li><a href="bms.html">BMS Solutions</a></li>
+        <li><a href="production.html#quality">Quality Assurance</a></li>
+        <li><a href="production.html#testing">Testing</a></li>
+        <li><a href="production.html#supply-chain">Supply Chain</a></li>
       </ul></div>
       <div class="footer-col"><h4>Company</h4><ul>
         <li><a href="about.html#company">About us</a></li>
-        <li><a href="about.html#career">Career</a></li>
+        <li><a href="bms.html">BMS Solutions</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html#career">Careers</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
