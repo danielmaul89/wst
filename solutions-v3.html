@@ -221,16 +221,14 @@ main > .solutions-hero{ display:none; }
 .architecture-node{ position:relative; z-index:1; min-height:254px; padding:0; overflow:hidden; border:0; border-radius:var(--r-lg); background:#d9d9dc; color:var(--blue-deep); opacity:.88; isolation:isolate; transition:opacity 400ms ease,transform 450ms var(--motion-ease),box-shadow 450ms ease; }
 .architecture-node::before,.architecture-node::after{ display:none; }
 .architecture-node img{ position:absolute; inset:0; width:100%; height:100%; border-radius:inherit; object-fit:cover; filter:saturate(.94) contrast(.99); transition:filter 500ms ease,transform 800ms var(--motion-ease); }
-.architecture-node strong{ position:absolute; z-index:2; left:18px; right:14px; top:18px; display:block; font-family:var(--font-display); font-size:17px; line-height:1.2; text-align:left; text-shadow:0 1px 16px rgba(255,255,255,.75); }
-.architecture-node span{ position:absolute; z-index:2; left:18px; right:14px; top:47px; display:block; color:rgba(3,11,33,.72); font-size:12px; line-height:1.35; text-align:left; text-shadow:0 1px 13px rgba(255,255,255,.82); }
-@media (hover:hover){ .architecture-node:hover{ transform:translateY(-2px); opacity:.9; } .architecture-node:hover img{ filter:saturate(.96) contrast(1); transform:scale(1.018); } }
+.architecture-node strong{ position:absolute; z-index:2; left:18px; right:14px; top:18px; display:block; font-family:var(--font-display); font-size:19px; line-height:1.18; text-align:left; text-shadow:0 1px 16px rgba(255,255,255,.75); }
+.architecture-node span{ position:absolute; z-index:2; left:18px; right:14px; top:52px; display:block; color:rgba(3,11,33,.76); font-size:13px; line-height:1.35; text-align:left; text-shadow:0 1px 13px rgba(255,255,255,.82); }
+@media (hover:hover){ .architecture-node:hover{ opacity:1; } .architecture-node:hover img{ filter:saturate(.96) contrast(1); transform:scale(1.025); } }
 
 .solution-atlas{ display:flex; flex-direction:column; gap:108px; }
 .solution-family{ scroll-margin-top:112px; }
 .family-heading{ display:grid; grid-template-columns:minmax(210px,.42fr) 1fr; gap:42px; align-items:end; margin-bottom:26px; }
-.family-kicker{ display:flex; align-items:center; gap:10px; color:var(--brass-text); font-family:var(--font-mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; }
-.family-kicker::before{ content:""; width:18px; height:1px; background:currentColor; }
-.family-heading h3{ margin-top:10px; color:var(--blue-deep); font-size:clamp(29px,3.2vw,42px); }
+.family-heading h3{ margin-top:0; color:var(--blue-deep); font-size:clamp(29px,3.2vw,42px); }
 .family-heading p{ max-width:53ch; justify-self:end; color:var(--ink-soft); font-size:14.5px; line-height:1.65; }
 .family-gallery{ display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
 .solution-tile{ --tile-span:3; position:relative; grid-column:span var(--tile-span); min-height:310px; overflow:hidden; border-radius:var(--r-lg); background:linear-gradient(145deg,#eeedef,#d8d8db); isolation:isolate; }
@@ -299,8 +297,8 @@ main > .solutions-hero{ display:none; }
   .architecture-intro{ grid-template-columns:1fr; gap:18px; margin-bottom:38px; }
   .architecture-nav{ grid-template-columns:repeat(2,1fr); gap:9px; margin-bottom:64px; }
   .architecture-node{ min-height:224px; }
-  .architecture-node strong{ left:14px; top:14px; font-size:15px; }
-  .architecture-node span{ left:14px; top:42px; font-size:11px; }
+  .architecture-node strong{ left:14px; top:14px; font-size:17px; }
+  .architecture-node span{ left:14px; top:46px; font-size:12px; }
   .family-explorer{ min-height:0; padding:0; gap:30px; }
   .explorer-visual{ grid-template-columns:1fr; min-height:0; }
   .explorer-main{ min-height:370px; }
@@ -486,7 +484,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     <div class="solution-atlas">
       <section class="solution-family" id="family-drones">
         <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Drones &amp; unmanned systems</span><h3>Power without payload compromise.</h3></div>
+          <div><h3>Power without payload compromise.</h3></div>
           <p>High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.</p>
         </div>
         <div class="family-gallery">
@@ -500,7 +498,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
       <section class="solution-family" id="family-material">
         <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Material Handling</span><h3>Uptime engineered into the fleet.</h3></div>
+          <div><h3>Uptime engineered into the fleet.</h3></div>
           <p>Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.</p>
         </div>
         <div class="family-gallery">
@@ -512,7 +510,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
       <section class="solution-family" id="family-robotics">
         <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Robotics</span><h3>Compact energy for intelligent machines.</h3></div>
+          <div><h3>Compact energy for intelligent machines.</h3></div>
           <p>High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.</p>
         </div>
         <div class="family-gallery">
@@ -523,7 +521,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
       <section class="solution-family" id="family-maritime">
         <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Maritime</span><h3>Built for duty cycles at sea.</h3></div>
+          <div><h3>Built for duty cycles at sea.</h3></div>
           <p>Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.</p>
         </div>
         <div class="family-gallery">
@@ -534,7 +532,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
       <section class="solution-family" id="family-ups">
         <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Uninterruptible Power Supply</span><h3>Stored energy when availability is critical.</h3></div>
+          <div><h3>Stored energy when availability is critical.</h3></div>
           <p>Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.</p>
         </div>
         <div class="family-gallery">
@@ -545,7 +543,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
       <section class="solution-family" id="family-heavy">
         <div class="family-heading" data-sv-reveal>
-          <div><span class="family-kicker">Heavy Machinery</span><h3>High-capacity systems for work outside.</h3></div>
+          <div><h3>High-capacity systems for work outside.</h3></div>
           <p>Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.</p>
         </div>
         <div class="family-gallery">
