@@ -477,30 +477,80 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
       <button class="architecture-node" id="heavy-machinery" type="button" role="tab" aria-selected="false" data-family="heavy"><img src="assets/products/cards/heavy-machinery.jpg" alt=""><strong>Heavy Machinery</strong><span>Outdoor · Construction · Agriculture</span></button>
     </div>
 
-    <section class="family-explorer" id="family-explorer" aria-live="polite" data-sv-reveal>
-      <div class="explorer-copy">
-        <span class="family-kicker" id="explorerKicker">Drones &amp; unmanned systems</span>
-        <h3 id="explorerTitle">Power without payload compromise.</h3>
-        <p id="explorerDescription">High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.</p>
-        <div class="explorer-list" id="explorerList">
-          <span>UAV · Multirotor</span><span>UAV · Fixed-wing</span><span>UAV · VTOL</span><span>USV · Surface</span><span>UGV · Ground</span>
+    <div class="solution-atlas">
+      <section class="solution-family" id="family-drones">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Drones &amp; unmanned systems</span><h3>Power without payload compromise.</h3></div>
+          <p>High energy density, low mass and predictable mission endurance across unmanned air, sea and ground platforms.</p>
         </div>
-        <a class="link-arrow explorer-link" id="explorerLink" href="product-drone.html">Explore this application family
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-      <div class="explorer-visual">
-        <a class="explorer-main" id="explorerMainLink" href="product-drone.html">
-          <img id="explorerMainImage" src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor unmanned aerial vehicle">
-          <span class="solution-tag" id="explorerMainTag">UAV · Multirotor</span>
-        </a>
-        <div class="explorer-examples" id="explorerExamples">
-          <a href="product-drone.html"><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-wing unmanned aerial vehicle"><span>Fixed-wing UAV</span></a>
-          <a href="product-drone.html"><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL unmanned aerial vehicle"><span>VTOL UAV</span></a>
-          <a href="contact.html"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span>Surface vehicle</span></a>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor unmanned aerial vehicle"><span class="solution-tag">UAV · Multirotor</span></a>
+          <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-wing unmanned aerial vehicle"><span class="solution-tag">UAV · Fixed-wing</span></a>
+          <a class="solution-tile wide" href="product-drone.html" data-sv-reveal><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL unmanned aerial vehicle"><span class="solution-tag">UAV · VTOL</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span class="solution-tag">USV · Surface</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle"><span class="solution-tag">UGV · Ground</span></a>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="solution-family" id="family-material">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Material Handling</span><h3>Uptime engineered into the fleet.</h3></div>
+          <p>Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/agv_scaled02.jpg" alt="Automated guided vehicle"><span class="solution-tag">AGV · AMR</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/pallet-truck.jpg" alt="Electric pallet truck"><span class="solution-tag">LEV · Pallet truck</span></a>
+          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/forklift.jpg" alt="Electric forklift"><span class="solution-tag">LEV · Forklift</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="family-robotics">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Robotics</span><h3>Compact energy for intelligent machines.</h3></div>
+          <p>High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/humanoid02.jpg" alt="Humanoid robot"><span class="solution-tag">Humanoid robotics</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/robotic-arm.jpg" alt="Mobile industrial robotic arm"><span class="solution-tag">Industrial robotics</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="family-maritime">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Maritime</span><h3>Built for duty cycles at sea.</h3></div>
+          <p>Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/boat.jpg" alt="Electric marine application"><span class="solution-tag">Marine · Workboat</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous marine platform"><span class="solution-tag">Marine · Autonomous platform</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="family-ups">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Uninterruptible Power Supply</span><h3>Stored energy when availability is critical.</h3></div>
+          <p>Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system.jpg" alt="Modular UPS battery cabinet"><span class="solution-tag">UPS · Modular cabinet</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system02.jpg" alt="Large-scale UPS installation"><span class="solution-tag">UPS · Infrastructure bank</span></a>
+        </div>
+      </section>
+
+      <section class="solution-family" id="family-heavy">
+        <div class="family-heading" data-sv-reveal>
+          <div><span class="family-kicker">Heavy Machinery</span><h3>High-capacity systems for work outside.</h3></div>
+          <p>Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.</p>
+        </div>
+        <div class="family-gallery">
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/lawn-mover.jpg" alt="Professional electric lawn mower"><span class="solution-tag">Outdoor maintenance</span></a>
+          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/utility-vehicle.jpg" alt="Electric utility vehicle"><span class="solution-tag">Utility vehicle</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/fejemaskine.jpg" alt="Professional street sweeper"><span class="solution-tag">Municipal maintenance</span></a>
+          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/excavator02.jpg" alt="Electric excavator"><span class="solution-tag">Construction · Excavator</span></a>
+          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/traktor01.jpg" alt="Agricultural tractor"><span class="solution-tag">Agriculture · Tractor</span></a>
+        </div>
+      </section>
+    </div>
   </div>
 </section>
 
@@ -968,13 +1018,18 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   var explorerTimer;
   function renderFamily(key){
     var data = architectureData[key];
-    if (!data || !explorer) return;
-    window.clearTimeout(explorerTimer);
+    if (!data) return;
     architectureTabs.forEach(function(tab){
       var active = tab.dataset.family === key;
       tab.classList.toggle('is-active', active);
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
     });
+    if (!explorer) {
+      var familyTarget = document.getElementById('family-' + key);
+      if (familyTarget) familyTarget.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
+      return;
+    }
+    window.clearTimeout(explorerTimer);
     explorer.classList.add('is-changing');
     explorerTimer = window.setTimeout(function(){
       document.getElementById('explorerKicker').textContent = data.kicker;
