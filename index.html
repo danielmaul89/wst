@@ -94,6 +94,17 @@
   --font-display: 'Geogrotesque', 'Sora', sans-serif;
   --font-body: 'Arbeit', 'Inter', Arial, sans-serif;
 
+  /* Type scale */
+  --fs-utility: 14px;
+  --fs-small: 14px;
+  --fs-body: 16px;
+  --fs-24: 24px;
+  --fs-32: 32px;
+  --fs-40: 40px;
+  --fs-48: 48px;
+  --fs-56: 56px;
+  --fs-64: 64px;
+
   /* Spacing scale */
   --sp-1: 8px;
   --sp-2: 16px;
@@ -178,7 +189,7 @@ textarea:focus-visible{
   gap:8px;
   font-family:var(--font-body);
   font-weight:600;
-  font-size:13px;
+  font-size:14px;
   letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--brass);
@@ -196,7 +207,7 @@ textarea:focus-visible{
   padding:14px 28px;
   border-radius:var(--r);
   font-weight:600;
-  font-size:15px;
+  font-size:16px;
   letter-spacing:-.01em;
   border:1px solid transparent;
   transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
@@ -358,7 +369,7 @@ textarea:focus-visible{
   padding:10px 16px;
   border-radius:var(--r);
   font-weight:500;
-  font-size:15px;
+  font-size:16px;
   color:var(--ink-soft);
   transition:color var(--dur) var(--ease), background var(--dur) var(--ease);
 }
@@ -390,7 +401,7 @@ textarea:focus-visible{
   display:block;
   padding:10px 14px;
   border-radius:var(--r);
-  font-size:14.5px;
+  font-size:14px;
   font-weight:500;
   color:var(--ink-soft);
   transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
@@ -426,7 +437,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
    3. HERO
    ============================================================ */
 .hero{
-  padding:var(--sp-7) 0 0;
+  padding:calc(var(--nav-height) + var(--sp-7)) 0 0;
   text-align:center;
   overflow:hidden;
 }
@@ -439,13 +450,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:var(--sp-3);
 }
 .hero h1{
-  font-size:clamp(36px, 5.6vw, 72px);
+  font-size:clamp(40px,5.6vw,64px);
   width:100%;
   white-space:nowrap;
 }
 .hero p{
   max-width:760px;
-  font-size:clamp(16px,1.6vw,19px);
+  font-size:clamp(16px,1.6vw,24px);
   color:var(--ink-soft);
   line-height:1.65;
 }
@@ -478,13 +489,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   flex-wrap:wrap;
 }
 .section-head h2{
-  font-size:clamp(28px,3.4vw,42px);
+  font-size:clamp(32px,3.4vw,40px);
   max-width:600px;
 }
 .section-head p{
   color:var(--ink-soft);
   max-width:420px;
-  font-size:15.5px;
+  font-size:16px;
 }
 .categories .section-head p{
   margin-top:4px;
@@ -500,7 +511,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .categories .section-head h2{
   max-width:16ch;
-  font-size:clamp(34px, 4vw, 52px);
+  font-size:clamp(32px,4vw,56px);
   line-height:1.04;
   letter-spacing:-.035em;
 }
@@ -529,7 +540,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
   transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.cat-card:hover{ border-color:rgba(6,8,26,.055); }
 .cat-card::after{
   content:"";
   position:absolute;
@@ -557,13 +567,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   z-index:2;
 }
 .cat-card h3{
-  font-size:clamp(26px, 2vw, 30px);
+  font-size:clamp(24px,2vw,32px);
   letter-spacing:-.025em;
   margin-bottom:10px;
   color:var(--blue-deep);
 }
 .cat-card p{
-  font-size:14.5px;
+  font-size:14px;
   color:var(--blue-deep);
   opacity:.78;
   max-width:28ch;
@@ -580,13 +590,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   height:100%;
   object-fit:cover;
   object-position:center;
-  transition:transform .5s var(--ease);
+  transform-origin:50% 100%;
+  transition:transform .6s var(--ease);
 }
-.cat-card:hover,
-.cat-card:focus-within{
-  transform:none;
-  border-color:rgba(6,8,26,.055);
-  box-shadow:0 18px 44px -28px rgba(6,8,26,.28);
+.cat-card:hover .cat-visual img,
+.cat-card:focus-within .cat-visual img{
+  transform:scale(1.04);
 }
 
 .cat-explore{
@@ -598,29 +607,33 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:8px;
   margin-top:20px;
   padding:12px 19px;
-  border-radius:var(--r-lg);
-  background:linear-gradient(145deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.46) 100%);
-  border:1px solid rgba(255,255,255,.86);
+  min-height:46px;
+  border-radius:var(--r);
+  background:linear-gradient(155deg, #101c3a 0%, var(--blue-deep) 72%);
+  border:1px solid rgba(255,255,255,.22);
   backdrop-filter:blur(14px) saturate(160%);
   -webkit-backdrop-filter:blur(14px) saturate(160%);
-  box-shadow:0 10px 24px -16px rgba(6,8,26,.3), inset 0 1px 0 rgba(255,255,255,.92);
+  box-shadow:
+    0 12px 26px -15px rgba(3,11,33,.6),
+    inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 0 0 1px rgba(255,255,255,.035);
   font-weight:600;
   font-size:14px;
-  color:var(--blue-deep);
+  letter-spacing:-.01em;
+  color:#fff;
   transition:background .5s var(--ease), border-color .5s var(--ease), box-shadow .55s var(--ease), color .5s var(--ease);
 }
 .cat-explore svg{ transition:opacity .5s var(--ease); }
-.cat-card:hover .cat-explore,
-.cat-card:focus-within .cat-explore,
 .cat-explore:hover,
 .cat-explore:focus-visible{
-  background:linear-gradient(145deg, rgba(255,253,249,.94) 0%, rgba(231,221,203,.72) 100%);
-  border-color:rgba(185,154,114,.52);
+  background:linear-gradient(155deg, #101c3a 0%, var(--blue-deep) 72%);
+  border-color:rgba(255,255,255,.22);
+  color:#fff;
   transform:none;
   box-shadow:
-    0 14px 34px -18px rgba(63,48,31,.34),
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 0 20px rgba(203,176,138,.14);
+    0 12px 26px -15px rgba(3,11,33,.6),
+    inset 0 1px 0 rgba(255,255,255,.34),
+    inset 0 0 0 1px rgba(255,255,255,.035);
 }
 
 /* ============================================================
@@ -638,7 +651,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   align-items:center;
 }
 .proof-copy h2{
-  font-size:clamp(26px,3.2vw,38px);
+  font-size:clamp(24px,3.2vw,40px);
   margin:var(--sp-2) 0 var(--sp-3);
   max-width:16ch;
 }
@@ -672,7 +685,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   border:1px solid var(--line-2);
   border-radius:999px;
   padding:8px 14px 8px 10px;
-  font-size:13px;
+  font-size:14px;
   font-weight:500;
   color:var(--ink);
   box-shadow:var(--shadow-sm);
@@ -728,7 +741,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   align-items:center;
 }
 .about h2{
-  font-size:clamp(28px,3.6vw,44px);
+  font-size:clamp(32px,3.6vw,48px);
   margin-bottom:var(--sp-3);
   max-width:14ch;
 }
@@ -791,7 +804,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   place-items:center;
   flex:none;
   color:var(--brass-text);
-  font-size:11px;
+  font-size:14px;
   font-weight:700;
   border:1.5px solid var(--brass);
   border-radius:48% 52% 43% 57% / 55% 44% 56% 45%;
@@ -808,7 +821,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   max-width:48ch;
   margin:0;
   color:var(--ink-soft);
-  font-size:13.5px;
+  font-size:14px;
   line-height:1.55;
 }
 
@@ -830,7 +843,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .work-row.in-view{ opacity:1; transform:translateY(0); }
 .work-row:hover{ background:var(--card); box-shadow:var(--shadow-md); }
-.work-num{ font-family:var(--font-display); font-weight:800; font-size:36px; letter-spacing:-.02em; color:var(--line-2); transition:color var(--dur) var(--ease); }
+.work-num{ font-family:var(--font-display); font-weight:800; font-size:40px; letter-spacing:-.02em; color:var(--line-2); transition:color var(--dur) var(--ease); }
 .work-row:hover .work-num{ color:var(--brass); }
 .work-icon{
   width:56px; height:56px; border-radius:50%;
@@ -843,15 +856,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .work-icon svg{ stroke:var(--blue); transition:stroke var(--dur) var(--ease); }
 .work-row:hover .work-icon{ border-color:var(--brass); box-shadow:0 10px 22px -10px rgba(185,154,114,.55), inset 0 1px 0 rgba(255,255,255,.7); transform:translateY(-3px); }
 .work-row:hover .work-icon svg{ stroke:var(--brass); }
-.work-body h3{ font-size:clamp(19px,2vw,24px); margin-bottom:6px; letter-spacing:-.015em; }
-.work-body p{ font-size:14.5px; color:var(--ink-soft); max-width:56ch; line-height:1.6; }
+.work-body h3{ font-size:24px; margin-bottom:6px; letter-spacing:-.015em; }
+.work-body p{ font-size:14px; color:var(--ink-soft); max-width:56ch; line-height:1.6; }
 
 /* ============================================================
    6C. GLOBAL PRESENCE — dot-map with location markers
    ============================================================ */
 .presence{ position:relative; z-index:41; background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; overflow:hidden; }
 .presence-head{ max-width:640px; margin-bottom:var(--sp-5); }
-.presence-head h2{ color:var(--paper); font-size:clamp(28px,3.4vw,42px); margin-bottom:var(--sp-3); }
+.presence-head h2{ color:var(--paper); font-size:clamp(32px,3.4vw,40px); margin-bottom:var(--sp-3); }
 .presence-head p{ color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
 .presence-map{ position:relative; width:100%; aspect-ratio:1147.5/514.4; }
 .presence-map img{ width:100%; height:100%; object-fit:contain; opacity:.9; }
@@ -877,48 +890,29 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   animation-delay:var(--ripple-delay, 0s);
   pointer-events:none;
 }
-.presence-ripple.hq .dot{ background:var(--paper); box-shadow:0 0 6px 1px rgba(251,249,245,.6); }
-.presence-ripple.hq .ring{ border-color:var(--paper); }
+.presence-ripple.hq .dot{ background:var(--brass-hi); box-shadow:0 0 8px 1px rgba(203,176,138,.58); }
+.presence-ripple.hq .ring{ border-color:var(--brass-hi); }
 .presence-ripple.partner .dot{ background:var(--blue); box-shadow:0 0 6px 1px rgba(15,42,92,.65); }
 .presence-ripple.partner .ring{ border-color:var(--blue); }
 .presence-ripple .ripple-label{
   position:absolute;
   overflow:hidden;
   top:calc(100% + 7px); left:50%; transform:translateX(-50%);
-  font-size:11px; white-space:nowrap; color:var(--ink-soft-on-dark);
-  background:linear-gradient(155deg, rgba(251,249,245,.16) 0%, rgba(251,249,245,.03) 100%);
+  font-size:14px; font-weight:500; white-space:nowrap; color:var(--paper);
+  background:linear-gradient(155deg, rgba(15,42,92,.88) 0%, rgba(3,11,33,.88) 100%);
   padding:5px 12px;
   border-radius:999px;
-  border:1px solid rgba(251,249,245,.24);
-  backdrop-filter:blur(10px) saturate(160%);
-  -webkit-backdrop-filter:blur(10px) saturate(160%);
-  box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.3);
+  border:1px solid rgba(251,249,245,.34);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.2);
   pointer-events:none;
 }
 .presence-ripple.hq .ripple-label{
-  color:var(--paper);
-  font-weight:600;
-  border-color:rgba(203,176,138,.4);
-  background:linear-gradient(155deg, rgba(203,176,138,.22) 0%, rgba(251,249,245,.04) 100%);
-  box-shadow:0 10px 24px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(251,249,245,.4);
-}
-.presence-ripple .ripple-label::before{
-  content:"";
-  position:absolute;
-  top:0; left:-60%;
-  width:35%; height:100%;
-  background:linear-gradient(100deg, transparent, rgba(255,255,255,.22), transparent);
-  transform:skewX(-20deg);
-  animation:label-shine 7s ease-in-out infinite;
-  animation-delay:var(--ripple-delay, 0s);
-}
-@keyframes label-shine{
-  0%{ left:-60%; }
-  45%{ left:130%; }
-  100%{ left:130%; }
-}
-@media (prefers-reduced-motion: reduce){
-  .presence-ripple .ripple-label::before{ animation:none; opacity:0; }
+  color:var(--blue-deep);
+  background:linear-gradient(145deg, rgba(251,249,245,.98), rgba(231,221,203,.94));
+  border-color:rgba(203,176,138,.72);
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.9);
 }
 .presence-ripple.label-top .ripple-label{ top:auto; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); }
 .presence-ripple.label-left .ripple-label{ top:50%; left:auto; right:calc(100% + 9px); transform:translateY(-50%); }
@@ -931,9 +925,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 @media (prefers-reduced-motion: reduce){
   .presence-ripple .ring{ animation:none; opacity:0; }
 }
-.presence-legend{ display:flex; gap:var(--sp-4); flex-wrap:wrap; margin-top:var(--sp-4); padding-top:var(--sp-3); border-top:1px solid rgba(251,249,245,.14); }
-.presence-legend .item{ display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft-on-dark); }
-.presence-legend .swatch{ width:9px; height:9px; border-radius:50%; flex:none; }
 
 /* ============================================================
    7. PROCESS — beige section, 6 numbered cards
@@ -958,17 +949,17 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .process-num{
   font-family:var(--font-display);
   font-weight:800;
-  font-size:15px;
+  font-size:16px;
   color:var(--brass);
   margin-bottom:var(--sp-2);
 }
 .process-card h3{
-  font-size:19px;
+  font-size:24px;
   letter-spacing:-.02em;
   margin-bottom:8px;
 }
 .process-card p{
-  font-size:14.5px;
+  font-size:14px;
   color:var(--ink-soft);
   line-height:1.55;
 }
@@ -1001,8 +992,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   display:flex; align-items:center; justify-content:center;
 }
 .tile-icon svg{ stroke:var(--blue); }
-.tile h3{ font-size:17px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
-.tile p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+.tile h3{ font-size:16px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
+.tile p{ font-size:14px; color:var(--ink-soft); line-height:1.5; }
 
 /* ============================================================
    9. BMS SOLUTIONS — 4 cards
@@ -1026,7 +1017,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .bms-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:transparent; }
 .bms-tag{
   display:inline-block;
-  font-size:12px;
+  font-size:14px;
   font-weight:600;
   letter-spacing:.06em;
   text-transform:uppercase;
@@ -1036,7 +1027,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   border-radius:999px;
   margin-bottom:var(--sp-2);
 }
-.bms-card h3{ font-size:18px; margin-bottom:8px; letter-spacing:-.01em; }
+.bms-card h3{ font-size:16px; margin-bottom:8px; letter-spacing:-.01em; }
 .bms-card p{ font-size:14px; color:var(--ink-soft); line-height:1.55; }
 
 /* ============================================================
@@ -1053,7 +1044,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:var(--sp-6);
 }
 .contact h2{
-  font-size:clamp(28px,3.6vw,44px);
+  font-size:clamp(32px,3.6vw,48px);
   margin-bottom:var(--sp-3);
   color:var(--paper);
 }
@@ -1071,7 +1062,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .contact-detail .k{
   width:110px;
   flex:none;
-  font-size:13px;
+  font-size:14px;
   color:var(--ink-soft-on-dark);
   letter-spacing:.04em;
   text-transform:uppercase;
@@ -1117,7 +1108,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field.full{ grid-column:1 / -1; }
 .field label{
-  font-size:13px;
+  font-size:14px;
   color:var(--ink-soft-on-dark);
 }
 .field input,
@@ -1145,7 +1136,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
 .field textarea{ resize:vertical; min-height:96px; }
 .form-note{
-  font-size:12.5px;
+  font-size:14px;
   color:var(--ink-soft-on-dark);
   margin-top:var(--sp-1);
 }
@@ -1157,7 +1148,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   border-radius:var(--r);
   background:rgba(185,154,114,.14);
   border:1px solid rgba(185,154,114,.4);
-  font-size:14.5px;
+  font-size:14px;
   margin-top:var(--sp-2);
 }
 .form-success.show{ display:flex; }
@@ -1178,10 +1169,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .footer-brand .brand{ color:var(--paper); margin-bottom:var(--sp-2); }
 .footer-brand .brand-logo{ height:30px; }
-.footer-tagline{ font-size:14.5px; color:#C7CCDE; max-width:32ch; margin-bottom:var(--sp-2); }
-.footer-address{ font-size:13.5px; color:#C7CCDE; line-height:1.7; }
+.footer-tagline{ font-size:14px; color:#C7CCDE; max-width:32ch; margin-bottom:var(--sp-2); }
+.footer-address{ font-size:14px; color:#C7CCDE; line-height:1.7; }
 .footer-col h4{
-  font-size:13px;
+  font-size:14px;
   letter-spacing:.06em;
   text-transform:uppercase;
   color:#C7CCDE;
@@ -1190,7 +1181,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   font-weight:700;
 }
 .footer-col ul li{ margin-bottom:10px; }
-.footer-col a{ font-size:14.5px; color:var(--paper); opacity:.92; transition:opacity var(--dur) var(--ease); }
+.footer-col a{ font-size:14px; color:var(--paper); opacity:.92; transition:opacity var(--dur) var(--ease); }
 .footer-col a:hover{ opacity:1; color:var(--brass-hi); }
 
 .footer-bottom{
@@ -1201,10 +1192,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:var(--sp-2);
   padding-top:var(--sp-3);
 }
-.footer-copy{ font-size:13px; color:#C7CCDE; }
+.footer-copy{ font-size:14px; color:#C7CCDE; }
 .cert-chips{ display:flex; gap:8px; }
 .cert-chip{
-  font-size:11.5px;
+  font-size:14px;
   font-weight:600;
   letter-spacing:.04em;
   padding:6px 12px;
@@ -1232,7 +1223,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:var(--sp-4);
 }
 .component-library-kicker{
-  font-size:12px;
+  font-size:14px;
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -1301,7 +1292,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
   .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
   .work-row{ grid-template-columns:56px 44px 1fr; gap:var(--sp-2); }
-  .work-num{ font-size:28px; }
+  .work-num{ font-size:32px; }
   .process-grid{ grid-template-columns:repeat(2, 1fr); }
   .tile-grid{ grid-template-columns:repeat(2, 1fr); }
   .bms-grid{ grid-template-columns:repeat(2, 1fr); }
@@ -1314,10 +1305,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .container{ padding:0 var(--sp-2); }
   .categories{ padding:68px 0 88px; }
   .categories .section-head{ margin-bottom:34px; }
-  .categories .section-head h2{ font-size:clamp(31px, 10vw, 42px); }
+  .categories .section-head h2{ font-size:clamp(32px,10vw,40px); }
   .cat-grid{ grid-template-columns:1fr; gap:20px; }
   .cat-card{ min-height:500px; padding:24px; }
-  .cat-card h3{ font-size:27px; }
+  .cat-card h3{ font-size:32px; }
   .about-sketch{ min-height:620px; }
   .about-stage{ width:78%; }
   .about-stage:nth-of-type(1){ left:0; top:2%; }
@@ -1336,9 +1327,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .component-library-intro .container{ flex-direction:column; gap:10px; }
 }
 </style>
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=2">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
 </head>
-<body>
+<body data-wst-page="home">
 
 <!-- Ambient gradient wash behind nav + hero — faded brand-colour blobs, low opacity -->
 <div class="ambient" aria-hidden="true">
@@ -1350,92 +1342,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <!-- ============================================================
      NAVIGATION
      ============================================================ -->
-<header class="nav">
-  <div class="container nav-inner">
-    <a href="#top" class="brand">
-      <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
-        <g>
-          <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
-          <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-          <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
-          <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
-          <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-          <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
-          <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
-          <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
-          <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-          <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
-          <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
-          <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-        </g>
-        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
-        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
-        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
-        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
-        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
-      </svg>
-    </a>
-
-    <nav aria-label="Primary">
-      <ul class="nav-menu">
-        <li class="nav-item">
-          <a href="#categories" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="#categories">Industrial Automation</a>
-            <a href="#categories">Energy &amp; Infrastructure</a>
-            <a href="#categories">Mobility</a>
-            <a href="#categories">Custom Battery Solutions</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="#process" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="#process">Idea &amp; Requirements</a>
-            <a href="#process">Feasibility Study</a>
-            <a href="#process">Prototype &amp; Testing</a>
-            <a href="#process">Industrialization</a>
-            <a href="#process">Compliance</a>
-            <a href="#process">Mass Production</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="#production" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="#production">Production Facility</a>
-            <a href="#production">Quality Assurance</a>
-            <a href="#production">Testing</a>
-            <a href="#production">Supply Chain</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="#bms" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="#bms">Low Voltage</a>
-            <a href="#bms">High Voltage</a>
-            <a href="#bms">Fast Charge</a>
-            <a href="#bms">Custom Development</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="#about" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="#about">Company</a>
-            <a href="#about">Partner Network</a>
-            <a href="#about">Global Presence</a>
-            <a href="#about">Careers</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="nav-cta">
-      <a href="#contact" class="btn btn-primary">Get in touch</a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
-        <span></span>
-      </button>
-    </div>
-  </div>
-</header>
+<div data-wst-header></div>
 
 <main id="top">
 
@@ -1581,6 +1488,48 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 </section>
 
 <!-- ============================================================
+     GLOBAL PRESENCE
+     ============================================================ -->
+<section class="presence on-dark">
+  <div class="container">
+    <div class="presence-head">
+      <span class="eyebrow">Global Presence</span>
+      <h2 style="margin-top:16px;">Engineered in Denmark.<br>Built and delivered worldwide.</h2>
+      <p>From our Danish headquarters to our production partner in China, WS Technicals supports customers and partners across Europe, the Americas and Asia.</p>
+    </div>
+
+    <div class="presence-map">
+      <img src="assets/map/wst-map.svg" alt="World map showing WS Technicals' engineering headquarters, production partner, and regions served">
+
+      <div class="presence-ripple hq label-top" style="left:52.305%; top:24.358%; --ripple-delay:0s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">Denmark HQ</span>
+      </div>
+      <div class="presence-ripple" style="left:47.704%; top:24.358%; --ripple-delay:.5s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">United Kingdom</span>
+      </div>
+      <div class="presence-ripple label-right" style="left:23.181%; top:34.623%; --ripple-delay:1.1s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">United States East</span>
+      </div>
+      <div class="presence-ripple label-left" style="left:13.987%; top:34.623%; --ripple-delay:1.7s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">United States West</span>
+      </div>
+      <div class="presence-ripple" style="left:29.316%; top:61.975%; --ripple-delay:2.2s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">South America</span>
+      </div>
+      <div class="presence-ripple partner" style="left:78.353%; top:34.623%; --ripple-delay:.8s;">
+        <span class="ring"></span><span class="dot"></span>
+        <span class="ripple-label">China Production Partner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      STAT BAND — dark
      ============================================================ -->
 <section class="stats on-dark">
@@ -1679,54 +1628,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     GLOBAL PRESENCE
-     ============================================================ -->
-<section class="presence on-dark">
-  <div class="container">
-    <div class="presence-head">
-      <span class="eyebrow">Global Presence</span>
-      <h2 style="margin-top:16px;">Engineered in Denmark. Built and delivered worldwide.</h2>
-      <p>From our Aarhus headquarters to our production partner in China, WS Technicals supports customers and partners across Europe, the Americas and Asia.</p>
-    </div>
-
-    <div class="presence-map">
-      <img src="assets/map/wst-map.svg" alt="World map showing WS Technicals' engineering headquarters, production partner, and regions served">
-
-      <div class="presence-ripple hq label-top" style="left:52.305%; top:24.358%; --ripple-delay:0s;">
-        <span class="ring"></span><span class="dot"></span>
-        <span class="ripple-label">Aarhus, DK — HQ</span>
-      </div>
-      <div class="presence-ripple" style="left:47.704%; top:24.358%; --ripple-delay:.5s;">
-        <span class="ring"></span><span class="dot"></span>
-        <span class="ripple-label">United Kingdom</span>
-      </div>
-      <div class="presence-ripple label-right" style="left:23.181%; top:34.623%; --ripple-delay:1.1s;">
-        <span class="ring"></span><span class="dot"></span>
-        <span class="ripple-label">United States — East</span>
-      </div>
-      <div class="presence-ripple label-left" style="left:13.987%; top:34.623%; --ripple-delay:1.7s;">
-        <span class="ring"></span><span class="dot"></span>
-        <span class="ripple-label">United States — West</span>
-      </div>
-      <div class="presence-ripple" style="left:29.316%; top:61.975%; --ripple-delay:2.2s;">
-        <span class="ring"></span><span class="dot"></span>
-        <span class="ripple-label">South America</span>
-      </div>
-      <div class="presence-ripple partner" style="left:78.353%; top:34.623%; --ripple-delay:.8s;">
-        <span class="ring"></span><span class="dot"></span>
-        <span class="ripple-label">China — Production Partner</span>
-      </div>
-    </div>
-
-    <div class="presence-legend">
-      <div class="item"><span class="swatch" style="background:#FBF9F5;"></span>Headquarters</div>
-      <div class="item"><span class="swatch" style="background:#0F2A5C;"></span>Production partner</div>
-      <div class="item"><span class="swatch" style="background:#CBB08A;"></span>Regions served</div>
     </div>
   </div>
 </section>
@@ -1943,96 +1844,18 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <!-- ============================================================
      FOOTER
      ============================================================ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#top" class="brand">
-          <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
-            <g>
-              <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
-              <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-              <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
-              <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
-              <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-              <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
-              <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
-              <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
-              <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-              <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
-              <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
-              <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-            </g>
-            <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
-            <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
-            <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
-            <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
-            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
-          </svg>
-        </a>
-        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>
-      </div>
+<div data-wst-footer></div>
 
-      <div class="footer-col">
-        <h4>Solutions</h4>
-        <ul>
-          <li><a href="#categories">Industrial Automation</a></li>
-          <li><a href="#categories">Energy &amp; Infrastructure</a></li>
-          <li><a href="#categories">Mobility</a></li>
-          <li><a href="#categories">Custom Battery Solutions</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Development</h4>
-        <ul>
-          <li><a href="#process">Idea &amp; Requirements</a></li>
-          <li><a href="#process">Feasibility Study</a></li>
-          <li><a href="#process">Prototype &amp; Testing</a></li>
-          <li><a href="#process">Compliance</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Production</h4>
-        <ul>
-          <li><a href="#production">Production Facility</a></li>
-          <li><a href="#production">Quality Assurance</a></li>
-          <li><a href="#production">Testing</a></li>
-          <li><a href="#production">Supply Chain</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#about">About us</a></li>
-          <li><a href="#bms">BMS Solutions</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#about">Careers</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
-      <div class="cert-chips">
-        <span class="cert-chip">CE</span>
-        <span class="cert-chip">UN 38.3</span>
-        <span class="cert-chip">RoHS</span>
-      </div>
-    </div>
-  </div>
-</footer>
+<script src="assets/scripts/wst-shell.js"></script>
 
 <script>
 (function(){
   var body = document.body;
 
-  // Keep the public homepage focused on five sections. Existing concepts stay
+  // Keep the public homepage focused on six sections. Existing concepts stay
   // available below the footer as a visual component library for evaluation.
   var footer = document.querySelector('.footer');
-  var librarySections = document.querySelectorAll('.stats, .work, .presence, .process, .production, .bms');
+  var librarySections = document.querySelectorAll('.stats, .work, .process, .production, .bms');
   if (footer && librarySections.length) {
     var library = document.createElement('div');
     library.className = 'component-library';

@@ -67,9 +67,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid va
 .ambient-blob-4{ width:2000px; height:2000px; top:32%; right:-16%; background:radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%); opacity:.4; }
 .ambient-blob-5{ width:2240px; height:2240px; top:55%; left:-17%; background:radial-gradient(circle at 50% 50%, var(--blue), transparent 66%); opacity:.34; }
 
-.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+.blueprint-grid{ display:none; }
 
-.nav{ position:sticky; top:0; z-index:100; transition:backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease); }
+.nav{ position:fixed; top:0; right:0; left:0; z-index:100; background:transparent; transition:background-color var(--dur) var(--ease), backdrop-filter var(--dur) var(--ease), -webkit-backdrop-filter var(--dur) var(--ease); }
 .nav--scrolled{ backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); }
 .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:76px; }
 .brand{ display:flex; align-items:center; }
@@ -113,16 +113,66 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
    stage; specifications live behind a "View specifications"
    trigger rather than crowding the page, Stripe-style.
    ============================================================ */
-.hero{ padding:var(--sp-6) 0 var(--sp-7); overflow:hidden; }
-.hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:var(--sp-6); align-items:center; }
+.hero{
+  position:relative;
+  isolation:isolate;
+  padding:calc(86px + 76px) 0 132px;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 58% 470px at 10% 0%, rgba(203,176,138,.25), transparent 72%),
+    radial-gradient(ellipse 62% 520px at 96% 2%, rgba(15,42,92,.11), transparent 74%),
+    linear-gradient(to bottom, rgba(251,249,245,.2) 0, var(--card) 690px);
+}
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-attachment:scroll;
+  background-position:0 100%;
+  background-size:96px 96px;
+}
+.hero::before{
+  background-image:
+    linear-gradient(rgba(15,42,92,.098) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,42,92,.098) 1px,transparent 1px);
+  -webkit-mask-image:linear-gradient(
+    to right,
+    transparent 18%,
+    rgba(0,0,0,.12) 28%,
+    rgba(0,0,0,.3) 44%,
+    rgba(0,0,0,.72) 63%,
+    rgba(0,0,0,.42) 82%,
+    transparent 100%
+  );
+  mask-image:linear-gradient(
+    to right,
+    transparent 18%,
+    rgba(0,0,0,.12) 28%,
+    rgba(0,0,0,.3) 44%,
+    rgba(0,0,0,.72) 63%,
+    rgba(0,0,0,.42) 82%,
+    transparent 100%
+  );
+}
+.hero::after{
+  background-image:
+    linear-gradient(rgba(185,154,114,.138) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(185,154,114,.138) 1px,transparent 1px);
+  -webkit-mask-image:radial-gradient(ellipse 50% 72% at 25% 22%,rgba(0,0,0,.68) 0%,rgba(0,0,0,.32) 48%,transparent 82%);
+  mask-image:radial-gradient(ellipse 50% 72% at 25% 22%,rgba(0,0,0,.68) 0%,rgba(0,0,0,.32) 48%,transparent 82%);
+}
+.hero-grid{ position:relative; z-index:1; display:grid; grid-template-columns:.88fr 1.12fr; gap:var(--sp-6); align-items:center; min-height:610px; }
 .hero-copy h1{ font-size:clamp(32px,4vw,50px); letter-spacing:-.035em; margin:14px 0 var(--sp-3); max-width:14ch; }
 .hero-copy p{ font-size:16.5px; color:var(--ink-soft); line-height:1.7; max-width:52ch; margin-bottom:var(--sp-4); }
 .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
-.stage-wrap{ position:relative; }
-.product-stage{ position:relative; aspect-ratio:1/1; border-radius:var(--r-xl); overflow:hidden; background:radial-gradient(120% 100% at 32% 22%, var(--paper-2) 0%, var(--brass-soft) 70%, var(--brass-hi) 140%); perspective:1200px; }
+.stage-wrap{ position:relative; min-width:0; }
+.product-stage{ position:relative; aspect-ratio:1.12/1; overflow:visible; background:transparent; perspective:1200px; }
 .stage-inner{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition:transform .25s var(--ease); transform-style:preserve-3d; will-change:transform; }
-.stage-img{ width:78%; max-width:480px; animation:stageFloat 6s ease-in-out infinite; filter:drop-shadow(0 30px 40px rgba(6,8,26,.18)); }
+.stage-img{ width:100%; max-width:720px; animation:stageFloat 7s ease-in-out infinite; filter:drop-shadow(0 34px 34px rgba(6,8,26,.14)); }
 @keyframes stageFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
 .product-stage:hover .stage-img{ animation-play-state:paused; }
 .stage-badge{ position:absolute; top:var(--sp-3); left:var(--sp-3); z-index:3; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); background:rgba(255,255,255,.72); backdrop-filter:blur(10px) saturate(160%); -webkit-backdrop-filter:blur(10px) saturate(160%); border:1px solid rgba(255,255,255,.7); padding:7px 13px; border-radius:999px; }
@@ -130,19 +180,425 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
 
 /* ============================================================
-   STORY — challenge / approach / result, told as soft cards
-   rather than a bordered engineering worksheet.
+   BATTERY FOCUS — a dedicated product moment between the
+   application-led hero and the real-world case study.
    ============================================================ */
-.story{ padding:var(--sp-7) 0; background:var(--card); }
-.story-head{ max-width:64ch; margin-bottom:var(--sp-5); }
-.story-head h2{ font-size:clamp(26px,3.2vw,40px); letter-spacing:-.03em; margin:14px 0 var(--sp-2); }
-.story-head p{ font-size:16px; color:var(--ink-soft); line-height:1.65; max-width:58ch; }
-.story-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-3); }
-.story-card{ border-radius:var(--r-lg); padding:var(--sp-4); background:var(--paper); border:1px solid var(--line-2); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.story-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.story-card .num{ width:34px; height:34px; border-radius:50%; background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:12px; color:var(--brass); margin-bottom:var(--sp-3); }
-.story-card h3{ font-size:17px; letter-spacing:-.02em; margin-bottom:8px; }
-.story-card p{ font-size:14px; color:var(--ink-soft); line-height:1.6; }
+.battery-focus{
+  position:relative;
+  isolation:isolate;
+  height:1056px;
+  min-height:0;
+  padding:var(--sp-8) 0 var(--sp-7);
+  overflow:hidden;
+  background:
+    linear-gradient(to bottom,transparent 48%,rgba(1,6,20,.28) 76%,rgba(1,5,17,.58) 100%),
+    radial-gradient(ellipse 62% 52% at 52% 64%, rgba(0,4,18,.86), transparent 72%),
+    radial-gradient(ellipse 76% 70% at 58% 54%, rgba(18,48,98,.12), transparent 78%),
+    radial-gradient(circle at 82% 18%, rgba(185,154,114,.12), transparent 30%),
+    linear-gradient(145deg,#030B21 0%,#071633 54%,#0B2149 100%);
+  color:var(--paper);
+  box-shadow:
+    inset 0 1px 0 rgba(251,249,245,.08),
+    inset 0 -1px 0 rgba(251,249,245,.08);
+}
+.battery-focus::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background-image:
+    linear-gradient(rgba(251,249,245,.042) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(251,249,245,.042) 1px,transparent 1px);
+  background-size:96px 96px;
+  background-position:0 0;
+  background-attachment:scroll;
+}
+.battery-focus::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(203,176,138,.085) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(203,176,138,.085) 1px,transparent 1px);
+  background-size:96px 96px;
+  background-position:0 0;
+  background-attachment:scroll;
+  -webkit-mask-image:
+    radial-gradient(circle at 30% 24%,rgba(0,0,0,.72) 0%,rgba(0,0,0,.28) 16%,transparent 36%),
+    radial-gradient(circle at 76% 70%,rgba(0,0,0,.48) 0%,transparent 31%);
+  mask-image:
+    radial-gradient(circle at 30% 24%,rgba(0,0,0,.72) 0%,rgba(0,0,0,.28) 16%,transparent 36%),
+    radial-gradient(circle at 76% 70%,rgba(0,0,0,.48) 0%,transparent 31%);
+}
+.battery-focus-head{
+  display:grid;
+  grid-template-columns:1fr .72fr;
+  gap:var(--sp-6);
+  align-items:start;
+}
+.battery-focus h2{
+  max-width:13ch;
+  font-size:clamp(40px,4.8vw,64px);
+  letter-spacing:-.04em;
+  color:var(--paper);
+}
+.battery-focus-copy{
+  max-width:48ch;
+  padding-top:6px;
+  color:rgba(251,249,245,.78);
+  font-size:16px;
+  line-height:1.7;
+}
+.battery-visual{
+  position:relative;
+  width:min(1120px,100%);
+  min-height:570px;
+  margin:var(--sp-4) auto 0;
+  display:grid;
+  place-items:center;
+}
+.battery-visual::before{
+  content:none;
+}
+.battery-visual::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:20%;
+  right:11%;
+  bottom:14.5%;
+  height:18px;
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(0,2,10,.62) 0%,
+      rgba(0,2,10,.48) 46%,
+      rgba(0,2,10,.16) 72%,
+      transparent 100%);
+  filter:blur(6px);
+  transform:scaleX(.96);
+  pointer-events:none;
+}
+.battery-visual img{
+  position:relative;
+  z-index:1;
+  width:min(1120px,98%);
+  max-height:590px;
+  object-fit:contain;
+  filter:none;
+  transform:translateY(24px);
+}
+.battery-callout{
+  position:absolute;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:42px;
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:var(--r-lg);
+  background:rgba(251,249,245,.12);
+  color:var(--paper);
+  box-shadow:0 18px 38px -28px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.28);
+  backdrop-filter:blur(16px) saturate(135%);
+  -webkit-backdrop-filter:blur(16px) saturate(135%);
+  font-size:14px;
+  font-weight:600;
+}
+.battery-callout::before{
+  content:"";
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--brass-hi);
+}
+.battery-callout.one{ top:25%; left:2%; }
+.battery-callout.two{ top:12%; right:5%; }
+.battery-callout.three{ right:1%; bottom:16%; }
+
+/* ============================================================
+   FIELD CASE — room for a concise, credible customer narrative.
+   ============================================================ */
+.field-case{ padding:var(--sp-8) 0; background:var(--paper); }
+.field-case-grid{
+  display:grid;
+  grid-template-columns:.76fr 1.24fr;
+  gap:clamp(48px,7vw,104px);
+  align-items:center;
+}
+.field-case-copy h2{
+  max-width:13ch;
+  margin:14px 0 var(--sp-3);
+  font-size:clamp(40px,4vw,56px);
+  letter-spacing:-.04em;
+}
+.field-case-copy > p{
+  max-width:47ch;
+  color:var(--ink-soft);
+  font-size:16px;
+  line-height:1.7;
+}
+.case-points{ margin-top:var(--sp-4); }
+.case-point{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:var(--sp-2);
+  padding:18px 0;
+}
+.case-point .num{
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:800;
+  color:var(--blue);
+}
+.case-point h3{ margin-bottom:5px; font-size:24px; letter-spacing:-.02em; }
+.case-point p{ max-width:42ch; color:var(--ink-soft); font-size:14px; line-height:1.6; }
+.case-visuals{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  grid-template-rows:repeat(2,minmax(260px,1fr));
+  gap:14px;
+  min-height:650px;
+}
+.case-image{
+  position:relative;
+  min-height:0;
+  margin:0;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:#E3E3E5;
+}
+.case-image.use{ grid-row:1 / -1; }
+.case-image img{ width:100%; height:100%; object-fit:cover; }
+.case-image.use img{ object-position:center; }
+.case-image.process img{ object-position:center; }
+.case-image.detail{
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(255,255,255,.95),rgba(231,235,242,.72) 62%,rgba(15,42,92,.08));
+}
+.case-image.detail img{ width:90%; height:90%; object-fit:contain; }
+.case-image::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(3,11,33,.18),transparent 44%);
+  pointer-events:none;
+}
+.case-image.detail::after{ display:none; }
+.case-image-caption{
+  position:absolute;
+  right:14px;
+  bottom:14px;
+  left:14px;
+  z-index:2;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.62);
+  border-radius:var(--r-lg);
+  background:rgba(255,255,255,.68);
+  color:var(--blue-deep);
+  backdrop-filter:blur(18px) saturate(135%);
+  -webkit-backdrop-filter:blur(18px) saturate(135%);
+  font-size:14px;
+  line-height:1.55;
+}
+
+/* ============================================================
+   PROJECT JOURNAL — a longer editorial layer with an asymmetric
+   image composition borrowed from the Solutions category atlas.
+   ============================================================ */
+.project-journal{
+  --journal-parallax:0px;
+  position:relative;
+  isolation:isolate;
+  padding:var(--sp-8) 0;
+  overflow:clip;
+  background:
+    radial-gradient(circle 520px at 18% 34%,rgba(203,176,138,.14),transparent 72%),
+    radial-gradient(circle 620px at 84% 68%,rgba(80,112,176,.12),transparent 74%),
+    linear-gradient(180deg,#FFFFFF 0%,#FAF8F3 46%,#F4F6FA 100%);
+  background-attachment:fixed,fixed,scroll;
+}
+.project-journal::before,
+.project-journal::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(110px);
+  will-change:transform;
+}
+.project-journal::before{
+  width:1180px;
+  height:980px;
+  top:5%;
+  left:-34%;
+  background:radial-gradient(circle,rgba(203,176,138,.3) 0%,rgba(203,176,138,.11) 40%,transparent 72%);
+  transform:translate3d(0,calc(var(--journal-parallax) * -.55),0);
+}
+.project-journal::after{
+  width:1380px;
+  height:1180px;
+  top:38%;
+  right:-42%;
+  background:radial-gradient(circle,rgba(84,112,166,.2) 0%,rgba(15,42,92,.07) 44%,transparent 74%);
+  transform:translate3d(0,var(--journal-parallax),0);
+}
+.project-journal > .container{
+  position:relative;
+  z-index:1;
+}
+.project-journal-head{
+  max-width:720px;
+  margin-bottom:var(--sp-5);
+}
+.project-journal h2{
+  max-width:12ch;
+  margin-top:14px;
+  font-size:clamp(40px,4.4vw,56px);
+  letter-spacing:-.04em;
+}
+.journal-grid{
+  display:grid;
+  grid-template-columns:.76fr 1.24fr;
+  gap:clamp(48px,7vw,104px);
+  align-items:stretch;
+}
+.journal-text{ display:flex; flex-direction:column; }
+.journal-item{
+  min-height:62vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:var(--sp-4) 0;
+}
+.journal-item:last-child{ min-height:46vh; }
+.journal-item .num{
+  display:block;
+  margin-bottom:var(--sp-2);
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:800;
+  color:rgba(15,42,92,.48);
+  transition:color .45s var(--ease);
+}
+.journal-item h3{
+  max-width:15ch;
+  margin-bottom:12px;
+  font-size:clamp(24px,2.8vw,32px);
+  letter-spacing:-.025em;
+  color:var(--ink-soft);
+  transition:color .45s var(--ease);
+}
+.journal-item p{
+  max-width:44ch;
+  color:#666975;
+  font-size:16px;
+  line-height:1.7;
+  transition:color .45s var(--ease);
+}
+.journal-item.is-active .num{ color:var(--blue); }
+.journal-item.is-active h3{ color:var(--blue-deep); }
+.journal-item.is-active p{ color:var(--ink-soft); }
+.journal-mobile-image{ display:none; }
+.journal-visual-column{
+  position:relative;
+  align-self:stretch;
+  min-height:100%;
+}
+.journal-sticky{
+  position:sticky;
+  top:104px;
+  height:calc(100vh - 136px);
+  min-height:560px;
+  max-height:760px;
+}
+.journal-stack{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:
+    radial-gradient(circle at 72% 30%,rgba(76,113,183,.28),transparent 38%),
+    linear-gradient(145deg,#13264a 0%,#071229 54%,#030B21 100%);
+  box-shadow:
+    0 32px 70px -42px rgba(3,11,33,.58),
+    inset 0 1px 0 rgba(255,255,255,.14);
+}
+.journal-frame{
+  position:absolute;
+  inset:0;
+  margin:0;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .85s var(--ease),visibility .85s;
+}
+.journal-frame.is-active{ opacity:1; visibility:visible; }
+.journal-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.018);
+  transition:transform 7s cubic-bezier(.2,.6,.2,1);
+}
+.journal-frame.is-active img{ transform:scale(1.055); }
+.journal-frame.product{
+  background:
+    radial-gradient(circle at 54% 45%,rgba(66,107,181,.34),transparent 39%),
+    linear-gradient(145deg,#14284f 0%,#07142f 58%,#030B21 100%);
+}
+.journal-frame.product::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background-image:
+    linear-gradient(rgba(251,249,245,.065) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(251,249,245,.065) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 76% 72% at 56% 46%,#000 0%,rgba(0,0,0,.55) 56%,transparent 100%);
+  mask-image:radial-gradient(ellipse 76% 72% at 56% 46%,#000 0%,rgba(0,0,0,.55) 56%,transparent 100%);
+}
+.journal-frame.product img{
+  position:relative;
+  z-index:1;
+  object-fit:contain;
+  padding:clamp(24px,5vw,64px);
+  filter:
+    drop-shadow(0 16px 12px rgba(0,0,0,.22))
+    drop-shadow(0 34px 30px rgba(0,0,0,.3));
+}
+.journal-frame::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(3,11,33,.24),transparent 42%);
+  pointer-events:none;
+}
+.journal-frame.product::after{ display:none; }
+.journal-frame figcaption{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  left:18px;
+  z-index:2;
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.62);
+  border-radius:var(--r-lg);
+  background:rgba(255,255,255,.7);
+  color:var(--blue-deep);
+  backdrop-filter:blur(16px) saturate(135%);
+  -webkit-backdrop-filter:blur(16px) saturate(135%);
+  font-size:14px;
+  font-weight:600;
+  line-height:1.45;
+}
 
 /* ============================================================
    GALLERY
@@ -218,6 +674,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 @media (max-width:980px){
   :root{ --sp-8:96px; --sp-7:72px; }
+  .project-journal{ background-attachment:scroll; }
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
   .nav-toggle{ display:flex; }
   body.menu-open .nav-menu{ display:flex; position:fixed; inset:76px 0 0 0; background:var(--paper); flex-direction:column; align-items:stretch; padding:var(--sp-3); gap:0; overflow-y:auto; z-index:99; }
@@ -226,7 +683,16 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
   .hero-grid{ grid-template-columns:1fr; }
-  .story-grid{ grid-template-columns:1fr; }
+  .battery-focus{ height:auto; min-height:960px; }
+  .battery-focus-head,.field-case-grid{ grid-template-columns:1fr; }
+  .journal-grid{ grid-template-columns:1fr; }
+  .journal-visual-column{ display:none; }
+  .journal-item,.journal-item:last-child{ min-height:auto; padding:var(--sp-5) 0; }
+  .journal-mobile-image{ display:block; width:100%; aspect-ratio:16/10; margin:var(--sp-3) 0 0; border-radius:var(--r-lg); object-fit:cover; background:#E5E5E8; }
+  .journal-mobile-image.contain{ object-fit:contain; padding:var(--sp-3); }
+  .battery-callout.one{ left:0; }
+  .battery-callout.two{ right:0; }
+  .case-visuals{ min-height:560px; }
   .gallery-grid{ grid-template-columns:1fr 1fr; }
   .related-grid{ grid-template-columns:repeat(2, 1fr); }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
@@ -235,10 +701,22 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
   .gallery-grid{ grid-template-columns:1fr; }
+  .battery-focus{ height:auto; min-height:auto; }
+  .battery-visual{ min-height:390px; }
+  .battery-visual::after{ display:none; }
+  .battery-callout{ position:static; margin:8px 0; }
+  .battery-visual{ display:flex; flex-direction:column; }
+  .battery-visual img{ order:-1; }
+  .case-visuals{ grid-template-columns:1fr; grid-template-rows:420px 280px 280px; min-height:0; }
+  .case-image.use{ grid-row:auto; }
   .related-grid{ grid-template-columns:1fr; }
   .specs-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
+}
+@media (prefers-reduced-motion:reduce){
+  .project-journal{ background-attachment:scroll; }
+  .project-journal::before,.project-journal::after{ transform:none; }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
@@ -251,10 +729,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   <span class="ambient-blob ambient-blob-blue"></span>
   <span class="ambient-blob ambient-blob-4"></span>
   <span class="ambient-blob ambient-blob-5"></span>
-</div>
-
-<div class="draft-notice">
-  <div class="container"><span class="dot"></span>Worked example — the narrative and specification numbers below are illustrative placeholders for review, not verified product data.</div>
 </div>
 
 <header class="nav">
@@ -334,18 +808,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <main id="top">
 
-<nav class="breadcrumb container" aria-label="Breadcrumb">
-  <ol>
-    <li><a href="index.html">Home</a></li>
-    <li class="sep">/</li>
-    <li><a href="solutions-v3.html">Solutions</a></li>
-    <li class="sep">/</li>
-    <li><a href="solutions-v3.html#drones">Drones</a></li>
-    <li class="sep">/</li>
-    <li class="current">Multirotor UAV Pack</li>
-  </ol>
-</nav>
-
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
@@ -362,7 +824,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     </div>
     <div class="stage-wrap">
       <div class="product-stage" id="productStage">
-        <span class="stage-badge"><span class="dot"></span>Case study example</span>
         <div class="stage-inner" id="stageInner">
           <img class="stage-img" src="assets/products/no-background/web/drone.png" alt="Multirotor industrial inspection drone with integrated camera gimbal">
         </div>
@@ -371,42 +832,115 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   </div>
 </section>
 
-<section class="story" id="story">
+<section class="battery-focus" id="battery">
   <div class="container">
-    <div class="story-head">
-      <span class="eyebrow">The Story</span>
-      <h2>A pack built around the mission, not a part number.</h2>
-      <p>Inspection crews measure a drone by how much ground it covers before it needs to land. That meant the pack had to fit inside a fixed weight budget, work with the existing bay, and change over fast enough to keep a crew moving between sites.</p>
+    <div class="battery-focus-head">
+      <h2>The battery behind the mission.</h2>
+      <p class="battery-focus-copy">The application defines the battery—not the other way around. Cell architecture, enclosure, communication and service access are developed as one integrated system around the machine.</p>
     </div>
-    <div class="story-grid">
-      <div class="story-card"><span class="num">01</span><h3>Every gram traded against flight time</h3><p>The airframe's weight budget was fixed — more energy meant a denser cell chemistry, not a bigger, heavier pack.</p></div>
-      <div class="story-card"><span class="num">02</span><h3>High energy-density Li-ion, quick-swap connector</h3><p>A 6S Li-ion pack matched to the gimbal and flight-controller load, with a keyed connector so field crews can swap packs without tools.</p></div>
-      <div class="story-card"><span class="num">03</span><h3>More flight time, faster turnaround</h3><p>Longer missions per battery, and a pack swap fast enough to keep an inspection crew moving between sites.</p></div>
+    <div class="battery-visual">
+      <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="WS Technicals custom lithium battery system with visible cell modules and integrated connectors">
+      <span class="battery-callout one">Application-matched cell architecture</span>
+      <span class="battery-callout two">Integrated BMS and communication</span>
+      <span class="battery-callout three">Custom enclosure and interfaces</span>
     </div>
   </div>
 </section>
 
-<section class="gallery" id="gallery">
-  <div class="container">
-    <div class="gallery-head">
-      <div>
-        <span class="eyebrow">Gallery</span>
-        <h2 style="margin-top:12px;">From the studio to the field.</h2>
+<section class="field-case" id="story">
+  <div class="container field-case-grid">
+    <div class="field-case-copy">
+      <span class="eyebrow">In real operation</span>
+      <h2>Built around the work the product must do.</h2>
+      <p>Inspection crews measure a drone by how much ground it covers before it needs to land. The battery therefore has to balance flight time, payload, safe handling and fast turnaround as one system.</p>
+      <div class="case-points">
+        <article class="case-point">
+          <span class="num">01</span>
+          <div><h3>The operating challenge</h3><p>A fixed airframe and payload leave little room for additional battery mass.</p></div>
+        </article>
+        <article class="case-point">
+          <span class="num">02</span>
+          <div><h3>The engineered response</h3><p>Cell chemistry, packaging and connector design are matched to the aircraft and its mission profile.</p></div>
+        </article>
+        <article class="case-point">
+          <span class="num">03</span>
+          <div><h3>The practical result</h3><p>Predictable flight time and rapid battery changes help the crew keep moving between inspections.</p></div>
+        </article>
       </div>
-      <p>One real studio photograph, one representative shot of our production line, and an honest placeholder where field photography doesn't exist yet.</p>
     </div>
-    <div class="gallery-grid">
-      <div class="gallery-tile contain">
-        <span class="gallery-tag"><span class="dot"></span>Studio</span>
-        <img src="assets/products/no-background/web/drone.png" alt="Multirotor industrial inspection drone, studio photograph">
+    <div class="case-visuals" aria-label="Product story images">
+      <figure class="case-image use">
+        <img src="assets/products/cards/drone.jpg" alt="Industrial multirotor drone representing the battery's operating application">
+        <figcaption class="case-image-caption">Application context — the machine and mission define the battery requirements.</figcaption>
+      </figure>
+      <figure class="case-image process">
+        <img src="assets/unsplash/production-line-web.jpg" alt="Automated production environment representing repeatable battery manufacturing">
+        <figcaption class="case-image-caption">Production — controlled assembly and repeatable quality processes.</figcaption>
+      </figure>
+      <figure class="case-image detail">
+        <img src="assets/products/renders/crop/qkw_print.png" alt="Detailed WS Technicals battery system render">
+        <figcaption class="case-image-caption">The solution — engineered packaging, electronics and service access.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="project-journal" id="project-journal">
+  <div class="container">
+    <div class="project-journal-head">
+      <span class="eyebrow">Project journal</span>
+      <h2>From requirement to working system.</h2>
+    </div>
+
+    <div class="journal-grid">
+      <div class="journal-text">
+        <article class="journal-item is-active" data-journal-step="1">
+          <span class="num">01</span>
+          <h3>Understanding the mission</h3>
+          <p>The aircraft, payload and operating pattern establish the brief. Flight duration, peak loads, charging windows and field handling define the decisions that follow.</p>
+          <img class="journal-mobile-image" src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Industrial multirotor drone prepared for operation">
+        </article>
+        <article class="journal-item" data-journal-step="2">
+          <span class="num">02</span>
+          <h3>Engineering the complete interface</h3>
+          <p>Mechanical fit, communication, thermal behavior and service access are developed together so the battery becomes part of the product architecture.</p>
+          <img class="journal-mobile-image contain" src="assets/products/renders/crop/xug-clean-transparent.png" alt="Detailed custom battery system render">
+        </article>
+        <article class="journal-item" data-journal-step="3">
+          <span class="num">03</span>
+          <h3>Validating the solution</h3>
+          <p>Prototype testing connects the electrical design to real operating conditions before the solution is released for repeatable production.</p>
+          <img class="journal-mobile-image contain" src="assets/products/no-background/web/drone.png" alt="Industrial inspection drone shown without background">
+        </article>
+        <article class="journal-item" data-journal-step="4">
+          <span class="num">04</span>
+          <h3>Building it consistently</h3>
+          <p>The validated architecture moves into controlled production with documented processes, quality checks and traceability.</p>
+          <img class="journal-mobile-image" src="assets/unsplash/production-line-web.jpg" alt="Controlled automated production environment">
+        </article>
       </div>
-      <div class="gallery-tile">
-        <span class="gallery-tag"><span class="dot"></span>Process</span>
-        <img src="assets/unsplash/production-line-web.jpg" alt="Automated production line — representative image of our manufacturing process">
-      </div>
-      <div class="gallery-tile is-placeholder">
-        <span class="gallery-tag"><span class="dot"></span>Photography pending</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M2 16l8-2 2-8 2 8 8 2-8 2-2 6-2-6z"/></svg>
+
+      <div class="journal-visual-column" aria-hidden="true">
+        <div class="journal-sticky">
+          <div class="journal-stack">
+            <figure class="journal-frame is-active" data-journal-step="1">
+              <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="">
+              <figcaption>The application — payload, mission profile and operating environment establish the brief.</figcaption>
+            </figure>
+            <figure class="journal-frame product" data-journal-step="2">
+              <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="">
+              <figcaption>The battery architecture is developed around the complete interface.</figcaption>
+            </figure>
+            <figure class="journal-frame product" data-journal-step="3">
+              <img src="assets/products/no-background/web/drone.png" alt="">
+              <figcaption>Prototype and application are evaluated as one working system.</figcaption>
+            </figure>
+            <figure class="journal-frame" data-journal-step="4">
+              <img src="assets/unsplash/production-line-web.jpg" alt="">
+              <figcaption>Repeatable production follows the validated design.</figcaption>
+            </figure>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -597,6 +1131,69 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && specsBackdrop.classList.contains('is-open')) closeSpecs();
   });
+
+  // Project journal — keep the visual pinned while selecting the text
+  // closest to the viewport's reading line.
+  var journalItems = Array.prototype.slice.call(document.querySelectorAll('.journal-item[data-journal-step]'));
+  var journalFrames = Array.prototype.slice.call(document.querySelectorAll('.journal-frame[data-journal-step]'));
+  var activeJournalStep = '';
+  function activateJournalStep(step){
+    if (step === activeJournalStep) return;
+    activeJournalStep = step;
+    journalItems.forEach(function(item){
+      item.classList.toggle('is-active', item.getAttribute('data-journal-step') === step);
+    });
+    journalFrames.forEach(function(frame){
+      frame.classList.toggle('is-active', frame.getAttribute('data-journal-step') === step);
+    });
+  }
+  var journalStepQueued = false;
+  function updateJournalStep(){
+    journalStepQueued = false;
+    if (!journalItems.length || window.innerWidth <= 980) return;
+    var readingLine = window.innerHeight * .48;
+    var closestItem = journalItems[0];
+    var closestDistance = Infinity;
+    journalItems.forEach(function(item){
+      var rect = item.getBoundingClientRect();
+      var itemCenter = rect.top + rect.height * .5;
+      var distance = Math.abs(itemCenter - readingLine);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestItem = item;
+      }
+    });
+    activateJournalStep(closestItem.getAttribute('data-journal-step'));
+  }
+  function queueJournalStep(){
+    if (journalStepQueued) return;
+    journalStepQueued = true;
+    window.requestAnimationFrame(updateJournalStep);
+  }
+  updateJournalStep();
+  window.addEventListener('scroll',queueJournalStep,{passive:true});
+  window.addEventListener('resize',queueJournalStep);
+
+  var journalSection = document.querySelector('.project-journal');
+  var journalParallaxQueued = false;
+  var reduceJournalMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function updateJournalParallax(){
+    journalParallaxQueued = false;
+    if (!journalSection || reduceJournalMotion) return;
+    var rect = journalSection.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+    var shift = (Math.max(0,Math.min(1,progress)) - .5) * 150;
+    journalSection.style.setProperty('--journal-parallax',shift.toFixed(1) + 'px');
+  }
+  function queueJournalParallax(){
+    if (journalParallaxQueued) return;
+    journalParallaxQueued = true;
+    window.requestAnimationFrame(updateJournalParallax);
+  }
+  updateJournalParallax();
+  window.addEventListener('scroll',queueJournalParallax,{passive:true});
+  window.addEventListener('resize',queueJournalParallax);
 })();
 </script>
 

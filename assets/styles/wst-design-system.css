@@ -1,0 +1,608 @@
+/*
+ * WS TECHNICALS — SHARED DESIGN SYSTEM
+ * Version: 1.0
+ *
+ * This file is the visual source of truth for every public page.
+ * Page files may add unique section layouts, but must not redefine the
+ * tokens or shared components below.
+ */
+
+@font-face {
+  font-family: "Geogrotesque";
+  src: url("../fonts/geogrotesque/Geogtq-Sb.otf") format("opentype");
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arbeit";
+  src:
+    url("../fonts/arbeit/arbeit-regular.woff2") format("woff2"),
+    url("../fonts/arbeit/arbeit-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arbeit";
+  src:
+    url("../fonts/arbeit/arbeit-medium.woff2") format("woff2"),
+    url("../fonts/arbeit/arbeit-medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arbeit";
+  src:
+    url("../fonts/arbeit/arbeit-semi-bold.woff2") format("woff2"),
+    url("../fonts/arbeit/arbeit-semi-bold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arbeit";
+  src:
+    url("../fonts/arbeit/arbeit-bold.woff2") format("woff2"),
+    url("../fonts/arbeit/arbeit-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 1. Brand and layout tokens
+   ------------------------------------------------------------ */
+:root {
+  --paper: #fbf9f5;
+  --paper-2: #f3efe7;
+  --card: #fff;
+
+  --ink: #06081a;
+  --ink-soft: #4a4c58;
+  --ink-faint: #767985;
+  --paper-on-dark: #fbf9f5;
+  --ink-soft-on-dark: #c7ccde;
+
+  --line: #e4dfd3;
+  --line-2: #eae6dc;
+  --blue: #0f2a5c;
+  --blue-deep: #030b21;
+  --brass: #b99a72;
+  --brass-hi: #cbb08a;
+  --brass-soft: #e7ddcb;
+  --brass-text: #765c3f;
+
+  --font-display: "Geogrotesque", "Sora", sans-serif;
+  --font-body: "Arbeit", "Inter", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+  --fs-small: 14px;
+  --fs-body: 16px;
+  --fs-24: 24px;
+  --fs-32: 32px;
+  --fs-40: 40px;
+  --fs-48: 48px;
+  --fs-56: 56px;
+  --fs-64: 64px;
+
+  --sp-1: 8px;
+  --sp-2: 16px;
+  --sp-3: 24px;
+  --sp-4: 32px;
+  --sp-5: 48px;
+  --sp-6: 64px;
+  --sp-7: 96px;
+  --sp-8: 140px;
+
+  --container: 1240px;
+  --page-gutter: 32px;
+  --section-space: clamp(96px, 10vw, 140px);
+
+  --r: 6px;
+  --r-lg: 10px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --dur: 420ms;
+  --shadow-sm: 0 1px 2px rgba(6, 8, 26, .04);
+  --shadow-md: 0 12px 32px -12px rgba(6, 8, 26, .14);
+  --shadow-lg: 0 24px 60px -20px rgba(6, 8, 26, .22);
+  --nav-height: 76px;
+  --grid-size: 96px;
+}
+
+/* 2. Foundation
+   ------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.03;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: clamp(var(--fs-48), 6vw, var(--fs-64));
+  font-weight: 700;
+  letter-spacing: -.04em;
+  line-height: 1.03;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+.eyebrow {
+  font-size: var(--fs-small);
+  color: var(--brass-text);
+}
+
+.on-dark .eyebrow {
+  color: var(--brass-hi);
+}
+
+/* 3. Shared buttons
+   ------------------------------------------------------------ */
+.btn,
+.cat-explore,
+.card-cta,
+.glass-cta,
+.nav-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: var(--r);
+  color: #fff;
+  background: linear-gradient(155deg, #101c3a 0%, var(--blue-deep) 72%);
+  box-shadow:
+    0 12px 26px -15px rgba(3, 11, 33, .6),
+    inset 0 1px 0 rgba(255, 255, 255, .3),
+    inset 0 0 0 1px rgba(255, 255, 255, .035);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1;
+  white-space: nowrap;
+  transform: none;
+  transition:
+    background var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.btn:hover,
+.cat-explore:hover,
+.card-cta:hover,
+.glass-cta:hover,
+.nav-contact:hover {
+  transform: none;
+}
+
+.btn-on-dark {
+  color: var(--blue-deep);
+  background: linear-gradient(145deg, #fff, var(--paper));
+  border-color: rgba(255, 255, 255, .72);
+}
+
+.btn-ghost {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.btn-ghost:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, .42);
+  border-color: var(--ink-soft);
+  box-shadow: none;
+}
+
+.nav-cta .btn,
+.nav-contact {
+  min-height: 42px;
+  padding: 10px 19px;
+  font-size: var(--fs-small);
+}
+
+/* 4. Shared navigation
+   ------------------------------------------------------------ */
+.nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition:
+    background-color var(--dur) var(--ease),
+    backdrop-filter var(--dur) var(--ease),
+    -webkit-backdrop-filter var(--dur) var(--ease);
+}
+
+.nav--scrolled {
+  background: rgba(251, 249, 245, .78);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: none;
+}
+
+/* The fixed transparent shell overlays the first section. Page heroes keep
+   their original breathing room below the navigation rather than starting
+   underneath it. */
+.page-hero {
+  padding-top: calc(var(--nav-height) + var(--sp-6)) !important;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+}
+
+.brand,
+.brand-logo {
+  display: block;
+}
+
+.brand-logo {
+  width: auto;
+  height: 30px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--r);
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.nav-item:hover > .nav-link,
+.nav-link:focus-visible,
+.nav-link[aria-current="page"] {
+  color: var(--ink);
+}
+
+.nav-link .chev {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform var(--dur) var(--ease);
+}
+
+.nav-item:hover .chev,
+.nav-item:focus-within .chev {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 240px;
+  padding: var(--sp-1);
+  border: 1px solid rgba(228, 223, 211, .82);
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, .88);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    visibility var(--dur);
+}
+
+.nav-item:hover .dropdown,
+.nav-item:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: var(--r);
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.dropdown a:hover,
+.dropdown a:focus-visible {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r);
+}
+
+/* 5. Shared forms
+   ------------------------------------------------------------ */
+.contact-form {
+  border-radius: var(--r-lg);
+}
+
+.contact-form label {
+  color: rgba(251, 249, 245, .9);
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea,
+.select-trigger {
+  min-height: 52px;
+  border: 1px solid rgba(251, 249, 245, .34);
+  border-radius: var(--r);
+  color: #fff;
+  background: rgba(251, 249, 245, .13);
+  font-size: var(--fs-body);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(251, 249, 245, .68);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus,
+.select-trigger:focus-visible {
+  outline: none;
+  border-color: rgba(251, 249, 245, .8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+
+/* 6. Shared footer
+   ------------------------------------------------------------ */
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding: var(--sp-7) 0 var(--sp-4);
+  color: var(--paper);
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(rgba(251, 249, 245, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 249, 245, .045) 1px, transparent 1px);
+  background-position: top left;
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, 1fr);
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-6);
+}
+
+.footer-brand .brand {
+  margin-bottom: var(--sp-3);
+}
+
+.footer-brand .brand-logo {
+  height: 30px;
+  filter: grayscale(1) brightness(0) invert(1);
+}
+
+.footer-address,
+.footer-copy {
+  color: var(--ink-soft-on-dark);
+  font-size: var(--fs-small);
+}
+
+.footer-address {
+  line-height: 1.7;
+}
+
+.footer-col h4 {
+  margin-bottom: var(--sp-2);
+  color: rgba(199, 204, 222, .74);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.footer-col li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  position: relative;
+  display: inline-block;
+  color: var(--paper);
+  font-size: var(--fs-small);
+  opacity: .92;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  padding-top: var(--sp-4);
+}
+
+.cert-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cert-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 5px 12px;
+  border: 1px solid rgba(251, 249, 245, .18);
+  border-radius: 999px;
+  color: var(--ink-soft-on-dark);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+/* 7. Responsive standards
+   ------------------------------------------------------------ */
+@media (max-width: 980px) {
+  :root {
+    --sp-8: 96px;
+    --sp-7: 72px;
+  }
+
+  .nav-menu {
+    position: fixed;
+    inset: var(--nav-height) 0 auto;
+    display: none;
+    max-height: calc(100vh - var(--nav-height));
+    padding: var(--sp-2) var(--page-gutter) var(--sp-4);
+    overflow-y: auto;
+    background: rgba(251, 249, 245, .98);
+  }
+
+  .menu-open .nav-menu {
+    display: block;
+  }
+
+  .nav-item {
+    border-bottom: 1px solid var(--line-2);
+  }
+
+  .nav-link {
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+
+  .dropdown {
+    position: static;
+    display: none;
+    min-width: 0;
+    padding: 0 0 var(--sp-2);
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-item.open .dropdown {
+    display: block;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --page-gutter: 16px;
+  }
+
+  .footer {
+    padding-top: var(--sp-6);
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

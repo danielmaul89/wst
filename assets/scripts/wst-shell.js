@@ -1,0 +1,123 @@
+(function () {
+  "use strict";
+
+  var page = document.body.getAttribute("data-wst-page") || "";
+  var headerTarget = document.querySelector("[data-wst-header]");
+  var footerTarget = document.querySelector("[data-wst-footer]");
+
+  function current(name) {
+    return page === name ? ' aria-current="page"' : "";
+  }
+
+  if (headerTarget) {
+    headerTarget.outerHTML = [
+      '<header class="nav">',
+      '  <div class="container nav-inner">',
+      '    <a href="index.html" class="brand" aria-label="WS Technicals home">',
+      '      <img class="brand-logo" src="assets/logo/full.svg" alt="WS Technicals">',
+      "    </a>",
+      '    <nav class="nav-menu" aria-label="Primary navigation">',
+      '      <div class="nav-item">',
+      '        <a href="solutions-v3.html" class="nav-link"' + current("solutions") + '>Solutions <span class="chev" aria-hidden="true">⌄</span></a>',
+      '        <div class="dropdown">',
+      '          <a href="solutions-v3.html#material-handling">Industrial Automation</a>',
+      '          <a href="solutions-v3.html#ups">Energy &amp; Infrastructure</a>',
+      '          <a href="solutions-v3.html#maritime">Mobility</a>',
+      '          <a href="solutions-v3.html#drones">Custom Battery Solutions</a>',
+      "        </div>",
+      "      </div>",
+      '      <div class="nav-item">',
+      '        <a href="development.html" class="nav-link"' + current("development") + '>Development <span class="chev" aria-hidden="true">⌄</span></a>',
+      '        <div class="dropdown">',
+      '          <a href="development.html#use-case">Idea &amp; Requirements</a>',
+      '          <a href="development.html#feasibility">Feasibility Study</a>',
+      '          <a href="development.html#prototype">Prototype &amp; Testing</a>',
+      '          <a href="development.html#industrialization">Industrialization</a>',
+      '          <a href="development.html#compliance">Compliance</a>',
+      '          <a href="development.html#mass-production">Mass Production</a>',
+      "        </div>",
+      "      </div>",
+      '      <div class="nav-item">',
+      '        <a href="production.html" class="nav-link"' + current("production") + '>Production <span class="chev" aria-hidden="true">⌄</span></a>',
+      '        <div class="dropdown">',
+      '          <a href="production.html#facility">Production Facility</a>',
+      '          <a href="production.html#quality">Quality Assurance</a>',
+      '          <a href="production.html#testing">Testing</a>',
+      '          <a href="production.html#supply-chain">Supply Chain</a>',
+      "        </div>",
+      "      </div>",
+      '      <div class="nav-item">',
+      '        <a href="bms.html" class="nav-link"' + current("bms") + '>BMS <span class="chev" aria-hidden="true">⌄</span></a>',
+      '        <div class="dropdown">',
+      '          <a href="bms.html#i-bms">Low Voltage</a>',
+      '          <a href="bms.html#n-bms">High Voltage</a>',
+      '          <a href="bms.html#fast-charge">Fast Charge</a>',
+      '          <a href="bms.html#custom-development">Custom Development</a>',
+      "        </div>",
+      "      </div>",
+      '      <div class="nav-item">',
+      '        <a href="about.html" class="nav-link"' + current("about") + '>About us <span class="chev" aria-hidden="true">⌄</span></a>',
+      '        <div class="dropdown">',
+      '          <a href="about.html#company">Company</a>',
+      '          <a href="about.html#partners">Partner Network</a>',
+      '          <a href="about.html#global">Global Presence</a>',
+      '          <a href="about.html#career">Careers</a>',
+      "        </div>",
+      "      </div>",
+      "    </nav>",
+      '    <div class="nav-cta">',
+      '      <a href="contact.html" class="btn btn-primary">Get in touch</a>',
+      '      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle"><span></span></button>',
+      "    </div>",
+      "  </div>",
+      "</header>"
+    ].join("\n");
+  }
+
+  if (footerTarget) {
+    footerTarget.outerHTML = [
+      '<footer class="footer">',
+      '  <div class="container">',
+      '    <div class="footer-top">',
+      '      <div class="footer-brand">',
+      '        <a href="index.html" class="brand" aria-label="WS Technicals home">',
+      '          <img class="brand-logo brand-logo--on-dark" src="assets/logo/full.svg" alt="WS Technicals">',
+      "        </a>",
+      '        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>',
+      "      </div>",
+      '      <div class="footer-col"><h4>Solutions</h4><ul>',
+      '        <li><a href="solutions-v3.html#material-handling">Industrial Automation</a></li>',
+      '        <li><a href="solutions-v3.html#ups">Energy &amp; Infrastructure</a></li>',
+      '        <li><a href="solutions-v3.html#maritime">Mobility</a></li>',
+      '        <li><a href="solutions-v3.html#drones">Custom Battery Solutions</a></li>',
+      "      </ul></div>",
+      '      <div class="footer-col"><h4>Development</h4><ul>',
+      '        <li><a href="development.html#use-case">Idea &amp; Requirements</a></li>',
+      '        <li><a href="development.html#feasibility">Feasibility Study</a></li>',
+      '        <li><a href="development.html#prototype">Prototype &amp; Testing</a></li>',
+      '        <li><a href="development.html#compliance">Compliance</a></li>',
+      "      </ul></div>",
+      '      <div class="footer-col"><h4>Production</h4><ul>',
+      '        <li><a href="production.html#facility">Production Facility</a></li>',
+      '        <li><a href="production.html#quality">Quality Assurance</a></li>',
+      '        <li><a href="production.html#testing">Testing</a></li>',
+      '        <li><a href="production.html#supply-chain">Supply Chain</a></li>',
+      "      </ul></div>",
+      '      <div class="footer-col"><h4>Company</h4><ul>',
+      '        <li><a href="about.html#company">About us</a></li>',
+      '        <li><a href="bms.html">BMS Solutions</a></li>',
+      '        <li><a href="contact.html">Get in touch</a></li>',
+      '        <li><a href="about.html#career">Careers</a></li>',
+      "      </ul></div>",
+      "    </div>",
+      '    <div class="footer-bottom">',
+      '      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>',
+      '      <div class="cert-chips" aria-label="Compliance standards">',
+      '        <span class="cert-chip">CE</span><span class="cert-chip">UN 38.3</span><span class="cert-chip">RoHS</span>',
+      "      </div>",
+      "    </div>",
+      "  </div>",
+      "</footer>"
+    ].join("\n");
+  }
+})();

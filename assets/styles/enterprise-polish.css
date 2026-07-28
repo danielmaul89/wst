@@ -353,7 +353,7 @@ body > section.contact {
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: .055em;
@@ -438,16 +438,14 @@ textarea {
 .nav-contact {
   min-height: 42px;
   padding: 10px 19px;
-  font-size: 13.5px;
+  font-size: 14px;
 }
 
 .btn-primary,
 .nav-contact,
 .card-cta,
 .glass-cta,
-.cat-explore,
-.cat-card:hover .cat-explore,
-.cat-card:focus-within .cat-explore {
+.cat-explore {
   color: #fff !important;
   background: linear-gradient(155deg, #101c3a 0%, var(--blue-deep, #030b21) 72%) !important;
   border-color: rgba(255, 255, 255, .22) !important;
@@ -762,7 +760,7 @@ textarea:focus {
   color:#e5e8ef;
   background:transparent;
   text-align:left;
-  font-size:14.5px;
+  font-size:14px;
   transition:background-color 180ms var(--motion-ease), color 180ms var(--motion-ease);
 }
 .select-option:last-child{ grid-column:1 / -1; }
