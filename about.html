@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>About us — WS Technicals</title>
+<meta name="robots" content="index, follow">
+<title>About us | WS Technicals</title>
 <meta name="description" content="Founded in 2015 as a spin-off from the intra-logistics sector, WS Technicals engineers custom lithium battery systems from Aarhus, Denmark.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,6 +136,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
 .career-card h3{ font-size:18px; margin-bottom:8px; }
 .career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
+.about-routes{ padding:var(--sp-7) 0; background:var(--card); }
+.about-routes-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-3); }
+.about-route{ display:flex; min-height:250px; padding:var(--sp-4); flex-direction:column; justify-content:space-between; border-radius:var(--r-lg); background:linear-gradient(155deg,var(--paper),var(--paper-2)); box-shadow:inset 0 1px 0 #fff; transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease); }
+.about-route:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md),inset 0 1px 0 #fff; }
+.about-route .route-index{ color:var(--brass-text); font-family:var(--font-mono); font-size:12px; }
+.about-route h3{ margin-bottom:10px; font-size:32px; }
+.about-route p{ max-width:34ch; color:var(--ink-soft); font-size:15px; }
 
 .cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
@@ -156,6 +163,228 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .cert-chips{ display:flex; gap:8px; }
 .cert-chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:6px 12px; border:1px solid rgba(251,249,245,.22); color:var(--ink-soft-on-dark); }
 
+/* ============================================================
+   ABOUT HERO — editorial leadership story blended into the
+   shared warm gradient, grid and glass design language.
+   ============================================================ */
+body[data-wst-page="about"] > .ambient{ opacity:.3; }
+.about-hero{
+  position:relative;
+  isolation:isolate;
+  height:100svh;
+  min-height:860px;
+  margin-top:-76px;
+  padding:calc(76px + var(--sp-7)) 0 var(--sp-6);
+  overflow:hidden;
+  background:
+    radial-gradient(circle 680px at 2% 2%,rgba(203,176,138,.3),rgba(203,176,138,.12) 42%,transparent 74%),
+    radial-gradient(circle 620px at 98% 4%,rgba(15,42,92,.075),transparent 76%),
+    #fff;
+}
+.about-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(15,42,92,.075) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,42,92,.075) 1px,transparent 1px);
+  background-size:96px 96px;
+  background-position:0 0;
+  -webkit-mask-image:linear-gradient(to right,transparent 26%,rgba(0,0,0,.12) 44%,rgba(0,0,0,.62) 70%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 26%,rgba(0,0,0,.12) 44%,rgba(0,0,0,.62) 70%,transparent 100%);
+}
+.about-hero-grid{
+  position:relative;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  height:100%;
+  min-height:0;
+}
+.about-hero-copy{
+  position:relative;
+  max-width:620px;
+  padding:40px 0 24px;
+  transform:translateY(-4vh);
+}
+.about-hero-copy h1{
+  max-width:54ch;
+  margin:0 0 18px;
+  font-family:var(--font-body);
+  font-size:18px;
+  font-weight:400;
+  line-height:1.72;
+  letter-spacing:0;
+  color:var(--ink-soft);
+}
+.about-hero-lead{
+  max-width:54ch;
+  margin-bottom:22px;
+  color:var(--ink-soft);
+  font-size:20px;
+  line-height:1.76;
+}
+.about-hero-lead:first-of-type{ color:var(--ink-soft); font-size:20px; font-weight:400; }
+.about-hero-copy .link-arrow{ margin-top:12px; }
+.visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+.leadership-signature{
+  position:relative;
+  display:inline-block;
+  margin-top:12px;
+  padding:2px 52px 16px 4px;
+  color:var(--blue-deep);
+  font-family:'Segoe Script','Brush Script MT','Snell Roundhand',cursive;
+  font-size:50px;
+  font-weight:400;
+  font-style:italic;
+  line-height:1;
+  letter-spacing:-.19em;
+  transform:rotate(-7deg) skewX(-11deg) scaleX(1.08);
+  transform-origin:left center;
+  opacity:.84;
+}
+.leadership-signature::after{
+  content:"";
+  position:absolute;
+  right:-4px;
+  bottom:5px;
+  left:22%;
+  height:2px;
+  background:linear-gradient(90deg,var(--blue-deep) 0 56%,rgba(3,11,33,.42) 74%,rgba(3,11,33,0) 100%);
+  transform:rotate(-8deg) skewX(-20deg);
+  transform-origin:left center;
+}
+.about-gallery{
+  position:relative;
+  z-index:4;
+  padding:32px 0 var(--sp-7);
+  background:#fff;
+}
+.about-gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-template-rows:repeat(2,250px);
+  gap:16px;
+}
+.about-gallery-item{
+  position:relative;
+  height:auto;
+  margin:0;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:var(--blue-deep);
+}
+.about-gallery-item:first-child{ grid-column:span 7; grid-row:1 / 3; }
+.about-gallery-item:nth-child(2),
+.about-gallery-item:nth-child(3){ grid-column:span 5; }
+.about-gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.72) brightness(.7) contrast(1.14);
+  transform:scale(1.001);
+  transition:transform .7s var(--ease),filter .7s var(--ease);
+}
+.about-gallery-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(3,11,33,.5) 0%,rgba(3,11,33,.12) 36%,rgba(3,11,33,.3) 100%),
+    linear-gradient(115deg,rgba(15,42,92,.18),transparent 45%,rgba(185,154,114,.09));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.about-gallery-caption{
+  position:absolute;
+  top:24px;
+  left:24px;
+  z-index:2;
+  max-width:31ch;
+  color:#fff;
+}
+.about-gallery-caption strong{
+  display:block;
+  font-family:var(--font-display);
+  font-size:24px;
+  line-height:1.15;
+  letter-spacing:-.025em;
+}
+.about-gallery-caption span{
+  display:block;
+  max-width:30ch;
+  margin-top:7px;
+  color:rgba(255,255,255,.8);
+  font-size:14px;
+  line-height:1.5;
+}
+@media (hover:hover){
+  .about-gallery-item:hover img{
+    transform:scale(1.025);
+    filter:saturate(.8) brightness(.78) contrast(1.12);
+  }
+}
+.about-byline{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:var(--sp-4);
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.about-byline::before{
+  content:"";
+  width:34px;
+  height:1px;
+  background:var(--brass);
+}
+.about-hero-visual{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:50%;
+  z-index:1;
+  margin:0;
+}
+.about-hero-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,#fff 0%,rgba(255,255,255,.76) 8%,rgba(255,255,255,.18) 23%,transparent 42%,rgba(255,255,255,.06) 82%,rgba(255,255,255,.68) 100%),
+    radial-gradient(ellipse 44% 68% at 94% 17%,rgba(15,42,92,.07),transparent 76%),
+    linear-gradient(180deg,rgba(255,255,255,.14),transparent 26%);
+}
+.about-hero-visual img{
+  position:absolute;
+  top:0;
+  right:auto;
+  left:0;
+  width:auto;
+  height:100%;
+  object-fit:contain;
+  object-position:center top;
+  opacity:.96;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.36) 8%,#000 20%,#000 84%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.36) 8%,#000 20%,#000 84%,transparent 100%);
+}
 @media (max-width:980px){
   :root{ --sp-8:96px; --sp-7:72px; }
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
@@ -167,21 +396,70 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .dropdown{ position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; border:none; display:none; background:var(--paper-2); margin-bottom:8px; }
   body.menu-open .nav-item.open .dropdown{ display:block; }
   .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .about-hero{ height:auto; min-height:1020px; margin-top:-76px; padding-bottom:var(--sp-5); }
+  .about-hero-grid{ min-height:880px; align-items:flex-start; }
+  .about-hero-copy{ max-width:560px; padding-top:var(--sp-6); transform:translateY(-24px); }
+  .about-hero-visual{ left:43%; }
+  .about-hero-visual img{ width:100%; height:100%; object-fit:cover; object-position:center top; }
+  .about-hero-visual::after{
+    background:
+      linear-gradient(90deg,#fff 0%,rgba(255,255,255,.98) 34%,rgba(255,255,255,.72) 58%,transparent 88%),
+      linear-gradient(0deg,#fff 0%,rgba(255,255,255,.92) 12%,transparent 38%);
+  }
+  .about-gallery-grid{ grid-template-columns:1fr 1fr; grid-template-rows:300px 230px; }
+  .about-gallery-item:first-child{ grid-column:1 / -1; grid-row:auto; }
+  .about-gallery-item:nth-child(2),
+  .about-gallery-item:nth-child(3){ grid-column:auto; }
   .work-grid{ grid-template-columns:repeat(2, 1fr); }
   .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+  .about-routes-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
+  .about-hero-lead,
+  .about-hero-lead:first-of-type{ font-size:18px; }
+  .leadership-signature{ font-size:42px; }
+  .about-gallery{ padding-top:20px; }
+  .about-gallery-grid{ grid-template-columns:1fr; grid-template-rows:none; gap:12px; }
+  .about-gallery-item,
+  .about-gallery-item:first-child,
+  .about-gallery-item:nth-child(2),
+  .about-gallery-item:nth-child(3){ grid-column:auto; grid-row:auto; height:240px; }
+  .about-hero{ min-height:1060px; }
+  .about-hero-grid{ min-height:920px; }
+  .about-hero-copy{ padding-top:var(--sp-5); transform:none; }
+  .about-hero-visual img{
+    top:auto;
+    bottom:0;
+    width:100%;
+    height:58%;
+    object-position:center bottom;
+    -webkit-mask-image:
+      linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%),
+      linear-gradient(to bottom,transparent 0%,#000 20%,#000 88%,transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:
+      linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%),
+      linear-gradient(to bottom,transparent 0%,#000 20%,#000 88%,transparent 100%);
+    mask-composite:intersect;
+  }
+  .about-hero-visual{ left:0; }
+  .about-hero-visual::after{
+    background:
+      linear-gradient(180deg,#fff 0%,rgba(255,255,255,.96) 46%,rgba(255,255,255,.2) 72%,transparent 84%),
+      linear-gradient(0deg,#fff 0%,rgba(255,255,255,.72) 5%,transparent 18%);
+  }
   .work-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 </head>
-<body>
+<body data-wst-page="about">
 
 <div class="ambient" aria-hidden="true">
   <span class="ambient-blob ambient-blob-brass"></span>
@@ -194,118 +472,49 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   <span class="ambient-blob ambient-blob-8"></span>
 </div>
 
-<header class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="brand">
-      <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
-        <g>
-          <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
-          <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-          <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
-          <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
-          <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-          <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
-          <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
-          <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
-          <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-          <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
-          <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
-          <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-        </g>
-        <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
-        <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
-        <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
-        <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
-        <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
-      </svg>
-    </a>
-
-    <nav aria-label="Primary">
-      <ul class="nav-menu">
-        <li class="nav-item">
-          <a href="solutions.html" class="nav-link">Solutions <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="solutions.html#robotics">Robotics</a>
-            <a href="solutions.html#maritime">Maritime</a>
-            <a href="solutions.html#ups">UPS</a>
-            <a href="solutions.html#heavy-machinery">Heavy Machinery</a>
-            <a href="solutions.html#defense">Defense</a>
-            <a href="solutions.html#material-handling">Material Handling</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="development.html" class="nav-link">Development <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="development.html#use-case">Use Case / Application</a>
-            <a href="development.html#feasibility">Feasibility Study</a>
-            <a href="development.html#prototype">Prototype &amp; Testing</a>
-            <a href="development.html#industrialization">Industrialization</a>
-            <a href="development.html#compliance">Market Compliance</a>
-            <a href="development.html#mass-production">Mass Production</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="production.html" class="nav-link">Production <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="production.html#facility">Production Facility</a>
-            <a href="production.html#quality">Quality &amp; Testing</a>
-            <a href="production.html#passport">Battery Passport</a>
-            <a href="production.html#supply-chain">Supply Chain</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="bms.html" class="nav-link">BMS <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="bms.html#i-bms">i-BMS</a>
-            <a href="bms.html#n-bms">n-BMS</a>
-            <a href="bms.html#n3-bms">n3-BMS</a>
-            <a href="bms.html#c-bms24x">c-BMS24x</a>
-          </div>
-        </li>
-        <li class="nav-item current">
-          <a href="about.html" class="nav-link">About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <div class="dropdown">
-            <a href="about.html#company">Company</a>
-            <a href="about.html#career">Career</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="nav-cta">
-      <a href="contact.html" class="btn btn-primary">Get in touch</a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
-        <span></span>
-      </button>
-    </div>
-  </div>
-</header>
+<div data-wst-header></div>
 
 <main id="top">
 
-<section class="page-hero">
-  <div class="container page-hero-inner">
-    <span class="eyebrow">About WS Technicals</span>
-    <h1>Custom battery engineering — focused since 2015.</h1>
-    <p>We deliver complete lithium battery solutions — from concept to certified production — combining speed, innovation and efficiency with state-of-the-art manufacturing technology.</p>
+<section class="about-hero" id="company">
+  <figure class="about-hero-visual">
+    <img src="assets/about/leadership-ceo-editorial.png" alt="Editorial leadership portrait in a light studio setting">
+  </figure>
+
+  <div class="container about-hero-grid">
+    <div class="about-hero-copy">
+      <h1 class="visually-hidden">About WS Technicals</h1>
+      <p class="about-hero-lead">At WS Technicals, we believe the strongest battery solutions are created through close partnerships, shared knowledge and a genuine willingness to solve difficult problems together. We provide customized industrial-grade batteries by beginning with the work each product must do instead of starting with a catalogue solution.</p>
+      <p class="about-hero-lead">Since our start in 2015 as a spin-off from the intra-logistics sector, collaboration has shaped the way we work. We listen before we design. We share what we know. And we remain closely involved from the first requirements conversation to a stable, production-ready system.</p>
+      <p class="about-hero-lead">Our role is not simply to supply a battery. It is to understand what your product must achieve and bring the engineering, BMS expertise and manufacturing discipline needed to make that ambition dependable in the real world.</p>
+      <div class="leadership-signature" aria-label="Signed by Louis, CEO">Louis</div>
+    </div>
   </div>
 </section>
 
-<section class="about-section" id="company">
-  <div class="container about-grid">
-    <div>
-      <h2>Engineering-led, from Aarhus.</h2>
-      <p>WS Technicals designs and manufactures custom lithium battery systems for companies that can't rely on off-the-shelf packs. Every project runs through in-house design, BMS development, and compliance testing before it reaches production — so the pack that ships is the one that was validated. Lithium batteries from WS Technicals power applications across every sector: AGVs and AMRs, drones, forklifts, cleaning machines, ground support equipment, heavy-duty construction equipment and small last-mile delivery robots.</p>
-      <a href="contact.html" class="link-arrow">Get in touch
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="about-mini-stats">
-      <div class="mini-stat"><div class="num">2015</div><div class="label">Founded as an intra-logistics spin-off</div></div>
-      <div class="mini-stat"><div class="num">In-house</div><div class="label">BMS &amp; compliance</div></div>
-      <div class="mini-stat"><div class="num">Aarhus</div><div class="label">Engineering headquarters</div></div>
-      <div class="mini-stat"><div class="num">CE · UN 38.3 · RoHS</div><div class="label">Certified</div></div>
-    </div>
+<section class="about-gallery" aria-label="Engineering and production">
+  <div class="container about-gallery-grid">
+    <figure class="about-gallery-item">
+      <img src="assets/about/gallery/production-testing.jpg" alt="Editorial visualization of a technician concentrating on battery verification at an end-of-line test station">
+      <figcaption class="about-gallery-caption">
+        <strong>Production verification</strong>
+        <span>Focused end-of-line testing before a battery system leaves production.</span>
+      </figcaption>
+    </figure>
+    <figure class="about-gallery-item">
+      <img src="assets/about/gallery/bms-engineering.jpg" alt="Editorial visualization of an engineer inspecting battery management electronics at a laboratory bench">
+      <figcaption class="about-gallery-caption">
+        <strong>BMS engineering</strong>
+        <span>Electronics and communication developed around the application.</span>
+      </figcaption>
+    </figure>
+    <figure class="about-gallery-item">
+      <img src="assets/about/gallery/cad-collaboration.jpg" alt="Editorial visualization of engineers reviewing a battery enclosure design in a technical office">
+      <figcaption class="about-gallery-caption">
+        <strong>Design collaboration</strong>
+        <span>Mechanical integration reviewed closely with the customer team.</span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -319,7 +528,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="work-card">
         <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
         <h3>Turn-Key Solutions</h3>
-        <p>We deliver complete lithium battery solutions — from concept to certified production.</p>
+        <p>We deliver complete lithium battery solutions from concept through certified production.</p>
       </div>
       <div class="work-card">
         <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
@@ -345,15 +554,27 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <div>
       <span class="eyebrow">Career</span>
       <h2 style="margin-top:16px;">Build custom battery systems with us.</h2>
-      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications — not just spec sheets — we'd like to hear from you.</p>
-      <a href="contact.html" class="link-arrow">Get in touch about opportunities
+      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications rather than just spec sheets, we'd like to hear from you.</p>
+      <a href="careers.html" class="link-arrow">Explore careers
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="career-card">
       <h3>Open positions</h3>
-      <p>We don't have specific openings listed here yet — but we're always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
-      <a href="contact.html" class="btn btn-primary">Send an open application</a>
+      <p>We don't have specific openings listed here yet. We are always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
+      <a href="careers.html" class="btn btn-primary">View career disciplines</a>
+    </div>
+  </div>
+</section>
+
+<section class="about-routes" aria-labelledby="about-routes-title">
+  <div class="container">
+    <span class="eyebrow">Explore WS Technicals</span>
+    <h2 id="about-routes-title" style="font-size:48px; margin:16px 0 48px;">Company, people and progress.</h2>
+    <div class="about-routes-grid">
+      <a class="about-route" href="about.html#company"><span class="route-index">01 / WHO WE ARE</span><div><h3>Who we are</h3><p>Our origin, engineering approach and role in making electrification more accessible.</p></div></a>
+      <a class="about-route" href="careers.html"><span class="route-index">02 / CAREERS</span><div><h3>Careers</h3><p>The disciplines and people behind complete custom battery systems.</p></div></a>
+      <a class="about-route" href="news.html"><span class="route-index">03 / NEWS</span><div><h3>News</h3><p>Success stories, employee perspectives and updates from WS Technicals.</p></div></a>
     </div>
   </div>
 </section>
@@ -361,88 +582,16 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="cta-band">
   <div class="container">
     <h2>Want to know more about WS Technicals?</h2>
-    <p>Whether it's a project, a partnership, or a career conversation — get in touch.</p>
-    <a href="contact.html" class="btn btn-on-dark">Contact us</a>
+    <p>Whether it's a project, a partnership or a career conversation, get in touch.</p>
+    <a href="contact-v2.html" class="btn btn-on-dark">Contact us</a>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="index.html" class="brand">
-          <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
-            <g>
-              <path class="cls-4" d="M109.84,34.03c.38,1.63.72,4.32.77,4.75.05-.34.34-2.59.86-4.7l4.13-16.37c.19-.77.58-1.2,1.39-1.2h3.65c.86,0,1.1.43.91,1.2l-7.63,30.24c-.19.82-.67,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-4.22-16.71c-.29-1.06-.62-3.84-.67-4.37-.05.48-.43,3.41-.67,4.37l-4.22,16.71c-.19.82-.62,1.2-1.49,1.2h-4.08c-.72,0-1.15-.43-1.34-1.2l-7.63-30.24c-.19-.77.05-1.2.91-1.2h4.27c.82,0,1.2.43,1.39,1.2l4.03,16.37c.43,1.78.77,4.03.77,4.03,0,0,.24-1.58.86-4.03l4.13-16.37c.19-.77.58-1.2,1.44-1.2h3.89c.86,0,1.25.43,1.44,1.2l4.03,16.32Z"/>
-              <path class="cls-4" d="M139.69,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-              <path class="cls-4" d="M179.68,16.51c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-6.82v26.02c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.2-.38-1.2-1.25v-26.02h-6.82c-.86,0-1.2-.34-1.2-1.2v-3.02c0-.86.34-1.15,1.2-1.15h20.16Z"/>
-              <path class="cls-4" d="M185.48,49.16c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h16.42c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-11.09v7.78h10.27c.86,0,1.25.29,1.25,1.15v2.88c0,.82-.38,1.15-1.25,1.15h-10.27v8.93h11.57c.86,0,1.2.29,1.2,1.15v3.02c0,.86-.34,1.2-1.2,1.2h-16.9Z"/>
-              <path class="cls-4" d="M229.74,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-              <path class="cls-4" d="M240.54,29.71h10.37v-11.95c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-12.82h-10.37v12.82c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v11.95Z"/>
-              <path class="cls-4" d="M285.28,47.96c0,.82-.29,1.2-1.15,1.2h-3.79c-.62,0-.86-.14-1.1-.58l-9.26-15.89c-1.3-2.16-1.87-3.74-1.92-3.89v19.15c0,.82-.29,1.2-1.15,1.2h-3.79c-.86,0-1.15-.38-1.15-1.2v-30.24c0-.82.29-1.2,1.15-1.2h3.79c.53,0,.82.14,1.01.48l9.65,16.56c.82,1.39,1.63,3.36,1.63,3.36v-19.2c0-.82.29-1.2,1.15-1.2h3.79c.86,0,1.15.38,1.15,1.2v30.24Z"/>
-              <path class="cls-4" d="M296.27,47.91c0,.86-.29,1.25-1.15,1.25h-4.18c-.86,0-1.15-.38-1.15-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v30.15Z"/>
-              <path class="cls-4" d="M323.29,41.72c0,4.03-2.59,7.82-11.28,7.82s-11.28-3.79-11.28-7.82v-17.76c0-4.03,2.59-7.83,11.28-7.83s11.28,3.79,11.28,7.83v2.3c0,.86-.29,1.2-1.1,1.2h-3.98c-.86,0-1.2-.34-1.2-1.2v-1.15c0-2.4-1.68-3.6-4.9-3.6s-4.85,1.2-4.85,3.6v15.46c0,2.4,1.63,3.6,4.85,3.6s4.9-1.2,4.9-3.6v-1.82c0-.86.34-1.2,1.2-1.2h3.98c.82,0,1.1.34,1.1,1.2v2.98Z"/>
-              <path class="cls-4" d="M339.85,16.51c.86,0,1.3.38,1.54,1.2l8.93,30.24c.24.77-.05,1.2-.86,1.2h-4.32c-.82,0-1.15-.43-1.39-1.2l-1.68-5.86h-8.93l-1.68,5.86c-.24.77-.58,1.2-1.44,1.2h-3.89c-.86,0-1.15-.43-.91-1.2l8.98-30.24c.24-.82.62-1.2,1.49-1.2h4.18ZM339.03,31.63c-.62-1.97-1.34-8.11-1.39-8.74-.1.62-.91,6.67-1.49,8.69l-1.63,5.38h6.1l-1.58-5.33Z"/>
-              <path class="cls-4" d="M359.67,43.78h10.71c.82,0,1.2.29,1.2,1.15v3.02c0,.86-.38,1.2-1.2,1.2h-16.18c-.72,0-1.01-.43-1.01-1.25v-30.15c0-.86.29-1.25,1.15-1.25h4.18c.86,0,1.15.38,1.15,1.25v26.02Z"/>
-              <path class="cls-4" d="M390.44,24.82c0-2.35-1.58-3.46-4.66-3.46s-4.71,1.1-4.71,3.46v.72c0,1.68,1.2,2.3,1.97,2.59l8.35,2.98c3.26,1.15,5.66,3.36,5.66,6.91v3.7c0,4.03-2.83,7.82-11.42,7.82s-11.47-3.79-11.47-7.82v-3.02c0-.86.34-1.25,1.15-1.25h4.03c.86,0,1.15.38,1.15,1.25v2.16c0,2.35,1.82,3.46,5.09,3.46s5.09-1.1,5.09-3.46v-1.54c0-1.97-1.92-2.74-4.08-3.55l-7.44-2.78c-2.3-.86-4.37-3.31-4.37-6.19v-2.83c0-4.03,2.5-7.83,10.9-7.83s11.09,3.79,11.09,7.83v1.97c0,.82-.34,1.2-1.2,1.2h-4.03c-.82,0-1.1-.38-1.1-1.2v-1.1Z"/>
-            </g>
-            <path class="cls-1" d="M8.27,33.03c0-13.14,10.23-23.86,23.15-24.72V0C13.92.86,0,15.32,0,33.03s13.92,32.16,31.41,33.03v-8.31c-12.92-.85-23.15-11.58-23.15-24.72Z"/>
-            <path class="cls-4" d="M66.14,33.03C66.14,15.32,52.22.86,34.72,0v8.31c12.92.85,23.15,11.58,23.15,24.72s-10.22,23.86-23.15,24.72v8.31c17.49-.86,31.41-15.32,31.41-33.03Z"/>
-            <path class="cls-2" d="M46.18,31.37h8.3c-.36-4.69-2.21-8.96-5.1-12.32l-5.87,5.87c1.42,1.83,2.37,4.04,2.67,6.45Z"/>
-            <path class="cls-5" d="M46.18,34.68c-.75,5.98-5.48,10.71-11.46,11.46-.54.07-1.09.11-1.65.11s-1.11-.05-1.65-.11c-2.41-.3-4.62-1.25-6.45-2.67l-5.87,5.87c3.37,2.89,7.63,4.74,12.32,5.1.55.04,1.1.08,1.65.08s1.11-.04,1.65-.08c10.55-.81,18.95-9.21,19.76-19.76h-8.3Z"/>
-            <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
-          </svg>
-        </a>
-        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
-      </div>
-      <div class="footer-col">
-        <h4>Solutions</h4>
-        <ul>
-          <li><a href="solutions.html#robotics">Robotics</a></li>
-          <li><a href="solutions.html#maritime">Maritime</a></li>
-          <li><a href="solutions.html#heavy-machinery">Heavy Machinery</a></li>
-          <li><a href="solutions.html#material-handling">Material Handling</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Development</h4>
-        <ul>
-          <li><a href="development.html#use-case">Use Case &amp; Requirements</a></li>
-          <li><a href="development.html#feasibility">Feasibility Study</a></li>
-          <li><a href="development.html#prototype">Prototype &amp; Testing</a></li>
-          <li><a href="development.html#compliance">Compliance</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Production</h4>
-        <ul>
-          <li><a href="production.html#facility">Production Facility</a></li>
-          <li><a href="production.html#quality">Quality &amp; Testing</a></li>
-          <li><a href="production.html#passport">Battery Passport</a></li>
-          <li><a href="bms.html">BMS Solutions</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html#company">About us</a></li>
-          <li><a href="about.html#career">Career</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>
-      <div class="cert-chips">
-        <span class="cert-chip">CE</span>
-        <span class="cert-chip">UN 38.3</span>
-        <span class="cert-chip">RoHS</span>
-      </div>
-    </div>
-  </div>
-</footer>
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
 
 <script>
 (function(){

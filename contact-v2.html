@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Contact — WS Technicals</title>
-<meta name="description" content="Get in touch with WS Technicals about a sales inquiry, a purchase, or a general question — or find your way to our support center.">
+<meta name="robots" content="index, follow">
+<title>Contact | WS Technicals</title>
+<meta name="description" content="Get in touch with WS Technicals about a sales inquiry, a purchase or a general question. Existing customers can also access our support center.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,6 +105,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 .contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0 var(--sp-8); }
 .contact-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6); }
+.contact-intro{ color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; max-width:42ch; margin-bottom:var(--sp-4); }
+.contact-detail{ display:grid; grid-template-columns:72px 1fr; gap:var(--sp-2); padding:14px 0; }
+.contact-detail .k{ font-size:13px; color:var(--ink-soft-on-dark); }
+.contact-detail .v{ font-size:15.5px; font-weight:500; color:var(--paper); }
+.contact-detail a.v:hover{ color:var(--brass-hi); }
 
 /* Signature moment: contact details become one-tap "channels" — each has
    its own glyph and a copy action, so reaching us doesn't require retyping
@@ -159,9 +164,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   pointer-events:none;
   z-index:-1;
 }
-.type-toggle{ display:flex; gap:8px; margin-bottom:var(--sp-3); flex-wrap:wrap; }
-.type-btn{ flex:1; min-width:110px; padding:12px 14px; border-radius:var(--r); border:1px solid rgba(251,249,245,.26); background:rgba(251,249,245,.09); color:var(--ink-soft-on-dark); font-size:14px; font-weight:600; text-align:center; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
-.type-btn.active{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
 .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); margin-bottom:var(--sp-2); }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field.full{ grid-column:1 / -1; }
@@ -183,8 +185,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .field input:hover, .field select:hover, .field textarea:hover{ border-color:rgba(251,249,245,.46); }
 .field input:focus, .field select:focus, .field textarea:focus{ background:rgba(251,249,245,.19); border-color:rgba(251,249,245,.6); box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(185,154,114,.28); }
 .field textarea{ resize:vertical; min-height:96px; }
-.sales-fields{ display:none; }
-.sales-fields.show{ display:contents; }
 .form-note{ font-size:12.5px; color:var(--ink-soft-on-dark); margin-top:var(--sp-1); }
 .form-success{ display:none; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r); background:rgba(185,154,114,.14); border:1px solid rgba(185,154,114,.4); font-size:14.5px; margin-top:var(--sp-2); }
 .form-success.show{ display:flex; }
@@ -226,11 +226,26 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=5">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=publish1">
+<style>
+/* Let the form illumination dissolve into the hero instead of being clipped
+   at the contact-section boundary. The first horizontal blueprint line starts
+   one complete grid row lower, so it cannot read as a section divider. */
+.page-hero + .contact.on-dark{
+  overflow:visible !important;
+}
+.page-hero + .contact.on-dark::after{
+  background-image:
+    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(to bottom, transparent 0 95px, rgba(251,249,245,.75) 95px 96px) !important;
+}
+</style>
 </head>
-<body class="on-dark">
+<body class="on-dark" data-wst-page="contact">
 
-<header class="nav">
+<div data-wst-header></div>
+<header class="nav legacy-nav" hidden aria-hidden="true">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
       <svg class="brand-logo brand-logo--on-dark" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
@@ -323,68 +338,35 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   <div class="container page-hero-inner">
     <span class="eyebrow">Contact</span>
     <h1>Let's talk about your application.</h1>
-    <p>Tell us what you need — a sales conversation, a purchase, or a general question — and the right person will get back to you.</p>
+    <p>Tell us whether you need a sales conversation, help with a purchase or an answer to a general question. The right person will get back to you.</p>
   </div>
 </section>
 
 <section class="contact on-dark" id="contact-form">
   <div class="container contact-grid">
     <div>
-      <div class="contact-channels">
-        <div class="channel-card">
-          <div class="channel-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 4h3l2 5-2 1a9 9 0 0 0 5 5l1-2 5 2v3a2 2 0 0 1-2 2C9 20 2 13 2 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg></div>
-          <div class="channel-body">
-            <span class="channel-label">Phone</span>
-            <a class="channel-value" href="tel:+4588618386">+45 88 61 83 86</a>
-          </div>
-          <button type="button" class="channel-copy" data-copy="+45 88 61 83 86" aria-label="Copy phone number">
-            <svg class="icon-copy" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg>
-            <svg class="icon-check" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-        <div class="channel-card">
-          <div class="channel-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5"/><path d="m3 5.5 7 5.5 7-5.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="channel-body">
-            <span class="channel-label">Email</span>
-            <a class="channel-value" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a>
-          </div>
-          <button type="button" class="channel-copy" data-copy="wstech@wstech.dk" aria-label="Copy email address">
-            <svg class="icon-copy" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg>
-            <svg class="icon-check" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-        <div class="channel-card">
-          <div class="channel-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 18s6-5.5 6-10a6 6 0 0 0-12 0c0 4.5 6 10 6 10Z" stroke-linejoin="round"/><circle cx="10" cy="8" r="2"/></svg></div>
-          <div class="channel-body">
-            <span class="channel-label">Address</span>
-            <span class="channel-value">Gjellerupvej 89D, 8230 Åbyhøj</span>
-          </div>
-          <button type="button" class="channel-copy" data-copy="Gjellerupvej 89D, 8230 Åbyhøj, Denmark" aria-label="Copy address">
-            <svg class="icon-copy" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 13V4a1 1 0 0 1 1-1h9"/></svg>
-            <svg class="icon-check" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke-width="1.8"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
+      <p class="contact-intro">Tell us about your requirements and a member of our engineering team will get back to you.</p>
+      <div class="contact-detail"><span class="k">Phone</span><a class="v" href="tel:+4588618388">+45 88 61 83 88</a></div>
+      <div class="contact-detail"><span class="k">Email</span><a class="v" href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></div>
+      <div class="contact-detail"><span class="k">Address</span><span class="v">Gjellerupvej 89A, 8230 Aarhus, Denmark</span></div>
 
       <div class="support-card">
         <h3>Already a customer?</h3>
-        <p>For technical support on an existing product, use our Support Center instead of the form — you'll get a faster, more specific answer.</p>
-        <a href="mailto:wstech@wstech.dk?subject=Support%20request" class="link-arrow">Go to Support Center
+        <p>For technical support on an existing product, use our Support Center instead of the form. You will receive a faster, more specific answer.</p>
+        <a href="https://wstech.freshdesk.com/support/home" class="link-arrow" target="_blank" rel="noopener noreferrer">Go to Support Center
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
+      </div>
+
+      <div class="support-card payment-card">
+        <h3>Payment details</h3>
+        <p>Jyske Bank<br>Account: 7562 1051764<br>IBAN: DK6775620001051764<br>SWIFT: JYBADKKK</p>
       </div>
     </div>
 
     <div class="form-wrap">
     <div class="form-glow" aria-hidden="true"></div>
     <form class="contact-form" id="contactForm">
-      <div class="type-toggle" role="group" aria-label="Inquiry type">
-        <button type="button" class="type-btn active" data-type="sales">Sales</button>
-        <button type="button" class="type-btn" data-type="buy">Buy</button>
-        <button type="button" class="type-btn" data-type="general">General</button>
-      </div>
-      <input type="hidden" name="inquiry_type" id="inquiryType" value="sales">
-
       <div class="form-row">
         <div class="field">
           <label for="f-name">Name</label>
@@ -396,20 +378,29 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         </div>
       </div>
       <div class="form-row">
-        <div class="field full">
+        <div class="field">
           <label for="f-email">Email</label>
           <input type="email" id="f-email" name="email" placeholder="jane@company.com">
         </div>
+        <div class="field">
+          <label for="f-country">Country</label>
+          <input type="text" id="f-country" name="country" placeholder="Country">
+        </div>
       </div>
 
-      <div class="form-row sales-fields show" id="salesFields">
-        <div class="field">
-          <label for="f-usecase">Use Case</label>
-          <input type="text" id="f-usecase" name="use_case" placeholder="e.g. AGV, drone, marine">
-        </div>
-        <div class="field">
-          <label for="f-capacity">Capacity</label>
-          <input type="text" id="f-capacity" name="capacity" placeholder="e.g. voltage / Ah / annual volume">
+      <div class="form-row">
+        <div class="field full">
+          <label for="f-application">Application</label>
+          <select id="f-application" name="application">
+            <option value="">Select an application</option>
+            <option>Drone</option>
+            <option>Material Handling</option>
+            <option>Robotics</option>
+            <option>Maritime</option>
+            <option>UPS</option>
+            <option>Heavy Machinery</option>
+            <option>Other</option>
+          </select>
         </div>
       </div>
 
@@ -424,7 +415,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <p class="form-note">All fields optional. We'll only use this to respond to your enquiry.</p>
       <div class="form-success" id="formSuccess">
         <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#B99A72" stroke-width="1.8"><path d="M4 10l4 4 8-8"/></svg>
-        <span>Thanks — we'll be in touch shortly.</span>
+        <span>Thanks. We'll be in touch shortly.</span>
       </div>
     </form>
     </div>
@@ -433,7 +424,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 </main>
 
-<footer class="footer">
+<div data-wst-footer></div>
+<footer class="footer legacy-footer" hidden aria-hidden="true">
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
@@ -460,7 +452,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
             <path class="cls-3" d="M34.72,11.61c-.55-.04-1.1-.08-1.65-.08s-1.11.04-1.65.08c-11.1.85-19.84,10.1-19.84,21.41,0,5.34,1.96,10.22,5.18,13.98l5.87-5.87c-1.74-2.24-2.79-5.05-2.79-8.1,0-6.74,5.05-12.3,11.57-13.11.54-.07,1.09-.11,1.65-.11s1.11.05,1.65.11c2.41.3,4.62,1.25,6.45,2.67l5.87-5.87c-3.37-2.89-7.63-4.74-12.32-5.1Z"/>
           </svg>
         </a>
-        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89D<br>8230 Åbyhøj, Denmark</p>
+        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>
       </div>
       <div class="footer-col">
         <h4>Solutions</h4>
@@ -509,6 +501,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   </div>
 </footer>
 
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
 <script>
 (function(){
   var body = document.body;
@@ -539,21 +532,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     });
   });
 
-  // Inquiry type toggle — shows Use Case / Capacity only for Sales
-  var typeBtns = document.querySelectorAll('.type-btn');
-  var inquiryType = document.getElementById('inquiryType');
-  var salesFields = document.getElementById('salesFields');
-  typeBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      typeBtns.forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-      var type = btn.getAttribute('data-type');
-      inquiryType.value = type;
-      salesFields.classList.toggle('show', type === 'sales');
-    });
-  });
-
-  // Contact form — front-end only placeholder (no backend wired up)
+  // Contact form interaction.
   var form = document.getElementById('contactForm');
   var success = document.getElementById('formSuccess');
   form.addEventListener('submit', function(e){

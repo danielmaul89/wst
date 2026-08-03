@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Multirotor UAV Pack — WS Technicals</title>
-<meta name="description" content="A custom Li-ion battery system engineered for industrial inspection drones — a case-study example of how we tell the story behind a custom pack.">
+<meta name="robots" content="index, follow">
+<title>Multirotor UAV Pack | WS Technicals</title>
+<meta name="description" content="A custom Li-ion battery system engineered around the weight, endurance and integration requirements of industrial inspection drones.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,18 +95,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid va
 body.menu-open .nav-toggle span{ background:transparent; }
 body.menu-open .nav-toggle span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
 body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
-
-.breadcrumb{ padding:var(--sp-3) 0 0; }
-.breadcrumb ol{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.breadcrumb li{ display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; letter-spacing:.03em; color:var(--ink-faint); }
-.breadcrumb a{ color:var(--ink-faint); transition:color var(--dur) var(--ease); }
-.breadcrumb a:hover{ color:var(--ink); }
-.breadcrumb li.current{ color:var(--ink-soft); }
-.breadcrumb .sep{ color:var(--line-2); }
-
-.draft-notice{ background:var(--brass-soft); border-bottom:1px solid rgba(6,8,26,.08); }
-.draft-notice .container{ padding-top:10px; padding-bottom:10px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:12px; letter-spacing:.02em; color:var(--ink-soft); }
-.draft-notice .dot{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; }
 
 /* ============================================================
    HERO — storytelling first. The product sits in a soft glass
@@ -307,13 +295,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   -webkit-backdrop-filter:blur(16px) saturate(135%);
   font-size:14px;
   font-weight:600;
-}
-.battery-callout::before{
-  content:"";
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:var(--brass-hi);
 }
 .battery-callout.one{ top:25%; left:2%; }
 .battery-callout.two{ top:12%; right:5%; }
@@ -613,10 +594,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .gallery-tile.contain img{ object-fit:contain; padding:var(--sp-4); background:radial-gradient(circle at 50% 42%, var(--card) 0%, var(--paper-2) 78%); }
 .gallery-tag{ position:absolute; top:var(--sp-2); left:var(--sp-2); z-index:2; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; color:#fff; background:rgba(6,8,26,.42); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.24); padding:6px 11px; border-radius:999px; }
 .gallery-tag .dot{ width:5px; height:5px; background:var(--brass-hi); flex:none; border-radius:50%; }
-.gallery-tile.is-placeholder{ display:flex; align-items:center; justify-content:center; background:linear-gradient(155deg, var(--paper-2) 0%, var(--brass-soft) 100%); }
-.gallery-tile.is-placeholder svg{ width:26%; opacity:.35; stroke:var(--ink); }
-.gallery-tile.is-placeholder .gallery-tag{ color:var(--ink-soft); background:rgba(255,255,255,.8); border-color:rgba(6,8,26,.08); }
-
 /* ============================================================
    RELATED APPLICATIONS — matches index.html's category cards
    ============================================================ */
@@ -719,9 +696,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .project-journal::before,.project-journal::after{ transform:none; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 </head>
-<body>
+<body data-wst-page="solutions">
 
 <div class="ambient" aria-hidden="true">
   <span class="ambient-blob ambient-blob-brass"></span>
@@ -731,7 +709,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   <span class="ambient-blob ambient-blob-5"></span>
 </div>
 
-<header class="nav">
+<div data-wst-header></div>
+<header class="nav legacy-nav" hidden aria-hidden="true">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
       <svg class="brand-logo" viewBox="0 0 397.07 66.05" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WS Technicals">
@@ -800,7 +779,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </ul>
     </nav>
     <div class="nav-cta">
-      <a href="contact.html" class="btn btn-primary">Get in touch</a>
+      <a href="contact-v2.html" class="btn btn-primary">Get in touch</a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle"><span></span></button>
     </div>
   </div>
@@ -813,9 +792,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <div class="hero-copy">
       <span class="eyebrow">Case Study · Drones</span>
       <h1>Every gram traded for flight time.</h1>
-      <p>An inspection drone only earns its keep in the air. When our customer needed longer missions without redesigning the airframe, the answer wasn't a bigger battery — it was a denser one, built to swap in seconds between flights.</p>
+      <p>An inspection drone only earns its keep in the air. When our customer needed longer missions without redesigning the airframe, the answer was not a bigger battery. It was a denser system built to swap in seconds between flights.</p>
       <div class="hero-cta">
-        <a href="contact.html" class="btn btn-primary">Talk to our engineering team</a>
+        <a href="contact-v2.html" class="btn btn-primary">Talk to our engineering team</a>
         <button type="button" class="btn btn-glass" data-specs-open>
           View specifications
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -836,7 +815,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   <div class="container">
     <div class="battery-focus-head">
       <h2>The battery behind the mission.</h2>
-      <p class="battery-focus-copy">The application defines the battery—not the other way around. Cell architecture, enclosure, communication and service access are developed as one integrated system around the machine.</p>
+      <p class="battery-focus-copy">The application defines the battery. Cell architecture, enclosure, communication and service access are developed as one integrated system around the machine.</p>
     </div>
     <div class="battery-visual">
       <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="WS Technicals custom lithium battery system with visible cell modules and integrated connectors">
@@ -871,15 +850,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <div class="case-visuals" aria-label="Product story images">
       <figure class="case-image use">
         <img src="assets/products/cards/drone.jpg" alt="Industrial multirotor drone representing the battery's operating application">
-        <figcaption class="case-image-caption">Application context — the machine and mission define the battery requirements.</figcaption>
+        <figcaption class="case-image-caption">Application context: the machine and mission define the battery requirements.</figcaption>
       </figure>
       <figure class="case-image process">
         <img src="assets/unsplash/production-line-web.jpg" alt="Automated production environment representing repeatable battery manufacturing">
-        <figcaption class="case-image-caption">Production — controlled assembly and repeatable quality processes.</figcaption>
+        <figcaption class="case-image-caption">Production: controlled assembly and repeatable quality processes.</figcaption>
       </figure>
       <figure class="case-image detail">
         <img src="assets/products/renders/crop/qkw_print.png" alt="Detailed WS Technicals battery system render">
-        <figcaption class="case-image-caption">The solution — engineered packaging, electronics and service access.</figcaption>
+        <figcaption class="case-image-caption">The solution: engineered packaging, electronics and service access.</figcaption>
       </figure>
     </div>
   </div>
@@ -925,7 +904,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <div class="journal-stack">
             <figure class="journal-frame is-active" data-journal-step="1">
               <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="">
-              <figcaption>The application — payload, mission profile and operating environment establish the brief.</figcaption>
+              <figcaption>The application: payload, mission profile and operating environment establish the brief.</figcaption>
             </figure>
             <figure class="journal-frame product" data-journal-step="2">
               <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="">
@@ -981,14 +960,17 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="cta-band">
   <div class="container">
     <h2>Need a battery built around your platform?</h2>
-    <p>Every pack starts with your airframe, your duty cycle and your certification targets — not the other way around.</p>
-    <a href="contact.html" class="btn btn-on-dark">Talk to our engineering team</a>
+    <p>Every pack starts with your airframe, duty cycle and certification targets. The application always comes first.</p>
+    <a href="contact-v2.html" class="btn btn-on-dark">Talk to our engineering team</a>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
+
+<footer class="footer" hidden aria-hidden="true">
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
@@ -1019,7 +1001,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </ul></div>
       <div class="footer-col"><h4>Company</h4><ul>
         <li><a href="about.html#company">About us</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact-v2.html">Contact</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
@@ -1037,19 +1019,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <p class="specs-intro">Multirotor UAV Pack — sized for the airframe's weight budget, with a keyed quick-swap connector.</p>
+    <p class="specs-intro">Multirotor UAV Pack sized for the airframe's weight budget and fitted with a keyed quick-swap connector.</p>
     <div class="specs-grid">
-      <div class="specs-mini"><span class="k">Nominal Voltage</span><span class="v">22.2<span class="unit">V</span></span></div>
-      <div class="specs-mini"><span class="k">Capacity</span><span class="v">22<span class="unit">Ah</span></span></div>
-      <div class="specs-mini"><span class="k">Energy</span><span class="v">0.488<span class="unit">kWh</span></span></div>
-      <div class="specs-mini"><span class="k">Chemistry</span><span class="v">Li-ion</span></div>
-      <div class="specs-mini"><span class="k">Cycle Life</span><span class="v">500<span class="unit">+ @ 80%</span></span></div>
-      <div class="specs-mini"><span class="k">IP Rating</span><span class="v">IP54</span></div>
+      <div class="specs-mini"><span class="k">Voltage</span><span class="v">Application-specific</span></div>
+      <div class="specs-mini"><span class="k">Capacity</span><span class="v">Duty-cycle matched</span></div>
+      <div class="specs-mini"><span class="k">Energy</span><span class="v">Project-defined</span></div>
+      <div class="specs-mini"><span class="k">Chemistry</span><span class="v">Selected per use</span></div>
+      <div class="specs-mini"><span class="k">Service life</span><span class="v">Validated to target</span></div>
+      <div class="specs-mini"><span class="k">Enclosure</span><span class="v">Environment-matched</span></div>
     </div>
-    <p class="specs-note">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 5.5v3.2M8 11.2h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/></svg>
-      Illustrative specification for this worked example — not a certified datasheet.
-    </p>
     <div class="specs-cert-row">
       <span class="cert-chip" style="border-color:var(--line-2); color:var(--ink-soft);">CE</span>
       <span class="cert-chip" style="border-color:var(--line-2); color:var(--ink-soft);">UN 38.3</span>

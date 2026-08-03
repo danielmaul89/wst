@@ -179,17 +179,28 @@ html.home-motion .tech-visual {
 .exploded-sequence {
   position: relative;
   z-index: 1;
-  width: 100%;
+  width: 96%;
   height: 100%;
+  margin-left: auto;
   isolation: isolate;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
-  mask-composite: intersect;
+  transform: translateX(5%);
+  transform-origin: 50% 48%;
+  -webkit-mask-image: radial-gradient(
+    ellipse 88% 84% at 54% 43%,
+    #000 0%,
+    #000 67%,
+    rgba(0, 0, 0, .88) 75%,
+    rgba(0, 0, 0, .28) 88%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 88% 84% at 54% 43%,
+    #000 0%,
+    #000 67%,
+    rgba(0, 0, 0, .88) 75%,
+    rgba(0, 0, 0, .28) 88%,
+    transparent 100%
+  );
 }
 
 .exploded-sequence .exploded-source {
@@ -234,6 +245,7 @@ html.home-motion .tech-visual {
 .proof-visual.has-exploded-sequence .callouts {
   z-index: 20;
   overflow: visible;
+  transform: translateX(5%);
 }
 
 .proof-visual.has-exploded-sequence .callout.part-visible {
@@ -245,6 +257,17 @@ html.home-motion .tech-visual {
 .proof-visual.has-exploded-sequence .callout.part-visible:nth-child(2) { transition-delay: 70ms; }
 .proof-visual.has-exploded-sequence .callout.part-visible:nth-child(3) { transition-delay: 90ms; }
 .proof-visual.has-exploded-sequence .callout.part-visible:nth-child(4) { transition-delay: 110ms; }
+
+@media (max-width: 980px) {
+  .exploded-sequence {
+    width: 100%;
+    transform: none;
+  }
+
+  .proof-visual.has-exploded-sequence .callouts {
+    transform: none;
+  }
+}
 
 html.home-motion .hero-stage-ring,
 html.home-motion .diagram-orbit,
@@ -321,6 +344,65 @@ header {
   .related-card:hover img {
     transform: scale(1.018);
   }
+}
+
+/* Shared tag language: compact, fully rounded labels without decorative dots. */
+.callout,
+.battery-callout,
+.orbit-location-label,
+.presence-ripple .ripple-label,
+.pinned-tag,
+.bms-tag,
+.info-tag,
+.cert-chip,
+.rel-tile-body .tag,
+.sol-product-body .tag {
+  border-radius: 999px !important;
+}
+
+.tag,
+.meta-tag,
+.hero-chip,
+.stage-badge,
+.placeholder-tag {
+  border-radius: 999px !important;
+}
+
+.callout-dot,
+.battery-callout::before,
+.pinned-tag .dot,
+.rel-tile-body .tag .dot,
+.sol-product-body .tag .dot {
+  display: none !important;
+  content: none !important;
+}
+
+.tag > .dot,
+.meta-tag > .dot,
+.hero-chip > .dot,
+.stage-badge > .dot,
+.placeholder-tag > .dot {
+  display: none !important;
+}
+
+.callout,
+.battery-callout,
+.pinned-tag {
+  gap: 0 !important;
+}
+
+.callout {
+  padding: 8px 14px !important;
+}
+
+.battery-callout {
+  padding: 10px 16px !important;
+  border: 0 !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(251,249,245,.97) 72%, rgba(238,224,202,.96)) !important;
+  color: var(--blue-deep) !important;
+  box-shadow: 0 12px 30px -18px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.9) !important;
+  backdrop-filter: blur(12px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
 }
 
 ::selection {
@@ -795,6 +877,103 @@ textarea:focus {
   mix-blend-mode:multiply;
 }
 
+/* Shared contact modal: restrained glass depth and soft entrance. */
+.wst-contact-modal__backdrop {
+  opacity: 0;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition: opacity .32s var(--ease), backdrop-filter .32s var(--ease);
+}
+
+.wst-contact-modal__dialog {
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
+  box-shadow: 0 36px 100px rgba(0, 0, 0, .34);
+  transition: opacity .32s var(--ease), transform .48s cubic-bezier(.16, 1, .3, 1);
+}
+
+.wst-contact-modal.is-open .wst-contact-modal__backdrop {
+  opacity: 1;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.wst-contact-modal.is-open .wst-contact-modal__dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.wst-contact-modal__dialog::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(70% 85% at 92% 105%, rgba(15, 70, 166, .42), transparent 70%),
+    radial-gradient(46% 52% at 16% -5%, rgba(226, 205, 174, .11), transparent 74%);
+}
+
+.wst-contact-modal .contact-form.wst-contact-modal__form,
+.wst-contact-modal .on-dark .contact-form.wst-contact-modal__form {
+  isolation: isolate;
+  overflow: visible;
+  background: linear-gradient(180deg, rgba(251, 249, 245, .045), rgba(251, 249, 245, .018)) !important;
+  border: 1px solid rgba(251, 249, 245, .09) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .075),
+    0 24px 60px rgba(0, 0, 0, .08) !important;
+  backdrop-filter: blur(10px) saturate(108%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(108%) !important;
+}
+
+.wst-contact-modal .contact-form.wst-contact-modal__form::before,
+.wst-contact-modal .contact-form.wst-contact-modal__form::after,
+.wst-contact-modal .on-dark .contact-form.wst-contact-modal__form::before,
+.wst-contact-modal .on-dark .contact-form.wst-contact-modal__form::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.wst-contact-modal__close {
+  top: 30px;
+  right: 34px;
+  background: rgba(3, 11, 33, .88);
+  border-color: rgba(251, 249, 245, .2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .08),
+    0 8px 24px rgba(0, 0, 0, .18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: color .25s var(--ease), background-color .25s var(--ease), border-color .25s var(--ease);
+}
+
+@media (hover: hover) {
+  .wst-contact-modal__close:hover {
+    color: var(--blue-deep);
+    background: rgba(251, 249, 245, .94);
+    border-color: rgba(251, 249, 245, .94);
+  }
+}
+
+@media (max-width: 760px) {
+  .wst-contact-modal__close {
+    top: 18px;
+    right: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wst-contact-modal__backdrop,
+  .wst-contact-modal__dialog {
+    transition: none !important;
+  }
+}
+
 .footer-col a {
   position:relative;
   display:inline-block;
@@ -836,6 +1015,7 @@ textarea:focus {
   height:calc(var(--footer-grid-unit) * 5);
   min-height:calc(var(--footer-grid-unit) * 5);
   padding:72px 0 40px !important;
+  background-image:none !important;
 }
 .footer::before{
   content:"";
@@ -848,11 +1028,19 @@ textarea:focus {
     repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px var(--footer-grid-unit));
   background-size:var(--footer-grid-unit) var(--footer-grid-unit);
   background-position:0 0;
-  opacity:.06;
+  opacity:.075;
   background-origin:border-box;
+  -webkit-mask-image:
+    radial-gradient(circle at 12% 18%,rgba(0,0,0,.88),transparent 42%),
+    radial-gradient(circle at 54% 62%,rgba(0,0,0,.66),transparent 50%),
+    radial-gradient(circle at 91% 24%,rgba(0,0,0,.78),transparent 39%);
+  mask-image:
+    radial-gradient(circle at 12% 18%,rgba(0,0,0,.88),transparent 42%),
+    radial-gradient(circle at 54% 62%,rgba(0,0,0,.66),transparent 50%),
+    radial-gradient(circle at 91% 24%,rgba(0,0,0,.78),transparent 39%);
   box-shadow:
-    inset 0 1px 0 rgba(251,249,245,.75),
-    inset 0 -1px 0 rgba(251,249,245,.75);
+    inset 0 1px 0 rgba(251,249,245,.08),
+    inset 0 -1px 0 rgba(251,249,245,.06);
 }
 .footer > .container{
   position:relative;

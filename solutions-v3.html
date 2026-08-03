@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Solutions — WS Technicals</title>
+<meta name="robots" content="index, follow">
+<title>Solutions | WS Technicals</title>
 <meta name="description" content="Custom lithium battery solutions for drones, material handling, robotics, maritime, UPS and heavy machinery applications.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,8 +104,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* ============================================================
    CATEGORY SECTIONS — matches index.html's soft, glassy card
    language rather than a technical spec-sheet. Real photography
-   where it exists; an honest "pending" placeholder tile where it
-   doesn't, rather than reusing an unrelated shot.
+   where it exists, with a neutral application symbol where it does not.
    ============================================================ */
 .sol-category{ padding:var(--sp-8) 0; }
 .sol-category:nth-of-type(even){ background:var(--card); }
@@ -127,9 +126,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .sol-product-body .tag{ font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--brass-text); display:block; margin-bottom:4px; text-transform:uppercase; }
 .sol-product-body h3{ font-size:16px; letter-spacing:-.015em; font-weight:600; color:var(--ink); }
 
-.sol-product.is-placeholder .sol-product-img svg{ width:28%; opacity:.4; stroke:var(--ink); }
-.pending-flag{ position:absolute; bottom:10px; left:10px; z-index:2; display:flex; align-items:center; gap:6px; font-size:14px; font-weight:500; color:var(--ink-soft); background:rgba(255,255,255,.85); backdrop-filter:blur(8px); padding:5px 10px; border-radius:999px; white-space:nowrap; }
-.pending-flag .dot{ width:5px; height:5px; border-radius:50%; background:var(--brass); flex:none; }
+.sol-product.is-symbol .sol-product-img svg{ width:28%; opacity:.4; stroke:var(--ink); }
 
 .cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(24px,3.2vw,40px); margin-bottom:var(--sp-2); }
@@ -221,14 +218,10 @@ main > .solutions-hero{ display:none; }
 .architecture-node{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:flex-start; min-height:300px; padding:22px 18px 20px; overflow:hidden; border:1px solid rgba(6,8,26,.07); border-radius:var(--r-lg); background:#F5F5F7; color:var(--blue-deep); opacity:1; isolation:isolate; box-shadow:inset 0 1px 0 rgba(255,255,255,.72); transition:box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease); }
 .architecture-node::before{ content:""; position:absolute; inset:0; z-index:1; display:block; background:linear-gradient(to bottom,rgba(255,255,255,.88) 0%,rgba(255,255,255,.68) 22%,rgba(255,255,255,.24) 42%,transparent 58%); pointer-events:none; }
 .architecture-node::after{ content:""; position:absolute; inset:0; z-index:1; display:block; background:linear-gradient(to top,rgba(6,8,26,.085) 0%,rgba(6,8,26,.012) 20%,transparent 36%); pointer-events:none; }
-.architecture-node img{ position:absolute; inset:0; width:100%; height:100%; border-radius:inherit; object-fit:cover; transform:none; }
+.architecture-node img{ position:absolute; inset:0; width:100%; height:100%; border-radius:inherit; object-fit:cover; transform:scale(1.001); transform-origin:50% 100%; backface-visibility:hidden; will-change:transform; transition:transform .6s var(--ease); }
 .architecture-node strong{ position:relative; z-index:2; display:block; max-width:100%; font-family:var(--font-display); font-size:24px; line-height:1.12; letter-spacing:-.025em; text-align:left; }
-@media (hover:hover){
-  .architecture-node:hover:not(.is-active){
-    border-color:rgba(15,42,92,.16);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 18px 34px -34px rgba(3,11,33,.34);
-  }
-}
+.architecture-node:hover img,
+.architecture-node.is-active:hover img{ transform:scale(1.055); }
 
 .solution-atlas{ min-height:620px; }
 .solution-family{ display:none; scroll-margin-top:112px; }
@@ -241,29 +234,29 @@ main > .solutions-hero{ display:none; }
 .solution-tile{ --tile-span:3; position:relative; grid-column:span var(--tile-span); min-height:310px; overflow:hidden; border:1px solid rgba(6,8,26,.055); border-radius:var(--r-lg); background:#F5F5F7; isolation:isolate; box-shadow:inset 0 1px 0 rgba(255,255,255,.72); }
 .solution-tile.wide{ --tile-span:5; }
 .solution-tile.large{ --tile-span:6; min-height:390px; }
-.solution-tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:none; }
+.solution-tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.001); transform-origin:50% 100%; backface-visibility:hidden; will-change:transform; transition:transform .6s var(--ease); }
 .solution-tile::before{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(255,255,255,.76) 0%,rgba(255,255,255,.52) 17%,rgba(255,255,255,.18) 31%,transparent 47%); pointer-events:none; }
 .solution-tile::after{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(to top,rgba(6,8,26,.085) 0%,rgba(6,8,26,.012) 20%,transparent 36%); pointer-events:none; }
 .solution-tag{ position:absolute; z-index:2; top:28px; left:28px; display:block; max-width:min(310px,calc(100% - 56px)); color:var(--blue-deep); }
 .solution-tag strong{ display:block; font-family:var(--font-display); font-size:clamp(16px,1.7vw,24px); line-height:1.18; letter-spacing:-.02em; }
 .solution-tag small{ display:block; max-width:29ch; margin-top:8px; color:var(--blue-deep); opacity:.78; font-size:14px; line-height:1.5; }
-@media (hover:hover){
-  .solution-tile:hover{
-    border-color:rgba(15,42,92,.14);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.84),0 20px 38px -36px rgba(3,11,33,.32);
-  }
-}
+.solution-tile:hover img{ transform:scale(1.055); }
+.architecture-node:focus-visible img,
+.solution-tile:focus-visible img,
+.explorer-examples a:focus-visible img{ transform:scale(1.055); }
 
 .architecture-node{ text-align:left; cursor:pointer; }
 .architecture-node.is-active{
   background:#F5F5F7;
   color:var(--blue-deep);
   opacity:1;
-  border-color:rgba(15,42,92,.46);
+  border-color:rgba(15,42,92,.055);
+  outline:2px solid rgba(112,132,160,.2);
+  outline-offset:2px;
   box-shadow:
-    inset 0 0 0 2px rgba(15,42,92,.46),
-    inset 0 1px 0 rgba(255,255,255,.82),
-    0 18px 38px -34px rgba(3,11,33,.28);
+    inset 0 1px 0 rgba(255,255,255,.72),
+    0 2px 0 -1px rgba(112,132,160,.2),
+    0 20px 44px -28px rgba(3,11,33,.24);
 }
 .architecture-node.is-active img{ filter:saturate(1) contrast(1); }
 .family-explorer{ display:grid; grid-template-columns:.7fr 1.3fr; gap:clamp(46px,7vw,104px); align-items:center; min-height:570px; padding:0; border-radius:0; background:transparent; overflow:visible; }
@@ -275,16 +268,14 @@ main > .solutions-hero{ display:none; }
 .explorer-visual{ display:grid; grid-template-columns:minmax(0,1.55fr) minmax(150px,.65fr); gap:14px; min-height:470px; transition:opacity 260ms ease,transform 500ms var(--motion-ease); }
 .family-explorer.is-changing .explorer-visual{ opacity:.18; transform:scale(.992); }
 .explorer-main,.explorer-examples a{ position:relative; overflow:hidden; border-radius:var(--r-lg); background:#dedee1; }
-.explorer-main img,.explorer-examples img{ width:100%; height:100%; object-fit:cover; transform:none; }
+.explorer-main img,.explorer-examples img{ width:100%; height:100%; object-fit:cover; transform:none; transform-origin:50% 100%; backface-visibility:hidden; transition:transform .6s var(--ease); }
 .explorer-main .solution-tag{ left:18px; bottom:18px; }
 .explorer-examples{ display:grid; grid-template-rows:repeat(3,1fr); gap:14px; min-height:0; }
 .explorer-examples a{ min-height:0; }
 .explorer-examples span{ position:absolute; z-index:2; left:10px; bottom:10px; padding:6px 8px; border:1px solid rgba(255,255,255,.65); border-radius:6px; background:rgba(255,255,255,.68); backdrop-filter:blur(12px); color:var(--blue-deep); font-size:14px; font-weight:600; }
 @media (hover:hover){
-  .explorer-main:hover,
-  .explorer-examples a:hover{
-    box-shadow:0 18px 36px -34px rgba(3,11,33,.34);
-  }
+  .explorer-main:hover img,
+  .explorer-examples a:hover img{ transform:scale(1.04); }
 }
 
 .solutions-close{ padding:96px 0; background:var(--blue-deep); color:var(--paper); }
@@ -376,8 +367,8 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=2">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=aboutstory1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 </head>
 <body data-wst-page="solutions">
 
@@ -402,7 +393,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
       <p>WS Technicals develops lithium battery systems around the machine, its operating environment and the business case behind it. From the first requirement to production release, the solution remains application-specific.</p>
       <div class="solutions-hero-actions">
         <a href="#applications" class="btn btn-primary">Explore applications</a>
-        <a href="contact.html" class="link-arrow">Discuss your requirements
+        <a href="contact-v2.html" class="link-arrow">Discuss your requirements
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -446,8 +437,8 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
           <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor unmanned aerial vehicle"><span class="solution-tag"><strong>Multirotor UAV</strong><small>High energy density for payload-sensitive missions and rapid field swaps.</small></span></a>
           <a class="solution-tile large" href="product-drone.html" data-sv-reveal><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-wing unmanned aerial vehicle"><span class="solution-tag"><strong>Fixed-wing UAV</strong><small>Long-endurance power with predictable range and low system mass.</small></span></a>
           <a class="solution-tile wide" href="product-drone.html" data-sv-reveal><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL unmanned aerial vehicle"><span class="solution-tag"><strong>VTOL UAV</strong><small>Peak power for vertical lift balanced with efficient cruise operation.</small></span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span class="solution-tag"><strong>Surface vehicle</strong><small>Marine-ready energy for autonomous missions at sea.</small></span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle"><span class="solution-tag"><strong>Ground vehicle</strong><small>Rugged power for remote and autonomous operation.</small></span></a>
+          <a class="solution-tile" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned surface vehicle"><span class="solution-tag"><strong>Surface vehicle</strong><small>Marine-ready energy for autonomous missions at sea.</small></span></a>
+          <a class="solution-tile" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle"><span class="solution-tag"><strong>Ground vehicle</strong><small>Rugged power for remote and autonomous operation.</small></span></a>
         </div>
       </section>
 
@@ -457,9 +448,9 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
           <p>Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.</p>
         </div>
         <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/agv_scaled02.jpg" alt="Automated guided vehicle"><span class="solution-tag"><strong>AGV &amp; AMR</strong><small>Continuous-duty systems shaped around fleet uptime and charging windows.</small></span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/pallet-truck.jpg" alt="Electric pallet truck"><span class="solution-tag"><strong>Pallet truck</strong><small>Compact, serviceable power for intensive warehouse operation.</small></span></a>
-          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/forklift.jpg" alt="Electric forklift"><span class="solution-tag"><strong>Electric forklift</strong><small>High-cycle packs for lifting performance and multi-shift availability.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/agv_scaled02.jpg" alt="Automated guided vehicle"><span class="solution-tag"><strong>AGV &amp; AMR</strong><small>Continuous-duty systems shaped around fleet uptime and charging windows.</small></span></a>
+          <a class="solution-tile" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/pallet-truck.jpg" alt="Electric pallet truck"><span class="solution-tag"><strong>Pallet truck</strong><small>Compact, serviceable power for intensive warehouse operation.</small></span></a>
+          <a class="solution-tile wide" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/forklift.jpg" alt="Electric forklift"><span class="solution-tag"><strong>Electric forklift</strong><small>High-cycle packs for lifting performance and multi-shift availability.</small></span></a>
         </div>
       </section>
 
@@ -469,8 +460,8 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
           <p>High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.</p>
         </div>
         <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/humanoid02.jpg" alt="Humanoid robot"><span class="solution-tag"><strong>Humanoid robotics</strong><small>Compact energy engineered around balance, motion and safe interaction.</small></span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/robotic-arm.jpg" alt="Mobile industrial robotic arm"><span class="solution-tag"><strong>Industrial robotics</strong><small>High-cycle power integrated with precision control platforms.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/humanoid02.jpg" alt="Humanoid robot"><span class="solution-tag"><strong>Humanoid robotics</strong><small>Compact energy engineered around balance, motion and safe interaction.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/robotic-arm.jpg" alt="Mobile industrial robotic arm"><span class="solution-tag"><strong>Industrial robotics</strong><small>High-cycle power integrated with precision control platforms.</small></span></a>
         </div>
       </section>
 
@@ -480,8 +471,8 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
           <p>Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.</p>
         </div>
         <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/boat.jpg" alt="Electric marine application"><span class="solution-tag"><strong>Electric workboat</strong><small>Marine-certified energy for vibration, moisture and long duty cycles.</small></span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous marine platform"><span class="solution-tag"><strong>Autonomous platform</strong><small>Reliable onboard power for unattended missions and harsh conditions.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/boat.jpg" alt="Electric marine application"><span class="solution-tag"><strong>Electric workboat</strong><small>Marine-certified energy for vibration, moisture and long duty cycles.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous marine platform"><span class="solution-tag"><strong>Autonomous platform</strong><small>Reliable onboard power for unattended missions and harsh conditions.</small></span></a>
         </div>
       </section>
 
@@ -491,8 +482,8 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
           <p>Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.</p>
         </div>
         <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system.jpg" alt="Modular UPS battery cabinet"><span class="solution-tag"><strong>Modular UPS cabinet</strong><small>Serviceable backup power configured around critical loads.</small></span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/ups-system02.jpg" alt="Large-scale UPS installation"><span class="solution-tag"><strong>Infrastructure bank</strong><small>Scalable stored energy for instant failover and continuous availability.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/ups-system.jpg" alt="Modular UPS battery cabinet"><span class="solution-tag"><strong>Modular UPS cabinet</strong><small>Serviceable backup power configured around critical loads.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/ups-system02.jpg" alt="Large-scale UPS installation"><span class="solution-tag"><strong>Infrastructure bank</strong><small>Scalable stored energy for instant failover and continuous availability.</small></span></a>
         </div>
       </section>
 
@@ -502,11 +493,11 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
           <p>Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.</p>
         </div>
         <div class="family-gallery">
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/lawn-mover.jpg" alt="Professional electric lawn mower"><span class="solution-tag"><strong>Outdoor maintenance</strong><small>Weather-ready power for long working days and repeated load cycles.</small></span></a>
-          <a class="solution-tile large" href="contact.html" data-sv-reveal><img src="assets/products/web/utility-vehicle.jpg" alt="Electric utility vehicle"><span class="solution-tag"><strong>Utility vehicle</strong><small>High-capacity energy for torque, range and practical serviceability.</small></span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/fejemaskine.jpg" alt="Professional street sweeper"><span class="solution-tag"><strong>Municipal equipment</strong><small>Reliable daily operation in changing outdoor conditions.</small></span></a>
-          <a class="solution-tile wide" href="contact.html" data-sv-reveal><img src="assets/products/web/excavator02.jpg" alt="Electric excavator"><span class="solution-tag"><strong>Electric excavator</strong><small>Peak power and rugged packaging for construction duty cycles.</small></span></a>
-          <a class="solution-tile" href="contact.html" data-sv-reveal><img src="assets/products/web/traktor01.jpg" alt="Agricultural tractor"><span class="solution-tag"><strong>Agricultural tractor</strong><small>Durable energy architecture for field work and heavy auxiliary loads.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/lawn-mover.jpg" alt="Professional electric lawn mower"><span class="solution-tag"><strong>Outdoor maintenance</strong><small>Weather-ready power for long working days and repeated load cycles.</small></span></a>
+          <a class="solution-tile large" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/utility-vehicle.jpg" alt="Electric utility vehicle"><span class="solution-tag"><strong>Utility vehicle</strong><small>High-capacity energy for torque, range and practical serviceability.</small></span></a>
+          <a class="solution-tile" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/fejemaskine.jpg" alt="Professional street sweeper"><span class="solution-tag"><strong>Municipal equipment</strong><small>Reliable daily operation in changing outdoor conditions.</small></span></a>
+          <a class="solution-tile wide" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/excavator02.jpg" alt="Electric excavator"><span class="solution-tag"><strong>Electric excavator</strong><small>Peak power and rugged packaging for construction duty cycles.</small></span></a>
+          <a class="solution-tile" href="contact-v2.html" data-sv-reveal><img src="assets/products/web/traktor01.jpg" alt="Agricultural tractor"><span class="solution-tag"><strong>Agricultural tractor</strong><small>Durable energy architecture for field work and heavy auxiliary loads.</small></span></a>
         </div>
       </section>
     </div>
@@ -517,7 +508,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   <div class="container solution-logic-grid">
     <div class="solution-logic-copy" data-sv-reveal>
       <span class="eyebrow">What custom means</span>
-      <h2>The battery follows the application—not the other way around.</h2>
+      <h2>The battery follows the application, never the other way around.</h2>
       <p>Potential solutions are evaluated as one system. Performance, safety, integration and production economics remain connected from the beginning.</p>
     </div>
     <div class="logic-list" data-sv-reveal>
@@ -532,7 +523,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="solutions-close">
   <div class="container solutions-close-grid">
     <div><h2>Your application may not fit a category. That is the point.</h2><p>Bring us the operating profile, physical constraints and integration requirements. We will help determine whether a custom battery system creates the right technical and commercial result.</p></div>
-    <a href="contact.html" class="btn btn-on-dark">Start the conversation</a>
+    <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
   </div>
 </section>
 
@@ -541,7 +532,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     <div class="page-hero-inner">
       <span class="eyebrow">Solutions</span>
       <h2>Custom lithium battery systems for six demanding application categories.</h2>
-      <p>From unmanned platforms to material handling, robotics, marine, backup power and heavy machinery — we design, certify and mass produce the battery your application needs, not a catalogue part number.</p>
+      <p>From unmanned platforms to material handling, robotics, marine, backup power and heavy machinery, we design, certify and mass produce the battery your application needs. We do not begin with a catalogue part number.</p>
     </div>
   </div>
 </section>
@@ -551,13 +542,13 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
       <span class="eyebrow">01 / 06 · Drones</span>
-      <h2>Power across air, sea and ground — unmanned.</h2>
-      <p>From long-endurance fixed-wing aircraft to underwater and ground platforms, every unmanned system runs on a pack engineered for its duty cycle, payload and environment — not a generic cell count.</p>
+      <h2>Power across unmanned air, sea and ground platforms.</h2>
+      <p>From long-endurance fixed-wing aircraft to underwater and ground platforms, every unmanned system runs on a pack engineered for its duty cycle, payload and environment rather than a generic cell count.</p>
       <div class="sol-chips">
-        <span class="sol-chip">UAV — Unmanned Aerial Vehicle</span>
-        <span class="sol-chip">USV — Unmanned Surface Vehicle</span>
-        <span class="sol-chip">UUV — Unmanned Underwater Vehicle</span>
-        <span class="sol-chip">UGV — Unmanned Ground Vehicle</span>
+        <span class="sol-chip">UAV: Unmanned Aerial Vehicle</span>
+        <span class="sol-chip">USV: Unmanned Surface Vehicle</span>
+        <span class="sol-chip">UUV: Unmanned Underwater Vehicle</span>
+        <span class="sol-chip">UGV: Unmanned Ground Vehicle</span>
       </div>
     </div>
     <div class="sol-product-grid">
@@ -589,10 +580,9 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
         </div>
         <div class="sol-product-body"><span class="tag">USV</span><h3>Unmanned Surface Vehicle</h3></div>
       </a>
-      <div class="sol-product is-placeholder" data-sv-reveal>
+      <div class="sol-product is-symbol" data-sv-reveal>
         <div class="sol-product-img">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M2 16l8-2 2-8 2 8 8 2-8 2-2 6-2-6z"/></svg>
-          <span class="pending-flag"><span class="dot"></span>Photography pending</span>
         </div>
         <div class="sol-product-body"><span class="tag">UUV</span><h3>Unmanned Underwater Vehicle</h3></div>
       </div>
@@ -613,7 +603,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     <div class="sol-category-head" data-sv-reveal>
       <span class="eyebrow">02 / 06 · Material Handling</span>
       <h2>Continuous-duty power for the warehouse floor.</h2>
-      <p>AGVs, AMRs and forklifts run multiple shifts without a change of pack — engineered for fast charging, safety interlocks and drop-in fleet compatibility.</p>
+      <p>AGVs, AMRs and forklifts run multiple shifts without a pack change. The systems are engineered for fast charging, safety interlocks and drop-in fleet compatibility.</p>
       <div class="sol-chips">
         <span class="sol-chip">AGV / AMR</span>
         <span class="sol-chip">Forklifts (LEV)</span>
@@ -651,7 +641,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     <div class="sol-category-head" data-sv-reveal>
       <span class="eyebrow">03 / 06 · Robotics</span>
       <h2>Compact, high-cycle packs for precision robotics.</h2>
-      <p>Humanoid platforms and collaborative robots demand packs that are light, dense and safe to operate alongside people — built into the chassis, not bolted onto it.</p>
+      <p>Humanoid platforms and collaborative robots demand packs that are light, dense and safe to operate alongside people. The battery is built into the chassis instead of bolted onto it.</p>
       <div class="sol-chips">
         <span class="sol-chip">Humanoid Robots</span>
         <span class="sol-chip">Cobots</span>
@@ -698,7 +688,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
     <div class="sol-category-head" data-sv-reveal>
       <span class="eyebrow">05 / 06 · UPS</span>
       <h2>Backup power that's ready the instant it's needed.</h2>
-      <p>Rack-mounted and cabinet UPS systems for critical infrastructure — engineered for long standby life and instant failover, not just peak capacity.</p>
+      <p>Rack-mounted and cabinet UPS systems protect critical infrastructure with long standby life and instant failover, not just peak capacity.</p>
       <div class="sol-chips">
         <span class="sol-chip">Uninterrupted Power Supply</span>
       </div>
@@ -779,8 +769,8 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="cta-band">
   <div class="container">
     <h2>Don't see your application listed?</h2>
-    <p>We build custom packs for sectors beyond this list — if it needs a battery, we can likely engineer it.</p>
-    <a href="contact.html" class="btn btn-on-dark">Talk to our engineering team</a>
+    <p>We build custom packs for sectors beyond this list. If it needs a battery, we can likely engineer it.</p>
+    <a href="contact-v2.html" class="btn btn-on-dark">Talk to our engineering team</a>
   </div>
 </section>
 
@@ -788,7 +778,7 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js"></script>
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
 
 <script>
 (function(){
@@ -822,11 +812,11 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 
   var sectorData = {
     drone:{ count:'Application 01 / 06', title:'Drones', copy:'High energy density with strict control of mass, geometry and mission duration.', image:'assets/products/cards/drone.jpg', alt:'Drone application environment', products:['Multirotor UAV','Fixed-wing UAV','USV / UUV / UGV'], cta:'View drone solution', href:'product-drone.html' },
-    material:{ count:'Application 02 / 06', title:'Material Handling', copy:'Continuous-duty power shaped around charging windows, fleet uptime and drop-in machine integration.', image:'assets/products/cards/material-handling.jpg', alt:'Material handling application environment', products:['AGV / AMR','Forklift','Pallet handling'], cta:'Discuss material handling', href:'contact.html' },
-    robotics:{ count:'Application 03 / 06', title:'Robotics', copy:'Compact, high-cycle systems designed into precision platforms that operate alongside people.', image:'assets/products/cards/robotics.jpg', alt:'Robotics application environment', products:['Humanoid platforms','Cobots','Mobile robotics'], cta:'Discuss a robotics project', href:'contact.html' },
-    maritime:{ count:'Application 04 / 06', title:'Maritime', copy:'Marine battery systems developed for vibration, moisture, corrosion risk and long duty cycles at sea.', image:'assets/products/cards/maritime.jpg', alt:'Maritime application environment', products:['Work boats','Leisure craft','Unmanned surface systems'], cta:'Discuss a marine project', href:'contact.html' },
-    ups:{ count:'Application 05 / 06', title:'UPS', copy:'Stored energy for critical infrastructure where standby life and immediate availability matter.', image:'assets/products/cards/ups.jpg', alt:'UPS application environment', products:['UPS cabinets','Rack battery banks','Critical infrastructure'], cta:'Discuss a UPS system', href:'contact.html' },
-    heavy:{ count:'Application 06 / 06', title:'Heavy Machinery', copy:'High-capacity systems engineered for torque, outdoor conditions and demanding operating cycles.', image:'assets/products/cards/heavy-machinery.jpg', alt:'Heavy machinery application environment', products:['Outdoor maintenance','Construction','Agriculture'], cta:'Discuss heavy machinery', href:'contact.html' }
+    material:{ count:'Application 02 / 06', title:'Material Handling', copy:'Continuous-duty power shaped around charging windows, fleet uptime and drop-in machine integration.', image:'assets/products/cards/material-handling.jpg', alt:'Material handling application environment', products:['AGV / AMR','Forklift','Pallet handling'], cta:'Discuss material handling', href:'contact-v2.html' },
+    robotics:{ count:'Application 03 / 06', title:'Robotics', copy:'Compact, high-cycle systems designed into precision platforms that operate alongside people.', image:'assets/products/cards/robotics.jpg', alt:'Robotics application environment', products:['Humanoid platforms','Cobots','Mobile robotics'], cta:'Discuss a robotics project', href:'contact-v2.html' },
+    maritime:{ count:'Application 04 / 06', title:'Maritime', copy:'Marine battery systems developed for vibration, moisture, corrosion risk and long duty cycles at sea.', image:'assets/products/cards/maritime.jpg', alt:'Maritime application environment', products:['Work boats','Leisure craft','Unmanned surface systems'], cta:'Discuss a marine project', href:'contact-v2.html' },
+    ups:{ count:'Application 05 / 06', title:'UPS', copy:'Stored energy for critical infrastructure where standby life and immediate availability matter.', image:'assets/products/cards/ups.jpg', alt:'UPS application environment', products:['UPS cabinets','Rack battery banks','Critical infrastructure'], cta:'Discuss a UPS system', href:'contact-v2.html' },
+    heavy:{ count:'Application 06 / 06', title:'Heavy Machinery', copy:'High-capacity systems engineered for torque, outdoor conditions and demanding operating cycles.', image:'assets/products/cards/heavy-machinery.jpg', alt:'Heavy machinery application environment', products:['Outdoor maintenance','Construction','Agriculture'], cta:'Discuss heavy machinery', href:'contact-v2.html' }
   };
   var showcaseFrame = document.querySelector('.showcase-frame');
   var showcaseTabs = Array.prototype.slice.call(document.querySelectorAll('.showcase-tab'));
@@ -874,61 +864,61 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
       examples:[
         ['assets/products/web/fixed-wing-uav02.jpg','Fixed-wing unmanned aerial vehicle','Fixed-wing UAV','product-drone.html'],
         ['assets/products/web/vtol-uav02.jpg','VTOL unmanned aerial vehicle','VTOL UAV','product-drone.html'],
-        ['assets/products/web/usv_unmanned-surface-vehicle.jpg','Unmanned surface vehicle','Surface vehicle','contact.html']
+        ['assets/products/web/usv_unmanned-surface-vehicle.jpg','Unmanned surface vehicle','Surface vehicle','contact-v2.html']
       ],
       items:['UAV · Multirotor','UAV · Fixed-wing','UAV · VTOL','USV · Surface','UUV · Underwater','UGV · Ground'], href:'product-drone.html'
     },
     material:{
       kicker:'Material Handling', title:'Uptime engineered into the fleet.',
       description:'Continuous-duty systems balanced around fleet utilisation, fast-charge windows, safety interlocks and drop-in machine integration.',
-      main:['assets/products/web/agv_scaled02.jpg','Automated guided vehicle','AGV · AMR','contact.html'],
+      main:['assets/products/web/agv_scaled02.jpg','Automated guided vehicle','AGV · AMR','contact-v2.html'],
       examples:[
-        ['assets/products/web/pallet-truck.jpg','Electric pallet truck','Pallet truck','contact.html'],
-        ['assets/products/web/forklift.jpg','Electric forklift','Forklift','contact.html'],
-        ['assets/products/web/robotic-arm.jpg','Automated warehouse handling','Automated handling','contact.html']
+        ['assets/products/web/pallet-truck.jpg','Electric pallet truck','Pallet truck','contact-v2.html'],
+        ['assets/products/web/forklift.jpg','Electric forklift','Forklift','contact-v2.html'],
+        ['assets/products/web/robotic-arm.jpg','Automated warehouse handling','Automated handling','contact-v2.html']
       ],
-      items:['AGV · Automated guided vehicle','AMR · Autonomous mobile robot','LEV · Pallet truck','LEV · Forklift'], href:'contact.html'
+      items:['AGV · Automated guided vehicle','AMR · Autonomous mobile robot','LEV · Pallet truck','LEV · Forklift'], href:'contact-v2.html'
     },
     robotics:{
       kicker:'Robotics', title:'Compact energy for intelligent machines.',
       description:'High-cycle battery systems integrated around motion, balance, safe human interaction and precise control electronics.',
-      main:['assets/products/web/humanoid02.jpg','Humanoid robot','Humanoid robotics','contact.html'],
+      main:['assets/products/web/humanoid02.jpg','Humanoid robot','Humanoid robotics','contact-v2.html'],
       examples:[
-        ['assets/products/web/robotic-arm.jpg','Mobile industrial robotic arm','Industrial robotics','contact.html'],
-        ['assets/products/web/ugv.jpg','Autonomous mobile robot','Mobile robotics','contact.html']
+        ['assets/products/web/robotic-arm.jpg','Mobile industrial robotic arm','Industrial robotics','contact-v2.html'],
+        ['assets/products/web/ugv.jpg','Autonomous mobile robot','Mobile robotics','contact-v2.html']
       ],
-      items:['Humanoid robotics','Industrial robotics','Mobile robotics'], href:'contact.html'
+      items:['Humanoid robotics','Industrial robotics','Mobile robotics'], href:'contact-v2.html'
     },
     maritime:{
       kicker:'Maritime', title:'Built for duty cycles at sea.',
       description:'Marine battery systems developed for vibration, moisture, corrosion risk and long operating periods away from service infrastructure.',
-      main:['assets/products/web/boat.jpg','Electric marine application','Marine · Workboat','contact.html'],
+      main:['assets/products/web/boat.jpg','Electric marine application','Marine · Workboat','contact-v2.html'],
       examples:[
-        ['assets/products/web/usv_unmanned-surface-vehicle.jpg','Autonomous marine platform','Autonomous platform','contact.html'],
-        ['assets/products/web/boat.jpg','Leisure marine craft','Leisure craft','contact.html']
+        ['assets/products/web/usv_unmanned-surface-vehicle.jpg','Autonomous marine platform','Autonomous platform','contact-v2.html'],
+        ['assets/products/web/boat.jpg','Leisure marine craft','Leisure craft','contact-v2.html']
       ],
-      items:['Workboats','Leisure craft','Autonomous surface platforms'], href:'contact.html'
+      items:['Workboats','Leisure craft','Autonomous surface platforms'], href:'contact-v2.html'
     },
     ups:{
       kicker:'Uninterruptible Power Supply', title:'Stored energy when availability is critical.',
       description:'Backup systems configured around instant failover, standby lifetime, serviceability and the physical infrastructure they protect.',
-      main:['assets/products/web/ups-system.jpg','Modular UPS battery cabinet','UPS · Modular cabinet','contact.html'],
+      main:['assets/products/web/ups-system.jpg','Modular UPS battery cabinet','UPS · Modular cabinet','contact-v2.html'],
       examples:[
-        ['assets/products/web/ups-system02.jpg','Large-scale UPS installation','Infrastructure bank','contact.html'],
-        ['assets/products/web/ups-system.jpg','Serviceable UPS rack','Rack system','contact.html']
+        ['assets/products/web/ups-system02.jpg','Large-scale UPS installation','Infrastructure bank','contact-v2.html'],
+        ['assets/products/web/ups-system.jpg','Serviceable UPS rack','Rack system','contact-v2.html']
       ],
-      items:['Modular cabinet','Rack battery bank','Critical infrastructure'], href:'contact.html'
+      items:['Modular cabinet','Rack battery bank','Critical infrastructure'], href:'contact-v2.html'
     },
     heavy:{
       kicker:'Heavy Machinery', title:'High-capacity systems for work outside.',
       description:'Battery architecture for torque, vibration, weather exposure and demanding cycles across maintenance, construction and agriculture.',
-      main:['assets/products/web/lawn-mover.jpg','Professional electric lawn mower','Outdoor maintenance','contact.html'],
+      main:['assets/products/web/lawn-mover.jpg','Professional electric lawn mower','Outdoor maintenance','contact-v2.html'],
       examples:[
-        ['assets/products/web/utility-vehicle.jpg','Electric utility vehicle','Utility vehicle','contact.html'],
-        ['assets/products/web/excavator02.jpg','Electric excavator','Excavator','contact.html'],
-        ['assets/products/web/traktor01.jpg','Agricultural tractor','Tractor','contact.html']
+        ['assets/products/web/utility-vehicle.jpg','Electric utility vehicle','Utility vehicle','contact-v2.html'],
+        ['assets/products/web/excavator02.jpg','Electric excavator','Excavator','contact-v2.html'],
+        ['assets/products/web/traktor01.jpg','Agricultural tractor','Tractor','contact-v2.html']
       ],
-      items:['Outdoor maintenance','Utility vehicles','Municipal equipment','Construction','Agriculture','Cranes'], href:'contact.html'
+      items:['Outdoor maintenance','Utility vehicles','Municipal equipment','Construction','Agriculture','Cranes'], href:'contact-v2.html'
     }
   };
   var architectureTabs = Array.prototype.slice.call(document.querySelectorAll('.architecture-node[data-family]'));
