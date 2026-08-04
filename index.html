@@ -862,24 +862,21 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   isolation:isolate;
 }
 .proof-visual::after{
-  content:"";
-  position:absolute;
-  inset:-1px;
-  z-index:1;
-  pointer-events:none;
-  background:
-    linear-gradient(90deg,var(--paper-2) 0%,transparent 13%,transparent 87%,var(--paper-2) 100%),
-    linear-gradient(180deg,transparent 72%,rgba(243,239,231,.32) 79%,var(--paper-2) 100%);
+  display:none;
 }
 .proof-img{
   position:relative;
   z-index:0;
-  width:100%;
-  height:100%;
+  display:block;
+  width:calc(100% - 32px);
+  height:calc(100% - 32px);
+  margin:16px;
+  box-sizing:border-box;
+  border:2px solid #e32626;
   object-fit:contain;
   object-position:center;
-  -webkit-mask-image:radial-gradient(ellipse 91% 90% at 50% 44%,#000 0%,#000 70%,rgba(0,0,0,.82) 78%,transparent 100%);
-  mask-image:radial-gradient(ellipse 91% 90% at 50% 44%,#000 0%,#000 70%,rgba(0,0,0,.82) 78%,transparent 100%);
+  -webkit-mask-image:none;
+  mask-image:none;
 }
 .proof-visual .callouts{
   position:absolute;
