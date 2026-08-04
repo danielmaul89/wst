@@ -862,17 +862,22 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   isolation:isolate;
 }
 .proof-visual::after{
-  display:none;
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 84%,rgba(243,239,231,.26) 90%,var(--paper-2) 100%),
+    linear-gradient(180deg,transparent 78%,rgba(243,239,231,.18) 86%,var(--paper-2) 100%);
 }
 .proof-img{
   position:relative;
   z-index:0;
   display:block;
-  width:calc(100% - 32px);
-  height:calc(100% - 32px);
-  margin:16px;
-  box-sizing:border-box;
-  border:2px solid #e32626;
+  width:100%;
+  height:100%;
+  margin:0;
   object-fit:contain;
   object-position:center;
   -webkit-mask-image:none;
