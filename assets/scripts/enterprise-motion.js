@@ -230,7 +230,7 @@
       { clip: 'inset(27% 0 64% 0)', offset: '-14px' },
       { clip: 'inset(36% 0 45% 0)', offset: '-10px' },
       { clip: 'inset(55% 0 40% 0)', offset: '-6px' },
-      { clip: 'inset(60% 0 18.5% 0)', offset: '-3px' },
+      { clip: 'inset(60% 0 21.5% 0)', offset: '-3px' },
       { clip: 'inset(78.5% 0 0 0)', offset: '4px' }
     ];
 
