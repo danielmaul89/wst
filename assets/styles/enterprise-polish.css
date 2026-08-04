@@ -183,7 +183,7 @@ html.home-motion .tech-visual {
   height: 100%;
   margin-left: auto;
   isolation: isolate;
-  transform: translateX(5%);
+  transform: translateX(8%);
   transform-origin: 50% 48%;
   -webkit-mask-image: radial-gradient(
     ellipse 88% 84% at 54% 43%,
@@ -245,7 +245,7 @@ html.home-motion .tech-visual {
 .proof-visual.has-exploded-sequence .callouts {
   z-index: 20;
   overflow: visible;
-  transform: translateX(5%);
+  transform: translateX(8%);
 }
 
 .proof-visual.has-exploded-sequence .callout.part-visible {
