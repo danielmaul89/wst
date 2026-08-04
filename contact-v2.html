@@ -229,16 +229,60 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=5">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=publish1">
 <style>
-/* Let the form illumination dissolve into the hero instead of being clipped
-   at the contact-section boundary. The first horizontal blueprint line starts
-   one complete grid row lower, so it cannot read as a section divider. */
+/* Contact page: one continuous dark blueprint surface from navigation to form. */
+body[data-wst-page="contact"]{
+  background:var(--blue-deep) !important;
+  color:var(--paper);
+}
+body[data-wst-page="contact"] .nav{
+  background:transparent !important;
+  border-bottom-color:transparent !important;
+  box-shadow:none !important;
+}
+body[data-wst-page="contact"] .nav--scrolled{
+  background:rgba(3,11,33,.76) !important;
+  border-bottom-color:rgba(251,249,245,.1) !important;
+}
+body[data-wst-page="contact"] [data-wst-header] .brand-logo{
+  filter:grayscale(1) brightness(0) invert(1);
+}
+body[data-wst-page="contact"] .nav-link{
+  color:rgba(251,249,245,.72);
+}
+body[data-wst-page="contact"] .nav-item:hover > .nav-link,
+body[data-wst-page="contact"] .nav-link:focus-visible,
+body[data-wst-page="contact"] .nav-link[aria-current="page"]{
+  color:var(--paper);
+}
+body[data-wst-page="contact"] .nav-cta .btn-primary{
+  background:var(--paper);
+  color:var(--blue-deep);
+  border-color:rgba(255,255,255,.72);
+}
+body[data-wst-page="contact"] .page-hero,
+body[data-wst-page="contact"] .contact{
+  background:transparent !important;
+}
+body[data-wst-page="contact"] .page-hero{
+  color:var(--paper);
+  padding-bottom:var(--sp-5) !important;
+}
+body[data-wst-page="contact"] .page-hero h1{
+  color:var(--paper);
+}
+body[data-wst-page="contact"] .page-hero p{
+  color:rgba(251,249,245,.72);
+}
+body[data-wst-page="contact"] .page-hero .eyebrow{
+  color:var(--brass-hi);
+}
+
+/* Let the form illumination dissolve into the hero instead of being clipped. */
 .page-hero + .contact.on-dark{
   overflow:visible !important;
 }
 .page-hero + .contact.on-dark::after{
-  background-image:
-    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
-    repeating-linear-gradient(to bottom, transparent 0 95px, rgba(251,249,245,.75) 95px 96px) !important;
+  content:none !important;
 }
 </style>
 </head>
