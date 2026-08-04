@@ -867,9 +867,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   inset:0;
   z-index:1;
   pointer-events:none;
-  background:
-    linear-gradient(90deg,transparent 84%,rgba(243,239,231,.26) 90%,var(--paper-2) 100%),
-    linear-gradient(180deg,transparent 78%,rgba(243,239,231,.18) 86%,var(--paper-2) 100%);
+  background:linear-gradient(90deg,transparent 86%,rgba(243,239,231,.18) 93%,var(--paper-2) 100%);
 }
 .proof-img{
   position:relative;
@@ -880,8 +878,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   margin:0;
   object-fit:contain;
   object-position:center;
-  -webkit-mask-image:none;
-  mask-image:none;
+  -webkit-mask-image:radial-gradient(ellipse 98% 94% at 50% 43%,#000 0%,#000 70%,rgba(0,0,0,.88) 79%,rgba(0,0,0,.42) 90%,transparent 100%);
+  mask-image:radial-gradient(ellipse 98% 94% at 50% 43%,#000 0%,#000 70%,rgba(0,0,0,.88) 79%,rgba(0,0,0,.42) 90%,transparent 100%);
 }
 .proof-visual .callouts{
   position:absolute;
