@@ -107,6 +107,21 @@
   --h5-card-sm: var(--fs-body);
   --h6-label: var(--fs-small);
 
+  /* Featured variants.
+     A tier's default size assumes ordinary density — a heading in a list or
+     grid alongside siblings. Content presented in a generously-framed block
+     (one heading, one supporting element, real whitespace around both — a
+     proof card, a family intro above a gallery) can carry a larger size
+     without changing its semantic level: it is still an h3, still subordinate
+     to the page's h2s, just given room to match the space around it.
+     Each featured ceiling stays at least one full scale step below the tier
+     above's floor at every viewport from 320 to 1920px, so a featured h3
+     cannot tie or exceed a real h2 on the same page. Use these instead of
+     reaching for the tier above — reaching up a tier is how a nested heading
+     ends up the same size as a section heading it sits inside. */
+  --h3-subsection-featured: clamp(var(--fs-24), 3.4vw, var(--fs-40));
+  --h4-card-featured: clamp(var(--fs-24), 2.4vw, var(--fs-32));
+
   /* Tracking and leading tighten as size grows. */
   --h1-lh: 1.02;
   --h1-ls: -.045em;
@@ -215,6 +230,26 @@ h4,
   font-weight: 600;
   letter-spacing: var(--h5-ls);
   line-height: var(--h5-lh);
+}
+
+/* Featured variants — same tier, same tracking/leading, larger ceiling.
+   Reach for these on a heading that is the sole focal point of a spacious
+   framed block; use the plain tier everywhere else, including every
+   instance inside a repeating grid or list. */
+.t-subsection-featured {
+  font-family: var(--font-display);
+  font-size: var(--h3-subsection-featured);
+  font-weight: 700;
+  letter-spacing: var(--h3-ls);
+  line-height: var(--h3-lh);
+}
+
+.t-card-featured {
+  font-family: var(--font-display);
+  font-size: var(--h4-card-featured);
+  font-weight: 700;
+  letter-spacing: var(--h4-ls);
+  line-height: var(--h4-lh);
 }
 
 /* Measure caps. Display lines want to break early; body copy beside a heading

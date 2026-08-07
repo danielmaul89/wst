@@ -158,13 +158,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
 .stage-wrap{ position:relative; min-width:0; }
-.product-stage{ --stage-x:50%; --stage-y:50%; position:relative; aspect-ratio:1.12/1; overflow:visible; background:transparent; perspective:1200px; }
-.product-stage::before{ content:""; position:absolute; inset:8% 2%; border-radius:50%; pointer-events:none; opacity:0; transform:scale(.92); background:radial-gradient(circle at var(--stage-x) var(--stage-y),rgba(255,255,255,.72) 0%,rgba(203,176,138,.16) 22%,rgba(15,42,92,.07) 46%,transparent 70%); filter:blur(22px); transition:opacity .65s var(--ease),transform .8s var(--ease); }
-.product-stage:hover::before{ opacity:.7; transform:scale(1); }
-.stage-inner{ position:absolute; z-index:1; inset:0; display:flex; align-items:center; justify-content:center; transition:transform .7s cubic-bezier(.2,.75,.2,1); transform-style:preserve-3d; will-change:transform; }
-.stage-img{ width:100%; max-width:720px; animation:stageFloat 7s ease-in-out infinite; filter:drop-shadow(0 34px 34px rgba(6,8,26,.14)); transition:filter .7s var(--ease); }
-@keyframes stageFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
-.product-stage:hover .stage-img{ animation-play-state:paused; filter:drop-shadow(0 40px 42px rgba(6,8,26,.18)); }
+.product-stage{ position:relative; aspect-ratio:1.12/1; overflow:visible; background:transparent; }
+.stage-inner{ position:absolute; z-index:1; inset:0; display:flex; align-items:center; justify-content:center; }
+.stage-img{ width:100%; max-width:720px; filter:drop-shadow(0 34px 34px rgba(6,8,26,.14)); }
 .stage-badge{ position:absolute; top:var(--sp-3); left:var(--sp-3); z-index:3; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); background:rgba(255,255,255,.72); backdrop-filter:blur(10px) saturate(160%); -webkit-backdrop-filter:blur(10px) saturate(160%); border:1px solid rgba(255,255,255,.7); padding:7px 13px; border-radius:999px; }
 .stage-badge .dot{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; animation:pulse 2s ease-in-out infinite; }
 @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
@@ -553,11 +549,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   isolation:isolate;
   display:grid;
   grid-template-columns:minmax(220px,.62fr) minmax(0,1.38fr);
-  gap:clamp(36px,7vw,104px);
+  /* Tightened to the "Get in touch" modal's rhythm — its two columns run on
+     padding and a form margin, no wide explicit gap between them. */
+  gap:clamp(28px,4vw,56px);
   align-items:center;
-  min-height:min(72vh,680px);
+  min-height:min(64vh,600px);
   margin-bottom:6vh;
-  padding:clamp(48px,6vw,88px);
+  padding:clamp(32px,4vw,56px);
   overflow:hidden;
   border-radius:12px;
   /* No border or accent rule — the cards read as clean sheets, separated by
@@ -569,9 +567,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
      original approach) stays too close to the edge to read against a
      similarly warm/pale background — the cards visually merged. */
   box-shadow:
-    0 1px 1px rgba(3,11,33,.04),
-    0 8px 20px -14px rgba(3,11,33,.22),
-    0 36px 80px -40px rgba(3,11,33,.34);
+    0 1px 1px rgba(3,11,33,.03),
+    0 6px 16px -14px rgba(3,11,33,.17),
+    0 30px 68px -42px rgba(3,11,33,.27);
   transform-origin:50% 0;
   will-change:transform;
   /* Short transition only smooths frame-to-frame jitter — the motion itself is
@@ -591,18 +589,21 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .proof-outcome.is-active{
   box-shadow:
-    0 1px 1px rgba(3,11,33,.05),
-    0 9px 22px -14px rgba(3,11,33,.26),
-    0 calc(48px - (var(--handoff) * 22px)) calc(108px - (var(--handoff) * 46px)) -40px rgba(3,11,33,.42);
+    0 1px 1px rgba(3,11,33,.04),
+    0 7px 18px -14px rgba(3,11,33,.2),
+    0 calc(38px - (var(--handoff) * 17px)) calc(86px - (var(--handoff) * 36px)) -40px rgba(3,11,33,.33);
 }
 .proof-outcome.is-past{
   box-shadow:
-    0 1px 1px rgba(3,11,33,.03),
-    0 6px 14px -12px rgba(3,11,33,.18),
-    0 22px 52px -36px rgba(3,11,33,.28);
+    0 1px 1px rgba(3,11,33,.02),
+    0 5px 12px -12px rgba(3,11,33,.14),
+    0 18px 42px -36px rgba(3,11,33,.22);
 }
 .proof-index{ display:block; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--brass); }
-.proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
+/* Featured h3, not h2: this heading frames a single card, not a page
+   section — it must stay visibly smaller than the "Designed to perform"
+   h2 above it, or the two levels become indistinguishable. */
+.proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:var(--h3-subsection-featured); letter-spacing:var(--h3-ls); line-height:var(--h3-lh); }
 .proof-copy > p{ max-width:43ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
 .proof-media{
   position:relative;
@@ -613,7 +614,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .proof-media::after{ content:""; position:absolute; inset:0; box-shadow:inset 0 0 0 1px rgba(6,8,26,.05); pointer-events:none; border-radius:inherit; }
 .proof-media img{ width:100%; height:100%; min-height:390px; object-fit:cover; transition:transform 1s cubic-bezier(.2,.72,.2,1); }
-.proof-media.contain img{ object-fit:contain; padding:clamp(28px,5vw,72px); }
+.proof-media.contain img{ object-fit:contain; padding:clamp(20px,3vw,40px); }
 .proof-outcome.is-active .proof-media img{ transform:scale(calc(1.035 - (var(--handoff) * .035))) translateY(calc(var(--handoff) * -8px)); }
 .proof-label{ position:absolute; left:20px; bottom:20px; z-index:1; padding:10px 16px; border-radius:999px; background:rgba(255,255,255,.88); color:var(--blue-deep); font-size:13px; font-weight:600; box-shadow:0 8px 28px rgba(3,11,33,.1); backdrop-filter:blur(12px); }
 .journal-mobile-image{ display:none; }
@@ -797,7 +798,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
   .proof-outcomes{ gap:var(--sp-4); padding-bottom:0; }
   .proof-stack-end{ display:none; }
-  .proof-outcome,.proof-outcome:nth-child(even){ position:relative; top:auto; grid-template-columns:1fr; min-height:auto; margin-bottom:0; padding:clamp(34px,6vw,56px); transform:none; opacity:1; }
+  .proof-outcome,.proof-outcome:nth-child(even){ position:relative; top:auto; grid-template-columns:1fr; min-height:auto; margin-bottom:0; padding:clamp(28px,6vw,40px); transform:none; opacity:1; }
   .proof-outcome.is-active,.proof-outcome.is-past{ transform:none; opacity:1; }
   .journal-grid{ grid-template-columns:1fr; }
   .journal-visual-column{ display:none; }
@@ -827,8 +828,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .specs-grid{ grid-template-columns:1fr; }
 }
 @media (prefers-reduced-motion:reduce){
-  .product-stage::before{ display:none; }
-  .stage-inner,.stage-img{ transition:none; }
   .project-journal{ background-attachment:scroll; }
   .project-journal::before,.project-journal::after{ transform:none; }
   /* The proof cards read as a plain stacked list; no scroll-linked scaling. */
@@ -1198,25 +1197,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
-
-  // Product stage — mouse-tilt "3D" parallax
-  var stage = document.getElementById('productStage');
-  var stageInner = document.getElementById('stageInner');
-  if (stage && stageInner && window.matchMedia('(hover: hover)').matches) {
-    stage.addEventListener('mousemove', function(e){
-      var rect = stage.getBoundingClientRect();
-      var x = (e.clientX - rect.left) / rect.width - 0.5;
-      var y = (e.clientY - rect.top) / rect.height - 0.5;
-      stage.style.setProperty('--stage-x',((x + .5) * 100).toFixed(1) + '%');
-      stage.style.setProperty('--stage-y',((y + .5) * 100).toFixed(1) + '%');
-      stageInner.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (y * -8) + 'deg) scale(1.025)';
-    });
-    stage.addEventListener('mouseleave', function(){
-      stageInner.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
-      stage.style.setProperty('--stage-x','50%');
-      stage.style.setProperty('--stage-y','50%');
-    });
-  }
 
   // Specifications modal — Stripe-style: opened on demand
   var specsBackdrop = document.getElementById('specsBackdrop');
