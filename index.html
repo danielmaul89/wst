@@ -582,7 +582,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   flex-wrap:wrap;
 }
 .section-head h2{
-  font-size:clamp(32px,3.4vw,40px);
+  font-size:var(--h2-section);
+  letter-spacing:var(--h2-ls);
+  line-height:var(--h2-lh);
   max-width:600px;
 }
 .section-head p{
@@ -604,8 +606,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .categories .section-head h2{
   max-width:16ch;
-  font-size:clamp(32px,4vw,56px);
-  line-height:1.04;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
   letter-spacing:-.035em;
 }
 .categories .section-head p{
@@ -660,8 +662,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   z-index:2;
 }
 .cat-card h3{
-  font-size:clamp(24px,2vw,32px);
-  letter-spacing:-.025em;
+  font-size:var(--h3-subsection);
+  letter-spacing:var(--h3-ls);
   margin-bottom:10px;
   color:var(--blue-deep);
 }
@@ -757,9 +759,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .partner-wall-head h2{
   max-width:17ch;
-  font-size:clamp(32px,4vw,56px);
-  line-height:1.04;
-  letter-spacing:-.035em;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
 }
 .partner-wall-head p{
   max-width:38ch;
@@ -885,7 +887,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   align-items:center;
 }
 .proof-copy h2{
-  font-size:clamp(24px,3.2vw,40px);
+  font-size:var(--h2-section);
+  letter-spacing:var(--h2-ls);
+  line-height:var(--h2-lh);
   margin:var(--sp-2) 0 var(--sp-3);
   max-width:16ch;
 }
@@ -1038,11 +1042,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .workflow::before{ content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(15,42,92,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.07) 1px,transparent 1px); background-size:96px 96px; opacity:.42; -webkit-mask-image:radial-gradient(ellipse 82% 92% at 58% 48%,#000,transparent 82%); mask-image:radial-gradient(ellipse 82% 92% at 58% 48%,#000,transparent 82%); }
 .workflow > .container{ position:relative; z-index:1; }
-.workflow-head{ display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,.7fr); align-items:start; gap:clamp(48px,8vw,120px); margin-bottom:72px; }
+.workflow-head{ margin-bottom:72px; }
 .workflow-head .eyebrow{ color:#876c4d; }
-.workflow-head h2{ max-width:15ch; margin-top:14px; color:var(--ink); font-size:clamp(40px,4.4vw,56px); letter-spacing:-.035em; }
-.workflow-intro{ padding-top:30px; }
-.workflow-intro > p{ max-width:49ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.workflow-head h2{ max-width:15ch; color:var(--ink); font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
+.workflow-head > p{ max-width:49ch; }
 .workflow-view-toggle{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -1246,7 +1249,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   box-shadow:0 0 0 5px rgba(203,176,138,.09);
 }
 .workflow-detail-kicker{ display:block; margin-bottom:16px; color:var(--brass-hi); font-size:14px; font-weight:600; letter-spacing:.04em; }
-.workflow-detail h3{ max-width:16ch; margin-bottom:18px; color:var(--paper); font-size:clamp(32px,4vw,48px); line-height:1.05; letter-spacing:-.035em; }
+.workflow-detail h3{ max-width:16ch; margin-bottom:18px; color:var(--paper); font-size:var(--h3-subsection); line-height:var(--h3-lh); letter-spacing:var(--h3-ls); }
 .workflow-detail p{ max-width:58ch; color:rgba(251,249,245,.76); font-size:16px; line-height:1.7; }
 .workflow-output{ display:flex; align-items:center; gap:16px; width:max-content; max-width:100%; margin-top:32px; padding:12px 16px; border-radius:var(--r); background:rgba(255,255,255,.085); box-shadow:inset 0 1px 0 rgba(255,255,255,.15); backdrop-filter:blur(14px); }
 .workflow-output span{ color:rgba(251,249,245,.58); font-size:14px; white-space:nowrap; }
@@ -1751,7 +1754,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .work-icon svg{ stroke:var(--blue); transition:stroke var(--dur) var(--ease); }
 .work-row:hover .work-icon{ border-color:var(--brass); box-shadow:0 10px 22px -10px rgba(185,154,114,.55), inset 0 1px 0 rgba(255,255,255,.7); transform:translateY(-3px); }
 .work-row:hover .work-icon svg{ stroke:var(--brass); }
-.work-body h3{ font-size:24px; margin-bottom:6px; letter-spacing:-.015em; }
+.work-body h3{ font-size:var(--h4-card); margin-bottom:6px; letter-spacing:var(--h4-ls); line-height:var(--h4-lh); }
 .work-body p{ font-size:14px; color:var(--ink-soft); max-width:56ch; line-height:1.6; }
 
 /* ============================================================
@@ -1759,7 +1762,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
    ============================================================ */
 .presence{ position:relative; z-index:41; background:var(--blue-deep); color:var(--paper); padding:var(--sp-8) 0; overflow:hidden; }
 .presence-head{ max-width:640px; margin-bottom:var(--sp-5); }
-.presence-head h2{ color:var(--paper); font-size:clamp(32px,3.4vw,40px); margin-bottom:var(--sp-3); }
+.presence-head h2{ color:var(--paper); font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin-bottom:var(--sp-3); }
 .presence-head p{ color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
 .presence-map{ position:relative; width:100%; aspect-ratio:1147.5/514.4; }
 .presence-map img{ width:100%; height:100%; object-fit:contain; opacity:.9; }
@@ -1857,8 +1860,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .orbit-copy h2{
   max-width:15ch;
   margin:16px 0 var(--sp-3);
-  font-size:clamp(40px,4vw,52px);
-  letter-spacing:-.04em;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
   color:var(--paper);
 }
 .orbit-copy > p{
@@ -2001,7 +2005,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   display:flex; align-items:center; justify-content:center;
 }
 .tile-icon svg{ stroke:var(--blue); }
-.tile h3{ font-size:16px; margin:var(--sp-2) 0 6px; letter-spacing:-.01em; }
+.tile h3{ font-size:var(--h5-card-sm); margin:var(--sp-2) 0 6px; letter-spacing:var(--h5-ls); line-height:var(--h5-lh); }
 .tile p{ font-size:14px; color:var(--ink-soft); line-height:1.5; }
 
 /* ============================================================
@@ -2036,7 +2040,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   border-radius:999px;
   margin-bottom:var(--sp-2);
 }
-.bms-card h3{ font-size:16px; margin-bottom:8px; letter-spacing:-.01em; }
+.bms-card h3{ font-size:var(--h5-card-sm); margin-bottom:8px; letter-spacing:var(--h5-ls); line-height:var(--h5-lh); }
 .bms-card p{ font-size:14px; color:var(--ink-soft); line-height:1.55; }
 
 /* ============================================================
@@ -2053,7 +2057,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:var(--sp-6);
 }
 .contact h2{
-  font-size:clamp(32px,3.6vw,48px);
+  font-size:var(--h2-section);
+  letter-spacing:var(--h2-ls);
+  line-height:var(--h2-lh);
   margin-bottom:var(--sp-3);
   color:var(--paper);
 }
@@ -2308,7 +2314,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
   .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
   .workflow-head{ grid-template-columns:1fr; gap:18px; margin-bottom:52px; }
-  .workflow-intro{ padding-top:0; }
   .workflow-shell{ grid-template-columns:1fr; gap:40px; min-height:0; }
   .workflow-track{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px 24px; padding:0; }
   .workflow-track::before,.workflow-track::after{ display:none; }
@@ -2360,16 +2365,16 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .hero{ min-height:90svh; }
   .categories{ padding:68px 0 88px; }
   .categories .section-head{ margin-bottom:34px; }
-  .categories .section-head h2{ font-size:clamp(32px,10vw,40px); }
+
   .cat-grid{ grid-template-columns:1fr; gap:20px; }
   .cat-card{ min-height:500px; padding:24px; }
-  .cat-card h3{ font-size:32px; }
+
   .partner-wall{ padding:80px 0 88px; }
-  .partner-wall-head h2{ font-size:40px; }
+
   .partner-grid{ --partner-cols:2; --partner-rows:5; grid-template-columns:repeat(2,minmax(0,1fr)); }
   .partner-logo{ min-height:124px; }
   .about-sketch{ min-height:500px; }
-  .workflow-head h2{ font-size:40px; }
+
   .workflow-view-toggle{ display:grid; grid-template-columns:repeat(2,1fr); width:100%; }
   .workflow-view-toggle button{ padding:8px 6px; font-size:13px; }
   .workflow-track{ grid-template-columns:repeat(2,1fr); gap:18px 14px; }
@@ -2397,7 +2402,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .workflow-detail{ min-height:620px; padding:84px 24px 32px; }
   .workflow-detail-status{ top:28px; left:24px; }
   .workflow-detail-index{ top:34px; right:26px; font-size:96px; }
-  .workflow-detail h3{ font-size:32px; }
+
   .workflow-output{ align-items:flex-start; flex-direction:column; gap:4px; width:100%; }
   .workflow-assurance{ grid-template-columns:1fr; width:100%; }
   .stats-grid{ grid-template-columns:1fr 1fr; }
@@ -2423,7 +2428,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .partner-cross{ opacity:.34; transform:none; transition:none; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=proof4">
 </head>
 <body data-wst-page="home">
@@ -2692,14 +2697,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
      ============================================================ -->
 <section class="workflow" id="how-we-work">
   <div class="container">
-    <div class="workflow-head">
-      <div>
-        <span class="eyebrow">Controlled development and industrialization</span>
-        <h2>From technical brief to controlled series production.</h2>
-      </div>
-      <div class="workflow-intro">
-        <p>A gated engineering process keeps requirements, validation evidence, compliance and manufacturing readiness aligned. Each phase closes with a documented decision before the programme advances.</p>
-      </div>
+    <div class="workflow-head head-split">
+      <span class="eyebrow">Controlled development and industrialization</span>
+      <h2>From technical brief to controlled series production.</h2>
+      <p>A gated engineering process keeps requirements, validation evidence, compliance and manufacturing readiness aligned. Each phase closes with a documented decision before the programme advances.</p>
     </div>
 
     <div class="workflow-shell" data-workflow data-layout="executive">

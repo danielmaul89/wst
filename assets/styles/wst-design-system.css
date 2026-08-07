@@ -91,6 +91,34 @@
   --fs-56: 56px;
   --fs-64: 64px;
 
+  /* Heading tiers.
+     The raw scale above steps linearly (+8), which is too fine to read as
+     hierarchy at the top end: 56 next to 64 is a size difference, not a level.
+     The tiers below therefore skip steps so each level lands roughly a fourth
+     or a fifth apart (64 / 48 / 32 / 24 / 16 / 14). 56px and 40px stay in the
+     scale as optical adjustments within a tier — for a long hero line that
+     needs to breathe, not as levels of their own.
+     One tier-1 heading per page. Never pick a tier for its size; pick it for
+     the level, then adjust the clamp max if the line needs it. */
+  --h1-display: clamp(var(--fs-40), 6vw, var(--fs-64));
+  --h2-section: clamp(var(--fs-32), 4.4vw, var(--fs-48));
+  --h3-subsection: clamp(var(--fs-24), 2.4vw, var(--fs-32));
+  --h4-card: var(--fs-24);
+  --h5-card-sm: var(--fs-body);
+  --h6-label: var(--fs-small);
+
+  /* Tracking and leading tighten as size grows. */
+  --h1-lh: 1.02;
+  --h1-ls: -.045em;
+  --h2-lh: 1.08;
+  --h2-ls: -.035em;
+  --h3-lh: 1.15;
+  --h3-ls: -.02em;
+  --h4-lh: 1.25;
+  --h4-ls: -.015em;
+  --h5-lh: 1.4;
+  --h5-ls: -.01em;
+
   --sp-1: 8px;
   --sp-2: 16px;
   --sp-3: 24px;
@@ -144,12 +172,120 @@ h4,
   line-height: 1.03;
 }
 
+/* Heading tier utilities.
+   Pages apply these instead of declaring their own heading font sizes, so a
+   section heading is the same level on every page regardless of whether the
+   document outline needs an h2 or an h3 there. */
+.t-display,
 .display {
   font-family: var(--font-display);
-  font-size: clamp(var(--fs-48), 6vw, var(--fs-64));
+  font-size: var(--h1-display);
   font-weight: 700;
-  letter-spacing: -.04em;
-  line-height: 1.03;
+  letter-spacing: var(--h1-ls);
+  line-height: var(--h1-lh);
+}
+
+.t-section {
+  font-family: var(--font-display);
+  font-size: var(--h2-section);
+  font-weight: 700;
+  letter-spacing: var(--h2-ls);
+  line-height: var(--h2-lh);
+}
+
+.t-subsection {
+  font-family: var(--font-display);
+  font-size: var(--h3-subsection);
+  font-weight: 700;
+  letter-spacing: var(--h3-ls);
+  line-height: var(--h3-lh);
+}
+
+.t-card {
+  font-family: var(--font-display);
+  font-size: var(--h4-card);
+  font-weight: 700;
+  letter-spacing: var(--h4-ls);
+  line-height: var(--h4-lh);
+}
+
+.t-card-sm {
+  font-family: var(--font-display);
+  font-size: var(--h5-card-sm);
+  font-weight: 600;
+  letter-spacing: var(--h5-ls);
+  line-height: var(--h5-lh);
+}
+
+/* Measure caps. Display lines want to break early; body copy beside a heading
+   should stay inside a comfortable reading measure. */
+.t-display,
+.t-section {
+  max-width: 15ch;
+}
+
+.t-subsection {
+  max-width: 20ch;
+}
+
+/* Split section head: heading left, supporting paragraph right.
+   The eyebrow gets its own grid row so the paragraph shares a row with the
+   heading and their top edges line up. Aligning on the wrapper instead would
+   pin the paragraph to the eyebrow, which reads as misaligned. */
+.head-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .7fr);
+  column-gap: clamp(48px, 8vw, 120px);
+  row-gap: 14px;
+  align-items: start;
+  margin-bottom: var(--sp-5);
+}
+
+.head-split > .eyebrow {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.head-split > h2,
+.head-split > h3 {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+}
+
+.head-split > p {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 46ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+}
+
+/* Optical correction: a 16px paragraph and a 48px heading that share a box top
+   do not look aligned, because the heading's cap sits lower inside its line
+   box. Nudge the paragraph down to match the heading's cap height. */
+.head-split > p {
+  padding-top: .35em;
+}
+
+@media (max-width: 980px) {
+  .head-split {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+  }
+
+  .head-split > h2,
+  .head-split > h3,
+  .head-split > p {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .head-split > p {
+    padding-top: 0;
+  }
 }
 
 .container {
@@ -539,8 +675,9 @@ body.wst-modal-open {
   max-width: 10ch;
   margin: 0 0 22px;
   color: var(--paper);
-  font-size: clamp(32px, 3.5vw, 48px);
-  line-height: 1.02;
+  font-size: var(--h2-section);
+  letter-spacing: var(--h2-ls);
+  line-height: var(--h2-lh);
 }
 
 .wst-contact-modal__intro > p {
