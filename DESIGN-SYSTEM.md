@@ -66,6 +66,36 @@ Rules:
 A page may legitimately have no tier 1: `about.html` opens with a lead
 paragraph and a visually hidden `h1`, so its top visible level is tier 2.
 
+#### Featured sizes for framed content
+
+`h1` is the hero and `h2` is a major block heading — those two stay reserved.
+`h3` and `h4` are the working range for everything nested inside a block:
+card titles, list-item titles, and the heading on a single generously-framed
+piece of content — a proof card, a family intro sitting above its own
+gallery. That last case reads cramped at the plain tier-3 size (`24–32px`),
+so it gets a **featured** variant instead of borrowing the `h2` token:
+
+| Token | Size | Use |
+| --- | --- | --- |
+| `--h3-subsection-featured` | `clamp(24, 3.4vw, 40)` | The one heading in a spacious framed block — image + copy, real whitespace, nothing competing beside it. |
+| `--h4-card-featured` | `clamp(24, 2.4vw, 32)` | Same idea, one tier down — a single oversized card in an otherwise plain layout. |
+
+Utility classes: `.t-subsection-featured`, `.t-card-featured`.
+
+The featured ceiling is fixed at a full scale step below the tier above's
+floor at every viewport from 320–1920px — a featured `h3` cannot reach the
+`h2` on the same page. That's the actual rule, not "smaller than 32px": a
+heading earns the featured size by being the sole focal point of a framed
+block, and it must still read as visibly smaller than that page's real `h2`s.
+
+The bug this replaced: three `h3`s (`product-drone.html`'s proof-card
+heading, `solutions-v3.html`'s family and explorer headings) were set to the
+plain `--h2-section` token to make them "big enough," which made them the
+identical size as actual `h2` section headings on the same page — the major
+block and the card nested inside a block became visually indistinguishable.
+Reaching for the tier above is how that happens; reach for the featured
+variant of the correct tier instead.
+
 #### Heading beside supporting text
 
 Use `.head-split` for the common "heading left, supporting paragraph right"
