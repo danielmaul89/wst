@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>WS Technicals Design System</title>
+<meta name="description" content="Interactive visual reference for the WS Technicals website design system.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
+<style>
+  .ds-page{ position:relative; z-index:1; }
+  .ds-hero{ padding:clamp(88px,10vw,140px) 0 80px; }
+  .ds-hero-grid{ display:grid; grid-template-columns:1.25fr .75fr; align-items:end; gap:var(--sp-6); }
+  .ds-hero h1{ max-width:12ch; margin:16px 0 24px; font-size:clamp(48px,6vw,64px); }
+  .ds-hero p{ max-width:62ch; color:var(--ink-soft); font-size:16px; }
+  .ds-version{ justify-self:end; max-width:320px; padding:24px; border:1px solid var(--line); border-radius:var(--r-lg); background:rgba(255,255,255,.56); backdrop-filter:blur(16px); }
+  .ds-version strong{ display:block; margin-bottom:8px; font-family:var(--font-display); font-size:24px; }
+  .ds-version span{ color:var(--ink-soft); font-size:14px; }
+
+  .ds-jump{ position:sticky; top:var(--nav-height); z-index:80; border-block:1px solid rgba(228,223,211,.72); background:rgba(251,249,245,.82); backdrop-filter:blur(18px) saturate(150%); }
+  .ds-jump-inner{ display:flex; gap:24px; overflow-x:auto; padding-block:14px; scrollbar-width:none; }
+  .ds-jump-inner::-webkit-scrollbar{ display:none; }
+  .ds-jump a{ flex:none; color:var(--ink-soft); font-size:14px; font-weight:600; }
+  .ds-jump a:hover{ color:var(--blue-deep); }
+
+  .ds-section{ padding:var(--section-space) 0; }
+  .ds-section.tint{ background:var(--paper-2); }
+  .ds-section.dark{ color:var(--paper); background:var(--blue-deep); }
+  .ds-heading{ display:grid; grid-template-columns:1fr 1fr; align-items:start; gap:var(--sp-6); margin-bottom:var(--sp-6); }
+  .ds-heading h2{ max-width:15ch; font-size:clamp(40px,4.5vw,56px); }
+  .ds-heading p{ max-width:56ch; color:var(--ink-soft); }
+  .dark .ds-heading p{ color:var(--ink-soft-on-dark); }
+  .ds-label{ display:block; margin-bottom:16px; color:var(--brass-text); font-size:14px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; }
+  .dark .ds-label{ color:var(--brass-hi); }
+
+  .token-lab{ display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-4); }
+  .lab-controls,.lab-preview{ border:1px solid var(--line); border-radius:var(--r-lg); background:rgba(255,255,255,.72); box-shadow:0 22px 52px -38px rgba(3,11,33,.28); }
+  .lab-controls{ padding:32px; }
+  .lab-controls h3{ margin-bottom:24px; font-size:24px; }
+  .lab-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .lab-control label{ display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; color:var(--ink-soft); font-size:14px; font-weight:600; }
+  .lab-control output{ color:var(--ink); }
+  .lab-control input[type="color"]{ width:100%; height:48px; padding:4px; border:1px solid var(--line); border-radius:var(--r); background:#fff; }
+  .lab-control input[type="range"]{ width:100%; accent-color:var(--blue-deep); }
+  .lab-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .lab-code{ width:100%; min-height:150px; margin-top:24px; padding:18px; border:1px solid var(--line); border-radius:var(--r); color:var(--ink); background:var(--paper); font:14px/1.6 var(--font-mono); resize:vertical; }
+  .lab-preview{ position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; min-height:500px; padding:48px; background:
+    radial-gradient(circle at 10% 10%, color-mix(in srgb, var(--brass-hi) 44%, transparent), transparent 40%),
+    radial-gradient(circle at 88% 36%, color-mix(in srgb, var(--blue) 25%, transparent), transparent 42%),
+    var(--paper); }
+  .lab-preview::after{ content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px); background-size:var(--grid-size) var(--grid-size); }
+  .lab-preview-copy,.lab-preview-actions{ position:relative; z-index:1; }
+  .lab-preview h3{ max-width:12ch; margin:12px 0 20px; font-size:40px; }
+  .lab-preview p{ max-width:44ch; color:var(--ink-soft); }
+  .lab-preview-actions{ display:flex; gap:12px; }
+
+  .swatch-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .swatch{ overflow:hidden; border:1px solid var(--line); border-radius:var(--r-lg); background:#fff; }
+  .swatch-color{ height:140px; background:var(--swatch); }
+  .swatch-info{ padding:18px; }
+  .swatch-info strong,.swatch-info span{ display:block; }
+  .swatch-info strong{ margin-bottom:4px; font-size:16px; }
+  .swatch-info span{ color:var(--ink-soft); font:14px var(--font-mono); }
+
+  .type-list{ display:grid; gap:0; border-top:1px solid var(--line); }
+  .type-row{ display:grid; grid-template-columns:120px 1fr; gap:32px; align-items:baseline; padding:28px 0; border-bottom:1px solid var(--line); }
+  .type-meta{ color:var(--ink-faint); font:14px var(--font-mono); }
+  .type-sample{ font-family:var(--font-display); line-height:1.05; letter-spacing:-.03em; }
+  .type-body{ font-family:var(--font-body); line-height:1.6; letter-spacing:0; }
+
+  .space-grid{ display:grid; gap:14px; }
+  .space-row{ display:grid; grid-template-columns:90px 1fr 80px; align-items:center; gap:20px; }
+  .space-name,.space-value{ color:var(--ink-soft); font:14px var(--font-mono); }
+  .space-bar{ height:14px; max-width:100%; border-radius:3px; background:linear-gradient(90deg,var(--blue-deep),var(--blue)); width:var(--space); }
+
+  .grid-demo{ overflow:hidden; padding:32px; border:1px solid var(--line); border-radius:var(--r-lg); background:#fff; }
+  .grid-track{ display:grid; grid-template-columns:repeat(12,1fr); gap:16px; min-height:180px; }
+  .grid-track span{ border-radius:4px; background:linear-gradient(180deg,rgba(15,42,92,.13),rgba(15,42,92,.04)); }
+  .grid-note{ display:flex; justify-content:space-between; gap:16px; margin-top:18px; color:var(--ink-soft); font-size:14px; }
+
+  .button-stage{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .button-panel{ min-height:260px; padding:40px; border:1px solid var(--line); border-radius:var(--r-lg); background:var(--paper); }
+  .button-panel.dark-panel{ border-color:rgba(255,255,255,.12); background:var(--blue-deep); }
+  .button-panel h3{ margin-bottom:24px; color:var(--ink); font-size:24px; }
+  .button-panel.dark-panel h3{ color:var(--paper); }
+  .button-row{ display:flex; align-items:center; flex-wrap:wrap; gap:16px; }
+  .size-note{ margin-top:24px; color:var(--ink-soft); font-size:14px; }
+  .dark-panel .size-note{ color:var(--ink-soft-on-dark); }
+
+  .card-showcase{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .sample-card{ position:relative; overflow:hidden; min-height:520px; border-radius:var(--r-lg); background:#d8d8da; }
+  .sample-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 700ms var(--ease); }
+  .sample-card:hover img{ transform:scale(1.035); }
+  .sample-card-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:flex-start; min-height:520px; padding:28px; }
+  .sample-card-content h3{ max-width:12ch; font-size:24px; }
+  .sample-card-content p{ max-width:30ch; margin-top:10px; color:var(--ink-soft); font-size:16px; }
+  .sample-card-content .cat-explore{ margin-top:auto; }
+
+  .glass-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:24px; }
+  .glass-canvas{ position:relative; overflow:hidden; min-height:440px; border-radius:var(--r-lg); background:var(--blue-deep); }
+  .glass-canvas::before,.glass-canvas::after{ content:""; position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(72px); }
+  .glass-canvas::before{ top:-180px; left:-90px; background:rgba(203,176,138,.5); }
+  .glass-canvas::after{ right:-160px; bottom:-220px; background:rgba(34,83,178,.62); }
+  .glass-sheet{ position:absolute; inset:56px; z-index:1; padding:36px; border:1px solid rgba(255,255,255,.22); border-radius:var(--r-lg); color:#fff; background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055)); box-shadow:0 30px 70px -40px #000,inset 0 1px 0 rgba(255,255,255,.26); backdrop-filter:blur(24px) saturate(145%); }
+  .glass-sheet h3{ margin-bottom:14px; font-size:32px; }
+  .glass-sheet p{ color:var(--ink-soft-on-dark); }
+  .glass-rules{ padding:32px; border:1px solid var(--line); border-radius:var(--r-lg); background:#fff; }
+  .glass-rules h3{ margin-bottom:20px; font-size:24px; }
+  .rule-list{ display:grid; gap:16px; }
+  .rule-list li{ padding-left:20px; color:var(--ink-soft); font-size:16px; }
+  .rule-list li::before{ content:""; display:inline-block; width:6px; height:6px; margin:0 12px 2px -18px; border-radius:50%; background:var(--brass); }
+
+  .form-demo{ padding:64px; border-radius:var(--r-lg); background:var(--blue-deep); }
+  .form-demo .contact-form{ max-width:760px; margin:auto; padding:40px; border:1px solid rgba(255,255,255,.18); background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.045)); backdrop-filter:blur(24px); }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .field{ display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .field input,.field select,.field textarea{ width:100%; padding:14px 16px; }
+  .field textarea{ min-height:130px; resize:vertical; }
+  .contact-form .btn{ width:100%; }
+
+  .contrast-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .contrast-card{ padding:28px; border:1px solid var(--line); border-radius:var(--r-lg); background:#fff; }
+  .contrast-pair{ display:flex; overflow:hidden; height:72px; margin-bottom:20px; border-radius:var(--r); }
+  .contrast-pair span{ flex:1; }
+  .contrast-card strong,.contrast-card small{ display:block; }
+  .contrast-card strong{ font-size:24px; }
+  .contrast-card small{ margin-top:6px; color:var(--ink-soft); font-size:14px; }
+  .contrast-status{ display:inline-flex; margin-top:14px; padding:5px 10px; border-radius:999px; color:#fff; background:var(--blue); font-size:14px; font-weight:700; }
+  .contrast-status.fail{ background:#8b2635; }
+
+  @media(max-width:980px){
+    .ds-hero-grid,.ds-heading,.token-lab,.glass-grid{ grid-template-columns:1fr; }
+    .ds-version{ justify-self:start; }
+    .swatch-grid{ grid-template-columns:repeat(2,1fr); }
+    .card-showcase,.contrast-grid{ grid-template-columns:1fr 1fr; }
+    .card-showcase .sample-card:last-child{ grid-column:1/-1; }
+  }
+  @media(max-width:640px){
+    .lab-grid,.button-stage,.card-showcase,.contrast-grid,.form-row{ grid-template-columns:1fr; }
+    .card-showcase .sample-card:last-child{ grid-column:auto; }
+    .swatch-grid{ grid-template-columns:1fr; }
+    .type-row{ grid-template-columns:1fr; gap:10px; }
+    .grid-track{ gap:6px; }
+    .lab-controls,.lab-preview,.form-demo{ padding:24px; }
+    .glass-sheet{ inset:24px; padding:24px; }
+  }
+</style>
+</head>
+<body data-wst-page="design-system">
+<div data-wst-header></div>
+
+<main class="ds-page" id="top">
+  <section class="ds-hero">
+    <div class="container ds-hero-grid">
+      <div>
+        <span class="ds-label">WS Technicals / Visual system</span>
+        <h1>One place to review the entire design.</h1>
+        <p>This page renders the live shared tokens and components used by the website. Change the shared stylesheet once and every specimen — and every connected page — updates with it.</p>
+      </div>
+      <aside class="ds-version">
+        <strong>System 1.0</strong>
+        <span>Light, precise and engineering-led. Built for enterprise decision-makers evaluating a custom battery partner.</span>
+      </aside>
+    </div>
+  </section>
+
+  <nav class="ds-jump" aria-label="Design system sections">
+    <div class="container ds-jump-inner">
+      <a href="#lab">Adjustment lab</a>
+      <a href="#colors">Colours</a>
+      <a href="#type">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#layout">Layout</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#cards">Cards</a>
+      <a href="#glass">Glass</a>
+      <a href="#forms">Forms</a>
+      <a href="#accessibility">Accessibility</a>
+    </div>
+  </nav>
+
+  <section class="ds-section tint" id="lab">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Adjustment lab</span><h2>Test global decisions live.</h2></div>
+        <p>The controls temporarily change the same CSS variables used by the website. When a combination feels right, copy the generated token block into the shared stylesheet.</p>
+      </div>
+      <div class="token-lab">
+        <div class="lab-controls">
+          <h3>Core tokens</h3>
+          <div class="lab-grid">
+            <div class="lab-control"><label for="paperControl">Paper <output data-output="paperControl">#FBF9F5</output></label><input id="paperControl" type="color" value="#fbf9f5" data-token="--paper"></div>
+            <div class="lab-control"><label for="inkControl">Ink <output data-output="inkControl">#06081A</output></label><input id="inkControl" type="color" value="#06081a" data-token="--ink"></div>
+            <div class="lab-control"><label for="blueControl">Deep blue <output data-output="blueControl">#030B21</output></label><input id="blueControl" type="color" value="#030b21" data-token="--blue-deep"></div>
+            <div class="lab-control"><label for="brassControl">Brass <output data-output="brassControl">#B99A72</output></label><input id="brassControl" type="color" value="#b99a72" data-token="--brass"></div>
+            <div class="lab-control"><label for="radiusControl">Radius <output data-output="radiusControl">6px</output></label><input id="radiusControl" type="range" min="0" max="16" value="6" data-token="--r" data-unit="px"></div>
+            <div class="lab-control"><label for="containerControl">Container <output data-output="containerControl">1240px</output></label><input id="containerControl" type="range" min="1080" max="1440" step="20" value="1240" data-token="--container" data-unit="px"></div>
+            <div class="lab-control"><label for="gutterControl">Page gutter <output data-output="gutterControl">32px</output></label><input id="gutterControl" type="range" min="16" max="64" step="4" value="32" data-token="--page-gutter" data-unit="px"></div>
+            <div class="lab-control"><label for="gridControl">Grid size <output data-output="gridControl">96px</output></label><input id="gridControl" type="range" min="48" max="144" step="8" value="96" data-token="--grid-size" data-unit="px"></div>
+          </div>
+          <div class="lab-actions">
+            <button class="btn btn-primary" type="button" id="copyTokens">Copy token overrides</button>
+            <button class="btn btn-primary" type="button" id="resetTokens">Reset</button>
+          </div>
+          <textarea class="lab-code" id="tokenCode" readonly aria-label="Generated CSS token overrides"></textarea>
+        </div>
+        <div class="lab-preview">
+          <div class="lab-preview-copy">
+            <span class="ds-label">Live preview</span>
+            <h3>Engineered around your application.</h3>
+            <p>Core colours, radii, spacing and layout update here as you adjust the controls.</p>
+          </div>
+          <div class="lab-preview-actions">
+            <a href="#buttons" class="btn btn-primary">Primary action</a>
+            <a href="#colors" class="btn btn-primary">Review colours</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="colors">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Colour system</span><h2>Warm surfaces. Technical contrast.</h2></div>
+        <p>Paper carries most of the experience. Deep blue creates authority and focus. Brass is used sparingly for structure, not decoration.</p>
+      </div>
+      <div class="swatch-grid">
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--paper)"></div><div class="swatch-info"><strong>Paper</strong><span>--paper / #FBF9F5</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--paper-2)"></div><div class="swatch-info"><strong>Paper 2</strong><span>--paper-2 / #F3EFE7</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--ink)"></div><div class="swatch-info"><strong>Ink</strong><span>--ink / #06081A</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--ink-soft)"></div><div class="swatch-info"><strong>Soft ink</strong><span>--ink-soft / #4A4C58</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--blue)"></div><div class="swatch-info"><strong>Midnight blue</strong><span>--blue / #0F2A5C</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--blue-deep)"></div><div class="swatch-info"><strong>Deep blue</strong><span>--blue-deep / #030B21</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--brass)"></div><div class="swatch-info"><strong>Brass</strong><span>--brass / #B99A72</span></div></article>
+        <article class="swatch"><div class="swatch-color" style="--swatch:var(--brass-soft)"></div><div class="swatch-info"><strong>Soft brass</strong><span>--brass-soft / #E7DDCB</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section tint" id="type">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Typography</span><h2>A disciplined eight-step scale.</h2></div>
+        <p>Geogrotesque gives headlines their technical confidence. Arbeit keeps detailed engineering content calm and highly readable.</p>
+      </div>
+      <div class="type-list">
+        <div class="type-row"><span class="type-meta">64 / Display</span><span class="type-sample" style="font-size:64px">Custom power systems.</span></div>
+        <div class="type-row"><span class="type-meta">56 / H1</span><span class="type-sample" style="font-size:56px">Engineered in Denmark.</span></div>
+        <div class="type-row"><span class="type-meta">48 / H2</span><span class="type-sample" style="font-size:48px">Built for the application.</span></div>
+        <div class="type-row"><span class="type-meta">40 / H2</span><span class="type-sample" style="font-size:40px">From concept to production.</span></div>
+        <div class="type-row"><span class="type-meta">32 / H3</span><span class="type-sample" style="font-size:32px">Battery architecture</span></div>
+        <div class="type-row"><span class="type-meta">24 / H4</span><span class="type-sample" style="font-size:24px">Material Handling</span></div>
+        <div class="type-row"><span class="type-meta">16 / Body</span><span class="type-sample type-body" style="font-size:16px">Every battery system is designed around the performance, safety and integration requirements of the product.</span></div>
+        <div class="type-row"><span class="type-meta">14 / Small</span><span class="type-sample type-body" style="font-size:14px">Technical labels, navigation, captions and supporting metadata.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="spacing">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Spacing</span><h2>Whitespace is part of the brand.</h2></div>
+        <p>The spacing scale prevents improvised gaps and keeps dense technical content feeling considered rather than crowded.</p>
+      </div>
+      <div class="space-grid">
+        <div class="space-row"><span class="space-name">--sp-1</span><span class="space-bar" style="--space:8px"></span><span class="space-value">8px</span></div>
+        <div class="space-row"><span class="space-name">--sp-2</span><span class="space-bar" style="--space:16px"></span><span class="space-value">16px</span></div>
+        <div class="space-row"><span class="space-name">--sp-3</span><span class="space-bar" style="--space:24px"></span><span class="space-value">24px</span></div>
+        <div class="space-row"><span class="space-name">--sp-4</span><span class="space-bar" style="--space:32px"></span><span class="space-value">32px</span></div>
+        <div class="space-row"><span class="space-name">--sp-5</span><span class="space-bar" style="--space:48px"></span><span class="space-value">48px</span></div>
+        <div class="space-row"><span class="space-name">--sp-6</span><span class="space-bar" style="--space:64px"></span><span class="space-value">64px</span></div>
+        <div class="space-row"><span class="space-name">--sp-7</span><span class="space-bar" style="--space:96px"></span><span class="space-value">96px</span></div>
+        <div class="space-row"><span class="space-name">--sp-8</span><span class="space-bar" style="--space:140px"></span><span class="space-value">140px</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section tint" id="layout">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Layout</span><h2>One alignment system across every page.</h2></div>
+        <p>The shared container is 1240px with 32px desktop gutters and 16px mobile gutters. Every major content block should resolve to this edge.</p>
+      </div>
+      <div class="grid-demo">
+        <div class="grid-track" aria-label="Twelve-column layout grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="grid-note"><span>12 flexible columns</span><span>1240px maximum</span><span>32px desktop gutter</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="buttons">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Actions</span><h2>One button language.</h2></div>
+        <p>All primary actions share the deep-blue glass treatment. Navigation actions are slightly smaller; cards and page CTAs use the standard size.</p>
+      </div>
+      <div class="button-stage">
+        <div class="button-panel">
+          <h3>On light surfaces</h3>
+          <div class="button-row"><a class="btn btn-primary" href="#buttons">Get in touch</a><a class="cat-explore" href="#cards">Explore <span aria-hidden="true">→</span></a></div>
+          <p class="size-note">Page/card: 46px. Navigation: 42px. No vertical movement on hover.</p>
+        </div>
+        <div class="button-panel dark-panel">
+          <h3>On dark surfaces</h3>
+          <div class="button-row"><a class="btn btn-on-dark" href="#forms">Send message</a></div>
+          <p class="size-note">Light action surface with controlled brass cursor lighting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section tint" id="cards">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Product cards</span><h2>Product first. Copy stays calm.</h2></div>
+        <p>Cards use full-frame application photography, dark-blue typography, low radii and one restrained image-scale interaction.</p>
+      </div>
+      <div class="card-showcase">
+        <article class="sample-card"><img src="assets/products/cards/drone.jpg" alt="Industrial drone"><div class="sample-card-content"><h3>Drone</h3><p>High energy-density systems engineered for flight time and payload.</p><a href="#cards" class="cat-explore">Explore <span aria-hidden="true">→</span></a></div></article>
+        <article class="sample-card"><img src="assets/products/cards/material-handling.jpg" alt="Autonomous material-handling vehicle"><div class="sample-card-content"><h3>Material Handling</h3><p>Robust power for AGVs, AMRs and continuous industrial operation.</p><a href="#cards" class="cat-explore">Explore <span aria-hidden="true">→</span></a></div></article>
+        <article class="sample-card"><img src="assets/products/cards/robotics.jpg" alt="Industrial robot"><div class="sample-card-content"><h3>Robotics</h3><p>Compact, high-cycle systems for collaborative automation.</p><a href="#cards" class="cat-explore">Explore <span aria-hidden="true">→</span></a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="glass">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Glass system</span><h2>Depth without visual noise.</h2></div>
+        <p>Glass is reserved for controls, contact surfaces and selective overlays. Reflection should describe the surface, not become an effect of its own.</p>
+      </div>
+      <div class="glass-grid">
+        <div class="glass-canvas"><div class="glass-sheet"><span class="ds-label">Material surface</span><h3>Controlled transparency.</h3><p>A subtle top reflection, restrained blur and enough opacity to preserve WCAG contrast.</p></div></div>
+        <aside class="glass-rules"><h3>Rules</h3><ul class="rule-list"><li>Never reduce text contrast to create glass.</li><li>Use one top-edge highlight, not a full bright border.</li><li>Keep lighting slow and tied to the pointer.</li><li>No hover translation on buttons.</li><li>Prefer depth from layered opacity over heavy shadows.</li></ul></aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section dark" id="forms">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Forms</span><h2>Clear, calm and credible.</h2></div>
+        <p>Fields remain visibly distinct from the dark surface while keeping the glass treatment controlled and readable.</p>
+      </div>
+      <div class="form-demo">
+        <form class="contact-form" action="#" onsubmit="return false;">
+          <div class="form-row">
+            <div class="field"><label for="dsName">Name</label><input id="dsName" type="text" placeholder="Jane Doe"></div>
+            <div class="field"><label for="dsCompany">Company</label><input id="dsCompany" type="text" placeholder="Company name"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="dsEmail">Email</label><input id="dsEmail" type="email" placeholder="jane@company.com"></div>
+            <div class="field"><label for="dsCountry">Country</label><input id="dsCountry" type="text" placeholder="Country"></div>
+          </div>
+          <div class="field"><label for="dsApplication">Application</label><select id="dsApplication"><option value="" selected disabled>Select an application</option><option>Drone</option><option>Material Handling</option><option>Robotics</option><option>Maritime</option><option>UPS</option><option>Heavy Machinery</option></select></div>
+          <div class="field"><label for="dsMessage">Message</label><textarea id="dsMessage" placeholder="Tell us about your project"></textarea></div>
+          <button class="btn btn-on-dark" type="submit">Send message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="accessibility">
+    <div class="container">
+      <div class="ds-heading">
+        <div><span class="ds-label">Accessibility</span><h2>Contrast is a design constraint.</h2></div>
+        <p>These checks are calculated from the live token values. Normal text should reach 4.5:1; large text should reach 3:1.</p>
+      </div>
+      <div class="contrast-grid">
+        <article class="contrast-card" data-contrast="--ink,--paper"><div class="contrast-pair"><span style="background:var(--ink)"></span><span style="background:var(--paper)"></span></div><strong data-ratio>—</strong><small>Ink on paper</small><span class="contrast-status" data-status>Checking</span></article>
+        <article class="contrast-card" data-contrast="--ink-soft,--paper"><div class="contrast-pair"><span style="background:var(--ink-soft)"></span><span style="background:var(--paper)"></span></div><strong data-ratio>—</strong><small>Soft ink on paper</small><span class="contrast-status" data-status>Checking</span></article>
+        <article class="contrast-card" data-contrast="--paper,--blue-deep"><div class="contrast-pair"><span style="background:var(--paper)"></span><span style="background:var(--blue-deep)"></span></div><strong data-ratio>—</strong><small>Paper on deep blue</small><span class="contrast-status" data-status>Checking</span></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=legal1"></script>
+<script>
+(function(){
+  var body = document.body;
+  var nav = document.querySelector('.nav');
+  var navToggle = document.getElementById('navToggle');
+  if(nav && navToggle){
+    navToggle.addEventListener('click',function(){
+      var open = body.classList.toggle('menu-open');
+      navToggle.setAttribute('aria-expanded',open ? 'true' : 'false');
+    });
+    function updateNav(){ nav.classList.toggle('nav--scrolled',window.scrollY > 8); }
+    updateNav();
+    window.addEventListener('scroll',updateNav,{passive:true});
+    document.querySelectorAll('.nav-item').forEach(function(item){
+      var link = item.querySelector('.nav-link');
+      link.addEventListener('click',function(event){
+        if(window.innerWidth <= 980){
+          event.preventDefault();
+          var open = item.classList.contains('open');
+          document.querySelectorAll('.nav-item.open').forEach(function(other){ other.classList.remove('open'); });
+          if(!open) item.classList.add('open');
+        }
+      });
+    });
+  }
+
+  var root = document.documentElement;
+  var controls = Array.prototype.slice.call(document.querySelectorAll('[data-token]'));
+  var code = document.getElementById('tokenCode');
+  var defaults = {};
+
+  controls.forEach(function(control){
+    defaults[control.dataset.token] = control.value;
+    control.addEventListener('input', update);
+  });
+
+  function valueFor(control){
+    return control.value + (control.dataset.unit || '');
+  }
+
+  function update(){
+    var lines = [':root {'];
+    controls.forEach(function(control){
+      var value = valueFor(control);
+      root.style.setProperty(control.dataset.token, value);
+      var output = document.querySelector('[data-output="' + control.id + '"]');
+      if(output) output.textContent = control.type === 'color' ? control.value.toUpperCase() : value;
+      lines.push('  ' + control.dataset.token + ': ' + value + ';');
+    });
+    lines.push('}');
+    code.value = lines.join('\n');
+    updateContrast();
+  }
+
+  document.getElementById('resetTokens').addEventListener('click', function(){
+    controls.forEach(function(control){
+      control.value = defaults[control.dataset.token];
+      root.style.removeProperty(control.dataset.token);
+    });
+    update();
+  });
+
+  document.getElementById('copyTokens').addEventListener('click', function(){
+    var button = this;
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(code.value).then(function(){
+        button.textContent = 'Copied';
+        window.setTimeout(function(){ button.textContent = 'Copy token overrides'; }, 1400);
+      });
+    } else {
+      code.select();
+      document.execCommand('copy');
+    }
+  });
+
+  function rgb(hex){
+    var value = hex.trim();
+    if(value.charAt(0) === '#') value = value.slice(1);
+    if(value.length === 3) value = value.split('').map(function(c){ return c + c; }).join('');
+    return [parseInt(value.slice(0,2),16),parseInt(value.slice(2,4),16),parseInt(value.slice(4,6),16)];
+  }
+
+  function luminance(color){
+    return rgb(color).map(function(channel){
+      var n = channel / 255;
+      return n <= .03928 ? n / 12.92 : Math.pow((n + .055) / 1.055, 2.4);
+    }).reduce(function(sum,channel,index){
+      return sum + channel * [.2126,.7152,.0722][index];
+    },0);
+  }
+
+  function updateContrast(){
+    var styles = getComputedStyle(root);
+    document.querySelectorAll('[data-contrast]').forEach(function(card){
+      var names = card.dataset.contrast.split(',');
+      var a = luminance(styles.getPropertyValue(names[0]));
+      var b = luminance(styles.getPropertyValue(names[1]));
+      var ratio = (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+      var pass = ratio >= 4.5;
+      card.querySelector('[data-ratio]').textContent = ratio.toFixed(2) + ':1';
+      var status = card.querySelector('[data-status]');
+      status.textContent = pass ? 'WCAG AA' : 'Review';
+      status.classList.toggle('fail',!pass);
+    });
+  }
+
+  update();
+})();
+</script>
+<script src="assets/scripts/enterprise-motion.js?v=aboutstory1" defer></script>
+</body>
+</html>

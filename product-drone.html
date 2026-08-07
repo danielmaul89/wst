@@ -53,8 +53,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid va
 .btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.4); }
 .btn-on-dark{ background:var(--paper); color:var(--ink); }
 .btn-on-dark:hover{ background:var(--brass-hi); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
-.btn-glass{ background:linear-gradient(145deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.5) 100%); border-color:rgba(255,255,255,.9); color:var(--blue-deep); backdrop-filter:blur(12px) saturate(160%); -webkit-backdrop-filter:blur(12px) saturate(160%); box-shadow:0 10px 24px -16px rgba(6,8,26,.24), inset 0 1px 0 rgba(255,255,255,.9); }
-.btn-glass:hover{ background:linear-gradient(145deg, rgba(255,253,249,.94) 0%, rgba(231,221,203,.66) 100%); transform:translateY(-1px); }
+.btn-glass{ background:linear-gradient(155deg,#15213f 0%,var(--blue-deep) 78%) !important; border-color:rgba(255,255,255,.22) !important; color:#fff !important; backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%); box-shadow:0 12px 26px -16px rgba(3,11,33,.55),inset 0 1px 0 rgba(255,255,255,.24) !important; }
+.btn-glass:hover{ background:linear-gradient(155deg,#182544 0%,#061029 78%) !important; color:#fff !important; transform:none; border-color:rgba(203,176,138,.32) !important; box-shadow:0 14px 30px -18px rgba(3,11,33,.62),inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 18px rgba(203,176,138,.06) !important; }
 .link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; color:var(--blue); }
 .link-arrow svg{ transition:transform var(--dur) var(--ease); }
 .link-arrow:hover svg{ transform:translateX(3px); }
@@ -158,11 +158,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
 .stage-wrap{ position:relative; min-width:0; }
-.product-stage{ position:relative; aspect-ratio:1.12/1; overflow:visible; background:transparent; perspective:1200px; }
-.stage-inner{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition:transform .25s var(--ease); transform-style:preserve-3d; will-change:transform; }
-.stage-img{ width:100%; max-width:720px; animation:stageFloat 7s ease-in-out infinite; filter:drop-shadow(0 34px 34px rgba(6,8,26,.14)); }
+.product-stage{ --stage-x:50%; --stage-y:50%; position:relative; aspect-ratio:1.12/1; overflow:visible; background:transparent; perspective:1200px; }
+.product-stage::before{ content:""; position:absolute; inset:8% 2%; border-radius:50%; pointer-events:none; opacity:0; transform:scale(.92); background:radial-gradient(circle at var(--stage-x) var(--stage-y),rgba(255,255,255,.72) 0%,rgba(203,176,138,.16) 22%,rgba(15,42,92,.07) 46%,transparent 70%); filter:blur(22px); transition:opacity .65s var(--ease),transform .8s var(--ease); }
+.product-stage:hover::before{ opacity:.7; transform:scale(1); }
+.stage-inner{ position:absolute; z-index:1; inset:0; display:flex; align-items:center; justify-content:center; transition:transform .7s cubic-bezier(.2,.75,.2,1); transform-style:preserve-3d; will-change:transform; }
+.stage-img{ width:100%; max-width:720px; animation:stageFloat 7s ease-in-out infinite; filter:drop-shadow(0 34px 34px rgba(6,8,26,.14)); transition:filter .7s var(--ease); }
 @keyframes stageFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
-.product-stage:hover .stage-img{ animation-play-state:paused; }
+.product-stage:hover .stage-img{ animation-play-state:paused; filter:drop-shadow(0 40px 42px rgba(6,8,26,.18)); }
 .stage-badge{ position:absolute; top:var(--sp-3); left:var(--sp-3); z-index:3; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); background:rgba(255,255,255,.72); backdrop-filter:blur(10px) saturate(160%); -webkit-backdrop-filter:blur(10px) saturate(160%); border:1px solid rgba(255,255,255,.7); padding:7px 13px; border-radius:999px; }
 .stage-badge .dot{ width:6px; height:6px; border-radius:50%; background:var(--brass); flex:none; animation:pulse 2s ease-in-out infinite; }
 @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
@@ -356,37 +358,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .case-image img{ width:100%; height:100%; object-fit:cover; }
 .case-image.use img{ object-position:center; }
 .case-image.process img{ object-position:center; }
-.case-image.detail{
-  display:grid;
-  place-items:center;
-  background:
-    radial-gradient(circle at 50% 48%,rgba(255,255,255,.95),rgba(231,235,242,.72) 62%,rgba(15,42,92,.08));
-}
-.case-image.detail img{ width:90%; height:90%; object-fit:contain; }
-.case-image::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(3,11,33,.18),transparent 44%);
-  pointer-events:none;
-}
-.case-image.detail::after{ display:none; }
-.case-image-caption{
-  position:absolute;
-  right:14px;
-  bottom:14px;
-  left:14px;
-  z-index:2;
-  padding:12px 14px;
-  border:1px solid rgba(255,255,255,.62);
-  border-radius:var(--r-lg);
-  background:rgba(255,255,255,.68);
-  color:var(--blue-deep);
-  backdrop-filter:blur(18px) saturate(135%);
-  -webkit-backdrop-filter:blur(18px) saturate(135%);
-  font-size:14px;
-  line-height:1.55;
-}
+.case-image.detail img{ width:100%; height:100%; object-fit:cover; object-position:center; }
 
 /* ============================================================
    PROJECT JOURNAL — a longer editorial layer with an asymmetric
@@ -435,41 +407,66 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   z-index:1;
 }
 .project-journal-head{
-  max-width:720px;
-  margin-bottom:var(--sp-5);
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.75fr);
+  gap:clamp(40px,8vw,120px);
+  align-items:end;
+  margin-bottom:clamp(24px,4vw,56px);
 }
 .project-journal h2{
-  max-width:12ch;
+  max-width:16ch;
   margin-top:14px;
   font-size:clamp(40px,4.4vw,56px);
   letter-spacing:-.04em;
 }
+.project-journal-intro{
+  max-width:48ch;
+  color:var(--ink-soft);
+  font-size:16px;
+  line-height:1.7;
+}
 .journal-grid{
   display:grid;
-  grid-template-columns:.76fr 1.24fr;
-  gap:clamp(48px,7vw,104px);
+  grid-template-columns:.9fr 1.1fr;
+  gap:clamp(48px,6vw,88px);
   align-items:stretch;
 }
 .journal-text{ display:flex; flex-direction:column; }
 .journal-item{
-  min-height:62vh;
+  position:relative;
+  min-height:54vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:var(--sp-4) 0;
+  padding:var(--sp-5) 0 var(--sp-5) 28px;
+  border-left:1px solid rgba(15,42,92,.12);
 }
-.journal-item:last-child{ min-height:46vh; }
+.journal-item::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:-1px;
+  width:2px;
+  height:0;
+  background:linear-gradient(180deg,var(--brass-hi),var(--blue));
+  transform:translateY(-50%);
+  transition:height .55s var(--ease);
+}
+.journal-item.is-active::before{ height:112px; }
+.journal-item:last-child{ min-height:42vh; }
 .journal-item .num{
   display:block;
-  margin-bottom:var(--sp-2);
-  font-family:var(--font-display);
-  font-size:16px;
-  font-weight:800;
-  color:rgba(15,42,92,.48);
+  margin-bottom:14px;
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(15,42,92,.52);
   transition:color .45s var(--ease);
 }
 .journal-item h3{
-  max-width:15ch;
+  max-width:19ch;
   margin-bottom:12px;
   font-size:clamp(24px,2.8vw,32px);
   letter-spacing:-.025em;
@@ -477,15 +474,136 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   transition:color .45s var(--ease);
 }
 .journal-item p{
-  max-width:44ch;
+  max-width:48ch;
   color:#666975;
   font-size:16px;
   line-height:1.7;
   transition:color .45s var(--ease);
 }
+.journal-proof{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px 22px;
+  max-width:520px;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid rgba(15,42,92,.12);
+  opacity:.42;
+  transform:translateY(8px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease);
+}
+.journal-item.is-active .journal-proof{ opacity:1; transform:none; }
+.journal-proof div{ min-width:0; }
+.journal-proof span{
+  display:block;
+  margin-bottom:5px;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.journal-proof strong{
+  display:block;
+  color:var(--blue-deep);
+  font-size:13px;
+  font-weight:600;
+  line-height:1.45;
+}
 .journal-item.is-active .num{ color:var(--blue); }
 .journal-item.is-active h3{ color:var(--blue-deep); }
 .journal-item.is-active p{ color:var(--ink-soft); }
+.engineering-proof{
+  --proof-card-top:calc(var(--nav-height,76px) + 72px);
+  --proof-peek:9px;
+  position:relative;
+  padding:var(--sp-8) 0;
+  /* clip, not hidden — `hidden` creates a scroll container and breaks the
+     position:sticky card stack below. */
+  overflow:clip;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(203,176,138,.2),transparent 30%),
+    radial-gradient(circle at 88% 74%,rgba(84,112,166,.13),transparent 34%),
+    var(--paper);
+}
+.engineering-proof-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);
+  gap:clamp(40px,8vw,120px);
+  align-items:end;
+  margin-bottom:clamp(48px,7vw,96px);
+}
+.engineering-proof-head h2{
+  max-width:16ch;
+  margin-top:14px;
+  font-size:clamp(40px,4.4vw,56px);
+  letter-spacing:-.04em;
+}
+.engineering-proof-head p{ max-width:48ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.proof-outcomes{ position:relative; display:flex; flex-direction:column; }
+/* Sticky travel is bounded by the container's CONTENT box, so padding here
+   would be ignored. The last card only gets a pinned dwell if real flow space
+   follows it — hence a spacer rather than padding-bottom. */
+.proof-stack-end{ flex:none; height:38vh; pointer-events:none; }
+.proof-outcome{
+  --handoff:0;
+  --depth:0;
+  --stack-index:0;
+  position:sticky;
+  top:calc(var(--proof-card-top) + (var(--stack-index) * var(--proof-peek)));
+  isolation:isolate;
+  display:grid;
+  grid-template-columns:minmax(220px,.62fr) minmax(0,1.38fr);
+  gap:clamp(36px,7vw,104px);
+  align-items:center;
+  min-height:min(72vh,680px);
+  margin-bottom:6vh;
+  padding:clamp(48px,6vw,88px);
+  overflow:hidden;
+  border-radius:12px;
+  /* No border or accent rule — the cards read as clean sheets, separated by
+     shadow alone. */
+  background:linear-gradient(135deg,#fff,#f6f3ed);
+  box-shadow:0 30px 80px -60px rgba(3,11,33,.46);
+  transform-origin:50% 0;
+  will-change:transform;
+  /* Short transition only smooths frame-to-frame jitter — the motion itself is
+     scroll-driven, so a long duration would lag behind the scroll. */
+  transition:transform 260ms cubic-bezier(.22,.61,.36,1),box-shadow 520ms ease;
+}
+.proof-outcome:nth-child(1){ --stack-index:0; z-index:1; }
+.proof-outcome:nth-child(2){ --stack-index:1; z-index:2; }
+.proof-outcome:nth-child(3){ --stack-index:2; z-index:3; margin-bottom:0; }
+
+/* Every card recedes as the next one slides up and covers it. The card stays
+   fully opaque so the stack reads as physical sheets, not a cross-fade. */
+.proof-outcome{
+  transform:
+    scale(calc(1 - (var(--handoff) * .032) - (var(--depth) * .016)))
+    translateY(calc((var(--handoff) * -8px) + (var(--depth) * -4px)));
+}
+.proof-outcome.is-active{
+  box-shadow:0 calc(42px - (var(--handoff) * 22px)) calc(108px - (var(--handoff) * 44px)) -70px rgba(3,11,33,.52);
+}
+.proof-outcome.is-past{ box-shadow:0 18px 48px -40px rgba(3,11,33,.34); }
+.proof-index{ display:block; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--brass); }
+.proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:clamp(28px,3vw,40px); letter-spacing:-.03em; }
+.proof-copy > p{ max-width:43ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.proof-evidence{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
+.proof-evidence span{ display:block; margin-bottom:5px; font-family:var(--font-mono); font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); }
+.proof-evidence strong{ display:block; font-size:14px; line-height:1.45; color:var(--blue-deep); }
+.proof-media{
+  position:relative;
+  min-height:390px;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:linear-gradient(145deg,#ececef,#d9d9de);
+}
+.proof-media::after{ content:""; position:absolute; inset:0; box-shadow:inset 0 0 0 1px rgba(6,8,26,.05); pointer-events:none; border-radius:inherit; }
+.proof-media img{ width:100%; height:100%; min-height:390px; object-fit:cover; transition:transform 1s cubic-bezier(.2,.72,.2,1); }
+.proof-media.contain img{ object-fit:contain; padding:clamp(28px,5vw,72px); }
+.proof-outcome.is-active .proof-media img{ transform:scale(calc(1.035 - (var(--handoff) * .035))) translateY(calc(var(--handoff) * -8px)); }
+.proof-label{ position:absolute; left:20px; bottom:20px; z-index:1; padding:10px 16px; border-radius:999px; background:rgba(255,255,255,.88); color:var(--blue-deep); font-size:13px; font-weight:600; box-shadow:0 8px 28px rgba(3,11,33,.1); backdrop-filter:blur(12px); }
 .journal-mobile-image{ display:none; }
 .journal-visual-column{
   position:relative;
@@ -569,16 +687,31 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   bottom:18px;
   left:18px;
   z-index:2;
-  padding:14px 16px;
+  padding:15px 17px;
   border:1px solid rgba(255,255,255,.62);
   border-radius:var(--r-lg);
   background:rgba(255,255,255,.7);
   color:var(--blue-deep);
   backdrop-filter:blur(16px) saturate(135%);
   -webkit-backdrop-filter:blur(16px) saturate(135%);
-  font-size:14px;
-  font-weight:600;
+  font-size:13px;
+  font-weight:500;
   line-height:1.45;
+}
+.journal-frame figcaption span{
+  display:block;
+  margin-bottom:4px;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--brass-text,var(--brass));
+}
+.journal-frame figcaption strong{
+  display:block;
+  font-size:14px;
+  font-weight:650;
+  color:var(--blue-deep);
 }
 
 /* ============================================================
@@ -662,9 +795,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .hero-grid{ grid-template-columns:1fr; }
   .battery-focus{ height:auto; min-height:960px; }
   .battery-focus-head,.field-case-grid{ grid-template-columns:1fr; }
+  .project-journal-head{ grid-template-columns:1fr; gap:var(--sp-3); align-items:start; }
+  .engineering-proof-head{ grid-template-columns:1fr; gap:var(--sp-3); align-items:start; }
+  .proof-outcomes{ gap:var(--sp-4); padding-bottom:0; }
+  .proof-stack-end{ display:none; }
+  .proof-outcome,.proof-outcome:nth-child(even){ position:relative; top:auto; grid-template-columns:1fr; min-height:auto; margin-bottom:0; padding:clamp(34px,6vw,56px); transform:none; opacity:1; }
+  .proof-outcome.is-active,.proof-outcome.is-past{ transform:none; opacity:1; }
   .journal-grid{ grid-template-columns:1fr; }
   .journal-visual-column{ display:none; }
-  .journal-item,.journal-item:last-child{ min-height:auto; padding:var(--sp-5) 0; }
+  .journal-item,.journal-item:last-child{ min-height:auto; padding:var(--sp-5) 0 var(--sp-5) 22px; }
   .journal-mobile-image{ display:block; width:100%; aspect-ratio:16/10; margin:var(--sp-3) 0 0; border-radius:var(--r-lg); object-fit:cover; background:#E5E5E8; }
   .journal-mobile-image.contain{ object-fit:contain; padding:var(--sp-3); }
   .battery-callout.one{ left:0; }
@@ -677,6 +816,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
+  .proof-media,.proof-media img{ min-height:300px; }
+  .proof-evidence{ grid-template-columns:1fr; }
+  .journal-proof{ grid-template-columns:1fr; gap:14px; }
   .gallery-grid{ grid-template-columns:1fr; }
   .battery-focus{ height:auto; min-height:auto; }
   .battery-visual{ min-height:390px; }
@@ -692,8 +834,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
 @media (prefers-reduced-motion:reduce){
+  .product-stage::before{ display:none; }
+  .stage-inner,.stage-img{ transition:none; }
   .project-journal{ background-attachment:scroll; }
   .project-journal::before,.project-journal::after{ transform:none; }
+  /* The proof cards read as a plain stacked list; no scroll-linked scaling. */
+  .proof-outcome,.proof-outcome.is-active,.proof-outcome.is-past{
+    position:relative;
+    top:auto;
+    margin-bottom:var(--sp-4);
+    transform:none;
+    transition:none;
+  }
+  .proof-outcome.is-active .proof-media img{ transform:none; }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
@@ -849,78 +1002,78 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     </div>
     <div class="case-visuals" aria-label="Product story images">
       <figure class="case-image use">
-        <img src="assets/products/cards/drone.jpg" alt="Industrial multirotor drone representing the battery's operating application">
-        <figcaption class="case-image-caption">Application context: the machine and mission define the battery requirements.</figcaption>
+        <img src="assets/products/lukas-vanatko-fOF3v1VDouw-unsplash.jpg" alt="Industrial multirotor drone representing the battery's operating application">
       </figure>
       <figure class="case-image process">
         <img src="assets/unsplash/production-line-web.jpg" alt="Automated production environment representing repeatable battery manufacturing">
-        <figcaption class="case-image-caption">Production: controlled assembly and repeatable quality processes.</figcaption>
       </figure>
       <figure class="case-image detail">
-        <img src="assets/products/renders/crop/qkw_print.png" alt="Detailed WS Technicals battery system render">
-        <figcaption class="case-image-caption">The solution: engineered packaging, electronics and service access.</figcaption>
+        <img src="assets/products/getty-images-hWhLUd6RraE-unsplash.jpg" alt="Detailed WS Technicals battery system render">
       </figure>
     </div>
   </div>
 </section>
 
-<section class="project-journal" id="project-journal">
+<section class="engineering-proof" id="engineering-proof">
   <div class="container">
-    <div class="project-journal-head">
-      <span class="eyebrow">Project journal</span>
-      <h2>From requirement to working system.</h2>
+    <div class="engineering-proof-head">
+      <div>
+        <span class="eyebrow">Engineering proof</span>
+        <h2>Designed to perform. Proven to scale.</h2>
+      </div>
+      <p>This is the evidence behind the solution: an architecture matched to the application, performance verified under load, and a manufacturing definition built for consistent output.</p>
     </div>
 
-    <div class="journal-grid">
-      <div class="journal-text">
-        <article class="journal-item is-active" data-journal-step="1">
-          <span class="num">01</span>
-          <h3>Understanding the mission</h3>
-          <p>The aircraft, payload and operating pattern establish the brief. Flight duration, peak loads, charging windows and field handling define the decisions that follow.</p>
-          <img class="journal-mobile-image" src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Industrial multirotor drone prepared for operation">
-        </article>
-        <article class="journal-item" data-journal-step="2">
-          <span class="num">02</span>
-          <h3>Engineering the complete interface</h3>
-          <p>Mechanical fit, communication, thermal behavior and service access are developed together so the battery becomes part of the product architecture.</p>
-          <img class="journal-mobile-image contain" src="assets/products/renders/crop/xug-clean-transparent.png" alt="Detailed custom battery system render">
-        </article>
-        <article class="journal-item" data-journal-step="3">
-          <span class="num">03</span>
-          <h3>Validating the solution</h3>
-          <p>Prototype testing connects the electrical design to real operating conditions before the solution is released for repeatable production.</p>
-          <img class="journal-mobile-image contain" src="assets/products/no-background/web/drone.png" alt="Industrial inspection drone shown without background">
-        </article>
-        <article class="journal-item" data-journal-step="4">
-          <span class="num">04</span>
-          <h3>Building it consistently</h3>
-          <p>The validated architecture moves into controlled production with documented processes, quality checks and traceability.</p>
-          <img class="journal-mobile-image" src="assets/unsplash/production-line-web.jpg" alt="Controlled automated production environment">
-        </article>
-      </div>
-
-      <div class="journal-visual-column" aria-hidden="true">
-        <div class="journal-sticky">
-          <div class="journal-stack">
-            <figure class="journal-frame is-active" data-journal-step="1">
-              <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="">
-              <figcaption>The application: payload, mission profile and operating environment establish the brief.</figcaption>
-            </figure>
-            <figure class="journal-frame product" data-journal-step="2">
-              <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="">
-              <figcaption>The battery architecture is developed around the complete interface.</figcaption>
-            </figure>
-            <figure class="journal-frame product" data-journal-step="3">
-              <img src="assets/products/no-background/web/drone.png" alt="">
-              <figcaption>Prototype and application are evaluated as one working system.</figcaption>
-            </figure>
-            <figure class="journal-frame" data-journal-step="4">
-              <img src="assets/unsplash/production-line-web.jpg" alt="">
-              <figcaption>Repeatable production follows the validated design.</figcaption>
-            </figure>
+    <div class="proof-outcomes">
+      <article class="proof-outcome">
+        <div class="proof-copy">
+          <span class="proof-index">01 / Architecture</span>
+          <h3>One system, engineered around the mission.</h3>
+          <p>Cell chemistry, BMS, thermal strategy, enclosure and interfaces are developed as one architecture around payload, flight time and operating conditions.</p>
+          <div class="proof-evidence">
+            <div><span>Engineering output</span><strong>Reviewed system architecture</strong></div>
+            <div><span>Customer value</span><strong>No catalogue-pack compromise</strong></div>
           </div>
         </div>
-      </div>
+        <figure class="proof-media contain">
+          <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="Custom battery architecture developed around the drone application">
+          <figcaption class="proof-label">Application-matched architecture</figcaption>
+        </figure>
+      </article>
+
+      <article class="proof-outcome">
+        <div class="proof-copy">
+          <span class="proof-index">02 / Validation</span>
+          <h3>Performance proven before release.</h3>
+          <p>Representative packs are verified electrically, thermally and mechanically against the agreed mission profile, including communication and fault handling.</p>
+          <div class="proof-evidence">
+            <div><span>Engineering output</span><strong>Documented validation results</strong></div>
+            <div><span>Customer value</span><strong>Lower integration and field risk</strong></div>
+          </div>
+        </div>
+        <figure class="proof-media">
+          <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Industrial drone used to validate the battery system in its intended application">
+          <figcaption class="proof-label">Verified in the intended application</figcaption>
+        </figure>
+      </article>
+
+      <article class="proof-outcome">
+        <div class="proof-copy">
+          <span class="proof-index">03 / Production readiness</span>
+          <h3>Quality designed into every finished pack.</h3>
+          <p>Approved components, controlled work instructions, serialized traceability and end-of-line testing make the validated design repeatable at production scale.</p>
+          <div class="proof-evidence">
+            <div><span>Manufacturing output</span><strong>Controlled BOM and EOL record</strong></div>
+            <div><span>Customer value</span><strong>Consistent quality across every batch</strong></div>
+          </div>
+        </div>
+        <figure class="proof-media">
+          <img src="assets/unsplash/production-line-web.jpg" alt="Controlled production line for repeatable battery manufacturing">
+          <figcaption class="proof-label">Traceable, repeatable production</figcaption>
+        </figure>
+      </article>
+
+      <div class="proof-stack-end" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -1075,10 +1228,14 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       var rect = stage.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width - 0.5;
       var y = (e.clientY - rect.top) / rect.height - 0.5;
-      stageInner.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (y * -14) + 'deg)';
+      stage.style.setProperty('--stage-x',((x + .5) * 100).toFixed(1) + '%');
+      stage.style.setProperty('--stage-y',((y + .5) * 100).toFixed(1) + '%');
+      stageInner.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (y * -8) + 'deg) scale(1.025)';
     });
     stage.addEventListener('mouseleave', function(){
-      stageInner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      stageInner.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+      stage.style.setProperty('--stage-x','50%');
+      stage.style.setProperty('--stage-y','50%');
     });
   }
 
@@ -1172,6 +1329,52 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   updateJournalParallax();
   window.addEventListener('scroll',queueJournalParallax,{passive:true});
   window.addEventListener('resize',queueJournalParallax);
+
+  // Engineering proof — each stage hands the viewport to the next stage.
+  // The scroll position controls the sequence; no carousel controls or
+  // automatic timing compete with the technical content.
+  var proofSection = document.querySelector('.engineering-proof');
+  var proofOutcomes = Array.prototype.slice.call(document.querySelectorAll('.proof-outcome'));
+  var proofQueued = false;
+  function updateProofSequence(){
+    proofQueued = false;
+    if (!proofSection || !proofOutcomes.length || window.innerWidth <= 980) return;
+    var sectionTop = proofSection.getBoundingClientRect().top + window.scrollY;
+    var readingPoint = window.scrollY + window.innerHeight * .38;
+    // A longer handoff spreads the scale/lift over more scroll, which reads as
+    // a smoother handover between chapters.
+    var handoffDistance = Math.min(680,window.innerHeight * .72);
+    var activeIndex = 0;
+    proofOutcomes.forEach(function(outcome,index){
+      if (readingPoint >= sectionTop + outcome.offsetTop) activeIndex = index;
+    });
+    proofOutcomes.forEach(function(outcome,index){
+      outcome.classList.toggle('is-active',index === activeIndex);
+      outcome.classList.toggle('is-past',index < activeIndex);
+      // Depth = how many cards have already stacked in front of this one.
+      outcome.style.setProperty('--depth',Math.max(0,activeIndex - index));
+      var handoff = 0;
+      if (index < proofOutcomes.length - 1) {
+        // Measure against this card's own resting offset so the staggered
+        // sticky tops stay in sync with the handoff curve.
+        var restTop = outcome.getBoundingClientRect().top;
+        var nextTop = proofOutcomes[index + 1].getBoundingClientRect().top;
+        var raw = Math.max(0,Math.min(1,(restTop + handoffDistance - nextTop) / handoffDistance));
+        // Smoothstep: eases in and out instead of ramping linearly.
+        handoff = raw * raw * (3 - 2 * raw);
+      }
+      outcome.style.setProperty('--handoff',handoff.toFixed(4));
+    });
+  }
+  function queueProofSequence(){
+    if (proofQueued) return;
+    proofQueued = true;
+    window.requestAnimationFrame(updateProofSequence);
+  }
+  if (proofOutcomes.length) proofOutcomes[0].classList.add('is-active');
+  updateProofSequence();
+  window.addEventListener('scroll',queueProofSequence,{passive:true});
+  window.addEventListener('resize',queueProofSequence);
 })();
 </script>
 

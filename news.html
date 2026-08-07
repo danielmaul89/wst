@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>News and stories | WS Technicals</title>
+<meta name="description" content="Success stories, employee perspectives and company news from WS Technicals.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ background:var(--paper); }
+.news-hero{ padding:170px 0 92px; overflow:hidden; background:radial-gradient(circle at 14% 0,rgba(203,176,138,.34),transparent 35%),radial-gradient(circle at 88% 18%,rgba(126,136,172,.25),transparent 38%),var(--paper); }
+.news-hero-grid{ display:grid; grid-template-columns:1fr .72fr; gap:clamp(56px,10vw,150px); align-items:start; }
+.news-hero h1{ max-width:12ch; margin-top:18px; font-size:clamp(48px,6vw,72px); }
+.news-intro{ padding-top:38px; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.editorial{ padding:40px 0 140px; }
+.feature{ position:relative; display:grid; grid-template-columns:1.05fr .95fr; min-height:470px; overflow:hidden; border-radius:var(--r-lg); background:var(--blue-deep); color:var(--paper); }
+.feature-copy{ display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(40px,6vw,76px); }
+.feature-copy h2{ max-width:11ch; margin:18px 0; color:var(--paper); font-size:48px; }
+.feature-copy p{ max-width:48ch; color:var(--ink-soft-on-dark); line-height:1.7; }
+.feature-visual{ position:relative; overflow:hidden; background:linear-gradient(145deg,rgba(46,91,157,.4),rgba(3,11,33,.2)),url('assets/about/gallery/production-testing.jpg') center/cover; }
+.feature-visual::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg,var(--blue-deep),transparent 45%); }
+.channels{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:24px; }
+.channel{ min-height:300px; padding:32px; border-radius:var(--r-lg); background:rgba(255,255,255,.66); box-shadow:inset 0 1px 0 #fff,0 24px 54px -46px rgba(3,11,33,.4); transition:transform .45s var(--ease),box-shadow .45s var(--ease); }
+.channel:hover{ transform:translateY(-5px); box-shadow:inset 0 1px 0 #fff,0 30px 64px -42px rgba(3,11,33,.42); }
+.channel-index{ display:block; margin-bottom:88px; color:var(--brass-text); font-family:var(--font-mono); font-size:13px; }
+.channel h3{ margin-bottom:14px; font-size:32px; }
+.channel p{ color:var(--ink-soft); line-height:1.65; }
+.archive-note{ display:flex; justify-content:space-between; gap:40px; margin-top:72px; padding-top:28px; border-top:1px solid var(--line); }
+.archive-note strong{ font-family:var(--font-display); font-size:24px; }
+.archive-note p{ max-width:54ch; color:var(--ink-soft); }
+@media(max-width:800px){ .news-hero-grid,.feature{ grid-template-columns:1fr; } .feature-visual{ min-height:320px; order:-1; } .channels{ grid-template-columns:1fr; } .channel{ min-height:240px; } .channel-index{ margin-bottom:56px; } }
+@media(max-width:560px){ .news-hero{ padding-top:120px; } .news-hero h1{ font-size:48px; } .feature-copy h2{ font-size:40px; } .archive-note{ flex-direction:column; } }
+</style>
+</head>
+<body data-wst-page="about">
+<div data-wst-header></div>
+<main>
+  <section class="news-hero">
+    <div class="container news-hero-grid">
+      <div><span class="eyebrow">News and perspectives</span><h1>Engineering stories from inside the work.</h1></div>
+      <p class="news-intro">Follow customer applications, the people behind the engineering and the developments shaping WS Technicals.</p>
+    </div>
+  </section>
+
+  <section class="editorial">
+    <div class="container">
+      <article class="feature">
+        <div class="feature-copy"><span class="eyebrow">Editorial focus</span><h2>From requirement to working system.</h2><p>Future stories will show how application requirements become battery architecture, validated hardware and dependable series production.</p></div>
+        <div class="feature-visual" role="img" aria-label="Battery testing and production environment"></div>
+      </article>
+      <div class="channels">
+        <article class="channel"><span class="channel-index">01</span><h3>Success stories</h3><p>Real applications, engineering constraints and the decisions behind each custom battery solution.</p></article>
+        <article class="channel"><span class="channel-index">02</span><h3>Employee stories</h3><p>Perspectives from the engineers and specialists who develop, test and industrialize each system.</p></article>
+        <article class="channel"><span class="channel-index">03</span><h3>Company news</h3><p>Updates from WS Technicals, its capabilities and the wider transition toward electrification.</p></article>
+      </div>
+      <div class="archive-note"><strong>Articles are being prepared.</strong><p>This page establishes the editorial structure without presenting placeholder stories as published company news.</p></div>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=about-pages1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>

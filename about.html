@@ -120,14 +120,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .section-head h2{ font-size:clamp(28px,3.4vw,42px); max-width:600px; }
 .section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
 
-.work{ background:var(--card); padding:var(--sp-8) 0; }
-.work-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
-.work-card{ border-radius:var(--r-lg); border:1px solid var(--line-2); padding:var(--sp-3); background:var(--paper); transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.work-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
-.work-icon{ width:40px; height:40px; border-radius:var(--r); background:var(--card); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-2); }
-.work-icon svg{ stroke:var(--blue); }
-.work-card h3{ font-size:17px; margin-bottom:6px; letter-spacing:-.01em; }
-.work-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
 
 .career{ background:var(--paper-2); padding:var(--sp-8) 0; }
 .career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
@@ -136,13 +128,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
 .career-card h3{ font-size:18px; margin-bottom:8px; }
 .career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
-.about-routes{ padding:var(--sp-7) 0; background:var(--card); }
-.about-routes-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-3); }
-.about-route{ display:flex; min-height:250px; padding:var(--sp-4); flex-direction:column; justify-content:space-between; border-radius:var(--r-lg); background:linear-gradient(155deg,var(--paper),var(--paper-2)); box-shadow:inset 0 1px 0 #fff; transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease); }
-.about-route:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md),inset 0 1px 0 #fff; }
-.about-route .route-index{ color:var(--brass-text); font-family:var(--font-mono); font-size:12px; }
-.about-route h3{ margin-bottom:10px; font-size:32px; }
-.about-route p{ max-width:34ch; color:var(--ink-soft); font-size:15px; }
+.facility-preview{ padding:var(--sp-7) 0; background:var(--card); }
+.facility-preview-head{ display:grid; grid-template-columns:minmax(0,1.15fr) minmax(280px,.7fr); gap:var(--sp-5); align-items:end; margin-bottom:var(--sp-4); }
+.facility-preview-head h2{ max-width:15ch; margin-top:14px; font-size:clamp(40px,4.3vw,56px); }
+.facility-preview-head p{ max-width:46ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.facility-preview-image{ position:relative; min-height:clamp(430px,52vw,650px); margin:0; overflow:hidden; border-radius:var(--r-lg); background:var(--blue-deep); }
+.facility-preview-image img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 61%; transition:transform 1.2s var(--ease); }
+@media (hover:hover){ .facility-preview-image:hover img{ transform:scale(1.018); } }
 
 .cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
 .cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
@@ -269,22 +261,40 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 .about-gallery{
   position:relative;
   z-index:4;
-  padding:32px 0 var(--sp-7);
+  min-height:100vh;
+  padding:clamp(48px,6vh,80px) 0 clamp(72px,8vh,112px);
   background:#fff;
+  display:flex;
+  align-items:center;
 }
+.about-gallery-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);
+  gap:clamp(40px,8vw,120px);
+  align-items:end;
+  margin-bottom:var(--sp-5);
+}
+.about-gallery-head h2{ max-width:15ch; margin-top:14px; font-size:clamp(40px,4.4vw,56px); letter-spacing:-.04em; }
+.about-gallery-head p{ max-width:48ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
 .about-gallery-grid{
   display:grid;
   grid-template-columns:repeat(12,1fr);
-  grid-template-rows:repeat(2,250px);
+  grid-template-rows:repeat(2,clamp(210px,25vh,270px));
   gap:16px;
 }
 .about-gallery-item{
   position:relative;
+  display:block;
+  width:100%;
+  padding:0;
+  border:0;
   height:auto;
   margin:0;
   overflow:hidden;
   border-radius:var(--r-lg);
   background:var(--blue-deep);
+  cursor:zoom-in;
+  text-align:left;
 }
 .about-gallery-item:first-child{ grid-column:span 7; grid-row:1 / 3; }
 .about-gallery-item:nth-child(2),
@@ -293,7 +303,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:saturate(.72) brightness(.7) contrast(1.14);
+  filter:saturate(.8) brightness(.78) contrast(1.1);
   transform:scale(1.001);
   transition:transform .7s var(--ease),filter .7s var(--ease);
 }
@@ -302,40 +312,99 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:
-    linear-gradient(180deg,rgba(3,11,33,.5) 0%,rgba(3,11,33,.12) 36%,rgba(3,11,33,.3) 100%),
-    linear-gradient(115deg,rgba(15,42,92,.18),transparent 45%,rgba(185,154,114,.09));
+  background:linear-gradient(115deg,rgba(15,42,92,.08),transparent 48%,rgba(185,154,114,.05));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
 }
-.about-gallery-caption{
+.about-gallery-zoom{
   position:absolute;
-  top:24px;
-  left:24px;
+  right:18px;
+  bottom:18px;
   z-index:2;
-  max-width:31ch;
-  color:#fff;
-}
-.about-gallery-caption strong{
-  display:block;
-  font-family:var(--font-display);
-  font-size:24px;
-  line-height:1.15;
-  letter-spacing:-.025em;
-}
-.about-gallery-caption span{
-  display:block;
-  max-width:30ch;
-  margin-top:7px;
-  color:rgba(255,255,255,.8);
-  font-size:14px;
-  line-height:1.5;
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  color:var(--blue-deep);
+  background:rgba(255,255,255,.88);
+  box-shadow:0 8px 30px rgba(3,11,33,.14);
+  backdrop-filter:blur(12px);
+  opacity:0;
+  transform:scale(.9);
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
 }
 @media (hover:hover){
   .about-gallery-item:hover img{
     transform:scale(1.025);
-    filter:saturate(.8) brightness(.78) contrast(1.12);
+    filter:saturate(.88) brightness(.84) contrast(1.08);
   }
+  .about-gallery-item:hover .about-gallery-zoom{ opacity:1; transform:none; }
 }
+.about-gallery-item:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
+.about-gallery-item{ transition:opacity .55s var(--ease), transform .55s var(--ease), box-shadow .55s var(--ease); }
+.work-rail{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin-top:clamp(24px,3.5vh,42px);
+  border-top:1px solid var(--line-2);
+  border-bottom:1px solid var(--line-2);
+}
+.work-principle{
+  position:relative;
+  min-height:138px;
+  padding:24px 24px 22px;
+  border:0;
+  border-right:1px solid var(--line-2);
+  background:transparent;
+  color:var(--ink);
+  text-align:left;
+  cursor:default;
+  overflow:hidden;
+}
+.work-principle:last-child{ border-right:0; }
+.work-principle::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(231,221,203,.42),rgba(255,255,255,0) 62%);
+  opacity:0;
+  transition:opacity .45s var(--ease);
+}
+.work-principle::after{
+  content:"";
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:0;
+  height:2px;
+  background:linear-gradient(90deg,var(--brass),rgba(185,154,114,0));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .55s var(--ease);
+}
+.work-principle > *{ position:relative; z-index:1; }
+.work-principle .index{ display:block; margin-bottom:12px; font-family:var(--font-body); font-size:12px; letter-spacing:.12em; color:var(--brass); }
+.work-principle h3{ margin:0 0 7px; font-size:18px; letter-spacing:-.015em; }
+.work-principle p{ margin:0; max-width:31ch; color:var(--ink-soft); font-size:14px; line-height:1.5; }
+.work-principle:first-child::before{ opacity:1; }
+.work-principle:first-child::after{ transform:scaleX(1); }
+.gallery-lightbox{
+  width:min(1180px,calc(100vw - 32px));
+  max-width:none;
+  padding:0;
+  border:0;
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  background:#06081a;
+  color:#fff;
+  box-shadow:0 40px 120px rgba(3,11,33,.42);
+}
+.gallery-lightbox::backdrop{ background:rgba(3,11,33,.78); backdrop-filter:blur(12px); }
+.gallery-lightbox img{ display:block; width:100%; max-height:78vh; object-fit:contain; background:#06081a; }
+.gallery-lightbox-footer{ display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 20px; }
+.gallery-lightbox-copy strong{ display:block; font-size:16px; }
+.gallery-lightbox-copy span{ display:block; margin-top:4px; color:rgba(255,255,255,.7); font-size:14px; }
+.gallery-lightbox-close{ flex:none; width:42px; height:42px; border:1px solid rgba(255,255,255,.18); border-radius:50%; color:#fff; background:rgba(255,255,255,.06); cursor:pointer; }
 .about-byline{
   display:flex;
   align-items:center;
@@ -407,12 +476,16 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       linear-gradient(0deg,#fff 0%,rgba(255,255,255,.92) 12%,transparent 38%);
   }
   .about-gallery-grid{ grid-template-columns:1fr 1fr; grid-template-rows:300px 230px; }
+  .about-gallery-head{ grid-template-columns:1fr; gap:var(--sp-3); align-items:start; }
   .about-gallery-item:first-child{ grid-column:1 / -1; grid-row:auto; }
   .about-gallery-item:nth-child(2),
   .about-gallery-item:nth-child(3){ grid-column:auto; }
-  .work-grid{ grid-template-columns:repeat(2, 1fr); }
+  .work-rail{ grid-template-columns:1fr 1fr; }
+  .work-principle:nth-child(2){ border-right:0; }
+  .work-principle:nth-child(-n+2){ border-bottom:1px solid var(--line-2); }
   .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
-  .about-routes-grid{ grid-template-columns:1fr; }
+  .facility-preview-head{ grid-template-columns:1fr; gap:var(--sp-3); }
+  .facility-preview-image{ min-height:440px; }
   .footer-top{ grid-template-columns:repeat(3, 1fr); }
   .footer-brand{ grid-column:1 / -1; margin-bottom:var(--sp-2); }
 }
@@ -421,12 +494,17 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   .about-hero-lead,
   .about-hero-lead:first-of-type{ font-size:18px; }
   .leadership-signature{ font-size:42px; }
-  .about-gallery{ padding-top:20px; }
   .about-gallery-grid{ grid-template-columns:1fr; grid-template-rows:none; gap:12px; }
   .about-gallery-item,
   .about-gallery-item:first-child,
   .about-gallery-item:nth-child(2),
   .about-gallery-item:nth-child(3){ grid-column:auto; grid-row:auto; height:240px; }
+  .about-gallery{ min-height:0; padding:64px 0; }
+  .work-rail{ grid-template-columns:1fr; }
+  .work-principle,
+  .work-principle:nth-child(2){ min-height:0; border-right:0; border-bottom:1px solid var(--line-2); }
+  .work-principle:last-child{ border-bottom:0; }
+  .facility-preview-image{ min-height:380px; }
   .about-hero{ min-height:1060px; }
   .about-hero-grid{ min-height:920px; }
   .about-hero-copy{ padding-top:var(--sp-5); transform:none; }
@@ -451,9 +529,14 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       linear-gradient(180deg,#fff 0%,rgba(255,255,255,.96) 46%,rgba(255,255,255,.2) 72%,transparent 84%),
       linear-gradient(0deg,#fff 0%,rgba(255,255,255,.72) 5%,transparent 18%);
   }
-  .work-grid{ grid-template-columns:1fr; }
   .footer-top{ grid-template-columns:1fr 1fr; }
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
+}
+@media (prefers-reduced-motion:reduce){
+  .about-gallery-item,
+  .about-gallery-item img,
+  .work-principle::before,
+  .work-principle::after{ transition:none !important; }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
@@ -493,61 +576,63 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 </section>
 
 <section class="about-gallery" aria-label="Engineering and production">
-  <div class="container about-gallery-grid">
-    <figure class="about-gallery-item">
+  <div class="container">
+    <div class="about-gallery-head">
+      <div>
+        <span class="eyebrow">Inside WS Technicals</span>
+        <h2>Engineering is a team discipline.</h2>
+      </div>
+      <p>Our work moves between engineering, electronics and production. These environments are connected by the same objective: turning complex requirements into dependable systems.</p>
+    </div>
+    <div class="about-gallery-grid">
+    <button class="about-gallery-item is-related" type="button" data-work-image="production" data-gallery-title="Production verification" data-gallery-copy="Focused end-of-line testing before a battery system leaves production.">
       <img src="assets/about/gallery/production-testing.jpg" alt="Editorial visualization of a technician concentrating on battery verification at an end-of-line test station">
-      <figcaption class="about-gallery-caption">
-        <strong>Production verification</strong>
-        <span>Focused end-of-line testing before a battery system leaves production.</span>
-      </figcaption>
-    </figure>
-    <figure class="about-gallery-item">
+      <span class="about-gallery-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7.5 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11Zm4-1 4 4M7.5 5v5M5 7.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+    </button>
+    <button class="about-gallery-item" type="button" data-work-image="electronics" data-gallery-title="BMS engineering" data-gallery-copy="Electronics and communication developed around the application.">
       <img src="assets/about/gallery/bms-engineering.jpg" alt="Editorial visualization of an engineer inspecting battery management electronics at a laboratory bench">
-      <figcaption class="about-gallery-caption">
-        <strong>BMS engineering</strong>
-        <span>Electronics and communication developed around the application.</span>
-      </figcaption>
-    </figure>
-    <figure class="about-gallery-item">
+      <span class="about-gallery-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7.5 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11Zm4-1 4 4M7.5 5v5M5 7.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+    </button>
+    <button class="about-gallery-item" type="button" data-work-image="collaboration" data-gallery-title="Design collaboration" data-gallery-copy="Mechanical integration reviewed closely with the customer team.">
       <img src="assets/about/gallery/cad-collaboration.jpg" alt="Editorial visualization of engineers reviewing a battery enclosure design in a technical office">
-      <figcaption class="about-gallery-caption">
-        <strong>Design collaboration</strong>
-        <span>Mechanical integration reviewed closely with the customer team.</span>
-      </figcaption>
-    </figure>
+      <span class="about-gallery-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7.5 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11Zm4-1 4 4M7.5 5v5M5 7.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+    </button>
+    </div>
+    <div class="work-rail" aria-label="The way we work">
+      <article class="work-principle">
+        <span class="index">01</span>
+        <h3>Turn-key responsibility</h3>
+        <p>One engineering partner from first requirement to certified production.</p>
+      </article>
+      <article class="work-principle">
+        <span class="index">02</span>
+        <h3>Close collaboration</h3>
+        <p>Decisions are made with your team, around the realities of your application.</p>
+      </article>
+      <article class="work-principle">
+        <span class="index">03</span>
+        <h3>Engineering depth</h3>
+        <p>Mechanical design, electronics and BMS are developed as one system.</p>
+      </article>
+      <article class="work-principle">
+        <span class="index">04</span>
+        <h3>Verified output</h3>
+        <p>End-of-line testing protects the agreed performance in every delivered pack.</p>
+      </article>
+    </div>
   </div>
 </section>
 
-<section class="work">
-  <div class="container">
-    <div class="section-head">
-      <h2>The way we work.</h2>
-      <p>Four principles that carry through every project, regardless of application or volume.</p>
+<dialog class="gallery-lightbox" id="galleryLightbox" aria-labelledby="galleryLightboxTitle">
+  <img id="galleryLightboxImage" src="" alt="">
+  <div class="gallery-lightbox-footer">
+    <div class="gallery-lightbox-copy">
+      <strong id="galleryLightboxTitle"></strong>
+      <span id="galleryLightboxText"></span>
     </div>
-    <div class="work-grid">
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 10l7-7 7 7M10 3v14"/></svg></div>
-        <h3>Turn-Key Solutions</h3>
-        <p>We deliver complete lithium battery solutions from concept through certified production.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M3 17l5-5 4 4 7-9"/></svg></div>
-        <h3>Competitive Solution</h3>
-        <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg></div>
-        <h3>State of the Art Technology</h3>
-        <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
-      </div>
-      <div class="work-card">
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg></div>
-        <h3>End-of-Line Testing</h3>
-        <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
-      </div>
-    </div>
+    <button class="gallery-lightbox-close" type="button" aria-label="Close image preview">×</button>
   </div>
-</section>
+</dialog>
 
 <section class="career" id="career">
   <div class="container career-grid">
@@ -567,15 +652,18 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   </div>
 </section>
 
-<section class="about-routes" aria-labelledby="about-routes-title">
+<section class="facility-preview" aria-labelledby="facility-preview-title">
   <div class="container">
-    <span class="eyebrow">Explore WS Technicals</span>
-    <h2 id="about-routes-title" style="font-size:48px; margin:16px 0 48px;">Company, people and progress.</h2>
-    <div class="about-routes-grid">
-      <a class="about-route" href="about.html#company"><span class="route-index">01 / WHO WE ARE</span><div><h3>Who we are</h3><p>Our origin, engineering approach and role in making electrification more accessible.</p></div></a>
-      <a class="about-route" href="careers.html"><span class="route-index">02 / CAREERS</span><div><h3>Careers</h3><p>The disciplines and people behind complete custom battery systems.</p></div></a>
-      <a class="about-route" href="news.html"><span class="route-index">03 / NEWS</span><div><h3>News</h3><p>Success stories, employee perspectives and updates from WS Technicals.</p></div></a>
+    <div class="facility-preview-head">
+      <div>
+        <span class="eyebrow">Our next chapter</span>
+        <h2 id="facility-preview-title">A new setting for engineering and production.</h2>
+      </div>
+      <p>A dedicated environment designed to bring customer dialogue, development, testing and production closer together.</p>
     </div>
+    <figure class="facility-preview-image">
+      <img src="assets/about/new-facility-placeholder.jpg" alt="Industrial facility representing the future WS Technicals location">
+    </figure>
   </div>
 </section>
 
@@ -622,6 +710,37 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  var galleryDialog = document.getElementById('galleryLightbox');
+  if (galleryDialog) {
+    var galleryImage = document.getElementById('galleryLightboxImage');
+    var galleryTitle = document.getElementById('galleryLightboxTitle');
+    var galleryText = document.getElementById('galleryLightboxText');
+    var galleryClose = galleryDialog.querySelector('.gallery-lightbox-close');
+
+    document.querySelectorAll('.about-gallery-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        var source = item.querySelector('img');
+        galleryImage.src = source.currentSrc || source.src;
+        galleryImage.alt = source.alt;
+        galleryTitle.textContent = item.dataset.galleryTitle || '';
+        galleryText.textContent = item.dataset.galleryCopy || '';
+        galleryDialog.showModal();
+      });
+    });
+
+    galleryClose.addEventListener('click', function(){ galleryDialog.close(); });
+    galleryDialog.addEventListener('click', function(event){
+      var rect = galleryDialog.getBoundingClientRect();
+      var outside = event.clientX < rect.left || event.clientX > rect.right ||
+        event.clientY < rect.top || event.clientY > rect.bottom;
+      if (outside) galleryDialog.close();
+    });
+    galleryDialog.addEventListener('close', function(){
+      galleryImage.removeAttribute('src');
+    });
+  }
+
 })();
 </script>
 
