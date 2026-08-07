@@ -566,12 +566,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   /* Layered like a real sheet resting on the stack below it: a tight contact
      shadow where the edge meets the card behind it, plus a soft, wide-reaching
      ambient cast. A single soft shadow with a large negative spread (the
-     previous approach) stays too close to the edge to read against a
+     original approach) stays too close to the edge to read against a
      similarly warm/pale background — the cards visually merged. */
   box-shadow:
-    0 1px 1px rgba(3,11,33,.05),
-    0 10px 26px -14px rgba(3,11,33,.32),
-    0 44px 96px -36px rgba(3,11,33,.5);
+    0 1px 1px rgba(3,11,33,.04),
+    0 8px 20px -14px rgba(3,11,33,.22),
+    0 36px 80px -40px rgba(3,11,33,.34);
   transform-origin:50% 0;
   will-change:transform;
   /* Short transition only smooths frame-to-frame jitter — the motion itself is
@@ -591,22 +591,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .proof-outcome.is-active{
   box-shadow:
-    0 1px 1px rgba(3,11,33,.06),
-    0 12px 30px -14px rgba(3,11,33,.36),
-    0 calc(58px - (var(--handoff) * 26px)) calc(130px - (var(--handoff) * 54px)) -40px rgba(3,11,33,.58);
+    0 1px 1px rgba(3,11,33,.05),
+    0 9px 22px -14px rgba(3,11,33,.26),
+    0 calc(48px - (var(--handoff) * 22px)) calc(108px - (var(--handoff) * 46px)) -40px rgba(3,11,33,.42);
 }
 .proof-outcome.is-past{
   box-shadow:
-    0 1px 1px rgba(3,11,33,.04),
-    0 7px 18px -12px rgba(3,11,33,.24),
-    0 28px 64px -36px rgba(3,11,33,.4);
+    0 1px 1px rgba(3,11,33,.03),
+    0 6px 14px -12px rgba(3,11,33,.18),
+    0 22px 52px -36px rgba(3,11,33,.28);
 }
 .proof-index{ display:block; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--brass); }
 .proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .proof-copy > p{ max-width:43ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
-.proof-evidence{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
-.proof-evidence span{ display:block; margin-bottom:5px; font-family:var(--font-mono); font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); }
-.proof-evidence strong{ display:block; font-size:14px; line-height:1.45; color:var(--blue-deep); }
 .proof-media{
   position:relative;
   min-height:390px;
@@ -816,7 +813,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 @media (max-width:640px){
   .container{ padding:0 var(--sp-2); }
   .proof-media,.proof-media img{ min-height:300px; }
-  .proof-evidence{ grid-template-columns:1fr; }
   .journal-proof{ grid-template-columns:1fr; gap:14px; }
   .gallery-grid{ grid-template-columns:1fr; }
   .battery-focus{ height:auto; min-height:auto; }
@@ -1025,10 +1021,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <span class="proof-index">01 / Architecture</span>
           <h3>One system, engineered around the mission.</h3>
           <p>Cell chemistry, BMS, thermal strategy, enclosure and interfaces are developed as one architecture around payload, flight time and operating conditions.</p>
-          <div class="proof-evidence">
-            <div><span>Engineering output</span><strong>Reviewed system architecture</strong></div>
-            <div><span>Customer value</span><strong>No catalogue-pack compromise</strong></div>
-          </div>
         </div>
         <figure class="proof-media contain">
           <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="Custom battery architecture developed around the drone application">
@@ -1041,10 +1033,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <span class="proof-index">02 / Validation</span>
           <h3>Performance proven before release.</h3>
           <p>Representative packs are verified electrically, thermally and mechanically against the agreed mission profile, including communication and fault handling.</p>
-          <div class="proof-evidence">
-            <div><span>Engineering output</span><strong>Documented validation results</strong></div>
-            <div><span>Customer value</span><strong>Lower integration and field risk</strong></div>
-          </div>
         </div>
         <figure class="proof-media">
           <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Industrial drone used to validate the battery system in its intended application">
@@ -1057,10 +1045,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <span class="proof-index">03 / Production readiness</span>
           <h3>Quality designed into every finished pack.</h3>
           <p>Approved components, controlled work instructions, serialized traceability and end-of-line testing make the validated design repeatable at production scale.</p>
-          <div class="proof-evidence">
-            <div><span>Manufacturing output</span><strong>Controlled BOM and EOL record</strong></div>
-            <div><span>Customer value</span><strong>Consistent quality across every batch</strong></div>
-          </div>
         </div>
         <figure class="proof-media">
           <img src="assets/unsplash/production-line-web.jpg" alt="Controlled production line for repeatable battery manufacturing">
