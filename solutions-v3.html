@@ -45,7 +45,6 @@ h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; let
 .container{ max-width:var(--container); margin:0 auto; padding:0 var(--sp-4); }
 section{ position:relative; }
 a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
-.eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:500; font-size:14px; letter-spacing:.16em; text-transform:uppercase; color:var(--brass-text); }
 .btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:16px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
 .btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
 .btn:hover::before{ opacity:1; }
@@ -98,7 +97,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 .page-hero{ padding:var(--sp-6) 0 var(--sp-5); overflow:hidden; }
 .page-hero-inner{ max-width:64ch; }
-.page-hero h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); max-width:18ch; margin:14px 0 var(--sp-3); }
+.page-hero h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); max-width:18ch; margin:0 0 var(--sp-3); }
 .page-hero p{ max-width:62ch; font-size:16px; color:var(--ink-soft); line-height:1.65; }
 
 /* ============================================================
@@ -109,7 +108,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .sol-category{ padding:var(--sp-8) 0; }
 .sol-category:nth-of-type(even){ background:var(--card); }
 .sol-category-head{ max-width:70ch; margin-bottom:var(--sp-5); }
-.sol-category-head h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin:14px 0 var(--sp-2); max-width:20ch; }
+.sol-category-head h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin:0 0 var(--sp-2); max-width:20ch; }
 .sol-category-head p{ font-size:16px; color:var(--ink-soft); line-height:1.65; max-width:58ch; margin-bottom:var(--sp-3); }
 .sol-chips{ display:flex; flex-wrap:wrap; gap:8px; }
 .sol-chip{ font-size:14px; font-weight:500; padding:7px 14px; border-radius:999px; color:var(--ink-soft); background:var(--paper-2); }
@@ -141,7 +140,7 @@ main > .cta-band{ display:none; }
 main > .solutions-hero{ display:none; }
 .solutions-hero{ padding:72px 0 112px; overflow:hidden; }
 .solutions-hero-grid{ display:grid; grid-template-columns:.92fr 1.08fr; gap:clamp(54px,7vw,110px); align-items:center; }
-.solutions-hero-copy h2{ max-width:12ch; margin:16px 0 24px; font-size:var(--h1-display); letter-spacing:var(--h1-ls); line-height:var(--h1-lh); }
+.solutions-hero-copy h2{ max-width:12ch; margin:0 0 24px; font-size:var(--h1-display); letter-spacing:var(--h1-ls); line-height:var(--h1-lh); }
 .solutions-hero-copy > p{ max-width:52ch; color:var(--ink-soft); font-size:16px; line-height:1.68; }
 .solutions-hero-actions{ display:flex; align-items:center; gap:18px; margin-top:30px; flex-wrap:wrap; }
 .solutions-hero-proof{ display:flex; gap:22px; margin-top:46px; padding-top:20px; border-top:1px solid rgba(6,8,26,.1); }
@@ -174,7 +173,7 @@ main > .solutions-hero{ display:none; }
 .solution-logic{ padding:128px 0; background:var(--paper-2); }
 .solution-logic-grid{ display:block; }
 .solution-logic-copy{ display:grid; grid-template-columns:minmax(0,1.05fr) minmax(320px,.75fr); gap:clamp(48px,8vw,128px); align-items:start; margin-bottom:72px; }
-.solution-logic-title h2{ max-width:18ch; margin:14px 0 0; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
+.solution-logic-title h2{ max-width:18ch; margin:0; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .solution-logic-copy > p{ max-width:52ch; padding-top:42px; color:var(--ink-soft); font-size:16px; line-height:1.7; }
 /* The list is pulled out by the row's horizontal padding so the dividers and
    the hover panel stay aligned to the container while the row content keeps
@@ -438,7 +437,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="solutions-hero">
   <div class="container solutions-hero-grid">
     <div class="solutions-hero-copy" data-sv-reveal>
-      <span class="eyebrow">Custom battery solutions</span>
       <h2>Your application sets the architecture.</h2>
       <p>WS Technicals develops lithium battery systems around the machine, its operating environment and the business case behind it. From the first requirement to production release, the solution remains application-specific.</p>
       <div class="solutions-hero-actions">
@@ -558,7 +556,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
   <div class="container solution-logic-grid">
     <div class="solution-logic-copy" data-sv-reveal>
       <div class="solution-logic-title">
-        <span class="eyebrow">What custom means</span>
         <h2>The battery follows the application, never the other way around.</h2>
       </div>
       <p>Potential solutions are evaluated as one system. Performance, safety, integration and production economics remain connected from the beginning.</p>
@@ -596,7 +593,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="page-hero">
   <div class="container">
     <div class="page-hero-inner">
-      <span class="eyebrow">Solutions</span>
       <h2>Custom lithium battery systems for six demanding application categories.</h2>
       <p>From unmanned platforms to material handling, robotics, marine, backup power and heavy machinery, we design, certify and mass produce the battery your application needs. We do not begin with a catalogue part number.</p>
     </div>
@@ -607,7 +603,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="sol-category" id="legacy-drones">
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
-      <span class="eyebrow">01 / 06 · Drones</span>
       <h2>Power across unmanned air, sea and ground platforms.</h2>
       <p>From long-endurance fixed-wing aircraft to underwater and ground platforms, every unmanned system runs on a pack engineered for its duty cycle, payload and environment rather than a generic cell count.</p>
       <div class="sol-chips">
@@ -667,7 +662,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="sol-category" id="legacy-material-handling">
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
-      <span class="eyebrow">02 / 06 · Material Handling</span>
       <h2>Continuous-duty power for the warehouse floor.</h2>
       <p>AGVs, AMRs and forklifts run multiple shifts without a pack change. The systems are engineered for fast charging, safety interlocks and drop-in fleet compatibility.</p>
       <div class="sol-chips">
@@ -705,7 +699,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="sol-category" id="legacy-robotics">
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
-      <span class="eyebrow">03 / 06 · Robotics</span>
       <h2>Compact, high-cycle packs for precision robotics.</h2>
       <p>Humanoid platforms and collaborative robots demand packs that are light, dense and safe to operate alongside people. The battery is built into the chassis instead of bolted onto it.</p>
       <div class="sol-chips">
@@ -729,7 +722,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="sol-category" id="legacy-maritime">
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
-      <span class="eyebrow">04 / 06 · Maritime</span>
       <h2>Marine-certified systems, built for vibration and moisture.</h2>
       <p>From leisure and work boats to unmanned surface systems, every marine pack is sealed, corrosion-resistant and certified for continuous duty at sea.</p>
       <div class="sol-chips">
@@ -752,7 +744,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="sol-category" id="legacy-ups">
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
-      <span class="eyebrow">05 / 06 · UPS</span>
       <h2>Backup power that's ready the instant it's needed.</h2>
       <p>Rack-mounted and cabinet UPS systems protect critical infrastructure with long standby life and instant failover, not just peak capacity.</p>
       <div class="sol-chips">
@@ -782,7 +773,6 @@ html.motion-ready [data-sv-reveal].in-view{ opacity:1; transform:translateY(0); 
 <section class="sol-category" id="legacy-heavy-machinery">
   <div class="container">
     <div class="sol-category-head" data-sv-reveal>
-      <span class="eyebrow">06 / 06 · Heavy Machinery</span>
       <h2>High-capacity packs for torque, duty cycle and the outdoors.</h2>
       <p>From groundskeeping equipment to construction, agricultural and lifting machinery, every pack is engineered for the torque curve and environment of the machine it powers.</p>
       <div class="sol-chips">

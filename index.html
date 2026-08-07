@@ -184,21 +184,6 @@ textarea:focus-visible{
   outline-color:var(--brass-hi);
 }
 
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:var(--font-body);
-  font-weight:600;
-  font-size:14px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--brass);
-}
-.on-dark .eyebrow,
-.global-orbit .eyebrow,
-.presence .eyebrow,
-.contact .eyebrow{ color:var(--brass-on-dark); }
 
 .btn{
   position:relative;
@@ -890,7 +875,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   font-size:var(--h2-section);
   letter-spacing:var(--h2-ls);
   line-height:var(--h2-lh);
-  margin:var(--sp-2) 0 var(--sp-3);
+  margin:0 0 var(--sp-3);
   max-width:16ch;
 }
 .proof-copy p{
@@ -1043,7 +1028,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .workflow::before{ content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(15,42,92,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.07) 1px,transparent 1px); background-size:96px 96px; opacity:.42; -webkit-mask-image:radial-gradient(ellipse 82% 92% at 58% 48%,#000,transparent 82%); mask-image:radial-gradient(ellipse 82% 92% at 58% 48%,#000,transparent 82%); }
 .workflow > .container{ position:relative; z-index:1; }
 .workflow-head{ margin-bottom:72px; }
-.workflow-head .eyebrow{ color:#876c4d; }
 .workflow-head h2{ max-width:15ch; color:var(--ink); font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .workflow-head > p{ max-width:49ch; }
 .workflow-view-toggle{
@@ -1859,7 +1843,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .orbit-copy{ max-width:500px; }
 .orbit-copy h2{
   max-width:15ch;
-  margin:16px 0 var(--sp-3);
+  margin:0 0 var(--sp-3);
   font-size:var(--h2-section);
   line-height:var(--h2-lh);
   letter-spacing:var(--h2-ls);
@@ -2397,7 +2381,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
      ============================================================ -->
 <section class="hero">
   <div class="container hero-inner">
-    <span class="eyebrow">Custom Battery Engineering</span>
     <h1>Custom battery systems.<br>Engineered around your application.</h1>
     <p>Custom lithium battery systems engineered for demanding applications. From concept and certification to scalable production, every solution is tailored to meet the performance, safety and reliability requirements of your product.</p>
     <a href="#contact" class="btn btn-primary">Get in touch</a>
@@ -2514,7 +2497,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="proof" id="proof">
   <div class="container proof-grid">
     <div class="proof-copy">
-      <span class="eyebrow">Engineered, not assembled</span>
       <h2>Every detail is built around your application, not pulled off a shelf.</h2>
       <p>From cell chemistry to firmware, every layer of the pack is selected for your duty cycle, environment and certification requirements. Everything is designed and tested in-house instead of sourced from a catalogue.</p>
       <a href="#contact" class="link-arrow">Talk to our engineering team
@@ -2539,8 +2521,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="presence on-dark" hidden aria-hidden="true">
   <div class="container">
     <div class="presence-head">
-      <span class="eyebrow">Global Presence</span>
-      <h2 style="margin-top:16px;">Engineered in Denmark.<br>Built and delivered worldwide.</h2>
+      <h2>Engineered in Denmark.<br>Built and delivered worldwide.</h2>
       <p>From our Danish headquarters to our production partner in China, WS Technicals supports customers and partners across Europe, the Americas and Asia.</p>
     </div>
 
@@ -2606,7 +2587,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="global-orbit" id="global-orbit">
   <div class="container orbit-layout">
     <div class="orbit-copy">
-      <span class="eyebrow">Global engineering network</span>
       <h2>One engineering base. Connected worldwide.</h2>
       <p>Every route starts with our headquarters in Denmark. From customer dialogue across Europe and the Americas to production coordination in China, technical decisions stay connected throughout the project.</p>
     </div>
@@ -2643,7 +2623,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="workflow" id="how-we-work">
   <div class="container">
     <div class="workflow-head head-split">
-      <span class="eyebrow">Controlled development and industrialization</span>
       <h2>From technical brief to controlled series production.</h2>
       <p>A gated engineering process keeps requirements, validation evidence, compliance and manufacturing readiness aligned. Each phase closes with a documented decision before the programme advances.</p>
     </div>
@@ -2862,8 +2841,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="contact on-dark" id="contact">
   <div class="container contact-grid">
     <div>
-      <span class="eyebrow">Get in touch</span>
-      <h2 style="margin-top:16px;">Let's talk about your application.</h2>
+      <h2>Let's talk about your application.</h2>
       <p class="contact-intro">Tell us about your requirements and a member of our engineering team will get back to you.</p>
 
       <div class="contact-detail">

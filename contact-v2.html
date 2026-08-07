@@ -45,8 +45,6 @@ h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; let
 section{ position:relative; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
 .on-dark a:focus-visible, .on-dark button:focus-visible, .on-dark input:focus-visible, .on-dark select:focus-visible, .on-dark textarea:focus-visible{ outline-color:var(--brass-hi); }
-.eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
-.on-dark .eyebrow{ color:var(--ink-soft-on-dark); }
 .btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
 .btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
 .btn:hover::before{ opacity:1; }
@@ -251,10 +249,6 @@ body[data-wst-page="contact"] .page-hero h1{
 body[data-wst-page="contact"] .page-hero p{
   color:rgba(251,249,245,.72);
 }
-body[data-wst-page="contact"] .page-hero .eyebrow{
-  color:var(--brass-hi);
-}
-
 /* Let the form illumination dissolve into the hero instead of being clipped,
    while still containing its sideways bleed. overflow-x:clip does not create a
    scroll container, so sticky descendants keep working. */
@@ -405,7 +399,6 @@ body[data-wst-page="contact"] .page-hero .eyebrow{
 
 <section class="page-hero">
   <div class="container page-hero-inner">
-    <span class="eyebrow">Contact</span>
     <h1>Let's talk about your application.</h1>
     <p>Tell us whether you need a sales conversation, help with a purchase or an answer to a general question. The right person will get back to you.</p>
   </div>

@@ -45,8 +45,6 @@ h1,h2,h3,h4,.font-display{ font-family:var(--font-display); font-weight:700; let
 section{ position:relative; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
 .on-dark a:focus-visible, .on-dark button:focus-visible{ outline-color:var(--brass-hi); }
-.eyebrow{ display:inline-flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
-.on-dark .eyebrow{ color:var(--ink-soft-on-dark); }
 .btn{ position:relative; z-index:0; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:var(--r); font-weight:600; font-size:15px; letter-spacing:-.01em; border:1px solid transparent; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease); white-space:nowrap; }
 .btn::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,.07) 100%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
 .btn:hover::before{ opacity:1; }
@@ -549,7 +547,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 <section class="about-gallery" aria-label="Engineering and production">
   <div class="container">
     <div class="about-gallery-head head-split">
-      <span class="eyebrow">Inside WS Technicals</span>
       <h2>Engineering is a team discipline.</h2>
       <p>Our work moves between engineering, electronics and production. These environments are connected by the same objective: turning complex requirements into dependable systems.</p>
     </div>
@@ -606,8 +603,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 <section class="career" id="career">
   <div class="container career-grid">
     <div>
-      <span class="eyebrow">Career</span>
-      <h2 style="margin-top:16px;">Build custom battery systems with us.</h2>
+      <h2>Build custom battery systems with us.</h2>
       <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications rather than just spec sheets, we'd like to hear from you.</p>
       <a href="careers.html" class="link-arrow">Explore careers
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -624,7 +620,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 <section class="facility-preview" aria-labelledby="facility-preview-title">
   <div class="container">
     <div class="facility-preview-head head-split">
-      <span class="eyebrow">Our next chapter</span>
       <h2 id="facility-preview-title">A new setting for engineering and production.</h2>
       <p>A dedicated environment designed to bring customer dialogue, development, testing and production closer together.</p>
     </div>
