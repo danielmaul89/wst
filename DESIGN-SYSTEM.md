@@ -33,6 +33,56 @@ Do not redefine global colours, fonts, spacing, container width, navigation, but
 - Scale: `14, 16, 24, 32, 40, 48, 56, 64px`.
 - Responsive headings may use `clamp()`, but their minimum and maximum values must come from the scale.
 
+#### Heading hierarchy
+
+The raw scale steps linearly (`+8`), which is too fine to read as hierarchy at
+the top end — 56px next to 64px is a size difference, not a level. The heading
+tiers therefore skip steps so each level lands roughly a fourth or a fifth
+apart. Pages must use these tokens rather than declaring heading sizes:
+
+| Tier | Token | Size | Use |
+| --- | --- | --- | --- |
+| 1 | `--h1-display` | `clamp(40, 6vw, 64)` | Page hero. **One per page.** |
+| 2 | `--h2-section` | `clamp(32, 4.4vw, 48)` | Major section headings. |
+| 3 | `--h3-subsection` | `clamp(24, 2.4vw, 32)` | Headings nested inside a section. |
+| 4 | `--h4-card` | `24` | Card and list-item titles. |
+| 5 | `--h5-card-sm` | `16` | Compact card titles, dense grids. |
+| 6 | `--h6-label` | `14` | Eyebrows, footer column labels. |
+
+Each tier has matching `--hN-lh` and `--hN-ls` tokens; tracking and leading
+tighten as size grows. Apply all three together.
+
+Rules:
+
+- Pick a tier for the **level**, never for the size it happens to produce.
+- Tier follows position in the page, not the tag. A section heading is tier 2
+  whether the document outline needs `h2` or `h3` there.
+- Never let a nested heading outrank its parent section heading.
+- `56px` and `40px` remain in the scale as optical adjustments within a tier —
+  for a long hero line that needs to breathe — not as levels of their own.
+- The utility classes `.t-display`, `.t-section`, `.t-subsection`, `.t-card`
+  and `.t-card-sm` apply a tier directly in markup.
+
+A page may legitimately have no tier 1: `about.html` opens with a lead
+paragraph and a visually hidden `h1`, so its top visible level is tier 2.
+
+#### Heading beside supporting text
+
+Use `.head-split` for the common "heading left, supporting paragraph right"
+section head. It places the eyebrow on its own grid row so the paragraph shares
+a row with the heading and their top edges line up, and applies a small optical
+nudge so the paragraph's first line matches the heading's cap height. Aligning
+on the wrapper instead pins the paragraph to the eyebrow, which reads as
+misaligned. Expected markup:
+
+```html
+<div class="section-head head-split">
+  <span class="eyebrow">Eyebrow</span>
+  <h2>Section heading.</h2>
+  <p>Supporting paragraph.</p>
+</div>
+```
+
 ### Layout
 
 - Maximum content width: `1240px`.

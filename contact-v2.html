@@ -100,7 +100,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 .page-hero{ padding:var(--sp-6) 0 var(--sp-4); text-align:center; overflow:hidden; }
 .page-hero-inner{ max-width:700px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:var(--sp-3); }
-.page-hero h1{ font-size:clamp(34px, 5vw, 56px); letter-spacing:-0.035em; }
+.page-hero h1{ font-size:var(--h1-display); letter-spacing:var(--h1-ls); line-height:var(--h1-lh); }
 .page-hero p{ max-width:560px; font-size:clamp(16px,1.4vw,18px); color:var(--ink-soft-on-dark); line-height:1.65; }
 
 .contact{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0 var(--sp-8); }
@@ -133,7 +133,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .channel-copy.copied{ border-color:var(--brass-hi); }
 
 .support-card{ margin-top:var(--sp-4); background:rgba(251,249,245,.04); border:1px solid rgba(251,249,245,.14); border-radius:var(--r-lg); padding:var(--sp-3); }
-.support-card h3{ font-size:16px; margin-bottom:6px; }
+.support-card h3{ font-size:var(--h5-card-sm); letter-spacing:var(--h5-ls); line-height:var(--h5-lh); margin-bottom:6px; }
 .support-card p{ font-size:13.5px; color:var(--ink-soft-on-dark); margin-bottom:var(--sp-2); max-width:36ch; }
 
 .form-wrap{ position:relative; }
@@ -226,7 +226,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .footer-bottom{ flex-direction:column; align-items:flex-start; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=5">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=publish1">
 <style>
 /* Contact page: one continuous dark blueprint surface from navigation to form. */

@@ -153,7 +153,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   mask-image:radial-gradient(ellipse 50% 72% at 25% 22%,rgba(0,0,0,.68) 0%,rgba(0,0,0,.32) 48%,transparent 82%);
 }
 .hero-grid{ position:relative; z-index:1; display:grid; grid-template-columns:.88fr 1.12fr; gap:var(--sp-6); align-items:center; min-height:610px; }
-.hero-copy h1{ font-size:clamp(32px,4vw,50px); letter-spacing:-.035em; margin:14px 0 var(--sp-3); max-width:14ch; }
+.hero-copy h1{ font-size:var(--h1-display); letter-spacing:var(--h1-ls); line-height:var(--h1-lh); margin:14px 0 var(--sp-3); max-width:14ch; }
 .hero-copy p{ font-size:16.5px; color:var(--ink-soft); line-height:1.7; max-width:52ch; margin-bottom:var(--sp-4); }
 .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
@@ -230,8 +230,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .battery-focus h2{
   max-width:13ch;
-  font-size:clamp(40px,4.8vw,64px);
-  letter-spacing:-.04em;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
   color:var(--paper);
 }
 .battery-focus-copy{
@@ -315,8 +316,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .field-case-copy h2{
   max-width:13ch;
   margin:14px 0 var(--sp-3);
-  font-size:clamp(40px,4vw,56px);
-  letter-spacing:-.04em;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
 }
 .field-case-copy > p{
   max-width:47ch;
@@ -337,7 +339,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   font-weight:800;
   color:var(--blue);
 }
-.case-point h3{ margin-bottom:5px; font-size:24px; letter-spacing:-.02em; }
+.case-point h3{ margin-bottom:5px; font-size:var(--h4-card); letter-spacing:var(--h4-ls); line-height:var(--h4-lh); }
 .case-point p{ max-width:42ch; color:var(--ink-soft); font-size:14px; line-height:1.6; }
 .case-visuals{
   display:grid;
@@ -415,9 +417,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .project-journal h2{
   max-width:16ch;
-  margin-top:14px;
-  font-size:clamp(40px,4.4vw,56px);
-  letter-spacing:-.04em;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
 }
 .project-journal-intro{
   max-width:48ch;
@@ -468,8 +470,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .journal-item h3{
   max-width:19ch;
   margin-bottom:12px;
-  font-size:clamp(24px,2.8vw,32px);
-  letter-spacing:-.025em;
+  font-size:var(--h3-subsection);
+  line-height:var(--h3-lh);
+  letter-spacing:var(--h3-ls);
   color:var(--ink-soft);
   transition:color .45s var(--ease);
 }
@@ -527,17 +530,13 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     var(--paper);
 }
 .engineering-proof-head{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);
-  gap:clamp(40px,8vw,120px);
-  align-items:end;
   margin-bottom:clamp(48px,7vw,96px);
 }
 .engineering-proof-head h2{
   max-width:16ch;
-  margin-top:14px;
-  font-size:clamp(40px,4.4vw,56px);
-  letter-spacing:-.04em;
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
 }
 .engineering-proof-head p{ max-width:48ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
 .proof-outcomes{ position:relative; display:flex; flex-direction:column; }
@@ -587,7 +586,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .proof-outcome.is-past{ box-shadow:0 18px 48px -40px rgba(3,11,33,.34); }
 .proof-index{ display:block; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--brass); }
-.proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:clamp(28px,3vw,40px); letter-spacing:-.03em; }
+.proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .proof-copy > p{ max-width:43ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
 .proof-evidence{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
 .proof-evidence span{ display:block; margin-bottom:5px; font-family:var(--font-mono); font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); }
@@ -719,7 +718,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
    ============================================================ */
 .gallery{ padding:var(--sp-7) 0; }
 .gallery-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap; margin-bottom:var(--sp-4); }
-.gallery-head h2{ font-size:clamp(24px,2.8vw,34px); letter-spacing:-.03em; }
+.gallery-head h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .gallery-head p{ font-size:14.5px; color:var(--ink-soft); max-width:46ch; }
 .gallery-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-3); }
 .gallery-tile{ position:relative; aspect-ratio:4/5; border-radius:var(--r-lg); overflow:hidden; background:var(--card); }
@@ -732,7 +731,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
    ============================================================ */
 .related{ padding:var(--sp-7) 0 var(--sp-8); background:var(--card); }
 .related-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap; margin-bottom:var(--sp-4); }
-.related-head h2{ font-size:clamp(24px,2.8vw,34px); letter-spacing:-.03em; }
+.related-head h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .related-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
 .rel-tile{ position:relative; display:flex; flex-direction:column; border-radius:var(--r-lg); background:#F5F5F7; overflow:hidden; transition:transform var(--dur) var(--ease); }
 .rel-tile-img{ position:relative; aspect-ratio:1/1; overflow:hidden; }
@@ -740,10 +739,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .rel-tile:hover .rel-tile-img img{ transform:scale(1.04); }
 .rel-tile-body{ padding:14px 16px 18px; }
 .rel-tile-body .tag{ font-size:11px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; color:var(--brass-text, var(--brass)); display:block; margin-bottom:4px; }
-.rel-tile-body h3{ font-size:15px; letter-spacing:-.015em; font-weight:600; }
+.rel-tile-body h3{ font-size:var(--h5-card-sm); letter-spacing:var(--h5-ls); line-height:var(--h5-lh); font-weight:600; }
 
 .cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
-.cta-band h2{ font-size:clamp(26px,3.2vw,38px); margin-bottom:var(--sp-2); }
+.cta-band h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin:0 auto var(--sp-2); }
 .cta-band p{ color:var(--ink-soft-on-dark); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
 
 .footer{ background:var(--ink); color:var(--paper); padding:var(--sp-6) 0 var(--sp-3); }
@@ -769,7 +768,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .specs-modal{ position:relative; width:100%; max-width:580px; max-height:86vh; overflow-y:auto; background:var(--card); border-radius:var(--r-xl); box-shadow:0 44px 100px -30px rgba(6,8,26,.55); padding:var(--sp-5); transform:translateY(18px) scale(.97); transition:transform .35s var(--ease); }
 .specs-backdrop.is-open .specs-modal{ transform:translateY(0) scale(1); }
 .specs-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--sp-3); margin-bottom:var(--sp-2); }
-.specs-head h3{ font-size:23px; letter-spacing:-.025em; }
+.specs-head h3{ font-size:var(--h4-card); letter-spacing:var(--h4-ls); line-height:var(--h4-lh); }
 .specs-close{ width:36px; height:36px; border-radius:50%; background:var(--paper-2); color:var(--ink-soft); display:flex; align-items:center; justify-content:center; flex:none; transition:background .25s var(--ease); }
 .specs-close:hover{ background:var(--line-2); color:var(--ink); }
 .specs-intro{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:var(--sp-4); max-width:46ch; }
@@ -796,7 +795,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .battery-focus{ height:auto; min-height:960px; }
   .battery-focus-head,.field-case-grid{ grid-template-columns:1fr; }
   .project-journal-head{ grid-template-columns:1fr; gap:var(--sp-3); align-items:start; }
-  .engineering-proof-head{ grid-template-columns:1fr; gap:var(--sp-3); align-items:start; }
+
   .proof-outcomes{ gap:var(--sp-4); padding-bottom:0; }
   .proof-stack-end{ display:none; }
   .proof-outcome,.proof-outcome:nth-child(even){ position:relative; top:auto; grid-template-columns:1fr; min-height:auto; margin-bottom:0; padding:clamp(34px,6vw,56px); transform:none; opacity:1; }
@@ -849,7 +848,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .proof-outcome.is-active .proof-media img{ transform:none; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=4">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 </head>
 <body data-wst-page="solutions">
@@ -1016,11 +1015,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <section class="engineering-proof" id="engineering-proof">
   <div class="container">
-    <div class="engineering-proof-head">
-      <div>
-        <span class="eyebrow">Engineering proof</span>
-        <h2>Designed to perform. Proven to scale.</h2>
-      </div>
+    <div class="engineering-proof-head head-split">
+      <span class="eyebrow">Engineering proof</span>
+      <h2>Designed to perform. Proven to scale.</h2>
       <p>This is the evidence behind the solution: an architecture matched to the application, performance verified under load, and a manufacturing definition built for consistent output.</p>
     </div>
 
