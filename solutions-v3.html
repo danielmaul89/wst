@@ -190,13 +190,12 @@ main > .solutions-hero{ display:none; }
   pointer-events:none;
   opacity:calc(var(--wave) * .92);
   /* Shadow only, no fill — a lit gradient surface read as too much on top of
-     the lift itself. */
+     the lift itself. mask-image was tried here to taper the shadow at the
+     row's left/right ends, but a mask clips to the element's border-box by
+     default — a shadow this size (58px blur, 22px offset) bleeds well
+     outside that box, so the mask was cutting away nearly the whole shadow,
+     not just its edges. */
   box-shadow:0 calc(22px * var(--wave)) calc(58px * var(--wave)) calc(-22px * var(--wave)) rgba(3,11,33,.4);
-  /* The panel spans the full row width, so without this its shadow reads as a
-     hard-edged bar at the left and right ends instead of a soft lift. Fading
-     the whole layer's opacity toward each side tapers it into the row. */
-  mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);
   transition:opacity 220ms ease,box-shadow 420ms var(--motion-ease);
 }
 .logic-row > *{ position:relative; z-index:1; }
