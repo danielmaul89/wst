@@ -99,15 +99,14 @@ variant of the correct tier instead.
 #### Heading beside supporting text
 
 Use `.head-split` for the common "heading left, supporting paragraph right"
-section head. It places the eyebrow on its own grid row so the paragraph shares
-a row with the heading and their top edges line up, and applies a small optical
-nudge so the paragraph's first line matches the heading's cap height. Aligning
-on the wrapper instead pins the paragraph to the eyebrow, which reads as
-misaligned. Expected markup:
+section head. It shares a grid row between the heading and the paragraph so
+their top edges line up, and applies a small optical nudge so the paragraph's
+first line matches the heading's cap height. Aligning on the wrapper instead
+only matches their box tops, not their visible tops — the heading's cap sits
+lower inside its line box than the paragraph's. Expected markup:
 
 ```html
 <div class="section-head head-split">
-  <span class="eyebrow">Eyebrow</span>
   <h2>Section heading.</h2>
   <p>Supporting paragraph.</p>
 </div>
