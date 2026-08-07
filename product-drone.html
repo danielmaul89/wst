@@ -563,7 +563,15 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   /* No border or accent rule — the cards read as clean sheets, separated by
      shadow alone. */
   background:linear-gradient(135deg,#fff,#f6f3ed);
-  box-shadow:0 30px 80px -60px rgba(3,11,33,.46);
+  /* Layered like a real sheet resting on the stack below it: a tight contact
+     shadow where the edge meets the card behind it, plus a soft, wide-reaching
+     ambient cast. A single soft shadow with a large negative spread (the
+     previous approach) stays too close to the edge to read against a
+     similarly warm/pale background — the cards visually merged. */
+  box-shadow:
+    0 1px 1px rgba(3,11,33,.05),
+    0 10px 26px -14px rgba(3,11,33,.32),
+    0 44px 96px -36px rgba(3,11,33,.5);
   transform-origin:50% 0;
   will-change:transform;
   /* Short transition only smooths frame-to-frame jitter — the motion itself is
@@ -582,9 +590,17 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     translateY(calc((var(--handoff) * -8px) + (var(--depth) * -4px)));
 }
 .proof-outcome.is-active{
-  box-shadow:0 calc(42px - (var(--handoff) * 22px)) calc(108px - (var(--handoff) * 44px)) -70px rgba(3,11,33,.52);
+  box-shadow:
+    0 1px 1px rgba(3,11,33,.06),
+    0 12px 30px -14px rgba(3,11,33,.36),
+    0 calc(58px - (var(--handoff) * 26px)) calc(130px - (var(--handoff) * 54px)) -40px rgba(3,11,33,.58);
 }
-.proof-outcome.is-past{ box-shadow:0 18px 48px -40px rgba(3,11,33,.34); }
+.proof-outcome.is-past{
+  box-shadow:
+    0 1px 1px rgba(3,11,33,.04),
+    0 7px 18px -12px rgba(3,11,33,.24),
+    0 28px 64px -36px rgba(3,11,33,.4);
+}
 .proof-index{ display:block; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--brass); }
 .proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .proof-copy > p{ max-width:43ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
