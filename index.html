@@ -297,6 +297,48 @@ textarea:focus-visible{
   opacity:.26;
 }
 
+/* Preserve a clean white centre while the colour fields sit behind it. */
+@media (min-width:981px){
+  .ambient::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:radial-gradient(
+      ellipse 46% 112% at 50% 34%,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,255,255,.96) 42%,
+      rgba(255,255,255,.78) 62%,
+      rgba(255,255,255,.28) 78%,
+      transparent 90%
+    );
+  }
+}
+
+/* Keep the warm identity visible on compact desktop and laptop screens. */
+@media (min-width:981px) and (max-width:1440px){
+  .ambient{
+    background:linear-gradient(90deg,#FCF8EF 0%,#FFFFFF 38%,#FFFFFF 62%,#F8FAFF 100%);
+  }
+  .ambient-blob-brass{
+    width:92vw; height:128vh;
+    top:-25vh; left:-44vw;
+    background:radial-gradient(circle at 52% 42%,#D6B985 0%,#EBD8B8 43%,#F5EBDD 64%,transparent 82%);
+    opacity:.64;
+  }
+  .ambient-blob-grey{
+    width:88vw; height:128vh;
+    top:-22vh; right:-42vw;
+    opacity:.20;
+  }
+  .ambient-blob-blue{
+    width:100vw; height:136vh;
+    top:6vh; left:auto; right:-54vw;
+    opacity:.16;
+  }
+}
+
 @media (max-width:980px){
   .ambient{
     background:linear-gradient(112deg,rgba(255,250,242,.72) 0%,rgba(255,255,255,.64) 48%,rgba(247,249,253,.54) 100%);
@@ -2178,6 +2220,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   position:relative;
   background:var(--paper);
 }
+.component-library[hidden]{
+  display:none !important;
+}
 .component-library-intro{
   background:var(--paper-2);
   padding:32px 0;
@@ -2530,8 +2575,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <img src="assets/products/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
       <div class="callouts">
         <div class="callout" style="top:12%; left:35%;">Custom BMS &amp; relay module</div>
-        <div class="callout" style="top:45%; left:0%;">Matched cell stack</div>
-        <div class="callout" style="top:57%; left:2%;">Thermal interface layer</div>
+        <div class="callout" style="top:45%; left:16%;">Matched cell stack</div>
+        <div class="callout" style="top:57%; left:14%;">Thermal interface layer</div>
         <div class="callout" style="top:76%; left:40%;">Connector &amp; wiring harness</div>
       </div>
     </div>
@@ -2961,6 +3006,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   if (footer && librarySections.length) {
     var library = document.createElement('div');
     library.className = 'component-library';
+    library.hidden = true;
     library.setAttribute('aria-label', 'Additional company information');
     footer.insertAdjacentElement('afterend', library);
     librarySections.forEach(function(section){ library.appendChild(section); });
