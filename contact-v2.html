@@ -274,9 +274,12 @@ body[data-wst-page="contact"] .page-hero .eyebrow{
   color:var(--brass-hi);
 }
 
-/* Let the form illumination dissolve into the hero instead of being clipped. */
+/* Let the form illumination dissolve into the hero instead of being clipped,
+   while still containing its sideways bleed. overflow-x:clip does not create a
+   scroll container, so sticky descendants keep working. */
 .page-hero + .contact.on-dark{
-  overflow:visible !important;
+  overflow-y:visible !important;
+  overflow-x:clip !important;
 }
 .page-hero + .contact.on-dark::after{
   content:none !important;
