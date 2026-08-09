@@ -337,32 +337,10 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   overflow:hidden;
 }
 .work-principle:last-child{ border-right:0; }
-.work-principle::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(135deg,rgba(231,221,203,.42),rgba(255,255,255,0) 62%);
-  opacity:0;
-  transition:opacity .45s var(--ease);
-}
-.work-principle::after{
-  content:"";
-  position:absolute;
-  left:24px;
-  right:24px;
-  bottom:0;
-  height:2px;
-  background:linear-gradient(90deg,var(--brass),rgba(185,154,114,0));
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform .55s var(--ease);
-}
 .work-principle > *{ position:relative; z-index:1; }
 .work-principle .index{ display:block; margin-bottom:12px; font-family:var(--font-body); font-size:12px; letter-spacing:.12em; color:var(--brass); }
 .work-principle h3{ margin:0 0 7px; font-size:var(--h5-card-sm); letter-spacing:var(--h5-ls); line-height:var(--h5-lh); }
 .work-principle p{ margin:0; max-width:31ch; color:var(--ink-soft); font-size:14px; line-height:1.5; }
-.work-principle:first-child::before{ opacity:1; }
-.work-principle:first-child::after{ transform:scaleX(1); }
 .gallery-lightbox{
   width:min(1180px,calc(100vw - 32px));
   max-width:none;
@@ -503,9 +481,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 }
 @media (prefers-reduced-motion:reduce){
   .about-gallery-item,
-  .about-gallery-item img,
-  .work-principle::before,
-  .work-principle::after{ transition:none !important; }
+  .about-gallery-item img{ transition:none !important; }
 }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">

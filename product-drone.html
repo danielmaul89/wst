@@ -512,7 +512,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .journal-item.is-active h3{ color:var(--blue-deep); }
 .journal-item.is-active p{ color:var(--ink-soft); }
 .engineering-proof{
-  --proof-card-top:calc(var(--nav-height,76px) + 72px);
+  --proof-card-top:calc(var(--nav-height,76px) + 16px);
   --proof-peek:9px;
   position:relative;
   padding:var(--sp-8) 0;
@@ -524,7 +524,114 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     radial-gradient(circle at 88% 74%,rgba(84,112,166,.13),transparent 34%),
     var(--paper);
 }
+/* Blueprint circuit accent — the same hairline grid technique as the site's
+   .blueprint-grid (index.html etc), 96px cells, recoloured for a light
+   section. Brass pulses fade in on a grid line, travel a short stretch,
+   then fade out (a blip, not a comet crossing the whole line).
+
+   The layer is `position:sticky` rather than absolute so it pins in the
+   viewport for the same scroll range the cards are pinned for — with both
+   motionless together, scrolling no longer reads as "the background moves
+   past static cards". The margin-bottom trick (negative, matching the
+   sticky box's own height) reserves that height for the sticky mechanism
+   without pushing the head/cards down: it collapses back to zero so
+   .container renders exactly where it used to. --proof-grid-h is set by JS
+   to the nearest whole multiple of the 96px cell for the viewport height,
+   so the visible slice starts AND ends flush on a grid line — no cell gets
+   cut in half at the top of the section or the seam with the next one.
+
+   z-index:0 (not -1) because negative z-index doesn't paint above this
+   section's own `background` here (confirmed by testing); the head text is
+   lifted to z-index:1 below to stay above it, and the cards' existing
+   z-index:1-3 already wins. */
+.proof-circuit{
+  position:sticky;
+  top:var(--nav-height,76px);
+  z-index:0;
+  height:var(--proof-grid-h,calc(100vh - 76px));
+  /* .proof-circuit is the section's first child, so it normally starts
+     BELOW the section's own top padding (--sp-8) — pulling it up by that
+     exact amount lands its background-position:0 0 origin (and so the
+     first grid line) flush with the section's true top edge, instead of a
+     couple of cells lower. */
+  margin-top:calc(-1 * var(--sp-8));
+  /* Net flow contribution must still land back at zero (so .container
+     isn't dragged up along with the margin-top pull), hence adding
+     --sp-8 back in here rather than just negating the height. */
+  margin-bottom:calc(var(--sp-8) - var(--proof-grid-h,calc(100vh - 76px)));
+  overflow:hidden;
+  pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right,rgba(6,8,26,.07) 0 1px,transparent 1px 96px),
+    repeating-linear-gradient(to bottom,rgba(6,8,26,.07) 0 1px,transparent 1px 96px);
+  background-size:96px 96px;
+  /* Fade the grid unevenly: four soft glow blobs of varying size, unioned
+     together (plain layering, no mask-composite — a previous attempt used
+     mask-composite:subtract to punch holes in a broad base and it nearly
+     erased the whole mask, since source-out zeroes out anywhere the small
+     source shape doesn't overlap an opaque destination). None of the blobs
+     reach the far left/right, so the grid naturally reads as fading off
+     both sides as well as in irregular "splash" patches, closer to the
+     section's own off-centre radial-gradient background than a clean
+     centred vignette. */
+  -webkit-mask-image:
+    radial-gradient(30% 26% at 20% 22%,#000 0%,transparent 100%),
+    radial-gradient(26% 24% at 72% 34%,#000 0%,transparent 100%),
+    radial-gradient(24% 22% at 40% 68%,#000 0%,transparent 100%),
+    radial-gradient(22% 20% at 82% 78%,#000 0%,transparent 100%);
+  mask-image:
+    radial-gradient(30% 26% at 20% 22%,#000 0%,transparent 100%),
+    radial-gradient(26% 24% at 72% 34%,#000 0%,transparent 100%),
+    radial-gradient(24% 22% at 40% 68%,#000 0%,transparent 100%),
+    radial-gradient(22% 20% at 82% 78%,#000 0%,transparent 100%);
+}
+.proof-pulse{
+  position:absolute;
+  width:6px;
+  height:6px;
+  margin:-3px 0 0 -3px;
+  border-radius:50%;
+  background:var(--brass);
+  box-shadow:0 0 8px 2px rgba(185,154,114,.9),0 0 22px 8px rgba(185,154,114,.35);
+  opacity:0;
+}
+/* Motion and visibility are two independent animations, not one. proofDrift*
+   never stops, pauses or resets mid-view — it's a plain back-and-forth
+   (alternate) linear crawl with no invisible "snap back" moment. proofBlink
+   fades the dot in, holds it at full visibility for a beat, fades it back
+   out, then sits invisible for a beat — on its OWN, shorter, unrelated
+   duration. Because the two run at different speeds, a dot never fades in
+   at the same drift position twice in a row, which is what gives the
+   "spawns somewhere new" read despite the position track being fixed and
+   perfectly continuous underneath. */
+.proof-pulse--h{
+  animation:
+    proofBlink var(--bdur,7s) ease-in-out var(--bdelay,0s) infinite,
+    proofDriftH var(--pdur,24s) linear var(--pdelay,0s) infinite alternate;
+}
+.proof-pulse--v{
+  animation:
+    proofBlink var(--bdur,7s) ease-in-out var(--bdelay,0s) infinite,
+    proofDriftV var(--pdur,24s) linear var(--pdelay,0s) infinite alternate;
+}
+/* Pixel-based (not %) so the travel distance is a fixed number of 96px
+   grid cells regardless of the section's actual width/height — a % range
+   would stretch or shrink with the container and stop lining up with "2-3
+   boxes" as the ask requires. */
+@keyframes proofDriftH{ from{ left:var(--pfrom,300px); } to{ left:var(--pto,700px); } }
+@keyframes proofDriftV{ from{ top:var(--pfrom,300px); } to{ top:var(--pto,700px); } }
+@keyframes proofBlink{
+  0%,100%{ opacity:0; }
+  20%{ opacity:1; }
+  55%{ opacity:1; }
+  80%{ opacity:0; }
+}
+@media (prefers-reduced-motion:reduce){
+  .proof-pulse{ display:none; }
+}
 .engineering-proof-head{
+  position:relative;
+  z-index:1;
   margin-bottom:clamp(48px,7vw,96px);
 }
 .engineering-proof-head h2{
@@ -554,7 +661,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   align-items:center;
   min-height:min(64vh,600px);
   margin-bottom:6vh;
-  padding:clamp(32px,4vw,56px);
+  /* Top/right/bottom are the card's spacing to the image (top and bottom
+     are shared with the copy column since they're on the same row, but the
+     image is what sits flush against the right edge) — fixed at 16px
+     rather than scaling with viewport width. Left keeps the responsive
+     clamp for the copy column's own breathing room. */
+  padding:16px 16px 16px clamp(32px,4vw,56px);
   overflow:hidden;
   border-radius:12px;
   /* No border or accent rule — the cards read as clean sheets, separated by
@@ -607,6 +719,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .proof-media{
   position:relative;
   min-height:390px;
+  /* The card's align-items:center (needed so the copy column reads well
+     when its text block is shorter than the row) would otherwise leave the
+     image centred with slack above and below instead of flush against the
+     32px padding. align-self:stretch alone left the figure sized to
+     something short of the full row (off-centre, for reasons that didn't
+     reduce to a single clean cause) — height:100% pins it exactly. */
+  align-self:stretch;
+  height:100%;
+  /* <figure> carries a default 1em 40px UA margin that was never reset —
+     left uncorrected it stacks on top of the card's own padding, which is
+     what was adding the extra ~40-80px of unwanted space on top of the
+     intended 32px gap. */
+  margin:0;
   overflow:hidden;
   border-radius:var(--r-lg);
   background:linear-gradient(145deg,#ececef,#d9d9de);
@@ -615,7 +740,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .proof-media img{ width:100%; height:100%; min-height:390px; object-fit:cover; transition:transform 1s cubic-bezier(.2,.72,.2,1); }
 .proof-media.contain img{ object-fit:contain; padding:clamp(20px,3vw,40px); }
 .proof-outcome.is-active .proof-media img{ transform:scale(calc(1.035 - (var(--handoff) * .035))) translateY(calc(var(--handoff) * -8px)); }
-.proof-label{ position:absolute; left:20px; bottom:20px; z-index:1; padding:10px 16px; border-radius:999px; background:rgba(255,255,255,.88); color:var(--blue-deep); font-size:13px; font-weight:600; box-shadow:0 8px 28px rgba(3,11,33,.1); backdrop-filter:blur(12px); }
 .journal-mobile-image{ display:none; }
 .journal-visual-column{
   position:relative;
@@ -748,7 +872,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .related-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:var(--sp-3); }
 .rel-tile{ position:relative; display:flex; flex-direction:column; border-radius:var(--r-lg); background:#F5F5F7; overflow:hidden; transition:transform var(--dur) var(--ease); }
 .rel-tile-img{ position:relative; aspect-ratio:1/1; overflow:hidden; }
-.rel-tile-img img{ width:100%; height:100%; object-fit:cover; transform-origin:50% 100%; transition:transform .6s var(--ease); }
+.rel-tile-img img{ width:100%; height:100%; object-fit:cover; object-position:50% 100%; transform-origin:50% 100%; transition:transform .6s var(--ease); }
 .rel-tile:hover .rel-tile-img img{ transform:scale(1.04); }
 .rel-tile-body{ padding:14px 16px 18px; }
 .rel-tile-body .tag{ font-size:11px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; color:var(--brass-text, var(--brass)); display:block; margin-bottom:4px; }
@@ -797,6 +921,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
   .proof-outcomes{ gap:var(--sp-4); padding-bottom:0; }
   .proof-stack-end{ display:none; }
+  /* The sticky-pinned grid layer is a desktop-only refinement tied to the
+     card stack's own sticky effect, which is also switched off below — a
+     sticky decorative layer fighting normal mobile scroll adds nothing. */
+  .proof-circuit{ position:absolute; inset:0; height:auto; margin-top:0; margin-bottom:0; }
   .proof-outcome,.proof-outcome:nth-child(even){ position:relative; top:auto; grid-template-columns:1fr; min-height:auto; margin-bottom:0; padding:clamp(28px,6vw,40px); transform:none; opacity:1; }
   .proof-outcome.is-active,.proof-outcome.is-past{ transform:none; opacity:1; }
   .journal-grid{ grid-template-columns:1fr; }
@@ -1004,6 +1132,14 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 </section>
 
 <section class="engineering-proof" id="engineering-proof">
+  <div class="proof-circuit" aria-hidden="true">
+    <span class="proof-pulse proof-pulse--h" style="top:96px;  --pfrom:288px; --pto:864px;  --pdur:13.4s; --pdelay:0s;  --bdur:7s;   --bdelay:0s;"></span>
+    <span class="proof-pulse proof-pulse--h" style="top:288px; --pfrom:480px; --pto:1056px; --pdur:15.4s; --pdelay:5s;  --bdur:8s;   --bdelay:3s;"></span>
+    <span class="proof-pulse proof-pulse--h" style="top:480px; --pfrom:672px; --pto:1248px; --pdur:12.5s; --pdelay:9s;  --bdur:6.5s; --bdelay:5.5s;"></span>
+    <span class="proof-pulse proof-pulse--v" style="left:192px;  --pfrom:96px;  --pto:672px; --pdur:14.4s; --pdelay:2s;  --bdur:7.5s; --bdelay:1.5s;"></span>
+    <span class="proof-pulse proof-pulse--v" style="left:672px;  --pfrom:192px; --pto:768px; --pdur:11.5s; --pdelay:7s;  --bdur:6s;   --bdelay:4s;"></span>
+    <span class="proof-pulse proof-pulse--v" style="left:1248px; --pfrom:48px;  --pto:624px; --pdur:16.3s; --pdelay:12s; --bdur:8.5s; --bdelay:6s;"></span>
+  </div>
   <div class="container">
     <div class="engineering-proof-head head-split">
       <h2>Designed to perform. Proven to scale.</h2>
@@ -1017,9 +1153,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <h3>One system, engineered around the mission.</h3>
           <p>Cell chemistry, BMS, thermal strategy, enclosure and interfaces are developed as one architecture around payload, flight time and operating conditions.</p>
         </div>
-        <figure class="proof-media contain">
-          <img src="assets/products/renders/crop/xug-clean-transparent.png" alt="Custom battery architecture developed around the drone application">
-          <figcaption class="proof-label">Application-matched architecture</figcaption>
+        <figure class="proof-media">
+          <img src="assets/unsplash/curated-lifestyle-jn5uqj9fO60-unsplash.jpg" alt="Engineer sketching a custom battery architecture on technical drawings">
         </figure>
       </article>
 
@@ -1030,8 +1165,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <p>Representative packs are verified electrically, thermally and mechanically against the agreed mission profile, including communication and fault handling.</p>
         </div>
         <figure class="proof-media">
-          <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Industrial drone used to validate the battery system in its intended application">
-          <figcaption class="proof-label">Verified in the intended application</figcaption>
+          <img src="assets/unsplash/DSC_4328.JPG" alt="Battery cells on the production line during validation build">
         </figure>
       </article>
 
@@ -1042,8 +1176,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <p>Approved components, controlled work instructions, serialized traceability and end-of-line testing make the validated design repeatable at production scale.</p>
         </div>
         <figure class="proof-media">
-          <img src="assets/unsplash/production-line-web.jpg" alt="Controlled production line for repeatable battery manufacturing">
-          <figcaption class="proof-label">Traceable, repeatable production</figcaption>
+          <img src="assets/unsplash/karl-greif-H5IXIH254AU-unsplash.jpg" alt="Industrial drone flying with the finished battery pack in its intended application">
         </figure>
       </article>
 
@@ -1329,6 +1462,49 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   updateProofSequence();
   window.addEventListener('scroll',queueProofSequence,{passive:true});
   window.addEventListener('resize',queueProofSequence);
+
+  // Size the sticky grid layer to a whole number of 96px cells so its
+  // visible slice starts and ends flush on a line, instead of clipping a
+  // cell in half wherever the viewport height happens to land.
+  var proofCircuit = document.querySelector('.proof-circuit');
+  function sizeProofGrid(){
+    if (!proofCircuit) return;
+    var navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 76;
+    var cell = 96;
+    var available = window.innerHeight - navHeight;
+    var rows = Math.max(1,Math.round(available / cell));
+    proofCircuit.style.setProperty('--proof-grid-h',(rows * cell) + 'px');
+  }
+  sizeProofGrid();
+  window.addEventListener('resize',sizeProofGrid);
+
+  // Snap each card's image to the nearest 96px grid line, mirroring the
+  // blueprint grid drawn behind the section. The card sits inside a
+  // centred, responsive container while the grid is drawn from the
+  // viewport edge, so the two almost never land on the same line on their
+  // own — nudging the media column's left margin closes that gap. Desktop
+  // only, matching the breakpoint the sticky card effect (and the grid
+  // itself) already switches off at.
+  function alignProofMediaToGrid(){
+    var cell = 96;
+    var desktop = window.innerWidth > 980;
+    proofOutcomes.forEach(function(outcome){
+      var media = outcome.querySelector('.proof-media');
+      if (!media) return;
+      media.style.marginLeft = '0px';
+      if (!desktop) return;
+      var left = media.getBoundingClientRect().left;
+      var nearest = Math.round(left / cell) * cell;
+      media.style.marginLeft = (nearest - left) + 'px';
+    });
+  }
+  alignProofMediaToGrid();
+  window.addEventListener('resize',alignProofMediaToGrid);
+  // Re-run once everything (web fonts, images) has actually finished
+  // loading — a font swap after the first pass can shift the copy column's
+  // width slightly, which throws off the margin this was computed against.
+  window.addEventListener('load',alignProofMediaToGrid);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignProofMediaToGrid);
 })();
 </script>
 
