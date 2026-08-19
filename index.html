@@ -820,12 +820,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   padding:28px;
   opacity:0;
   transform:translateY(38px);
-  transition:transform .82s cubic-bezier(.22,1,.36,1),filter .55s var(--ease),opacity .72s var(--ease);
+  transition:transform .82s cubic-bezier(.22,1,.36,1),opacity .72s var(--ease);
   transition-delay:calc(100ms + (var(--logo-index) * 115ms));
-  filter:saturate(.72) contrast(.94);
 }
-.partner-wall.is-visible .partner-logo-frame{ opacity:.78; transform:translateY(0); }
-.partner-logo:hover .partner-logo-frame{ transform:translateY(0); filter:saturate(.72) contrast(.94); opacity:.78; transition-delay:0ms; }
+.partner-wall.is-visible .partner-logo-frame{ opacity:1; transform:translateY(0); }
+.partner-logo:hover .partner-logo-frame{ transform:translateY(0); opacity:1; transition-delay:0ms; }
 .partner-logo-frame img{
   display:block;
   width:auto;
@@ -912,33 +911,26 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   -webkit-mask-image:radial-gradient(ellipse 98% 94% at 50% 43%,#000 0%,#000 70%,rgba(0,0,0,.88) 79%,rgba(0,0,0,.42) 90%,transparent 100%);
   mask-image:radial-gradient(ellipse 98% 94% at 50% 43%,#000 0%,#000 70%,rgba(0,0,0,.88) 79%,rgba(0,0,0,.42) 90%,transparent 100%);
 }
-.proof-visual .callouts{
+.proof-visual .pinout{
   position:absolute;
   inset:0;
   z-index:2;
+  margin:0; padding:0;
+  list-style:none;
   pointer-events:none;
 }
-.callout{
+.pin{
   position:absolute;
-  pointer-events:auto;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:var(--card);
-  border:1px solid var(--line-2);
-  border-radius:999px;
-  padding:8px 14px 8px 10px;
-  font-size:14px;
-  font-weight:500;
+  right:0; top:var(--t);
+  width:var(--lead);
+  padding-bottom:8px;
+  border-bottom:1.5px solid var(--line-2);
+  text-align:right;
+  font-size:14px; font-weight:600; line-height:1.3;
   color:var(--ink);
-  box-shadow:var(--shadow-sm);
   white-space:nowrap;
-}
-.callout-dot{
-  width:6px; height:6px;
-  border-radius:50%;
-  background:var(--brass);
-  flex:none;
+  transform:translateY(-100%);
+  pointer-events:auto;
 }
 
 /* ============================================================
@@ -2236,14 +2228,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .partner-logo{ min-height:132px; }
   .proof-grid{ grid-template-columns:1fr; }
   .proof-visual{ width:100%; min-height:0; aspect-ratio:4 / 3; transform:none; }
-  .proof-visual .callouts{
+  .proof-visual .pinout{
     position:static;
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:var(--sp-3);
+    display:grid;
+    margin:var(--sp-3) 0 0;
+    padding:0; list-style:none;
   }
-  .callout{ position:static; max-width:100%; white-space:normal; }
+  .pin{
+    position:static; width:auto;
+    padding:9px 0; text-align:left;
+    white-space:normal; transform:none;
+    border-bottom:1px solid var(--line-2);
+  }
+  .pin:first-child{ border-top:1px solid var(--line-2); }
   .stats-grid{ grid-template-columns:repeat(2, 1fr); gap:var(--sp-4) var(--sp-3); }
   .about-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
   .workflow-head{ grid-template-columns:1fr; gap:18px; margin-bottom:52px; }
@@ -2505,12 +2502,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     </div>
     <div class="proof-visual">
       <img src="assets/products/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack, showing the BMS module, cell block, thermal interface layer and connector housing" class="proof-img">
-      <div class="callouts">
-        <div class="callout" style="top:12%; left:35%;">Custom BMS &amp; relay module</div>
-        <div class="callout" style="top:45%; left:16%;">Matched cell stack</div>
-        <div class="callout" style="top:57%; left:14%;">Thermal interface layer</div>
-        <div class="callout" style="top:76%; left:40%;">Connector &amp; wiring harness</div>
-      </div>
+      <ul class="pinout">
+        <li class="pin" style="--t:17.5%; --lead:35%;">Custom BMS</li>
+        <li class="pin" style="--t:45%; --lead:37%;">Matched cell stack</li>
+        <li class="pin" style="--t:55%; --lead:39%;">Thermal interface layer</li>
+        <li class="pin" style="--t:83%; --lead:23%;">Connector &amp; wiring harness</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -2620,7 +2617,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <!-- ============================================================
      ABOUT
      ============================================================ -->
-<section class="workflow" id="how-we-work">
+<section class="workflow" id="how-we-work" hidden aria-hidden="true">
   <div class="container">
     <div class="workflow-head head-split">
       <h2>From technical brief to controlled series production.</h2>
@@ -3167,7 +3164,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
-<script src="assets/scripts/wst-globe-webgl.js?v=21" defer></script>
+<script src="assets/scripts/wst-globe-webgl.js?v=22" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>
 </body>
 </html>
