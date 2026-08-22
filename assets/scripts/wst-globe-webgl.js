@@ -160,13 +160,42 @@
     stage.dataset.landDots = String(liftedPositions.length / 3);
   }
 
+  /* Denmark is always index 0 - every route is drawn out of it. Only the two
+     anchors carry a DOM label; the customer countries stay unlabelled so the
+     globe reads as activity rather than a wall of text. `traveler` is reserved
+     for the long-haul routes, where a moving dot is legible. */
+  var CUSTOMER_COLOR = 0xcbb08a;
   var locations = [
-    { name: 'Denmark', lat: 56.16, lon: 10.2, color: 0xcbb08a, hq: true },
-    { name: 'United Kingdom', lat: 54.5, lon: -2.4, color: 0xcbb08a },
-    { name: 'United States · East', lat: 40.7, lon: -74, color: 0xcbb08a },
-    { name: 'United States · West', lat: 37.8, lon: -122.4, color: 0xcbb08a },
-    { name: 'South America', lat: -23.5, lon: -46.6, color: 0xcbb08a },
-    { name: 'China', lat: 31.2, lon: 121.5, color: 0x496c9f }
+    { name: 'Denmark', lat: 56.16, lon: 10.2, color: CUSTOMER_COLOR, hq: true, label: true },
+    { name: 'China', lat: 31.2, lon: 121.5, color: 0x496c9f, label: true, partner: true, traveler: true },
+
+    { name: 'United States · East', lat: 40.7, lon: -74, color: CUSTOMER_COLOR, traveler: true },
+    { name: 'United States · West', lat: 37.8, lon: -122.4, color: CUSTOMER_COLOR },
+    { name: 'Mexico', lat: 19.43, lon: -99.13, color: CUSTOMER_COLOR, traveler: true },
+    { name: 'Brazil', lat: -15.79, lon: -47.88, color: CUSTOMER_COLOR, traveler: true },
+    { name: 'Morocco', lat: 31.8, lon: -7.1, color: CUSTOMER_COLOR },
+    { name: 'Japan', lat: 35.69, lon: 139.69, color: CUSTOMER_COLOR, traveler: true },
+    { name: 'Thailand', lat: 13.75, lon: 100.5, color: CUSTOMER_COLOR },
+    { name: 'Singapore', lat: 1.35, lon: 103.82, color: CUSTOMER_COLOR, traveler: true },
+    { name: 'Australia', lat: -33.87, lon: 151.21, color: CUSTOMER_COLOR, traveler: true },
+
+    { name: 'United Kingdom', lat: 53, lon: -1.5, color: CUSTOMER_COLOR },
+    { name: 'Sweden', lat: 59.33, lon: 18.07, color: CUSTOMER_COLOR },
+    { name: 'Norway', lat: 60.5, lon: 8.5, color: CUSTOMER_COLOR },
+    { name: 'Finland', lat: 60.17, lon: 24.94, color: CUSTOMER_COLOR },
+    { name: 'Latvia', lat: 56.95, lon: 24.11, color: CUSTOMER_COLOR },
+    { name: 'Germany', lat: 51.1, lon: 10.4, color: CUSTOMER_COLOR },
+    { name: 'Netherlands', lat: 52.2, lon: 5.5, color: CUSTOMER_COLOR },
+    { name: 'Belgium', lat: 50.85, lon: 4.35, color: CUSTOMER_COLOR },
+    { name: 'France', lat: 46.6, lon: 2.4, color: CUSTOMER_COLOR },
+    { name: 'Spain', lat: 40.42, lon: -3.7, color: CUSTOMER_COLOR },
+    { name: 'Portugal', lat: 39.5, lon: -8.2, color: CUSTOMER_COLOR },
+    { name: 'Italy', lat: 42.8, lon: 12.6, color: CUSTOMER_COLOR },
+    { name: 'Austria', lat: 47.5, lon: 14.5, color: CUSTOMER_COLOR },
+    { name: 'Slovenia', lat: 46.1, lon: 14.8, color: CUSTOMER_COLOR },
+    { name: 'Slovakia', lat: 48.7, lon: 19.7, color: CUSTOMER_COLOR },
+    { name: 'Poland', lat: 52.0, lon: 19.5, color: CUSTOMER_COLOR },
+    { name: 'Serbia', lat: 44.0, lon: 21.0, color: CUSTOMER_COLOR }
   ];
 
   function makeGlowTexture(color) {
@@ -232,26 +261,25 @@
       blending: THREE.AdditiveBlending
     }));
     sprite.position.copy(geoToVector(location.lat, location.lon, radius * 1.025));
-    var size = location.hq ? 0.108 : 0.078;
+    var size = location.hq ? 0.108 : (location.label ? 0.078 : 0.05);
     sprite.scale.set(size, size, 1);
     sprite.userData.baseSize = size;
     sprite.userData.phase = Math.random() * Math.PI * 2;
     globe.add(sprite);
     markerSprites.push(sprite);
 
+    if (!location.label) return;
+
     var label = document.createElement('span');
     label.className = 'orbit-location-label' + (location.hq ? ' is-hq' : '');
-    label.textContent = location.name + (location.hq ? ' · HQ' : '');
+    label.textContent = location.name + (location.hq ? ' · HQ' : (location.partner ? ' · Production' : ''));
     label.setAttribute('aria-hidden', 'true');
     stage.appendChild(label);
     var offsetX = 14;
     var offsetY = -20;
-    if (location.name === 'Denmark') {
+    if (location.hq) {
       offsetX = 18;
       offsetY = -42;
-    } else if (location.name === 'United Kingdom') {
-      offsetX = 14;
-      offsetY = 16;
     }
     labelSprites.push({
       label: label,
@@ -282,17 +310,24 @@
       vector.multiplyScalar(radius * 1.018 + Math.sin(Math.PI * amount) * arcLift);
       routePoints.push(vector);
     }
+    /* Europe carries most of the routes, so the unlabelled customer arcs are
+       drawn thinner and fainter than the two anchors to stop that cluster
+       turning into a solid blob. */
+    var isAnchor = Boolean(destination.label);
     var curve = new THREE.CatmullRomCurve3(routePoints, false, 'centripetal');
-    var geometry = new THREE.TubeBufferGeometry(curve, 72, 0.0027, 6, false);
+    var geometry = new THREE.TubeBufferGeometry(curve, isAnchor ? 72 : 40, isAnchor ? 0.0027 : 0.0015, 6, false);
     var material = new THREE.MeshBasicMaterial({
       color: destination.color,
       transparent: true,
-      opacity: 0.22,
+      opacity: isAnchor ? 0.22 : 0.12,
       depthWrite: false
     });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.userData.curve = curve;
+    mesh.userData.baseOpacity = isAnchor ? 0.18 : 0.1;
     globe.add(mesh);
+
+    if (!destination.traveler) return mesh;
 
     var destinationColor = new THREE.Color(destination.color);
     var traveler = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -393,7 +428,8 @@
     }
 
     routes.forEach(function (route, index) {
-      route.material.opacity = 0.18 + 0.055 * Math.sin(elapsed * 0.62 + index);
+      route.material.opacity = route.userData.baseOpacity + 0.055 * Math.sin(elapsed * 0.62 + index);
+      if (!route.userData.traveler) return;
       var progress = reduceMotion ? 0.62 : (elapsed * 0.09 + index * 0.17) % 1;
       route.userData.traveler.position.copy(route.userData.curve.getPointAt(progress));
     });
