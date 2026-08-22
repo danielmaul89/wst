@@ -3,10 +3,14 @@
 This project is a static, multi-page website. The shared visual source of truth is:
 
 - `design-system.html` — interactive visual reference and live token adjustment lab.
+- `component-library.html` — every shared section block rendered in isolation with its markup contract.
 - `assets/styles/wst-design-system.css` — brand tokens, typography, layout, navigation, buttons, forms, footer and responsive standards.
+- `assets/styles/wst-components.css` — shared section blocks: cards, grids, splits, bands, galleries, row lists.
 - `assets/styles/enterprise-polish.css` — glass lighting, cursor-aware button light, motion and finishing details.
 - `assets/scripts/wst-shell.js` — the canonical navigation and footer markup used by every migrated page.
 - `assets/scripts/enterprise-motion.js` — shared interaction behaviour.
+
+`COMPONENTS.md` documents the process: how to build a new page from these, and what to do when nothing existing fits. Read it before writing CSS.
 
 Page-level `<style>` blocks are reserved for layouts and components unique to that page.
 
@@ -18,11 +22,20 @@ When making a change, use this order:
 
 1. Change a token in `wst-design-system.css` when the decision applies everywhere.
 2. Change a shared component in `wst-design-system.css` when navigation, buttons, forms or the footer should change everywhere.
-3. Change `enterprise-polish.css` only for animation, glass, lighting and interaction polish.
-4. Change `wst-shell.js` when navigation or footer content must change everywhere.
-5. Add page-local CSS only when the section is genuinely unique.
+3. Change or extend a block in `wst-components.css` when a page section — a card, grid, split, band, gallery or row list — should change everywhere. Prefer adding a `--modifier` variant over adding a new component.
+4. Change `enterprise-polish.css` only for animation, glass, lighting and interaction polish.
+5. Change `wst-shell.js` when navigation or footer content must change everywhere.
+6. Add page-local CSS only when the section is genuinely unique.
 
 Do not redefine global colours, fonts, spacing, container width, navigation, buttons, forms or footer styles inside an HTML file.
+
+### The `wst-` prefix
+
+Every class in `wst-components.css` is prefixed `wst-`; page-local classes never are. A page must never declare a `wst-*` class in its own `<style>` block — not to override it, not to extend it. `scripts/check-design-system.ps1` enforces this:
+
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-design-system.ps1
+```
 
 ## Canonical standards
 
@@ -159,15 +172,23 @@ lower inside its line box than the paragraph's. Expected markup:
 
 ## Active pages
 
-The shared system is connected to:
+Every page loads `wst-design-system.css` and `enterprise-polish.css`, and takes its navigation and footer from `wst-shell.js`. The shared sheets are linked *after* each page's own `<style>` block, so the system wins any equal-specificity conflict.
 
-- `index.html`
+Only pages built on the component layer also load `wst-components.css`:
+
+- `component-library.html`
+
+### Pages predating the component layer
+
+- `index.html` — visual homepage reference
 - `solutions-v3.html`
-- `development.html`
-- `production.html`
-- `bms.html`
 - `about.html`
-- `contact.html`
-- `product.html`
+- `product-drone.html`
+- `development.html`, `production.html`, `bms.html`, `contact.html`, `product.html`
+- `careers.html`, `news.html`, `design-system.html`
 
-`index.html` remains the visual homepage reference. Versioned alternatives such as `index-v3.html` and `solutions-v2.html` are design experiments and are intentionally not migrated until selected for production.
+These carry a private copy of the navigation, button and footer CSS inside their own `<style>` block, under the same class names as the shared system — 865 duplicated declarations across 23 files. Because the shared sheets load afterwards, those copies are largely inert, but any property the shared sheet does not set is still governed locally, and you cannot tell by reading a page which of its rules are live.
+
+This is known debt and is deliberately left in place. The component layer governs new pages; these are frozen where they are and will drift from it. `scripts/check-design-system.ps1` reports them separately from real failures, and `-Strict` fails on them if that changes.
+
+`index.html`, `solutions-v3.html`, `about.html` and `product-drone.html` are the canonical look — the component layer was extracted from them on 2026-08-13. Versioned alternatives such as `index-v3.html` and `solutions-v2.html` are design experiments and are intentionally not migrated until selected for production.

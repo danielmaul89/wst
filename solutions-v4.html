@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Applications | WS Technicals</title>
+<meta name="description" content="Custom lithium battery systems across every demanding application — from unmanned platforms to heavy machinery.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
+<style>
+
+/* Ambient blob colour variants */
+.ambient-blob-brass { width:2080px; height:1520px; top:-280px; left:-220px; background:radial-gradient(circle at 40% 40%, #CBB08A, transparent 68%); opacity:.7; }
+.ambient-blob-grey  { width:1960px; height:1960px; top:-260px; right:-300px; background:radial-gradient(circle at 55% 45%, #7E88AC, transparent 68%); opacity:.55; }
+.ambient-blob-blue  { width:2480px; height:2480px; top:7%; left:6%; background:radial-gradient(circle at 50% 50%, #0F2A5C, transparent 66%); opacity:.4; }
+
+/* ----------------------------------------------------------------
+   Hero
+   ---------------------------------------------------------------- */
+.app-hero {
+  position: relative;
+  padding: 80px 0 72px;
+  overflow: hidden;
+}
+.app-hero-inner { position: relative; z-index: 1; }
+.app-hero h1 {
+  font-family: var(--font-display);
+  font-size: var(--h1-display);
+  line-height: var(--h1-lh);
+  letter-spacing: var(--h1-ls);
+  color: var(--ink);
+  max-width: 16ch;
+  margin: 0 0 var(--sp-3);
+}
+.app-hero p {
+  font-size: 18px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 44ch;
+  margin: 0 0 var(--sp-3);
+}
+.app-hero-body {
+  font-size: 16px !important;
+  color: var(--ink-soft) !important;
+  line-height: 1.72 !important;
+  max-width: 60ch !important;
+  margin: 0 0 var(--sp-4) !important;
+}
+
+/* ----------------------------------------------------------------
+   Editorial grid
+   ---------------------------------------------------------------- */
+.app-showcase {
+  padding: 72px 0 120px;
+  background: transparent;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+/* Tile base */
+.app-tile {
+  --ts: 4;
+  grid-column: span var(--ts);
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: #F5F5F7;
+  isolation: isolate;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.07);
+}
+
+/* Large tiles get more breathing room */
+.app-tile.t-lg { --ts: 6; min-height: 360px; }
+.app-tile.t-wide { --ts: 5; }
+.app-tile.t-sm { --ts: 3; }
+
+/* Top gradient — keeps the name legible */
+.app-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,.88) 0%,
+    rgba(255,255,255,.58) 20%,
+    rgba(255,255,255,.15) 38%,
+    transparent 52%
+  );
+  pointer-events: none;
+}
+
+/* Subtle bottom scrim */
+.app-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(6,8,26,.085) 0%, transparent 30%);
+  pointer-events: none;
+}
+
+.app-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.001);
+  transform-origin: 50% 60%;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform .65s var(--ease);
+}
+
+@media (hover: hover) {
+  .app-tile:hover img { transform: scale(1.06); }
+}
+
+.app-tile:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+/* Name label */
+.app-tile-name {
+  position: absolute;
+  z-index: 2;
+  top: 22px;
+  left: 24px;
+  right: 24px;
+  display: block;
+  color: var(--blue-deep);
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.6vw, 24px);
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+/* ----------------------------------------------------------------
+   Custom CTA panels — paired 6+6 dark tiles inside the grid
+   ---------------------------------------------------------------- */
+.cta-panel {
+  --ts: 4;
+  grid-column: span var(--ts);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: linear-gradient(148deg, #0e2455 0%, #030e28 100%);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 28px 28px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 2px 12px rgba(6,8,26,.1);
+}
+.cta-panel-a { --ts: 4; }
+.cta-panel-b { --ts: 5; }
+
+/* Blueprint crosshatch */
+.cta-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px);
+  background-size: 96px 96px;
+  opacity: .07;
+  pointer-events: none;
+}
+
+/* Brass glow — panel A lower-left, panel B upper-right */
+.cta-panel-a::after {
+  content: "";
+  position: absolute;
+  width: 640px; height: 640px;
+  bottom: -220px; left: -120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(185,154,114,.22), transparent 66%);
+  pointer-events: none;
+}
+.cta-panel-b::after {
+  content: "";
+  position: absolute;
+  width: 560px; height: 560px;
+  top: -180px; right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(185,154,114,.2), transparent 66%);
+  pointer-events: none;
+}
+
+.cta-panel-eyebrow {
+  position: absolute;
+  top: 32px; left: 36px;
+  display: block;
+  color: var(--brass-on-dark);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.cta-panel-heading {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  color: var(--paper);
+  max-width: 18ch;
+  margin: 0;
+}
+
+.cta-panel-body {
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+  color: var(--ink-soft-on-dark);
+  line-height: 1.68;
+  max-width: 38ch;
+  margin: 0 0 32px;
+}
+
+.cta-panel-b .btn { position: relative; z-index: 1; align-self: flex-start; }
+
+/* ----------------------------------------------------------------
+   Close band
+   ---------------------------------------------------------------- */
+.app-close {
+  padding: 96px 0;
+  background: var(--blue-deep);
+}
+.app-close-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+}
+.app-close h2 {
+  font-family: var(--font-display);
+  font-size: var(--h2-section);
+  line-height: var(--h2-lh);
+  letter-spacing: var(--h2-ls);
+  color: var(--paper);
+  max-width: 22ch;
+  margin: 0 0 12px;
+}
+.app-close p {
+  max-width: 52ch;
+  color: var(--ink-soft-on-dark);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* ----------------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------------- */
+@media (max-width: 980px) {
+  .app-grid { grid-template-columns: repeat(6, 1fr); }
+  .app-tile,
+  .app-tile.t-wide,
+  .app-tile.t-sm { --ts: 3; }
+  .app-tile.t-lg { --ts: 6; }
+}
+@media (max-width: 640px) {
+  .app-hero { padding: 56px 0 48px; }
+  .app-grid { grid-template-columns: 1fr 1fr; gap: 11px; }
+  .app-tile,
+  .app-tile.t-lg,
+  .app-tile.t-wide,
+  .app-tile.t-sm { grid-column: span 1; min-height: 200px; }
+  .app-close-grid { grid-template-columns: 1fr; gap: 28px; }
+  .cta-panel { grid-column: 1 / -1; min-height: 240px; }
+  .cta-panel-a, .cta-panel-b { --ts: 6; }
+}
+
+</style>
+</head>
+<body data-wst-page="solutions">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-grey"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+
+<main>
+
+<section class="app-hero">
+  <div class="container">
+    <div class="app-hero-inner">
+      <h1>Engineered for any application.</h1>
+      <p>If it runs on a battery, we can build it.</p>
+      <p class="app-hero-body">WST specialises in custom lithium battery engineering — from concept to certification. We do not sell from a catalogue. Every system is designed from the ground up to match your exact operating conditions, physical constraints and integration requirements. The applications below represent the breadth of what we have built. They are not a limit of what we can do.</p>
+      <a href="contact-v2.html" class="btn btn-primary">Discuss your application</a>
+    </div>
+  </div>
+</section>
+
+<section class="app-showcase">
+  <div class="container">
+    <div class="app-grid">
+
+      <!-- Row 1: 6 + 6 -->
+      <a class="app-tile t-lg" href="product-drone.html">
+        <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV">
+        <strong class="app-tile-name">Multirotor UAV</strong>
+      </a>
+      <a class="app-tile t-lg" href="product-drone.html">
+        <img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-Wing UAV">
+        <strong class="app-tile-name">Fixed-Wing UAV</strong>
+      </a>
+
+      <!-- Row 2: 5 + 4 + 3 -->
+      <a class="app-tile t-wide" href="product-drone.html">
+        <img src="assets/products/web/vtol-uav02.jpg" alt="VTOL UAV">
+        <strong class="app-tile-name">VTOL UAV</strong>
+      </a>
+      <a class="app-tile" href="product-drone.html">
+        <img src="assets/products/web/fixed-wing-uav01.jpg" alt="Long-Endurance UAV">
+        <strong class="app-tile-name">Long-Endurance UAV</strong>
+      </a>
+      <a class="app-tile t-sm" href="contact-v2.html">
+        <img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned Surface Vehicle">
+        <strong class="app-tile-name">Unmanned Surface Vehicle</strong>
+      </a>
+
+      <!-- Row 3: 3 + 5 + 4 -->
+      <a class="app-tile t-sm" href="contact-v2.html">
+        <img src="assets/products/web/ugv.jpg" alt="Unmanned Ground Vehicle">
+        <strong class="app-tile-name">Unmanned Ground Vehicle</strong>
+      </a>
+      <a class="app-tile t-wide" href="contact-v2.html">
+        <img src="assets/products/web/agv_scaled02.jpg" alt="AGV and AMR">
+        <strong class="app-tile-name">AGV &amp; AMR</strong>
+      </a>
+      <!-- CTA Panel A — position 8 from top, span 4 -->
+      <div class="cta-panel cta-panel-a">
+        <span class="cta-panel-eyebrow">Battery Engineering Experts</span>
+        <h2 class="cta-panel-heading">Custom solutions for any application.</h2>
+      </div>
+
+      <!-- Row 4: 6 + 6 -->
+      <a class="app-tile t-lg" href="contact-v2.html">
+        <img src="assets/products/web/forklift.jpg" alt="Electric Forklift">
+        <strong class="app-tile-name">Electric Forklift</strong>
+      </a>
+      <a class="app-tile t-lg" href="contact-v2.html">
+        <img src="assets/products/web/humanoid02.jpg" alt="Humanoid Robotics">
+        <strong class="app-tile-name">Humanoid Robotics</strong>
+      </a>
+
+      <!-- Row 5: 4 + 5 + 3 -->
+      <a class="app-tile" href="contact-v2.html">
+        <img src="assets/products/web/robotic-arm.jpg" alt="Industrial Robotics">
+        <strong class="app-tile-name">Industrial Robotics</strong>
+      </a>
+      <a class="app-tile t-wide" href="contact-v2.html">
+        <img src="assets/products/web/boat.jpg" alt="Electric Workboat">
+        <strong class="app-tile-name">Electric Workboat</strong>
+      </a>
+      <a class="app-tile t-sm" href="contact-v2.html">
+        <img src="assets/products/cards/maritime.jpg" alt="Autonomous Marine Platform">
+        <strong class="app-tile-name">Autonomous Marine Platform</strong>
+      </a>
+
+      <!-- Row 6: 6 + 6 -->
+      <a class="app-tile t-lg" href="contact-v2.html">
+        <img src="assets/products/web/ups-system.jpg" alt="Modular UPS Cabinet">
+        <strong class="app-tile-name">Modular UPS Cabinet</strong>
+      </a>
+      <a class="app-tile t-lg" href="contact-v2.html">
+        <img src="assets/products/web/ups-system02.jpg" alt="Infrastructure Bank">
+        <strong class="app-tile-name">Infrastructure Bank</strong>
+      </a>
+
+      <!-- Row 7: 4 + 5 + 3 — CTA Panel B replaces utility vehicle (position 4 from bottom) -->
+      <a class="app-tile" href="contact-v2.html">
+        <img src="assets/products/web/lawn-mover.jpg" alt="Outdoor Maintenance">
+        <strong class="app-tile-name">Outdoor Maintenance</strong>
+      </a>
+      <div class="cta-panel cta-panel-b">
+        <p class="cta-panel-body">We build to your specification — not a catalogue. Every battery is engineered from operating profile to cell chemistry, precisely matched to the machine.</p>
+        <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+      </div>
+      <a class="app-tile t-sm" href="contact-v2.html">
+        <img src="assets/products/web/fejemaskine.jpg" alt="Municipal Equipment">
+        <strong class="app-tile-name">Municipal Equipment</strong>
+      </a>
+
+      <!-- Row 8: 6 + 6 -->
+      <a class="app-tile t-lg" href="contact-v2.html">
+        <img src="assets/products/web/excavator02.jpg" alt="Electric Excavator">
+        <strong class="app-tile-name">Electric Excavator</strong>
+      </a>
+      <a class="app-tile t-lg" href="contact-v2.html">
+        <img src="assets/products/web/traktor01.jpg" alt="Agricultural Tractor">
+        <strong class="app-tile-name">Agricultural Tractor</strong>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="app-close">
+  <div class="container app-close-grid">
+    <div>
+      <h2>Your application may not fit a category. That is the point.</h2>
+      <p>Bring us the operating profile, physical constraints and integration requirements. We will help determine whether a custom battery system creates the right result.</p>
+    </div>
+    <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+  </div>
+</section>
+
+</main>
+
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+
+</body>
+</html>
