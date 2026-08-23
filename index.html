@@ -607,77 +607,56 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   gap:28px;
 }
 .cat-card{
-  position:relative;
   overflow:hidden;
   border-radius:var(--r-lg);
-  padding:20px 24px;
-  min-height:190px;
+  padding:0;
+  min-height:260px;
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
   background:#F5F5F7;
   border:1px solid rgba(6,8,26,.055);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
   transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  text-decoration:none;
+  color:inherit;
 }
-.cat-card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(to top, rgba(6,8,26,.085) 0%, rgba(6,8,26,.012) 20%, transparent 36%);
-  pointer-events:none;
+.cat-card::before,.cat-card::after{ display:none; }
+.cat-visual{
+  flex:1;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#F5F5F7;
 }
-.cat-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(
-    to bottom,
-    rgba(255,255,255,.76) 0%,
-    rgba(255,255,255,.52) 17%,
-    rgba(255,255,255,.18) 31%,
-    transparent 47%
-  );
-  pointer-events:none;
+.cat-visual img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center center;
+  padding:20px 24px 12px;
+  transition:transform .6s var(--ease);
 }
 .cat-text{
-  position:relative;
-  z-index:2;
+  padding:14px 20px;
+  border-top:1px solid rgba(6,8,26,.07);
+  background:rgba(245,245,247,.98);
 }
 .cat-card p{ display:none; }
 .cat-explore{ display:none; }
 .cat-card h3{
   font-size:var(--h3-subsection);
   letter-spacing:var(--h3-ls);
-  margin-bottom:10px;
+  margin:0;
   color:var(--blue-deep);
-}
-.cat-card p{
-  font-size:14px;
-  color:var(--blue-deep);
-  opacity:.78;
-  max-width:28ch;
-  line-height:1.55;
-}
-.cat-visual{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  overflow:hidden;
-}
-.cat-visual img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center bottom;
-  transform-origin:50% 100%;
-  transition:transform .6s var(--ease);
 }
 .cat-card:hover .cat-visual img,
 .cat-card:focus-within .cat-visual img{
-  transform:scale(1.04);
+  transform:scale(1.05);
+}
+.cat-card:hover{
+  border-color:rgba(6,8,26,.13);
+  box-shadow:0 4px 20px rgba(6,8,26,.09);
 }
 
 .cat-explore{
@@ -2394,47 +2373,47 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="categories" id="categories">
   <div class="container">
     <div class="section-head">
-      <h2>Battery systems built for six demanding application categories.</h2>
-      <p>Every pack starts with your application, including duty cycle, environment and certification requirements. It never starts with a catalogue part number.</p>
+      <h2>A sample of what we have engineered. The real list is longer.</h2>
+      <p>Every system starts with your application — duty cycle, environment, certification. Never a catalogue part number.</p>
     </div>
 
     <div class="cat-grid">
 
-      <!-- 01 Drone -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Drone</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone"></div>
-      </article>
+      <!-- 01 Multirotor UAV -->
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Custom lithium battery pack for a multirotor hexacopter UAV"></div>
+        <div class="cat-text"><h3>Multirotor UAV</h3></div>
+      </a>
 
-      <!-- 02 Material Handling -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Material Handling</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform"></div>
-      </article>
+      <!-- 02 AGV & AMR -->
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/agv_scaled02.jpg" alt="Custom lithium battery pack for an autonomous guided vehicle"></div>
+        <div class="cat-text"><h3>AGV &amp; AMR</h3></div>
+      </a>
 
-      <!-- 03 Robotics -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Robotics</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot"></div>
-      </article>
+      <!-- 03 Humanoid Robotics -->
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/humanoid02.jpg" alt="Custom lithium battery pack for a humanoid robot"></div>
+        <div class="cat-text"><h3>Humanoid Robotics</h3></div>
+      </a>
 
-      <!-- 04 Maritime -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Maritime</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel"></div>
-      </article>
+      <!-- 04 Electric Workboat -->
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/boat.jpg" alt="Custom lithium battery system for an electric workboat"></div>
+        <div class="cat-text"><h3>Electric Workboat</h3></div>
+      </a>
 
-      <!-- 05 UPS -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>UPS</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power"></div>
-      </article>
+      <!-- 05 UPS Cabinet -->
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/ups-system02.jpg" alt="Custom lithium UPS cabinet battery system"></div>
+        <div class="cat-text"><h3>UPS Cabinet</h3></div>
+      </a>
 
-      <!-- 06 Heavy Machinery -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Heavy Machinery</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery"></div>
-      </article>
+      <!-- 06 Electric Excavator -->
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/excavator02.jpg" alt="Custom high-voltage lithium battery pack for an electric excavator"></div>
+        <div class="cat-text"><h3>Electric Excavator</h3></div>
+      </a>
 
     </div>
   </div>
