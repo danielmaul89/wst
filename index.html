@@ -556,7 +556,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
    ============================================================ */
 .categories{
   padding:96px 0 144px;
-  background:#EAEAEC;
+  background:rgba(255,255,255,.28);
 }
 .section-head{
   display:flex;
@@ -604,18 +604,18 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .cat-grid{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
-  gap:2px;
+  gap:10px;
 }
 .cat-card{
   position:relative;
   overflow:hidden;
-  border-radius:0;
+  border-radius:var(--r-lg);
   padding:0;
   min-height:240px;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
-  background:transparent;
+  background:#EAEAEC;
   border:none;
   box-shadow:none;
   transition:transform var(--dur) var(--ease);
