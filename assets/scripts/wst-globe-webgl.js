@@ -244,27 +244,6 @@
     return texture;
   }
 
-  var mouseX = -9999;
-  var mouseY = -9999;
-  canvas.addEventListener('mousemove', function (event) {
-    var rect = canvas.getBoundingClientRect();
-    mouseX = event.clientX - rect.left;
-    mouseY = event.clientY - rect.top;
-  });
-  canvas.addEventListener('mouseleave', function () {
-    mouseX = -9999;
-    mouseY = -9999;
-  });
-  canvas.addEventListener('touchstart', function (event) {
-    var rect = canvas.getBoundingClientRect();
-    var touch = event.touches[0];
-    mouseX = touch.clientX - rect.left;
-    mouseY = touch.clientY - rect.top;
-  }, { passive: true });
-  canvas.addEventListener('touchend', function () {
-    setTimeout(function () { mouseX = -9999; mouseY = -9999; }, 2200);
-  }, { passive: true });
-
   var markerSprites = [];
   var labelSprites = [];
   locations.forEach(function (location) {
@@ -289,20 +268,25 @@
     globe.add(sprite);
     markerSprites.push(sprite);
 
+    if (!location.label) return;
+
     var label = document.createElement('span');
     label.className = 'orbit-location-label' + (location.hq ? ' is-hq' : '');
     label.textContent = location.name + (location.hq ? ' · HQ' : (location.partner ? ' · Production' : ''));
     label.setAttribute('aria-hidden', 'true');
     stage.appendChild(label);
+    var offsetX = 14;
+    var offsetY = -20;
+    if (location.hq) {
+      offsetX = 18;
+      offsetY = -42;
+    }
     labelSprites.push({
       label: label,
       marker: sprite,
-      opacity: 0,
-      offsetX: 14,
-      offsetY: -12,
-      screenX: 0,
-      screenY: 0,
-      facing: 0
+      opacity: 1,
+      offsetX: offsetX,
+      offsetY: offsetY
     });
   });
 
@@ -457,30 +441,17 @@
     });
 
     scene.updateMatrixWorld(true);
-    var HOVER_RADIUS_SQ = 1800;
-    var closestDist = Infinity;
-    var closestIdx = -1;
-    labelSprites.forEach(function (entry, idx) {
+    labelSprites.forEach(function (entry) {
       entry.marker.getWorldPosition(labelWorldPosition);
       labelNormal.copy(labelWorldPosition).normalize();
       labelToCamera.copy(camera.position).sub(labelWorldPosition).normalize();
-      entry.facing = labelNormal.dot(labelToCamera);
+      var facing = labelNormal.dot(labelToCamera);
+      var horizonFade = Math.max(0, Math.min(1, (facing + 0.015) / 0.22));
+      horizonFade = horizonFade * horizonFade * (3 - 2 * horizonFade);
+      entry.opacity += (horizonFade - entry.opacity) * 0.11;
       labelScreenPosition.copy(labelWorldPosition).project(camera);
-      entry.screenX = (labelScreenPosition.x * 0.5 + 0.5) * width;
-      entry.screenY = (-labelScreenPosition.y * 0.5 + 0.5) * height;
-      if (entry.facing > 0.05) {
-        var dx = entry.screenX - mouseX;
-        var dy = entry.screenY - mouseY;
-        var distSq = dx * dx + dy * dy;
-        if (distSq < closestDist) { closestDist = distSq; closestIdx = idx; }
-      }
-    });
-    var activeIdx = closestDist < HOVER_RADIUS_SQ ? closestIdx : -1;
-    labelSprites.forEach(function (entry, idx) {
-      var target = (idx === activeIdx) ? 1 : 0;
-      entry.opacity += (target - entry.opacity) * 0.14;
-      var labelX = entry.screenX + entry.offsetX;
-      var labelY = entry.screenY + entry.offsetY;
+      var labelX = (labelScreenPosition.x * 0.5 + 0.5) * width + entry.offsetX;
+      var labelY = (-labelScreenPosition.y * 0.5 + 0.5) * height + entry.offsetY;
       entry.label.style.transform = 'translate3d(' + labelX.toFixed(2) + 'px,' + labelY.toFixed(2) + 'px,0)';
       entry.label.style.opacity = entry.opacity.toFixed(3);
       entry.label.style.visibility = entry.opacity > 0.018 ? 'visible' : 'hidden';
