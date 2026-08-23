@@ -261,7 +261,7 @@
       blending: THREE.AdditiveBlending
     }));
     sprite.position.copy(geoToVector(location.lat, location.lon, radius * 1.025));
-    var size = location.hq ? 0.108 : (location.label ? 0.078 : 0.05);
+    var size = location.hq ? 0.108 : (location.label ? 0.078 : 0.068);
     sprite.scale.set(size, size, 1);
     sprite.userData.baseSize = size;
     sprite.userData.phase = Math.random() * Math.PI * 2;
