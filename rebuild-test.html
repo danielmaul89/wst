@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Rebuild test | WS Technicals</title>
+<meta name="description" content="Internal design test page for the Rettelser_01 client feedback. Not for publication.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<style>
+/* ============================================================
+   REBUILD TEST — internal approval page. Every class here is
+   prefixed `rb-` so nothing can collide with the shared
+   component layer or with any production page.
+   Delete this file once the decisions are made.
+   ============================================================ */
+
+body{ background:var(--paper); }
+
+/* --- page furniture ------------------------------------------------ */
+.rb-hero{ padding:150px 0 var(--sp-6); background:var(--paper-2); }
+.rb-hero h1{ max-width:22ch; margin:0 0 var(--sp-2); font-size:var(--fs-48); line-height:1.08; }
+.rb-hero p{ max-width:60ch; color:var(--ink-soft); font-size:var(--fs-body); line-height:1.7; }
+.rb-warn{
+  display:inline-flex; align-items:center; gap:10px;
+  margin-bottom:var(--sp-3); padding:8px 14px;
+  border:1px solid var(--brass); border-radius:999px;
+  color:var(--brass-text); font-family:var(--font-mono);
+  font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+}
+
+.rb-block{ padding:var(--sp-7) 0; border-top:1px solid var(--line); }
+.rb-block--tint{ background:var(--paper-2); }
+.rb-head{ margin-bottom:var(--sp-5); }
+.rb-ref{
+  display:block; margin-bottom:var(--sp-1);
+  color:var(--brass-text); font-family:var(--font-mono);
+  font-size:12px; letter-spacing:.08em;
+}
+.rb-head h2{ max-width:20ch; margin:0 0 var(--sp-2); font-size:var(--fs-40); line-height:1.12; }
+.rb-head p{ max-width:62ch; color:var(--ink-soft); font-size:var(--fs-body); line-height:1.7; }
+.rb-quote{
+  max-width:62ch; margin:var(--sp-3) 0 0; padding:var(--sp-2) 0 var(--sp-2) var(--sp-3);
+  border-left:2px solid var(--brass);
+  color:var(--ink-soft); font-size:var(--fs-small); line-height:1.7; font-style:italic;
+}
+
+/* Option label above each variant being compared. */
+.rb-variant{ margin-top:var(--sp-5); }
+.rb-variant-label{
+  display:flex; align-items:baseline; gap:12px;
+  margin-bottom:var(--sp-3); padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.rb-variant-label strong{ font-family:var(--font-display); font-size:var(--fs-24); }
+.rb-variant-label span{ color:var(--ink-soft); font-size:var(--fs-small); }
+
+/* ============================================================
+   A. WIDE-FORMAT APPLICATION LOOP
+   Replaces the six-up portrait grid. The track holds the six
+   cards twice; the animation travels exactly -50%, so the
+   second copy lands where the first began and the seam is
+   invisible. Card count and width can change freely — the
+   -50% stays correct because it is half of *whatever* the
+   track contains.
+   ============================================================ */
+.rb-loop{ position:relative; }
+.rb-loop-viewport{
+  overflow:hidden;
+  /* Feather both ends so cards enter and leave rather than being cut. */
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+}
+.rb-loop-track{
+  display:flex;
+  gap:var(--sp-3);
+  width:max-content;
+  animation:rb-drift 46s linear infinite;
+}
+.rb-loop:hover .rb-loop-track,
+.rb-loop:focus-within .rb-loop-track{ animation-play-state:paused; }
+@keyframes rb-drift{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+.rb-app{
+  position:relative;
+  flex:none;
+  width:clamp(300px,38vw,560px);
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:var(--card);
+  text-decoration:none;
+  color:var(--paper);
+}
+.rb-app img{
+  width:100%; height:100%;
+  object-fit:cover;
+  /* The existing cards are portrait 752x920 and every subject sits in the
+     lower two-thirds, so a default centre crop returns empty background.
+     `--focus` is each image's measured centre-of-detail. Once the real
+     wide-format images land this override can go. */
+  object-position:center var(--focus,68%);
+  transition:transform .9s cubic-bezier(.22,1,.36,1);
+}
+.rb-app::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(3,11,33,.78),rgba(3,11,33,.12) 52%,transparent);
+}
+.rb-app:hover img,
+.rb-app:focus-visible img{ transform:scale(1.045); }
+.rb-app:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
+.rb-app-name{
+  position:absolute; z-index:2;
+  left:var(--sp-3); bottom:var(--sp-3);
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--font-display);
+  font-size:var(--fs-24);
+  letter-spacing:-.01em;
+}
+.rb-app-name::before{
+  content:""; flex:none;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--brass-hi);
+}
+.rb-loop-note{
+  margin-top:var(--sp-3);
+  color:var(--ink-faint);
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.04em;
+}
+
+/* ============================================================
+   B. EXPLODED VIEW — the two annotation treatments
+   ============================================================ */
+.rb-proof{
+  position:relative;
+  width:100%;
+  max-width:760px;
+  aspect-ratio:1800 / 1346;
+}
+.rb-proof img{
+  display:block;
+  width:100%; height:100%;
+  object-fit:contain;
+}
+
+/* B1 — pills (current) */
+.rb-pills{ position:absolute; inset:0; z-index:2; margin:0; padding:0; list-style:none; }
+.rb-pill{
+  position:absolute;
+  top:var(--t); left:var(--l);
+  padding:8px 14px;
+  border:1px solid var(--line-2);
+  border-radius:999px;
+  background:var(--card);
+  box-shadow:0 6px 18px -12px rgba(6,8,26,.4);
+  color:var(--ink);
+  font-size:var(--fs-small); font-weight:500;
+  white-space:nowrap;
+}
+
+/* B2 — pinout. The leader rule runs out of the pack to the right
+   margin and the label sits on top of it, so the product is never
+   covered. `--lead` is the rule's length as a share of the frame;
+   the values are measured against the artwork's alpha channel. */
+.rb-pinout{ position:absolute; inset:0; z-index:2; margin:0; padding:0; list-style:none; }
+.rb-pin{
+  position:absolute;
+  right:0; top:var(--t);
+  width:var(--lead);
+  padding-bottom:7px;
+  border-bottom:1px solid var(--line-2);
+  text-align:right;
+  font-size:var(--fs-small); font-weight:600; line-height:1.3;
+  color:var(--ink);
+  white-space:nowrap;
+  transform:translateY(-100%);
+}
+
+/* ============================================================
+   C. SUPPLIER LOGOS — mono vs colour
+   ============================================================ */
+.rb-logos{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+}
+.rb-logo{
+  display:grid; place-items:center;
+  min-height:128px; padding:var(--sp-3);
+  background:var(--card);
+}
+.rb-logo img{
+  width:auto; height:auto;
+  max-width:min(78%,190px); max-height:58px;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+}
+/* Today's treatment. The fix is simply to drop this filter. */
+.rb-logos--mono .rb-logo img{ filter:saturate(.72) contrast(.94); opacity:.78; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:980px){
+  .rb-hero{ padding-top:120px; }
+  .rb-hero h1{ font-size:var(--fs-40); }
+  .rb-head h2{ font-size:var(--fs-32); }
+  .rb-logos{ grid-template-columns:repeat(2,1fr); }
+
+  /* The pinout has nowhere to run at this width, so the labels
+     become a plain ruled list under the artwork. */
+  .rb-pinout{ position:static; display:grid; margin-top:var(--sp-3); }
+  .rb-pin{
+    position:static; width:auto;
+    padding:9px 0; text-align:left; white-space:normal; transform:none;
+  }
+  .rb-pin:first-child{ border-top:1px solid var(--line-2); }
+  .rb-pills{ position:static; display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--sp-3); }
+  .rb-pill{ position:static; white-space:normal; }
+}
+
+/* ============================================================
+   REDUCED MOTION — the loop stops travelling and becomes a
+   carousel the reader scrolls themselves.
+   ============================================================ */
+@media(prefers-reduced-motion:reduce){
+  .rb-loop-track{ animation:none; }
+  .rb-loop-viewport{ overflow-x:auto; scroll-snap-type:x mandatory; }
+  .rb-app{ scroll-snap-align:center; }
+  .rb-app img{ transition:none; }
+  .rb-app:hover img,.rb-app:focus-visible img{ transform:none; }
+}
+</style>
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/wst-components.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body data-wst-page="home">
+<div data-wst-header></div>
+
+<main>
+
+  <section class="rb-hero">
+    <div class="container">
+      <span class="rb-warn">Internal test page — not for publication</span>
+      <h1>Rebuild test: the three things worth approving before I touch the live pages.</h1>
+      <p>Built from the client's feedback in <strong>Rettelser_01</strong>. Nothing here is live — the production pages are untouched. Each block below shows the proposal, and where there is a choice to make, both options sit side by side. Pick one per block and I will build it into the shared component layer so the front page and Solutions inherit the same section.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       A. Wide-format application loop
+       ============================================================ -->
+  <section class="rb-block">
+    <div class="container">
+      <div class="rb-head">
+        <span class="rb-ref">FS2 + SO1 · replaces the six-up portrait grid</span>
+        <h2>Applications as a wide-format loop, not six fixed boxes.</h2>
+        <p>The portrait grid was the client's biggest objection, and it was two objections in one: the grid reads as static, and six framed boxes read as an exhaustive list of what WS Technicals can build. A moving wide-format row solves both — the images get the format they were shot for, and a row that keeps travelling cannot be read as a closed set of six.</p>
+        <p class="rb-quote">"Applikationerne fungerer bedre i bredformat, og et grid bliver meget statisk. Kan vi få noget dynamik ind på siden ved at erstatte højformats-gridded med en bredformats 'slider', hvor billederne kører i et loop el.lign.?"</p>
+      </div>
+
+      <div class="rb-head">
+        <h2 style="font-size:var(--fs-32); max-width:26ch;">Battery systems built around the application — whatever the application is.</h2>
+        <p>These are examples of the application types we work with, not a list of the ones we are limited to. Every pack starts with your duty cycle, environment and certification requirements.</p>
+      </div>
+
+      <div class="rb-loop">
+        <div class="rb-loop-viewport">
+          <div class="rb-loop-track">
+            <a class="rb-app" style="--focus:76%" href="solutions-v3.html"><img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone"><span class="rb-app-name">Drones</span></a>
+            <a class="rb-app" style="--focus:73%" href="solutions-v3.html"><img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform"><span class="rb-app-name">Material handling</span></a>
+            <a class="rb-app" style="--focus:63%" href="solutions-v3.html"><img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot"><span class="rb-app-name">Robotics</span></a>
+            <a class="rb-app" style="--focus:76%" href="solutions-v3.html"><img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel"><span class="rb-app-name">Maritime</span></a>
+            <a class="rb-app" style="--focus:63%" href="solutions-v3.html"><img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power"><span class="rb-app-name">UPS &amp; backup</span></a>
+            <a class="rb-app" style="--focus:75%" href="solutions-v3.html"><img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery"><span class="rb-app-name">Heavy machinery</span></a>
+            <!-- Second copy: makes the -50% travel seamless. Hidden from assistive tech. -->
+            <a class="rb-app" style="--focus:76%" href="solutions-v3.html" aria-hidden="true" tabindex="-1"><img src="assets/products/cards/drone.jpg" alt=""><span class="rb-app-name">Drones</span></a>
+            <a class="rb-app" style="--focus:73%" href="solutions-v3.html" aria-hidden="true" tabindex="-1"><img src="assets/products/cards/material-handling.jpg" alt=""><span class="rb-app-name">Material handling</span></a>
+            <a class="rb-app" style="--focus:63%" href="solutions-v3.html" aria-hidden="true" tabindex="-1"><img src="assets/products/cards/robotics.jpg" alt=""><span class="rb-app-name">Robotics</span></a>
+            <a class="rb-app" style="--focus:76%" href="solutions-v3.html" aria-hidden="true" tabindex="-1"><img src="assets/products/cards/maritime.jpg" alt=""><span class="rb-app-name">Maritime</span></a>
+            <a class="rb-app" style="--focus:63%" href="solutions-v3.html" aria-hidden="true" tabindex="-1"><img src="assets/products/cards/ups.jpg" alt=""><span class="rb-app-name">UPS &amp; backup</span></a>
+            <a class="rb-app" style="--focus:75%" href="solutions-v3.html" aria-hidden="true" tabindex="-1"><img src="assets/products/cards/heavy-machinery.jpg" alt=""><span class="rb-app-name">Heavy machinery</span></a>
+          </div>
+        </div>
+        <p class="rb-loop-note">Hover or tab into the row to pause it. Clicking a card goes to Solutions.</p>
+      </div>
+
+      <p class="rb-quote" style="margin-top:var(--sp-4);"><strong>Note on the images:</strong> these are the existing portrait card crops, shown cropped to 16:9 so you can judge the motion and the layout. They will look considerably better once the wide-format AI-generated images land — that is the outstanding item <strong>FS2b</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       B. Exploded view annotation
+       ============================================================ -->
+  <section class="rb-block rb-block--tint">
+    <div class="container">
+      <div class="rb-head">
+        <span class="rb-ref">FS3 · decision needed</span>
+        <h2>Exploded view: pills or pinout?</h2>
+        <p>The client asked for a pinout. You asked for the pills back. Both are built and sitting below — the production page currently runs <strong>B1</strong>.</p>
+        <p class="rb-quote">"Kan vi undlade tekstboksene i sektionen med batteriet i exploded view og i stedet lave en slags pinout? Se vedhæftede billede 01_Pinouts"</p>
+      </div>
+
+      <div class="rb-variant">
+        <div class="rb-variant-label">
+          <strong>B1 · Pills</strong>
+          <span>Currently live on the front page. Labels float over the artwork.</span>
+        </div>
+        <div class="rb-proof">
+          <img src="assets/products/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack annotated with pill labels">
+          <ul class="rb-pills">
+            <li class="rb-pill" style="--t:12%; --l:35%;">Custom BMS</li>
+            <li class="rb-pill" style="--t:45%; --l:16%;">Matched cell stack</li>
+            <li class="rb-pill" style="--t:57%; --l:14%;">Thermal interface layer</li>
+            <li class="rb-pill" style="--t:76%; --l:40%;">Connector &amp; wiring harness</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rb-variant">
+        <div class="rb-variant-label">
+          <strong>B2 · Pinout</strong>
+          <span>What the client asked for. Leader rules run clear of the pack, so nothing covers the product.</span>
+        </div>
+        <div class="rb-proof">
+          <img src="assets/products/xwd_egholm_exploded_transparent_print2.png" alt="Exploded view of a WS Technicals custom battery pack annotated with pinout labels">
+          <ul class="rb-pinout">
+            <li class="rb-pin" style="--t:17.5%; --lead:35%;">Custom BMS</li>
+            <li class="rb-pin" style="--t:45%; --lead:37%;">Matched cell stack</li>
+            <li class="rb-pin" style="--t:55%; --lead:39%;">Thermal interface layer</li>
+            <li class="rb-pin" style="--t:83%; --lead:23%;">Connector &amp; wiring harness</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       C. Supplier logos
+       ============================================================ -->
+  <section class="rb-block">
+    <div class="container">
+      <div class="rb-head">
+        <span class="rb-ref">FS4 · needs new assets</span>
+        <h2>Supplier logos in colour.</h2>
+        <p><strong>Correction — I had this wrong.</strong> I first called this a one-line CSS fix. It is not. All ten logo files the site uses are flattened to a single colour, <code>#06081a</code> — the site's own <code>--ink</code> token. The colour is not in the files, so dropping the <code>saturate(.72)</code> filter changes almost nothing; the two panels below are near-identical for exactly that reason.</p>
+        <p>Partial colour originals do exist in the repo: <code>technology-partners-strip.png</code> holds all ten in one 2500&times;110 strip with seven of them in colour, and <code>eve/highstar/rept/spe.png</code> are 220&times;110 on white. Neither source is big enough for the 190&times;58 slot on a high-density screen, so the real fix is to request colour logos — ideally SVG — from the seven suppliers that have them.</p>
+        <p class="rb-quote">"Supplier logos må meget gerne være i farver."</p>
+      </div>
+
+      <div class="rb-variant">
+        <div class="rb-variant-label">
+          <strong>C1 · Today</strong>
+          <span>saturate(.72) contrast(.94), opacity .78</span>
+        </div>
+        <div class="rb-logos rb-logos--mono">
+          <div class="rb-logo"><img src="assets/partners/eve-energy.png" alt="EVE Energy"></div>
+          <div class="rb-logo"><img src="assets/partners/gotion.png" alt="Gotion"></div>
+          <div class="rb-logo"><img src="assets/partners/rept-battero.png" alt="REPT Battero"></div>
+          <div class="rb-logo"><img src="assets/partners/lithium-balance.png" alt="Lithium Balance"></div>
+        </div>
+      </div>
+
+      <div class="rb-variant">
+        <div class="rb-variant-label">
+          <strong>C2 · Full colour</strong>
+          <span>filter removed, full opacity</span>
+        </div>
+        <div class="rb-logos">
+          <div class="rb-logo"><img src="assets/partners/eve-energy.png" alt="EVE Energy"></div>
+          <div class="rb-logo"><img src="assets/partners/gotion.png" alt="Gotion"></div>
+          <div class="rb-logo"><img src="assets/partners/rept-battero.png" alt="REPT Battero"></div>
+          <div class="rb-logo"><img src="assets/partners/lithium-balance.png" alt="Lithium Balance"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Still blocked
+       ============================================================ -->
+  <section class="rb-block rb-block--tint">
+    <div class="container">
+      <div class="rb-head">
+        <span class="rb-ref">Not built — waiting on you</span>
+        <h2>What I could not mock up yet.</h2>
+      </div>
+      <ul class="wst-row-list">
+        <li class="wst-row">
+          <span class="wst-row-index">01</span>
+          <div>
+            <h3>Solutions: applications paired with batteries, or a blown-up application showcase?</h3>
+            <p>The client offered both and picked neither. Option (a) needs the <strong>03_Solutions</strong> attachment, which was referenced in the PDF but not included. Option (b) needs no attachment but is a full rebuild of the page. This is the one decision that blocks the most work.</p>
+          </div>
+        </li>
+        <li class="wst-row">
+          <span class="wst-row-index">02</span>
+          <div>
+            <h3>The About text</h3>
+            <p>Sits in Figma under <strong>Tekst</strong>. It replaces Louis' copy and is meant to be broken across several sections down the page, with office photography between them.</p>
+          </div>
+        </li>
+        <li class="wst-row">
+          <span class="wst-row-index">03</span>
+          <div>
+            <h3>The real Development process points</h3>
+            <p>Also in Figma, under <strong>Development</strong>. The current points on Solutions do not match them, which is why the client wants that section gone rather than edited.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=rebuild-test1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=rebuild-test1" defer></script>
+</body>
+</html>
