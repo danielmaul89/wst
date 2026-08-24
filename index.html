@@ -609,14 +609,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   bottom:0;
   left:0;
   right:0;
-  height:58%;
-  background:linear-gradient(to bottom, transparent 0%, transparent 5%, rgb(252,251,248) 78%);
-  pointer-events:none;
+  height:72%;
+  background:linear-gradient(to bottom, transparent 0%, rgb(252,251,248) 52%);
+  pointer-events:all;
   z-index:10;
 }
 .cat-more-cta{
+  position:absolute;
+  top:64%;
+  left:0;
+  right:0;
+  transform:translateY(-50%);
   text-align:center;
-  margin-top:36px;
+  z-index:11;
 }
 .cat-grid{
   display:grid;
@@ -2473,9 +2478,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
     </div>
     <div class="cat-more-fade" aria-hidden="true"></div>
-    </div>
     <div class="cat-more-cta">
       <a href="solutions-v4.html" class="btn btn-primary">Explore more areas</a>
+    </div>
     </div>
   </div>
 </section>
