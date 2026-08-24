@@ -1,0 +1,25 @@
+# Raw/unprocessed source renders — huge (100s of MB), not referenced by the site.
+# Only the cropped/optimized derivatives in assets/products/web/ and
+# assets/products/renders/ are actually used.
+assets/products/*.png
+
+# Design/source assets that are not used by the published website.
+assets/products/*.psd
+assets/products/no-background/
+assets/products/cards/*.png
+
+# Intermediate sketch-illustration process layers (loose construction, ink,
+# shading stages) — 40+MB of working files, not referenced by the site.
+# Only assets/sketches/*.png (the finished output) is actually used.
+assets/products/sketch-layers/
+
+# Local image-processing helpers; the generated web assets remain included.
+scripts/bake-cards.ps1
+scripts/process-cutouts.ps1
+
+# Local editor/tool state.
+.claude/
+.DS_Store
+
+# Local Claude Code tool permissions (machine-specific, not project config)
+.claude/settings.local.json

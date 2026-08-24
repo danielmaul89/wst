@@ -601,66 +601,50 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   line-height:1.64;
 }
 
+.cat-grid-wrap{
+  position:relative;
+}
+.cat-more-fade{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:72%;
+  background:linear-gradient(to bottom, transparent 0%, rgb(252,251,248) 52%);
+  pointer-events:all;
+  z-index:10;
+}
+.cat-more-cta{
+  position:absolute;
+  top:64%;
+  left:0;
+  right:0;
+  transform:translateY(-50%);
+  text-align:center;
+  z-index:11;
+}
 .cat-grid{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
-  gap:28px;
+  gap:10px;
 }
 .cat-card{
   position:relative;
   overflow:hidden;
   border-radius:var(--r-lg);
-  padding:20px 24px;
-  min-height:190px;
+  padding:0;
+  min-height:240px;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
-  background:#F5F5F7;
-  border:1px solid rgba(6,8,26,.055);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
-  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  background:#EAEAEC;
+  border:none;
+  box-shadow:none;
+  transition:transform var(--dur) var(--ease);
+  text-decoration:none;
+  color:inherit;
 }
-.cat-card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(to top, rgba(6,8,26,.085) 0%, rgba(6,8,26,.012) 20%, transparent 36%);
-  pointer-events:none;
-}
-.cat-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(
-    to bottom,
-    rgba(255,255,255,.76) 0%,
-    rgba(255,255,255,.52) 17%,
-    rgba(255,255,255,.18) 31%,
-    transparent 47%
-  );
-  pointer-events:none;
-}
-.cat-text{
-  position:relative;
-  z-index:2;
-}
-.cat-card p{ display:none; }
-.cat-explore{ display:none; }
-.cat-card h3{
-  font-size:var(--h3-subsection);
-  letter-spacing:var(--h3-ls);
-  margin-bottom:10px;
-  color:var(--blue-deep);
-}
-.cat-card p{
-  font-size:14px;
-  color:var(--blue-deep);
-  opacity:.78;
-  max-width:28ch;
-  line-height:1.55;
-}
+.cat-card::before,.cat-card::after{ display:none; }
 .cat-visual{
   position:absolute;
   inset:0;
@@ -671,13 +655,31 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center bottom;
-  transform-origin:50% 100%;
+  object-position:center center;
   transition:transform .6s var(--ease);
+}
+.cat-text{
+  position:relative;
+  z-index:2;
+  padding:18px 20px 0;
+  background:none;
+  border:none;
+}
+.cat-card p{ display:none; }
+.cat-explore{ display:none; }
+.cat-card h3{
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  margin:0;
+  color:var(--blue-deep);
 }
 .cat-card:hover .cat-visual img,
 .cat-card:focus-within .cat-visual img{
-  transform:scale(1.04);
+  transform:scale(.97);
+}
+.cat-card:hover{
+  transform:translateY(-2px);
 }
 
 .cat-explore{
@@ -2394,48 +2396,91 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <section class="categories" id="categories">
   <div class="container">
     <div class="section-head">
-      <h2>Battery systems built for six demanding application categories.</h2>
-      <p>Every pack starts with your application, including duty cycle, environment and certification requirements. It never starts with a catalogue part number.</p>
+      <h2>Every application we build for.</h2>
+      <p>If it runs on a battery, we can engineer it. Every system starts with your application — duty cycle, environment and certification. Never a catalogue part number.</p>
     </div>
 
+    <div class="cat-grid-wrap">
     <div class="cat-grid">
 
-      <!-- 01 Drone -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Drone</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/drone.jpg" alt="Custom lithium battery pack integrated in a multirotor drone"></div>
-      </article>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV"></div>
+        <div class="cat-text"><h3>Multirotor UAV</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/forklift.jpg" alt="Electric Forklift"></div>
+        <div class="cat-text"><h3>Electric Forklift</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/excavator02.jpg" alt="Electric Excavator"></div>
+        <div class="cat-text"><h3>Electric Excavator</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-Wing UAV"></div>
+        <div class="cat-text"><h3>Fixed-Wing UAV</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/humanoid02.jpg" alt="Humanoid Robotics"></div>
+        <div class="cat-text"><h3>Humanoid Robotics</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/boat.jpg" alt="Electric Workboat"></div>
+        <div class="cat-text"><h3>Electric Workboat</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL UAV"></div>
+        <div class="cat-text"><h3>VTOL UAV</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/agv_scaled02.jpg" alt="AGV and AMR"></div>
+        <div class="cat-text"><h3>AGV &amp; AMR</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/ups-system02.jpg" alt="Infrastructure Bank"></div>
+        <div class="cat-text"><h3>Infrastructure Bank</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/fixed-wing-uav01.jpg" alt="Long-Endurance UAV"></div>
+        <div class="cat-text"><h3>Long-Endurance UAV</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/robotic-arm.jpg" alt="Industrial Robotics"></div>
+        <div class="cat-text"><h3>Industrial Robotics</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/traktor01.jpg" alt="Agricultural Tractor"></div>
+        <div class="cat-text"><h3>Agricultural Tractor</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned Surface Vehicle"></div>
+        <div class="cat-text"><h3>Unmanned Surface Vehicle</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/ugv.jpg" alt="Unmanned Ground Vehicle"></div>
+        <div class="cat-text"><h3>Unmanned Ground Vehicle</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/ups-system.jpg" alt="Modular UPS Cabinet"></div>
+        <div class="cat-text"><h3>Modular UPS Cabinet</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/lawn-mover.jpg" alt="Outdoor Maintenance"></div>
+        <div class="cat-text"><h3>Outdoor Maintenance</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/fejemaskine.jpg" alt="Municipal Equipment"></div>
+        <div class="cat-text"><h3>Municipal Equipment</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous Marine Platform"></div>
+        <div class="cat-text"><h3>Autonomous Marine Platform</h3></div>
+      </a>
 
-      <!-- 02 Material Handling -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Material Handling</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/material-handling.jpg" alt="Custom lithium battery pack integrated in an AGV material handling platform"></div>
-      </article>
-
-      <!-- 03 Robotics -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Robotics</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/robotics.jpg" alt="Custom lithium battery pack integrated in a collaborative robot"></div>
-      </article>
-
-      <!-- 04 Maritime -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Maritime</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/maritime.jpg" alt="Custom lithium battery pack integrated in a marine vessel"></div>
-      </article>
-
-      <!-- 05 UPS -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>UPS</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/ups.jpg" alt="WS Technicals custom lithium battery rack module for UPS backup power"></div>
-      </article>
-
-      <!-- 06 Heavy Machinery -->
-      <article class="cat-card">
-        <div class="cat-text"><h3>Heavy Machinery</h3></div>
-        <div class="cat-visual"><img src="assets/products/cards/heavy-machinery.jpg" alt="Custom lithium battery pack integrated in heavy outdoor machinery"></div>
-      </article>
-
+    </div>
+    <div class="cat-more-fade" aria-hidden="true"></div>
+    <div class="cat-more-cta">
+      <a href="solutions-v4.html" class="btn btn-primary">Explore more areas</a>
+    </div>
     </div>
   </div>
 </section>
@@ -2509,6 +2554,22 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <!-- ============================================================
      TECHNOLOGY PARTNERS — trusted components across the system
      ============================================================ -->
+<!-- Interactive globe concept -->
+<section class="global-orbit" id="global-orbit">
+  <div class="container orbit-layout">
+    <div class="orbit-copy">
+      <h2>One engineering base. Connected worldwide.</h2>
+      <p>Every route starts with our headquarters in Denmark. From customer dialogue across Europe and the Americas to production coordination in China, technical decisions stay connected throughout the project.</p>
+    </div>
+    <div class="orbit-stage">
+      <canvas class="orbit-canvas" id="wstGlobe" role="img" aria-label="Interactive dotted globe showing connections between WS Technicals headquarters in Denmark and international regions"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STAT BAND — dark
+     ============================================================ -->
 <section class="partner-wall" aria-labelledby="partner-wall-title">
   <div class="container">
     <div class="partner-wall-head">
@@ -2526,22 +2587,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <div class="partner-logo" style="--logo-index:7" aria-label="Lester Electrical"><span class="partner-cross tl"></span><span class="partner-cross br"></span><div class="partner-logo-frame"><img src="assets/partners/lester-electrical.png" alt="Lester Electrical"></div></div>
       <div class="partner-logo" style="--logo-index:8" aria-label="Lithium Balance"><span class="partner-cross tl"></span><span class="partner-cross br"></span><div class="partner-logo-frame"><img src="assets/partners/lithium-balance.png" alt="Lithium Balance"></div></div>
       <div class="partner-logo" style="--logo-index:9" aria-label="S.P.E. Elettronica Industriale"><span class="partner-cross tl"></span><span class="partner-cross br"></span><div class="partner-logo-frame"><img src="assets/partners/spe-elettronica-industriale.png" alt="S.P.E. Elettronica Industriale"></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     STAT BAND — dark
-     ============================================================ -->
-<!-- Interactive globe concept -->
-<section class="global-orbit" id="global-orbit">
-  <div class="container orbit-layout">
-    <div class="orbit-copy">
-      <h2>One engineering base. Connected worldwide.</h2>
-      <p>Every route starts with our headquarters in Denmark. From customer dialogue across Europe and the Americas to production coordination in China, technical decisions stay connected throughout the project.</p>
-    </div>
-    <div class="orbit-stage">
-      <canvas class="orbit-canvas" id="wstGlobe" role="img" aria-label="Interactive dotted globe showing connections between WS Technicals headquarters in Denmark and international regions"></canvas>
     </div>
   </div>
 </section>

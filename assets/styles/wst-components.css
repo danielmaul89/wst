@@ -1,0 +1,1143 @@
+/* ============================================================================
+   WS Technicals — shared component layer
+   ----------------------------------------------------------------------------
+   Every class here is prefixed `wst-`. That prefix is the contract: a class
+   starting with `wst-` is owned by this file and must never be declared,
+   extended or overridden inside a page's <style> block. Page-local classes
+   stay unprefixed, so the two namespaces can never collide and a page can
+   never silently shadow the system the way the pre-2026-08 pages did.
+
+   Load order (new pages):
+     1. assets/styles/wst-design-system.css   tokens, type, nav, buttons, forms, footer
+     2. assets/styles/wst-components.css      this file — section blocks
+     3. assets/styles/enterprise-polish.css   motion, glass, lighting
+
+   Every value below resolves to a token from wst-design-system.css. If a
+   component needs a number this file cannot express in tokens, that is a
+   signal the token set is incomplete — add the token, do not hard-code.
+
+   Components were extracted from the canonical pages (index.html,
+   solutions-v3.html, about.html, product-drone.html) as of 2026-08-13. Those
+   pages keep their own local copies and are deliberately untouched; this file
+   governs new pages only.
+
+   Each numbered section below is one Payload block boundary.
+   ========================================================================== */
+
+
+/* ============================================================================
+   1. SECTION SCAFFOLDING
+   Every block sits inside one of these. `position:relative` on the section is
+   what lets ambient washes and blueprint grids stack correctly.
+   ========================================================================== */
+
+.wst-section {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-space) 0;
+}
+
+/* Half-height section, for a block that continues the one above it rather
+   than starting a new idea. */
+.wst-section--tight {
+  padding: var(--sp-7) 0;
+}
+
+/* Raised off the paper — used to separate a block from its neighbours without
+   a divider rule. */
+.wst-section--tint {
+  background: var(--paper-2);
+}
+
+.wst-section--card {
+  background: var(--card);
+}
+
+/* Intentional dark band. Pair with `.on-dark` on the same element so the
+   shared button and link treatments switch too. */
+.wst-section--dark {
+  background: var(--blue-deep);
+  color: var(--paper);
+}
+
+.wst-section--dark h1,
+.wst-section--dark h2,
+.wst-section--dark h3,
+.wst-section--dark h4 {
+  color: var(--paper);
+}
+
+.wst-section--dark p {
+  color: var(--ink-soft-on-dark);
+}
+
+/* --- Section head ---------------------------------------------------------
+   Heading left, optional supporting paragraph right. For the variant whose
+   heading and paragraph must align on cap height, use the shared `.head-split`
+   from wst-design-system.css instead — it owns that optical correction. */
+
+.wst-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-5);
+}
+
+.wst-section-head h2 {
+  font-size: var(--h2-section);
+  letter-spacing: var(--h2-ls);
+  line-height: var(--h2-lh);
+  max-width: 600px;
+}
+
+.wst-section-head p {
+  max-width: 420px;
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+
+.wst-section--dark .wst-section-head p {
+  color: var(--ink-soft-on-dark);
+}
+
+.wst-section-head--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wst-section-head--center h2,
+.wst-section-head--center p {
+  max-width: 44ch;
+}
+
+/* Bottom-aligned variant, for a head whose paragraph is a short aside rather
+   than a full lead. */
+.wst-section-head--baseline {
+  align-items: flex-end;
+}
+
+
+/* ============================================================================
+   2. AMBIENT WASH
+   The soft out-of-focus brand-colour field behind a section. Two variants,
+   because the canonical pages use it two genuinely different ways.
+
+   Markup:
+     <div class="wst-ambient wst-ambient--hero" aria-hidden="true">
+       <span class="wst-ambient-blob wst-ambient-blob--brass"></span>
+       <span class="wst-ambient-blob wst-ambient-blob--grey"></span>
+       <span class="wst-ambient-blob wst-ambient-blob--blue"></span>
+     </div>
+
+   Place it as the first child of a `position:relative` element. It is
+   decorative: always `aria-hidden`, never a background for text contrast.
+   ========================================================================== */
+
+.wst-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Hero variant — a finite wash behind the nav and first screen, faded out at
+   its lower edge so the page returns to clean paper. Used on landing pages. */
+.wst-ambient--hero {
+  inset: 0 0 auto 0;
+  height: 1180px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+
+/* Page variant — the wash continues the full document length as a slow
+   alternating brass/blue chain. Used on long editorial subpages. Add
+   `.wst-ambient-blob--4` … `--8` for each additional stop down the page. */
+.wst-ambient--page {
+  inset: 0;
+}
+
+.wst-ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(124px);
+}
+
+.wst-ambient-blob--brass {
+  width: clamp(1980px, 158vw, 2540px);
+  height: clamp(1420px, 108vw, 1860px);
+  top: -430px;
+  left: -30%;
+  background: radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity: .58;
+}
+
+.wst-ambient-blob--grey {
+  width: clamp(2040px, 166vw, 2640px);
+  height: clamp(2040px, 166vw, 2640px);
+  top: -360px;
+  right: -38%;
+  background: radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity: .34;
+}
+
+.wst-ambient-blob--blue {
+  width: clamp(2680px, 230vw, 3540px);
+  height: clamp(2680px, 230vw, 3540px);
+  top: 180px;
+  left: 21%;
+  background: radial-gradient(circle at 48% 48%, var(--blue) 0%, #496594 38%, transparent 80%);
+  opacity: .26;
+}
+
+/* Continuation stops for `--page`. Opacity steps down as the reader descends
+   so the wash never competes with content further into the page. */
+.wst-ambient-blob--4,
+.wst-ambient-blob--6,
+.wst-ambient-blob--8 {
+  width: 2000px;
+  height: 2000px;
+  right: -16%;
+  background: radial-gradient(circle at 50% 50%, var(--brass-hi), transparent 66%);
+}
+
+.wst-ambient-blob--5,
+.wst-ambient-blob--7 {
+  width: 2240px;
+  height: 2240px;
+  left: -17%;
+  background: radial-gradient(circle at 50% 50%, var(--blue), transparent 66%);
+}
+
+.wst-ambient-blob--4 { top: 24%; opacity: .40; }
+.wst-ambient-blob--5 { top: 40%; opacity: .34; }
+.wst-ambient-blob--6 { top: 56%; opacity: .30; }
+.wst-ambient-blob--7 { top: 70%; opacity: .26; }
+.wst-ambient-blob--8 { top: 84%; opacity: .22; }
+
+
+/* ============================================================================
+   3. BLUEPRINT GRID
+   Paper-toned hairlines on the 96px grid token. Near-invisible over light
+   sections by design; reads as a technical grid where it crosses a dark band.
+
+   Markup: <div class="wst-blueprint-grid" aria-hidden="true"></div>
+   placed inside a `position:relative` section, above the ambient wash.
+
+   background-size matches the repeat unit explicitly so cells stay true
+   squares instead of drifting off-grid.
+   ========================================================================== */
+
+.wst-blueprint-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: .06;
+  background-image:
+    repeating-linear-gradient(to right, rgba(251, 249, 245, .75) 0 1px, transparent 1px var(--grid-size)),
+    repeating-linear-gradient(to bottom, rgba(251, 249, 245, .75) 0 1px, transparent 1px var(--grid-size));
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+
+/* ============================================================================
+   4. INLINE PRIMITIVES
+   ========================================================================== */
+
+/* Text link with a trailing chevron that advances on hover. */
+.wst-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.wst-link-arrow svg {
+  transition: transform var(--dur) var(--ease);
+}
+
+.wst-link-arrow:hover svg {
+  transform: translateX(3px);
+}
+
+.on-dark .wst-link-arrow,
+.wst-section--dark .wst-link-arrow {
+  color: var(--paper);
+}
+
+/* Small brass category label above a card title. `--brass-text` is the
+   AA-contrast brass; never use the decorative `--brass` for text this size. */
+.wst-tag {
+  display: block;
+  color: var(--brass-text);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.on-dark .wst-tag,
+.wst-section--dark .wst-tag {
+  color: var(--brass-on-dark);
+}
+
+/* Monospace ordinal — step numbers, row indices, figure references. */
+.wst-index {
+  display: block;
+  color: var(--brass-text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: .08em;
+}
+
+.on-dark .wst-index,
+.wst-section--dark .wst-index {
+  color: var(--brass-on-dark);
+}
+
+/* Annotation pill pinned over a photograph or render. Absolutely positioned
+   by the page; this file owns only its appearance. */
+.wst-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.wst-callout::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brass);
+}
+
+
+/* ============================================================================
+   5. GRID
+   One grid utility instead of a bespoke `*-grid` per block. Column counts
+   collapse at the shared breakpoints in section 12.
+   ========================================================================== */
+
+.wst-grid {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.wst-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.wst-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.wst-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Fills the row with as many tiles as fit at a readable minimum width. Use
+   for product tiles whose count is CMS-driven and therefore unknown. */
+.wst-grid--auto {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.wst-grid--wide-gap { gap: 28px; }
+
+
+/* ============================================================================
+   6. CARDS
+   Five card types. They differ by content shape, not by decoration — pick the
+   one whose content you actually have rather than restyling a neighbour.
+   ========================================================================== */
+
+/* 6a. Base card — bordered paper surface. The default for text content that
+   needs to sit apart from the page. */
+.wst-card {
+  padding: var(--sp-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.wst-card h3 {
+  margin-bottom: 8px;
+  font-size: var(--h4-card);
+  letter-spacing: var(--h4-ls);
+  line-height: var(--h4-lh);
+}
+
+.wst-card p {
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+}
+
+/* Opt-in lift. Cards that are not links should not move on hover. */
+.wst-card--interactive:hover,
+.wst-card--interactive:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* 6b. Icon tile — square glyph, compact title, one line of copy. */
+.wst-icon-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  padding: var(--sp-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.wst-icon-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.wst-icon-tile-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r);
+  background: var(--paper-2);
+}
+
+.wst-icon-tile-glyph svg {
+  stroke: var(--blue);
+}
+
+.wst-icon-tile h3 {
+  margin: var(--sp-2) 0 6px;
+  font-size: var(--h5-card-sm);
+  letter-spacing: var(--h5-ls);
+  line-height: var(--h5-lh);
+}
+
+.wst-icon-tile p {
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+/* 6c. Step card — a numbered stage in a process shown as a grid rather than
+   a list. For the full-width list form use `.wst-row-list` (section 9). */
+.wst-step-card {
+  padding: var(--sp-4) var(--sp-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.wst-step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.wst-step-card .wst-index {
+  margin-bottom: var(--sp-2);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-body);
+  letter-spacing: 0;
+  color: var(--brass);
+}
+
+.wst-step-card h3 {
+  margin-bottom: 8px;
+  font-size: var(--h4-card);
+  letter-spacing: var(--h4-ls);
+  line-height: var(--h4-lh);
+}
+
+.wst-step-card p {
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+}
+
+/* 6d. Feature card — full-bleed photograph with copy over a top scrim. The
+   tallest, most editorial card; use for a page's primary category or sector
+   navigation, not for supporting content.
+
+   Two scrims do the work: `::before` lifts the top so dark type stays legible
+   over any image, `::after` weights the bottom so the card does not float. */
+.wst-feature-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 510px;
+  padding: var(--sp-4);
+  border: 1px solid rgba(6, 8, 26, .055);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  isolation: isolate;
+  background: #F5F5F7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72);
+  color: var(--blue-deep);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+
+.wst-feature-card-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.wst-feature-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms var(--ease);
+}
+
+.wst-feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, .80) 0%,
+    rgba(255, 255, 255, .52) 18%,
+    rgba(255, 255, 255, .14) 34%,
+    transparent 48%
+  );
+}
+
+.wst-feature-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(6, 8, 26, .085) 0%,
+    rgba(6, 8, 26, .012) 20%,
+    transparent 36%
+  );
+}
+
+.wst-feature-card-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.wst-feature-card h3 {
+  margin-bottom: 10px;
+  color: var(--blue-deep);
+  font-size: var(--h3-subsection);
+  letter-spacing: var(--h3-ls);
+  line-height: var(--h3-lh);
+}
+
+.wst-feature-card p {
+  max-width: 30ch;
+  color: rgba(3, 11, 33, .74);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+}
+
+.wst-feature-card:hover .wst-feature-card-media img,
+.wst-feature-card:focus-within .wst-feature-card-media img {
+  transform: scale(1.04);
+}
+
+/* Glass action pinned to the card's lower-left. */
+.wst-feature-card-action {
+  position: absolute;
+  z-index: 3;
+  left: var(--sp-4);
+  bottom: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 15px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .55);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  box-shadow:
+    0 14px 32px -24px rgba(3, 11, 33, .5),
+    inset 0 1px 0 rgba(255, 255, 255, .95);
+  color: var(--blue-deep);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+/* 6e. Product tile — square product image over a tinted plinth, with a tag
+   and a compact title. The unit of every product listing. */
+.wst-product-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #F5F5F7;
+  transition: transform var(--dur) var(--ease);
+}
+
+.wst-product-tile-img {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--paper-2) 0%, var(--brass-soft) 100%);
+}
+
+.wst-product-tile-img img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 14px 18px rgba(6, 8, 26, .14));
+  transition: transform .6s var(--ease);
+}
+
+/* Photographic variant — the image fills the plinth instead of floating on it. */
+.wst-product-tile--photo .wst-product-tile-img {
+  background: none;
+}
+
+.wst-product-tile--photo .wst-product-tile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 100%;
+  filter: none;
+}
+
+.wst-product-tile--photo:hover .wst-product-tile-img img {
+  transform: scale(1.04);
+}
+
+.wst-product-tile-body {
+  padding: 16px 16px 18px;
+}
+
+.wst-product-tile-body .wst-tag {
+  margin-bottom: 4px;
+}
+
+.wst-product-tile-body h3 {
+  color: var(--ink);
+  font-size: var(--h5-card-sm);
+  font-weight: 600;
+  letter-spacing: var(--h5-ls);
+  line-height: var(--h5-lh);
+}
+
+/* 6f. Compact stat card — a figure and its label, for a stat that sits inside
+   a layout rather than in the full-width band (section 7). */
+.wst-stat-card {
+  padding: var(--sp-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: var(--card);
+}
+
+.wst-stat-card .num {
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-24);
+  letter-spacing: -.02em;
+}
+
+.wst-stat-card .label {
+  color: var(--ink-faint);
+  font-size: var(--fs-small);
+}
+
+
+/* ============================================================================
+   7. STAT BAND
+   Full-width dark band of headline figures. One per page — a second one
+   halves the weight of both.
+   ========================================================================== */
+
+.wst-stat-band {
+  background: var(--blue-deep);
+  color: var(--paper);
+  padding: var(--sp-6) 0;
+}
+
+.wst-stat-band .wst-grid {
+  gap: var(--sp-4);
+}
+
+.wst-stat {
+  padding-left: var(--sp-3);
+  border-left: 1px solid rgba(251, 249, 245, .14);
+}
+
+.wst-stat-num {
+  margin-bottom: 10px;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(var(--fs-40), 5vw, var(--fs-64));
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.wst-stat-label {
+  max-width: 22ch;
+  color: var(--ink-soft-on-dark);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+
+/* ============================================================================
+   8. SPLIT
+   Copy on one side, media on the other. The workhorse editorial block.
+   Default is copy-left; `--reverse` swaps without reordering the markup, so
+   the heading still precedes its figure in the document.
+   ========================================================================== */
+
+.wst-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: center;
+}
+
+/* Media-dominant proportion, for a wide render or diagram. */
+.wst-split--media-wide {
+  grid-template-columns: .62fr 1.38fr;
+}
+
+.wst-split--copy-wide {
+  grid-template-columns: 1.38fr .62fr;
+}
+
+.wst-split--top {
+  align-items: start;
+}
+
+.wst-split--reverse .wst-split-copy {
+  order: 2;
+}
+
+.wst-split-copy h2 {
+  max-width: 16ch;
+  margin: 0 0 var(--sp-3);
+  font-size: var(--h2-section);
+  letter-spacing: var(--h2-ls);
+  line-height: var(--h2-lh);
+}
+
+.wst-split-copy p {
+  max-width: 42ch;
+  margin-bottom: var(--sp-3);
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+
+.wst-split-media {
+  position: relative;
+  min-width: 0;
+}
+
+.wst-split-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-lg);
+}
+
+
+/* ============================================================================
+   9. ROW LIST
+   A numbered sequence as full-width rows: index, heading, description. The
+   list form of a process — use it when each step earns a paragraph. For
+   short steps use `.wst-step-card` in a grid instead.
+
+   Rows lift on hover with shadow only. A lit gradient fill was tried and read
+   as too much on top of the lift. The shadow is drawn on a `::before` inset
+   from the row's edges rather than on the row itself, and the list must not
+   clip it — a shadow at 58px blur / 22px offset bleeds far outside the
+   border-box, so `overflow` or `mask-image` on either element erases it.
+
+   Markup:
+     <div class="wst-row-list">
+       <div class="wst-row">
+         <span class="wst-index">01</span>
+         <h3>…</h3>
+         <p>…</p>
+       </div>
+     </div>
+   ========================================================================== */
+
+.wst-row-list {
+  --wst-row-inset: 28px;
+  position: relative;
+  margin-inline: calc(var(--wst-row-inset) * -1);
+  border-top: 1px solid var(--line);
+  transition: border-color 300ms var(--ease);
+}
+
+.wst-row {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 64px minmax(220px, .72fr) minmax(0, 1.28fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+  width: 100%;
+  padding: 34px var(--wst-row-inset);
+  border-bottom: 1px solid var(--line);
+  outline: none;
+  transition: border-color 300ms var(--ease);
+}
+
+.wst-row--interactive {
+  cursor: pointer;
+}
+
+.wst-row::before {
+  content: "";
+  position: absolute;
+  inset: 4px 0;
+  z-index: 0;
+  border-radius: var(--r-lg);
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 22px 58px -22px rgba(3, 11, 33, .4);
+  transition:
+    opacity 220ms ease,
+    box-shadow var(--dur) var(--ease);
+}
+
+.wst-row > * {
+  position: relative;
+  z-index: 1;
+}
+
+.wst-row .wst-index {
+  padding-top: 6px;
+}
+
+.wst-row h3 {
+  color: var(--blue-deep);
+  font-size: var(--h3-subsection);
+  letter-spacing: var(--h3-ls);
+  line-height: var(--h3-lh);
+}
+
+.wst-row p {
+  max-width: 62ch;
+  padding-top: 4px;
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+
+/* Retract the dividers that would otherwise cut across the lifted panel: the
+   active row's own bottom rule, the rule above it, and the list's top rule
+   when the first row is active. */
+@media (hover: hover) {
+  .wst-row--interactive:hover::before {
+    opacity: .92;
+  }
+
+  .wst-row--interactive:hover,
+  .wst-row:has(+ .wst-row--interactive:hover) {
+    border-bottom-color: transparent;
+  }
+
+  .wst-row-list:has(> .wst-row--interactive:first-child:hover) {
+    border-top-color: transparent;
+  }
+}
+
+/* Keyboard focus reads identically to hover, plus a visible ring. */
+.wst-row:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(15, 42, 92, .55);
+}
+
+.wst-row:focus-visible::before {
+  opacity: .92;
+}
+
+.wst-row:focus-visible,
+.wst-row:has(+ .wst-row:focus-visible) {
+  border-bottom-color: transparent;
+}
+
+.wst-row-list:has(> .wst-row:first-child:focus-visible) {
+  border-top-color: transparent;
+}
+
+
+/* ============================================================================
+   10. GALLERY
+   Even grid by default; `--mosaic` promotes the first image to a tall lead.
+   ========================================================================== */
+
+.wst-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.wst-gallery--mosaic {
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(0, auto);
+}
+
+.wst-gallery--mosaic > :first-child {
+  grid-column: span 7;
+  grid-row: 1 / 3;
+}
+
+.wst-gallery--mosaic > :nth-child(2),
+.wst-gallery--mosaic > :nth-child(3) {
+  grid-column: span 5;
+}
+
+.wst-gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--card);
+}
+
+.wst-gallery--mosaic .wst-gallery-item {
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 220px;
+}
+
+.wst-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product renders sit inside the frame rather than filling it. */
+.wst-gallery-item--contain img {
+  object-fit: contain;
+  padding: var(--sp-4);
+  background: radial-gradient(circle at 50% 42%, var(--card) 0%, var(--paper-2) 78%);
+}
+
+.wst-gallery-item:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+/* Caption pinned inside the frame's top-left. */
+.wst-media-tag {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 11px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  background: rgba(6, 8, 26, .42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+.wst-media-tag::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brass-hi);
+}
+
+
+/* ============================================================================
+   11. CTA BAND
+   The closing block. One per page, last before the footer.
+   ========================================================================== */
+
+.wst-cta-band {
+  padding: var(--sp-6) 0;
+  background: var(--blue-deep);
+  color: var(--paper);
+  text-align: center;
+}
+
+.wst-cta-band h2 {
+  margin: 0 auto var(--sp-2);
+  max-width: 20ch;
+  font-size: var(--h2-section);
+  letter-spacing: var(--h2-ls);
+  line-height: var(--h2-lh);
+}
+
+.wst-cta-band p {
+  max-width: 44ch;
+  margin: 0 auto var(--sp-4);
+  color: var(--ink-soft-on-dark);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+
+.wst-cta-band-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================================
+   12. RESPONSIVE
+   One place for every component's collapse, so a new block inherits the
+   page's breakpoints instead of inventing its own.
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .wst-grid--4 { grid-template-columns: repeat(2, 1fr); }
+
+  .wst-split,
+  .wst-split--media-wide,
+  .wst-split--copy-wide {
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+  }
+
+  .wst-split--reverse .wst-split-copy { order: 0; }
+  .wst-split-copy h2 { max-width: 24ch; }
+}
+
+@media (max-width: 980px) {
+  .wst-grid--3 { grid-template-columns: repeat(2, 1fr); }
+
+  .wst-feature-card { min-height: 420px; }
+
+  .wst-row {
+    grid-template-columns: 40px 1fr;
+    gap: 12px 16px;
+  }
+
+  .wst-row p { grid-column: 2; }
+
+  .wst-gallery { grid-template-columns: repeat(2, 1fr); }
+
+  .wst-gallery--mosaic { grid-template-columns: repeat(2, 1fr); }
+
+  .wst-gallery--mosaic > :first-child,
+  .wst-gallery--mosaic > :nth-child(2),
+  .wst-gallery--mosaic > :nth-child(3) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .wst-grid--2,
+  .wst-grid--3,
+  .wst-grid--4,
+  .wst-grid--auto {
+    grid-template-columns: 1fr;
+  }
+
+  .wst-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wst-stat {
+    padding-left: var(--sp-2);
+  }
+
+  .wst-row-list {
+    --wst-row-inset: 0px;
+  }
+
+  .wst-row { padding: 28px 0; }
+
+  .wst-gallery,
+  .wst-gallery--mosaic {
+    grid-template-columns: 1fr;
+  }
+
+  .wst-feature-card-action {
+    left: var(--sp-3);
+    bottom: var(--sp-3);
+  }
+}
+
+
+/* ============================================================================
+   13. REDUCED MOTION
+   Movement is removed; state is still communicated through shadow and colour,
+   never through opacity alone.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .wst-card,
+  .wst-icon-tile,
+  .wst-step-card,
+  .wst-feature-card,
+  .wst-product-tile,
+  .wst-row,
+  .wst-row::before,
+  .wst-link-arrow svg,
+  .wst-feature-card-media img,
+  .wst-product-tile-img img {
+    transition-duration: 1ms;
+  }
+
+  .wst-card--interactive:hover,
+  .wst-icon-tile:hover,
+  .wst-step-card:hover,
+  .wst-feature-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+
+  .wst-feature-card:hover .wst-feature-card-media img,
+  .wst-feature-card:focus-within .wst-feature-card-media img,
+  .wst-product-tile--photo:hover .wst-product-tile-img img,
+  .wst-link-arrow:hover svg {
+    transform: none;
+  }
+}
