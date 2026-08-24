@@ -604,16 +604,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .cat-grid-wrap{
   position:relative;
 }
-.cat-more-fade{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:32%;
-  background:linear-gradient(to bottom, transparent 0%, rgb(252,251,248) 55%);
-  pointer-events:all;
-  z-index:10;
-}
 .cat-more-cta{
   position:absolute;
   bottom:0;
@@ -630,6 +620,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   grid-template-columns:repeat(12, 1fr);
   grid-auto-flow:row dense;
   gap:16px;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 66%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 66%, transparent 100%);
 }
 .cat-card{
   --ts:4;
@@ -658,7 +650,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   position:absolute;
   inset:0;
   z-index:1;
-  background:linear-gradient(to bottom, rgba(255,255,255,.88) 0%, rgba(255,255,255,.58) 20%, rgba(255,255,255,.15) 38%, transparent 52%);
+  background:linear-gradient(to bottom, rgba(255,255,255,.94) 0%, rgba(255,255,255,.7) 24%, rgba(255,255,255,.22) 44%, transparent 60%);
   pointer-events:none;
 }
 .cat-card::after{
@@ -707,6 +699,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   transform:scale(1.06);
 }
 .cat-card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+.cat-card:nth-last-child(-n+2){ pointer-events:none; }
 
 .cat-explore{
   position:relative;
@@ -2468,7 +2461,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </a>
 
     </div>
-    <div class="cat-more-fade" aria-hidden="true"></div>
     <div class="cat-more-cta">
       <a href="solutions-v4.html" class="btn btn-primary">Explore more areas</a>
     </div>
