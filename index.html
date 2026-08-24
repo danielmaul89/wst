@@ -625,26 +625,47 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .cat-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:10px;
+  grid-template-columns:repeat(12, 1fr);
+  gap:16px;
 }
 .cat-card{
+  --ts:4;
+  grid-column:span var(--ts);
   position:relative;
   overflow:hidden;
   border-radius:var(--r-lg);
   padding:0;
-  min-height:240px;
+  min-height:280px;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
-  background:#EAEAEC;
+  background:#F5F5F7;
   border:none;
-  box-shadow:none;
+  isolation:isolate;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.07);
   transition:transform var(--dur) var(--ease);
   text-decoration:none;
   color:inherit;
 }
-.cat-card::before,.cat-card::after{ display:none; }
+.cat-card.t-lg{ --ts:6; min-height:360px; }
+.cat-card.t-wide{ --ts:5; }
+.cat-card.t-sm{ --ts:3; }
+.cat-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(to bottom, rgba(255,255,255,.88) 0%, rgba(255,255,255,.58) 20%, rgba(255,255,255,.15) 38%, transparent 52%);
+  pointer-events:none;
+}
+.cat-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(to top, rgba(6,8,26,.085) 0%, transparent 30%);
+  pointer-events:none;
+}
 .cat-visual{
   position:absolute;
   inset:0;
@@ -656,31 +677,33 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   height:100%;
   object-fit:cover;
   object-position:center center;
-  transition:transform .6s var(--ease);
+  transition:transform .65s var(--ease);
 }
 .cat-text{
-  position:relative;
+  position:absolute;
   z-index:2;
-  padding:18px 20px 0;
+  top:22px;
+  left:24px;
+  right:24px;
+  padding:0;
   background:none;
   border:none;
 }
 .cat-card p{ display:none; }
 .cat-explore{ display:none; }
 .cat-card h3{
-  font-size:16px;
+  font-size:clamp(16px, 1.6vw, 24px);
   font-weight:600;
-  letter-spacing:-.01em;
+  line-height:1.15;
+  letter-spacing:-.025em;
   margin:0;
   color:var(--blue-deep);
 }
 .cat-card:hover .cat-visual img,
 .cat-card:focus-within .cat-visual img{
-  transform:scale(.97);
+  transform:scale(1.06);
 }
-.cat-card:hover{
-  transform:translateY(-2px);
-}
+.cat-card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
 
 .cat-explore{
   position:relative;
@@ -2224,7 +2247,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   }
   .categories .section-head h2{ max-width:17ch; }
   .categories .section-head p{ margin-top:0; max-width:48ch; }
-  .cat-grid{ grid-template-columns:repeat(2, 1fr); gap:22px; }
+  .cat-grid{ grid-template-columns:repeat(6, 1fr); gap:14px; }
+  .cat-card,
+  .cat-card.t-wide,
+  .cat-card.t-sm{ --ts:3; }
+  .cat-card.t-lg{ --ts:6; }
   .partner-wall{ padding:96px 0 108px; }
   .partner-wall-head{ grid-template-columns:1fr; gap:18px; margin-bottom:44px; }
   .partner-wall-head p{ max-width:48ch; }
@@ -2297,8 +2324,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .categories{ padding:68px 0 88px; }
   .categories .section-head{ margin-bottom:34px; }
 
-  .cat-grid{ grid-template-columns:1fr; gap:14px; }
-  .cat-card{ min-height:180px; padding:18px 20px; }
+  .cat-grid{ grid-template-columns:1fr 1fr; gap:11px; }
+  .cat-card,
+  .cat-card.t-lg,
+  .cat-card.t-wide,
+  .cat-card.t-sm{ grid-column:span 1; min-height:200px; }
 
   .partner-wall{ padding:80px 0 88px; }
 
@@ -2403,77 +2433,92 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <div class="cat-grid-wrap">
     <div class="cat-grid">
 
-      <a href="solutions-v4.html" class="cat-card">
+      <a href="solutions-v4.html" class="cat-card t-lg">
         <div class="cat-visual"><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV"></div>
         <div class="cat-text"><h3>Multirotor UAV</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/forklift.jpg" alt="Electric Forklift"></div>
-        <div class="cat-text"><h3>Electric Forklift</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/excavator02.jpg" alt="Electric Excavator"></div>
-        <div class="cat-text"><h3>Electric Excavator</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
+      <a href="solutions-v4.html" class="cat-card t-lg">
         <div class="cat-visual"><img src="assets/products/web/fixed-wing-uav02.jpg" alt="Fixed-Wing UAV"></div>
         <div class="cat-text"><h3>Fixed-Wing UAV</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/humanoid02.jpg" alt="Humanoid Robotics"></div>
-        <div class="cat-text"><h3>Humanoid Robotics</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/boat.jpg" alt="Electric Workboat"></div>
-        <div class="cat-text"><h3>Electric Workboat</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
+
+      <a href="solutions-v4.html" class="cat-card t-wide">
         <div class="cat-visual"><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL UAV"></div>
         <div class="cat-text"><h3>VTOL UAV</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/agv_scaled02.jpg" alt="AGV and AMR"></div>
-        <div class="cat-text"><h3>AGV &amp; AMR</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/ups-system02.jpg" alt="Infrastructure Bank"></div>
-        <div class="cat-text"><h3>Infrastructure Bank</h3></div>
       </a>
       <a href="solutions-v4.html" class="cat-card">
         <div class="cat-visual"><img src="assets/products/web/fixed-wing-uav01.jpg" alt="Long-Endurance UAV"></div>
         <div class="cat-text"><h3>Long-Endurance UAV</h3></div>
       </a>
+      <a href="solutions-v4.html" class="cat-card t-sm">
+        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned Surface Vehicle"></div>
+        <div class="cat-text"><h3>Unmanned Surface Vehicle</h3></div>
+      </a>
+
+      <a href="solutions-v4.html" class="cat-card t-sm">
+        <div class="cat-visual"><img src="assets/products/web/ugv.jpg" alt="Unmanned Ground Vehicle"></div>
+        <div class="cat-text"><h3>Unmanned Ground Vehicle</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card t-wide">
+        <div class="cat-visual"><img src="assets/products/web/agv_scaled02.jpg" alt="AGV and AMR"></div>
+        <div class="cat-text"><h3>AGV &amp; AMR</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card">
+        <div class="cat-visual"><img src="assets/products/web/pallet-truck.jpg" alt="Pallet Truck"></div>
+        <div class="cat-text"><h3>Pallet Truck</h3></div>
+      </a>
+
+      <a href="solutions-v4.html" class="cat-card t-lg">
+        <div class="cat-visual"><img src="assets/products/web/forklift.jpg" alt="Electric Forklift"></div>
+        <div class="cat-text"><h3>Electric Forklift</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card t-lg">
+        <div class="cat-visual"><img src="assets/products/web/humanoid02.jpg" alt="Humanoid Robotics"></div>
+        <div class="cat-text"><h3>Humanoid Robotics</h3></div>
+      </a>
+
       <a href="solutions-v4.html" class="cat-card">
         <div class="cat-visual"><img src="assets/products/web/robotic-arm.jpg" alt="Industrial Robotics"></div>
         <div class="cat-text"><h3>Industrial Robotics</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/traktor01.jpg" alt="Agricultural Tractor"></div>
-        <div class="cat-text"><h3>Agricultural Tractor</h3></div>
+      <a href="solutions-v4.html" class="cat-card t-wide">
+        <div class="cat-visual"><img src="assets/products/web/boat.jpg" alt="Electric Workboat"></div>
+        <div class="cat-text"><h3>Electric Workboat</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned Surface Vehicle"></div>
-        <div class="cat-text"><h3>Unmanned Surface Vehicle</h3></div>
+      <a href="solutions-v4.html" class="cat-card t-sm">
+        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous Marine Platform"></div>
+        <div class="cat-text"><h3>Autonomous Marine Platform</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/ugv.jpg" alt="Unmanned Ground Vehicle"></div>
-        <div class="cat-text"><h3>Unmanned Ground Vehicle</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
+
+      <a href="solutions-v4.html" class="cat-card t-lg">
         <div class="cat-visual"><img src="assets/products/web/ups-system.jpg" alt="Modular UPS Cabinet"></div>
         <div class="cat-text"><h3>Modular UPS Cabinet</h3></div>
       </a>
+      <a href="solutions-v4.html" class="cat-card t-lg">
+        <div class="cat-visual"><img src="assets/products/web/ups-system02.jpg" alt="Infrastructure Bank"></div>
+        <div class="cat-text"><h3>Infrastructure Bank</h3></div>
+      </a>
+
       <a href="solutions-v4.html" class="cat-card">
         <div class="cat-visual"><img src="assets/products/web/lawn-mover.jpg" alt="Outdoor Maintenance"></div>
         <div class="cat-text"><h3>Outdoor Maintenance</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
+      <a href="solutions-v4.html" class="cat-card t-wide">
+        <div class="cat-visual"><img src="assets/products/web/utility-vehicle.jpg" alt="Utility Vehicle"></div>
+        <div class="cat-text"><h3>Utility Vehicle</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card t-sm">
         <div class="cat-visual"><img src="assets/products/web/fejemaskine.jpg" alt="Municipal Equipment"></div>
         <div class="cat-text"><h3>Municipal Equipment</h3></div>
       </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Autonomous Marine Platform"></div>
-        <div class="cat-text"><h3>Autonomous Marine Platform</h3></div>
+
+      <a href="solutions-v4.html" class="cat-card t-lg">
+        <div class="cat-visual"><img src="assets/products/web/excavator02.jpg" alt="Electric Excavator"></div>
+        <div class="cat-text"><h3>Electric Excavator</h3></div>
+      </a>
+      <a href="solutions-v4.html" class="cat-card t-lg">
+        <div class="cat-visual"><img src="assets/products/web/traktor01.jpg" alt="Agricultural Tractor"></div>
+        <div class="cat-text"><h3>Agricultural Tractor</h3></div>
       </a>
 
     </div>
