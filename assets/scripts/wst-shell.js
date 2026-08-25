@@ -227,26 +227,86 @@
   }
 
   var PRODUCT_INFO = {
-    "Multirotor UAV": "Custom battery packs engineered for payload capacity, flight time and rapid field swaps in multirotor platforms.",
-    "Fixed-Wing UAV": "Long-range power systems balancing weight, endurance and reliability for fixed-wing aircraft.",
-    "VTOL UAV": "Battery systems tuned for the high peak-power demands of vertical takeoff paired with efficient cruise flight.",
-    "Long-Endurance UAV": "High energy density packs designed to extend flight time without adding excess weight.",
-    "Unmanned Surface Vehicle": "Marine-grade battery systems built for autonomous surface vessels operating in harsh conditions.",
-    "Unmanned Ground Vehicle": "Rugged battery packs engineered for remote and autonomous ground operation in demanding environments.",
-    "AGV and AMR": "Battery systems built for continuous shift cycles and fast opportunity charging in automated warehouses.",
-    "Electric Forklift": "High-cycle battery packs engineered for daily duty in material handling and warehouse operations.",
-    "Humanoid Robotics": "Compact, high-density battery systems built for the space and weight constraints of humanoid platforms.",
-    "Industrial Robotics": "Custom power systems for robotic arms and automated production line equipment.",
-    "Electric Workboat": "Marine battery systems engineered for electric propulsion and onboard power in commercial workboats.",
-    "Autonomous Marine Platform": "Battery systems designed for the endurance and reliability autonomous marine missions demand.",
-    "Modular UPS Cabinet": "Scalable battery banks engineered for uninterrupted backup power in critical infrastructure.",
-    "Infrastructure Bank": "Large-format battery installations built for grid support and facility-scale energy storage.",
-    "Outdoor Maintenance": "Battery systems built for the duty cycles of outdoor maintenance and grounds equipment.",
-    "Municipal Equipment": "Custom power systems engineered for municipal vehicles and public works equipment.",
-    "Electric Excavator": "High-voltage battery packs engineered for the torque and duty cycle of electric excavators.",
-    "Agricultural Tractor": "Battery systems built for the power demands and duty cycles of agricultural machinery.",
-    "Pallet Truck": "Compact battery packs engineered for the daily cycles of electric pallet trucks.",
-    "Utility Vehicle": "Custom battery systems built for electric utility vehicles operating across varied terrain."
+    "Multirotor UAV": {
+      desc: "Custom battery packs engineered for payload capacity, flight time and rapid field swaps in multirotor platforms.",
+      specs: [["Weight", "Minimised for flight time"], ["Vibration", "Shock-isolated mounting"], ["Peak load", "Payload-dependent draw"]]
+    },
+    "Fixed-Wing UAV": {
+      desc: "Long-range power systems balancing weight, endurance and reliability for fixed-wing aircraft.",
+      specs: [["Energy density", "High, for range"], ["Weight", "Balanced to CG"], ["Altitude", "Rated to -30°C"]]
+    },
+    "VTOL UAV": {
+      desc: "Battery systems tuned for the high peak-power demands of vertical takeoff paired with efficient cruise flight.",
+      specs: [["Peak power", "High-current hover draw"], ["Thermal", "Burst-load managed"], ["Weight", "Hover/cruise balanced"]]
+    },
+    "Long-Endurance UAV": {
+      desc: "High energy density packs designed to extend flight time without adding excess weight.",
+      specs: [["Energy density", "Maximised per kg"], ["Self-discharge", "Low-leakage cells"], ["Weight", "Minimal, for endurance"]]
+    },
+    "Unmanned Surface Vehicle": {
+      desc: "Marine-grade battery systems built for autonomous surface vessels operating in harsh conditions.",
+      specs: [["Waterproofing", "IP67 sealed"], ["Temperature", "-20°C to 55°C"], ["Corrosion", "Marine-grade housing"]]
+    },
+    "Unmanned Ground Vehicle": {
+      desc: "Rugged battery packs engineered for remote and autonomous ground operation in demanding environments.",
+      specs: [["Ingress", "Dust and water sealed"], ["Shock", "Reinforced mounting"], ["Temperature", "Extreme-range rated"]]
+    },
+    "AGV and AMR": {
+      desc: "Battery systems built for continuous shift cycles and fast opportunity charging in automated warehouses.",
+      specs: [["Duty cycle", "Multi-shift continuous"], ["Charging", "Opportunity-charge ready"], ["Footprint", "Chassis-constrained"]]
+    },
+    "Electric Forklift": {
+      desc: "High-cycle battery packs engineered for daily duty in material handling and warehouse operations.",
+      specs: [["Cycle life", "High-cycle rated"], ["Weight", "Counterbalance-critical"], ["Charging", "Shift-length sized"]]
+    },
+    "Humanoid Robotics": {
+      desc: "Compact, high-density battery systems built for the space and weight constraints of humanoid platforms.",
+      specs: [["Weight", "Balance-critical"], ["Size", "Tightly constrained"], ["Energy density", "Maximised per litre"]]
+    },
+    "Industrial Robotics": {
+      desc: "Custom power systems for robotic arms and automated production line equipment.",
+      specs: [["Footprint", "Base-chassis sized"], ["Duty cycle", "Continuous production"], ["EMI", "Shielded from controls"]]
+    },
+    "Electric Workboat": {
+      desc: "Marine battery systems engineered for electric propulsion and onboard power in commercial workboats.",
+      specs: [["Waterproofing", "IP-rated enclosure"], ["Temperature", "Marine-range rated"], ["Corrosion", "Salt-air resistant"]]
+    },
+    "Autonomous Marine Platform": {
+      desc: "Battery systems designed for the endurance and reliability autonomous marine missions demand.",
+      specs: [["Waterproofing", "Fully sealed"], ["Temperature", "Open-ocean rated"], ["Endurance", "Multi-day missions"]]
+    },
+    "Modular UPS Cabinet": {
+      desc: "Scalable battery banks engineered for uninterrupted backup power in critical infrastructure.",
+      specs: [["Redundancy", "N+1 capable"], ["Thermal", "Rack-load managed"], ["Certification", "Critical-infra rated"]]
+    },
+    "Infrastructure Bank": {
+      desc: "Large-format battery installations built for grid support and facility-scale energy storage.",
+      specs: [["Capacity", "Facility-scale"], ["Thermal", "Array-level managed"], ["Safety", "Unattended-rated"]]
+    },
+    "Outdoor Maintenance": {
+      desc: "Battery systems built for the duty cycles of outdoor maintenance and grounds equipment.",
+      specs: [["Ingress", "Dust and moisture sealed"], ["Temperature", "Year-round outdoor"], ["Duty cycle", "Extended shifts"]]
+    },
+    "Municipal Equipment": {
+      desc: "Custom power systems engineered for municipal vehicles and public works equipment.",
+      specs: [["Duty cycle", "Full daily routes"], ["Ingress", "Weather-sealed"], ["Charging", "Depot-scheduled"]]
+    },
+    "Electric Excavator": {
+      desc: "High-voltage battery packs engineered for the torque and duty cycle of electric excavators.",
+      specs: [["Power draw", "High, for digging torque"], ["Thermal", "Sustained high-current"], ["Duty cycle", "Full-shift rated"]]
+    },
+    "Agricultural Tractor": {
+      desc: "Battery systems built for the power demands and duty cycles of agricultural machinery.",
+      specs: [["Power draw", "High, machine-scale"], ["Duty cycle", "Long field days"], ["Ingress", "Dust and mud sealed"]]
+    },
+    "Pallet Truck": {
+      desc: "Compact battery packs engineered for the daily cycles of electric pallet trucks.",
+      specs: [["Weight", "Low-profile chassis"], ["Cycle life", "Frequent short lifts"], ["Charging", "Opportunity-charge sized"]]
+    },
+    "Utility Vehicle": {
+      desc: "Custom battery systems built for electric utility vehicles operating across varied terrain.",
+      specs: [["Terrain", "On/off-road rated"], ["Duty cycle", "Multi-stop routes"], ["Ingress", "Dust and mud sealed"]]
+    }
   };
 
   if (headerTarget && !document.querySelector("[data-wst-product-modal]")) {
@@ -254,13 +314,20 @@
       '<div class="wst-product-modal" data-wst-product-modal hidden>',
       '  <button class="wst-product-modal__backdrop" type="button" data-wst-product-close aria-label="Close"></button>',
       '  <section class="wst-product-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="wst-product-modal-title" tabindex="-1">',
-      '    <button class="wst-product-modal__close" type="button" data-wst-product-close aria-label="Close">',
-      '      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 3.5 14.5 14.5M14.5 3.5 3.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-      "    </button>",
-      '    <span class="wst-product-modal__eyebrow">Application</span>',
-      '    <h2 id="wst-product-modal-title" data-wst-product-title></h2>',
+      '    <div class="wst-product-modal__head">',
+      '      <h2 id="wst-product-modal-title" data-wst-product-title></h2>',
+      '      <button class="wst-product-modal__close" type="button" data-wst-product-close aria-label="Close">',
+      '        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+      "      </button>",
+      "    </div>",
       "    <p data-wst-product-desc></p>",
-      '    <a href="contact-v2.html" class="btn btn-on-dark">Discuss this application</a>',
+      '    <div class="wst-product-modal__grid" data-wst-product-specs></div>',
+      '    <div class="wst-product-modal__cert-row">',
+      '      <span class="cert-chip">CE</span>',
+      '      <span class="cert-chip">UN 38.3</span>',
+      '      <span class="cert-chip">RoHS</span>',
+      '      <a href="contact-v2.html" class="wst-product-modal__cta">Discuss this application</a>',
+      "    </div>",
       "  </section>",
       "</div>"
     ].join("\n"));
@@ -269,6 +336,7 @@
     var productDialog = productModal.querySelector(".wst-product-modal__dialog");
     var productTitle = productModal.querySelector("[data-wst-product-title]");
     var productDesc = productModal.querySelector("[data-wst-product-desc]");
+    var productSpecs = productModal.querySelector("[data-wst-product-specs]");
     var lastProductTrigger = null;
     var productCloseTimer = null;
 
@@ -279,8 +347,14 @@
     function openProductModal(card) {
       var img = card.querySelector("img");
       var name = img ? img.getAttribute("alt") : "";
+      var info = PRODUCT_INFO[name];
       productTitle.textContent = name;
-      productDesc.textContent = PRODUCT_INFO[name] || "Every system is engineered around your application, from operating profile to certification.";
+      productDesc.textContent = info ? info.desc : "Every system is engineered around your application, from operating profile to certification.";
+
+      var specs = info ? info.specs : [];
+      productSpecs.innerHTML = specs.map(function (pair) {
+        return '<div class="wst-product-modal__spec"><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + "</span></div>";
+      }).join("");
 
       window.clearTimeout(productCloseTimer);
       lastProductTrigger = card;
