@@ -377,7 +377,7 @@
     }
 
     document.addEventListener("click", function (event) {
-      var card = event.target.closest(".cat-card, .app-tile");
+      var card = event.target.closest(".cat-card, .app-tile, .show-row");
       if (!card) return;
       event.preventDefault();
       openProductModal(card);
