@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Project pages | WS Technicals</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
+<style>
+
+/* Ambient gradient wash — matches the rest of the site's hero background */
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1180px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
+}
+.ambient-blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(124px);
+}
+.ambient-blob-brass{
+  width:clamp(1980px, 158vw, 2540px); height:clamp(1420px, 108vw, 1860px);
+  top:-430px; left:-30%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.58;
+}
+.ambient-blob-grey{
+  width:clamp(2040px, 166vw, 2640px); height:clamp(2040px, 166vw, 2640px);
+  top:-360px; right:-38%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.34;
+}
+.ambient-blob-blue{
+  width:clamp(2680px, 230vw, 3540px); height:clamp(2680px, 230vw, 3540px);
+  top:180px; left:21%;
+  background:radial-gradient(circle at 48% 48%, var(--blue) 0%, #496594 38%, transparent 80%);
+  opacity:.26;
+}
+@media (min-width:981px){
+  .ambient::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:radial-gradient(
+      ellipse 46% 112% at 50% 34%,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,255,255,.96) 42%,
+      rgba(255,255,255,.78) 62%,
+      rgba(255,255,255,.28) 78%,
+      transparent 90%
+    );
+  }
+}
+@media (min-width:981px) and (max-width:1440px){
+  .ambient{ background:linear-gradient(90deg,#FCF8EF 0%,#FFFFFF 38%,#FFFFFF 62%,#F8FAFF 100%); }
+  .ambient-blob-brass{ width:92vw; height:128vh; top:-25vh; left:-44vw; background:radial-gradient(circle at 52% 42%,#D6B985 0%,#EBD8B8 43%,#F5EBDD 64%,transparent 82%); opacity:.64; }
+  .ambient-blob-grey{ width:88vw; height:128vh; top:-22vh; right:-42vw; opacity:.20; }
+  .ambient-blob-blue{ width:100vw; height:136vh; top:6vh; left:auto; right:-54vw; opacity:.16; }
+}
+@media (max-width:980px){
+  .ambient{ background:linear-gradient(112deg,rgba(255,250,242,.72) 0%,rgba(255,255,255,.64) 48%,rgba(247,249,253,.54) 100%); }
+  .ambient::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse 52% 68% at 50% 40%,rgba(255,255,255,.94) 0%,rgba(255,255,255,.76) 38%,rgba(255,255,255,.24) 66%,transparent 84%);
+    pointer-events:none;
+  }
+  .ambient-blob-brass{ width:1720px; height:1340px; top:-390px; left:-610px; background:radial-gradient(circle at 44% 42%,#DCC39D 0%,#F0E2CC 45%,transparent 78%); opacity:.62; }
+  .ambient-blob-grey{ width:1580px; height:1580px; top:-250px; right:-860px; background:radial-gradient(circle at 50% 44%,#C8D2E5 0%,#EEF2F8 48%,transparent 79%); opacity:.1; }
+  .ambient-blob-blue{ width:1780px; height:1780px; top:290px; left:31%; background:radial-gradient(circle at 48% 48%,#9EB3D5 0%,#DCE5F2 42%,transparent 80%); opacity:.14; }
+}
+@media (max-width:640px){
+  .ambient{ height:1020px; background:linear-gradient(118deg,rgba(255,249,239,.8) 0%,rgba(255,255,255,.72) 54%,rgba(248,250,253,.58) 100%); }
+  .ambient-blob{ filter:blur(92px); }
+  .ambient::after{ background:radial-gradient(ellipse 68% 64% at 50% 38%,rgba(255,255,255,.96) 0%,rgba(255,255,255,.8) 42%,rgba(255,255,255,.3) 70%,transparent 88%); }
+  .ambient-blob-brass{ width:1220px; height:1040px; top:-300px; left:-460px; background:radial-gradient(circle at 46% 42%,#DCC39D 0%,#F2E5D2 46%,transparent 79%); opacity:.64; }
+  .ambient-blob-grey{ width:1180px; height:1180px; top:-190px; right:-790px; opacity:.06; }
+  .ambient-blob-blue{ width:1320px; height:1320px; top:350px; left:38%; background:radial-gradient(circle at 48% 48%,#A9BBD9 0%,#E2E9F3 44%,transparent 81%); opacity:.12; }
+}
+
+/* ----------------------------------------------------------------
+   Hero
+   ---------------------------------------------------------------- */
+.ov-hero{
+  position:relative;
+  padding:96px 0 64px;
+  overflow:hidden;
+}
+.ov-hero-inner{ position:relative; z-index:1; }
+.ov-hero h1{
+  font-family:var(--font-display);
+  font-size:var(--h1-display);
+  line-height:var(--h1-lh);
+  letter-spacing:var(--h1-ls);
+  color:var(--ink);
+  max-width:16ch;
+  margin:0 0 var(--sp-3);
+}
+.ov-hero p{
+  font-size:18px;
+  color:var(--ink-soft);
+  line-height:1.6;
+  max-width:52ch;
+  margin:0;
+}
+
+/* ----------------------------------------------------------------
+   Page list
+   ---------------------------------------------------------------- */
+.ov-section{
+  padding:8px 0 56px;
+}
+.ov-section-head{
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+  margin-bottom:24px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+.ov-section-head h2{
+  font-family:var(--font-display);
+  font-size:22px;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin:0;
+}
+.ov-section-head span{
+  color:var(--ink-faint);
+  font-size:14px;
+}
+.ov-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:14px;
+}
+.ov-card{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:22px 24px;
+  background:#F5F5F7;
+  border-radius:var(--r-lg);
+  text-decoration:none;
+  color:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.05);
+  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.ov-card:hover{
+  transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 10px 26px -14px rgba(6,8,26,.16);
+}
+.ov-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.ov-card h3{
+  font-family:var(--font-display);
+  font-size:19px;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin:0;
+}
+.ov-card-path{
+  flex:none;
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  color:var(--ink-faint);
+  white-space:nowrap;
+}
+.ov-card p{
+  font-size:14px;
+  line-height:1.55;
+  color:var(--ink-soft);
+  margin:0;
+}
+.ov-card-tag{
+  align-self:flex-start;
+  margin-top:4px;
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+}
+.ov-card-tag.live{ background:rgba(15,42,92,.09); color:var(--blue); }
+.ov-card-tag.progress{ background:rgba(185,154,114,.16); color:var(--brass-text); }
+.ov-card-tag.concept{ background:rgba(6,8,26,.06); color:var(--ink-soft); }
+
+@media (max-width:720px){
+  .ov-grid{ grid-template-columns:1fr; }
+  .ov-hero{ padding:72px 0 40px; }
+}
+</style>
+</head>
+<body data-wst-page="overview">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-grey"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+
+<main>
+
+<section class="ov-hero">
+  <div class="container ov-hero-inner">
+    <h1>Project pages.</h1>
+    <p>A working overview of every page built so far, grouped by status. Use this link to review the current state of the site in one place.</p>
+  </div>
+</section>
+
+<section class="ov-section">
+  <div class="container">
+
+    <div class="ov-section-head">
+      <h2>Live</h2>
+      <span>Linked from the site navigation today</span>
+    </div>
+    <div class="ov-grid">
+
+      <a class="ov-card" href="index.html">
+        <div class="ov-card-top"><h3>Home</h3><span class="ov-card-path">index.html</span></div>
+        <p>Hero, application categories, technology partners, global presence and company story.</p>
+        <span class="ov-card-tag live">Live</span>
+      </a>
+
+      <a class="ov-card" href="solutions-v4.html">
+        <div class="ov-card-top"><h3>Solutions</h3><span class="ov-card-path">solutions-v4.html</span></div>
+        <p>Every application category in one editorial grid, from unmanned platforms to heavy machinery.</p>
+        <span class="ov-card-tag live">Live</span>
+      </a>
+
+      <a class="ov-card" href="about.html">
+        <div class="ov-card-top"><h3>About us</h3><span class="ov-card-path">about.html</span></div>
+        <p>Company story, leadership and the global partner network.</p>
+        <span class="ov-card-tag live">Live</span>
+      </a>
+
+      <a class="ov-card" href="contact-v2.html">
+        <div class="ov-card-top"><h3>Contact</h3><span class="ov-card-path">contact-v2.html</span></div>
+        <p>Enquiry form and direct contact details.</p>
+        <span class="ov-card-tag live">Live</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="ov-section">
+  <div class="container">
+
+    <div class="ov-section-head">
+      <h2>In development</h2>
+      <span>Built, not yet linked from navigation</span>
+    </div>
+    <div class="ov-grid">
+
+      <a class="ov-card" href="careers.html">
+        <div class="ov-card-top"><h3>Careers</h3><span class="ov-card-path">careers.html</span></div>
+        <p>Open roles and engineering disciplines.</p>
+        <span class="ov-card-tag progress">In development</span>
+      </a>
+
+      <a class="ov-card" href="news.html">
+        <div class="ov-card-top"><h3>News &amp; stories</h3><span class="ov-card-path">news.html</span></div>
+        <p>Company news and customer success stories.</p>
+        <span class="ov-card-tag progress">In development</span>
+      </a>
+
+      <a class="ov-card" href="product-drone.html">
+        <div class="ov-card-top"><h3>Product detail</h3><span class="ov-card-path">product-drone.html</span></div>
+        <p>Full product and case detail template, reserved for individual product pages later.</p>
+        <span class="ov-card-tag progress">In development</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="ov-section">
+  <div class="container">
+
+    <div class="ov-section-head">
+      <h2>Design concepts</h2>
+      <span>Alternatives for review, not yet decided on</span>
+    </div>
+    <div class="ov-grid">
+
+      <a class="ov-card" href="solutions-v5.html">
+        <div class="ov-card-top"><h3>Solutions — wide rows</h3><span class="ov-card-path">solutions-v5.html</span></div>
+        <p>Alternative full-width layout for the applications page, one application per row with application-specific detail.</p>
+        <span class="ov-card-tag concept">Concept</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+
+</body>
+</html>
