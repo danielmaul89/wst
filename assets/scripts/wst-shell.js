@@ -257,20 +257,16 @@
       '    <button class="wst-product-modal__close" type="button" data-wst-product-close aria-label="Close">',
       '      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 3.5 14.5 14.5M14.5 3.5 3.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
       "    </button>",
-      '    <div class="wst-product-modal__media"><img data-wst-product-image src="" alt=""></div>',
-      '    <div class="wst-product-modal__body">',
-      '      <span class="wst-product-modal__eyebrow">Application</span>',
-      '      <h2 id="wst-product-modal-title" data-wst-product-title></h2>',
-      "      <p data-wst-product-desc></p>",
-      '      <a href="contact-v2.html" class="btn btn-primary">Discuss this application</a>',
-      "    </div>",
+      '    <span class="wst-product-modal__eyebrow">Application</span>',
+      '    <h2 id="wst-product-modal-title" data-wst-product-title></h2>',
+      "    <p data-wst-product-desc></p>",
+      '    <a href="contact-v2.html" class="btn btn-on-dark">Discuss this application</a>',
       "  </section>",
       "</div>"
     ].join("\n"));
 
     var productModal = document.querySelector("[data-wst-product-modal]");
     var productDialog = productModal.querySelector(".wst-product-modal__dialog");
-    var productImage = productModal.querySelector("[data-wst-product-image]");
     var productTitle = productModal.querySelector("[data-wst-product-title]");
     var productDesc = productModal.querySelector("[data-wst-product-desc]");
     var lastProductTrigger = null;
@@ -283,8 +279,6 @@
     function openProductModal(card) {
       var img = card.querySelector("img");
       var name = img ? img.getAttribute("alt") : "";
-      productImage.setAttribute("src", img ? img.getAttribute("src") : "");
-      productImage.setAttribute("alt", name);
       productTitle.textContent = name;
       productDesc.textContent = PRODUCT_INFO[name] || "Every system is engineered around your application, from operating profile to certification.";
 
