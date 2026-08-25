@@ -217,8 +217,8 @@
   object-fit: contain;
   object-position: 100% center;
   transition: transform .65s var(--ease);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.35) 30%, black 52%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.35) 30%, black 52%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 27%, black 70%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 27%, black 70%);
 }
 
 @media (hover: hover) {
@@ -233,10 +233,11 @@
   background: linear-gradient(
     to right,
     rgba(255,255,255,.97) 0%,
-    rgba(255,255,255,.93) 26%,
-    rgba(255,255,255,.6) 44%,
-    rgba(255,255,255,.12) 60%,
-    transparent 72%
+    rgba(255,255,255,.94) 24%,
+    rgba(255,255,255,.7) 40%,
+    rgba(255,255,255,.3) 56%,
+    rgba(255,255,255,.06) 70%,
+    transparent 84%
   );
   pointer-events: none;
 }
