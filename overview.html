@@ -97,7 +97,7 @@
    ---------------------------------------------------------------- */
 .ov-hero{
   position:relative;
-  padding:96px 0 64px;
+  padding:64px 0 64px;
   overflow:hidden;
 }
 .ov-hero-inner{ position:relative; z-index:1; }
@@ -147,6 +147,9 @@
   display:grid;
   grid-template-columns:repeat(2, 1fr);
   gap:14px;
+}
+.ov-grid-3{
+  grid-template-columns:repeat(3, 1fr);
 }
 .ov-card{
   display:flex;
@@ -204,6 +207,9 @@
 .ov-card-tag.progress{ background:rgba(185,154,114,.16); color:var(--brass-text); }
 .ov-card-tag.concept{ background:rgba(6,8,26,.06); color:var(--ink-soft); }
 
+@media (max-width:900px){
+  .ov-grid-3{ grid-template-columns:1fr 1fr; }
+}
 @media (max-width:720px){
   .ov-grid{ grid-template-columns:1fr; }
   .ov-hero{ padding:72px 0 40px; }
@@ -217,8 +223,6 @@
   <span class="ambient-blob ambient-blob-grey"></span>
   <span class="ambient-blob ambient-blob-blue"></span>
 </div>
-
-<div data-wst-header></div>
 
 <main>
 
@@ -244,12 +248,6 @@
         <span class="ov-card-tag live">Live</span>
       </a>
 
-      <a class="ov-card" href="solutions-v4.html">
-        <div class="ov-card-top"><h3>Solutions</h3><span class="ov-card-path">solutions-v4.html</span></div>
-        <p>Every application category in one editorial grid, from unmanned platforms to heavy machinery.</p>
-        <span class="ov-card-tag live">Live</span>
-      </a>
-
       <a class="ov-card" href="about.html">
         <div class="ov-card-top"><h3>About us</h3><span class="ov-card-path">about.html</span></div>
         <p>Company story, leadership and the global partner network.</p>
@@ -260,6 +258,37 @@
         <div class="ov-card-top"><h3>Contact</h3><span class="ov-card-path">contact-v2.html</span></div>
         <p>Enquiry form and direct contact details.</p>
         <span class="ov-card-tag live">Live</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="ov-section">
+  <div class="container">
+
+    <div class="ov-section-head">
+      <h2>Solutions page — all variants</h2>
+      <span>Same page, three layouts, for side-by-side comparison</span>
+    </div>
+    <div class="ov-grid ov-grid-3">
+
+      <a class="ov-card" href="solutions-v3.html">
+        <div class="ov-card-top"><h3>Solutions v3</h3><span class="ov-card-path">solutions-v3.html</span></div>
+        <p>Original six top-level categories (drones, material handling, robotics, maritime, UPS, heavy machinery). Superseded by v4.</p>
+        <span class="ov-card-tag concept">Superseded</span>
+      </a>
+
+      <a class="ov-card" href="solutions-v4.html">
+        <div class="ov-card-top"><h3>Solutions v4</h3><span class="ov-card-path">solutions-v4.html</span></div>
+        <p>Current live version. Every application as its own tile in one editorial grid, from unmanned platforms to heavy machinery.</p>
+        <span class="ov-card-tag live">Live</span>
+      </a>
+
+      <a class="ov-card" href="solutions-v5.html">
+        <div class="ov-card-top"><h3>Solutions v5</h3><span class="ov-card-path">solutions-v5.html</span></div>
+        <p>New concept. Full-width rows, one application per row, with application-specific engineering detail alongside each photo.</p>
+        <span class="ov-card-tag concept">Concept</span>
       </a>
 
     </div>
@@ -297,47 +326,7 @@
   </div>
 </section>
 
-<section class="ov-section">
-  <div class="container">
-
-    <div class="ov-section-head">
-      <h2>Design concepts</h2>
-      <span>Alternatives for review, not yet decided on</span>
-    </div>
-    <div class="ov-grid">
-
-      <a class="ov-card" href="solutions-v5.html">
-        <div class="ov-card-top"><h3>Solutions — wide rows</h3><span class="ov-card-path">solutions-v5.html</span></div>
-        <p>Alternative full-width layout for the applications page, one application per row with application-specific detail.</p>
-        <span class="ov-card-tag concept">Concept</span>
-      </a>
-
-    </div>
-  </div>
-</section>
-
 </main>
-
-<div data-wst-footer></div>
-
-<script src="assets/scripts/wst-shell.js?v=publish1"></script>
-<script>
-(function () {
-  var toggle = document.getElementById('navToggle');
-  if (toggle) {
-    toggle.addEventListener('click', function () {
-      var open = document.body.classList.toggle('menu-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
-  var nav = document.querySelector('.nav');
-  if (nav) {
-    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-})();
-</script>
 
 </body>
 </html>
