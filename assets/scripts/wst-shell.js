@@ -225,4 +225,116 @@
       modalSuccess.hidden = false;
     });
   }
+
+  var PRODUCT_INFO = {
+    "Multirotor UAV": "Custom battery packs engineered for payload capacity, flight time and rapid field swaps in multirotor platforms.",
+    "Fixed-Wing UAV": "Long-range power systems balancing weight, endurance and reliability for fixed-wing aircraft.",
+    "VTOL UAV": "Battery systems tuned for the high peak-power demands of vertical takeoff paired with efficient cruise flight.",
+    "Long-Endurance UAV": "High energy density packs designed to extend flight time without adding excess weight.",
+    "Unmanned Surface Vehicle": "Marine-grade battery systems built for autonomous surface vessels operating in harsh conditions.",
+    "Unmanned Ground Vehicle": "Rugged battery packs engineered for remote and autonomous ground operation in demanding environments.",
+    "AGV and AMR": "Battery systems built for continuous shift cycles and fast opportunity charging in automated warehouses.",
+    "Electric Forklift": "High-cycle battery packs engineered for daily duty in material handling and warehouse operations.",
+    "Humanoid Robotics": "Compact, high-density battery systems built for the space and weight constraints of humanoid platforms.",
+    "Industrial Robotics": "Custom power systems for robotic arms and automated production line equipment.",
+    "Electric Workboat": "Marine battery systems engineered for electric propulsion and onboard power in commercial workboats.",
+    "Autonomous Marine Platform": "Battery systems designed for the endurance and reliability autonomous marine missions demand.",
+    "Modular UPS Cabinet": "Scalable battery banks engineered for uninterrupted backup power in critical infrastructure.",
+    "Infrastructure Bank": "Large-format battery installations built for grid support and facility-scale energy storage.",
+    "Outdoor Maintenance": "Battery systems built for the duty cycles of outdoor maintenance and grounds equipment.",
+    "Municipal Equipment": "Custom power systems engineered for municipal vehicles and public works equipment.",
+    "Electric Excavator": "High-voltage battery packs engineered for the torque and duty cycle of electric excavators.",
+    "Agricultural Tractor": "Battery systems built for the power demands and duty cycles of agricultural machinery.",
+    "Pallet Truck": "Compact battery packs engineered for the daily cycles of electric pallet trucks.",
+    "Utility Vehicle": "Custom battery systems built for electric utility vehicles operating across varied terrain."
+  };
+
+  if (headerTarget && !document.querySelector("[data-wst-product-modal]")) {
+    document.body.insertAdjacentHTML("beforeend", [
+      '<div class="wst-product-modal" data-wst-product-modal hidden>',
+      '  <button class="wst-product-modal__backdrop" type="button" data-wst-product-close aria-label="Close"></button>',
+      '  <section class="wst-product-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="wst-product-modal-title" tabindex="-1">',
+      '    <button class="wst-product-modal__close" type="button" data-wst-product-close aria-label="Close">',
+      '      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 3.5 14.5 14.5M14.5 3.5 3.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+      "    </button>",
+      '    <div class="wst-product-modal__media"><img data-wst-product-image src="" alt=""></div>',
+      '    <div class="wst-product-modal__body">',
+      '      <span class="wst-product-modal__eyebrow">Application</span>',
+      '      <h2 id="wst-product-modal-title" data-wst-product-title></h2>',
+      "      <p data-wst-product-desc></p>",
+      '      <a href="contact-v2.html" class="btn btn-primary">Discuss this application</a>',
+      "    </div>",
+      "  </section>",
+      "</div>"
+    ].join("\n"));
+
+    var productModal = document.querySelector("[data-wst-product-modal]");
+    var productDialog = productModal.querySelector(".wst-product-modal__dialog");
+    var productImage = productModal.querySelector("[data-wst-product-image]");
+    var productTitle = productModal.querySelector("[data-wst-product-title]");
+    var productDesc = productModal.querySelector("[data-wst-product-desc]");
+    var lastProductTrigger = null;
+    var productCloseTimer = null;
+
+    function productModalFocusable() {
+      return Array.prototype.slice.call(productDialog.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+    }
+
+    function openProductModal(card) {
+      var img = card.querySelector("img");
+      var name = img ? img.getAttribute("alt") : "";
+      productImage.setAttribute("src", img ? img.getAttribute("src") : "");
+      productImage.setAttribute("alt", name);
+      productTitle.textContent = name;
+      productDesc.textContent = PRODUCT_INFO[name] || "Every system is engineered around your application, from operating profile to certification.";
+
+      window.clearTimeout(productCloseTimer);
+      lastProductTrigger = card;
+      productModal.hidden = false;
+      document.body.classList.add("wst-modal-open");
+      window.requestAnimationFrame(function () {
+        productModal.classList.add("is-open");
+        productDialog.focus({ preventScroll: true });
+      });
+    }
+
+    function closeProductModal() {
+      productModal.classList.remove("is-open");
+      document.body.classList.remove("wst-modal-open");
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      productCloseTimer = window.setTimeout(function () {
+        productModal.hidden = true;
+        if (lastProductTrigger && typeof lastProductTrigger.focus === "function") lastProductTrigger.focus({ preventScroll: true });
+      }, reduceMotion ? 0 : 320);
+    }
+
+    document.addEventListener("click", function (event) {
+      var card = event.target.closest(".cat-card, .app-tile");
+      if (!card) return;
+      event.preventDefault();
+      openProductModal(card);
+    });
+    productModal.querySelectorAll("[data-wst-product-close]").forEach(function (button) {
+      button.addEventListener("click", closeProductModal);
+    });
+    productModal.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeProductModal();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      var focusable = productModalFocusable();
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  }
 })();

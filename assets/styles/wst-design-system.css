@@ -862,6 +862,128 @@ body.wst-modal-open {
   }
 }
 
+.wst-product-modal[hidden] {
+  display: none;
+}
+
+.wst-product-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 40px);
+}
+
+.wst-product-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(3, 7, 22, .64);
+  cursor: default;
+}
+
+.wst-product-modal__dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(340px, .82fr);
+  width: min(920px, 100%);
+  max-height: min(640px, calc(100vh - 48px));
+  overflow: auto;
+  background: var(--paper);
+  border-radius: var(--r-lg);
+  outline: none;
+  box-shadow: 0 40px 90px -24px rgba(3, 7, 22, .5);
+}
+
+.wst-product-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  color: var(--ink);
+  background: rgba(255, 255, 255, .82);
+  border: 1px solid rgba(6, 8, 26, .1);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.wst-product-modal__close:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.wst-product-modal__media {
+  position: relative;
+  overflow: hidden;
+  background: #F5F5F7;
+}
+
+.wst-product-modal__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wst-product-modal__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(36px, 4vw, 56px);
+}
+
+.wst-product-modal__eyebrow {
+  margin-bottom: 14px;
+  color: var(--brass-text);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.wst-product-modal__body h2 {
+  max-width: 16ch;
+  margin: 0 0 16px;
+  color: var(--ink);
+  font-size: var(--h3-subsection);
+  letter-spacing: var(--h3-ls);
+  line-height: var(--h3-lh);
+}
+
+.wst-product-modal__body p {
+  max-width: 38ch;
+  margin: 0 0 28px;
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+
+@media (max-width: 720px) {
+  .wst-product-modal__dialog {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+
+  .wst-product-modal__media {
+    min-height: 220px;
+  }
+
+  .wst-product-modal__body {
+    padding: 28px 24px 32px;
+  }
+}
+
 /* 6. Shared footer
    ------------------------------------------------------------ */
 .footer {
