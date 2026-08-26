@@ -337,25 +337,15 @@
   position: relative;
   z-index: 1;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3vw, 40px);
-  line-height: 1.1;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.15;
   letter-spacing: -.03em;
   color: var(--paper);
-  max-width: 18ch;
-  margin: 0;
+  max-width: 17ch;
+  margin: 0 0 22px;
 }
 
-.cta-panel-body {
-  position: relative;
-  z-index: 1;
-  font-size: 16px;
-  color: var(--ink-soft-on-dark);
-  line-height: 1.68;
-  max-width: 38ch;
-  margin: 0 0 32px;
-}
-
-.cta-panel-b .btn { position: relative; z-index: 1; align-self: flex-start; }
+.cta-panel .btn { position: relative; z-index: 1; align-self: flex-start; }
 
 /* ----------------------------------------------------------------
    Close band
@@ -473,7 +463,8 @@
       <!-- CTA Panel A — position 8 from top, span 4 -->
       <div class="cta-panel cta-panel-a">
         <span class="cta-panel-eyebrow">Battery Engineering Experts</span>
-        <h2 class="cta-panel-heading">Custom solutions for any application.</h2>
+        <h2 class="cta-panel-heading">Built to fit your application, not a catalogue part number.</h2>
+        <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
       </div>
 
       <!-- Row 4: 6 + 6 -->
@@ -516,7 +507,8 @@
         <strong class="app-tile-name">Outdoor Maintenance</strong>
       </a>
       <div class="cta-panel cta-panel-b">
-        <p class="cta-panel-body">We build to your specification, not a catalogue. Every battery is engineered from operating profile to cell chemistry, precisely matched to the machine.</p>
+        <span class="cta-panel-eyebrow">Battery Engineering Experts</span>
+        <h2 class="cta-panel-heading">Built to fit your application, not a catalogue part number.</h2>
         <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
       </div>
       <a class="app-tile t-sm" href="contact-v2.html">
