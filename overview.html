@@ -90,16 +90,18 @@
   flex-direction:column;
   gap:6px;
   padding:22px 24px;
-  background:#F5F5F7;
+  background:#EFEFEC;
+  border:1px solid rgba(6,8,26,.09);
   border-radius:var(--r-lg);
   text-decoration:none;
   color:inherit;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.05);
-  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 3px 14px rgba(6,8,26,.08);
+  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .ov-card:hover{
   transform:translateY(-2px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 10px 26px -14px rgba(6,8,26,.16);
+  border-color:rgba(6,8,26,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 12px 30px -14px rgba(6,8,26,.22);
 }
 .ov-card-top{
   display:flex;
