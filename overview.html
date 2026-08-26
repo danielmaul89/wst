@@ -13,83 +13,17 @@
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 <style>
 
-/* Ambient gradient wash — matches the rest of the site's hero background */
+/* Neutral wash — soft grey, no brand colour blobs */
 .ambient{
   position:absolute;
   top:0; left:0; right:0;
-  height:1180px;
+  height:640px;
   overflow:hidden;
   z-index:0;
   pointer-events:none;
-  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
-  mask-image:linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
-}
-.ambient-blob{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(124px);
-}
-.ambient-blob-brass{
-  width:clamp(1980px, 158vw, 2540px); height:clamp(1420px, 108vw, 1860px);
-  top:-430px; left:-30%;
-  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
-  opacity:.58;
-}
-.ambient-blob-grey{
-  width:clamp(2040px, 166vw, 2640px); height:clamp(2040px, 166vw, 2640px);
-  top:-360px; right:-38%;
-  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
-  opacity:.34;
-}
-.ambient-blob-blue{
-  width:clamp(2680px, 230vw, 3540px); height:clamp(2680px, 230vw, 3540px);
-  top:180px; left:21%;
-  background:radial-gradient(circle at 48% 48%, var(--blue) 0%, #496594 38%, transparent 80%);
-  opacity:.26;
-}
-@media (min-width:981px){
-  .ambient::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    z-index:2;
-    pointer-events:none;
-    background:radial-gradient(
-      ellipse 46% 112% at 50% 34%,
-      rgba(255,255,255,.98) 0%,
-      rgba(255,255,255,.96) 42%,
-      rgba(255,255,255,.78) 62%,
-      rgba(255,255,255,.28) 78%,
-      transparent 90%
-    );
-  }
-}
-@media (min-width:981px) and (max-width:1440px){
-  .ambient{ background:linear-gradient(90deg,#FCF8EF 0%,#FFFFFF 38%,#FFFFFF 62%,#F8FAFF 100%); }
-  .ambient-blob-brass{ width:92vw; height:128vh; top:-25vh; left:-44vw; background:radial-gradient(circle at 52% 42%,#D6B985 0%,#EBD8B8 43%,#F5EBDD 64%,transparent 82%); opacity:.64; }
-  .ambient-blob-grey{ width:88vw; height:128vh; top:-22vh; right:-42vw; opacity:.20; }
-  .ambient-blob-blue{ width:100vw; height:136vh; top:6vh; left:auto; right:-54vw; opacity:.16; }
-}
-@media (max-width:980px){
-  .ambient{ background:linear-gradient(112deg,rgba(255,250,242,.72) 0%,rgba(255,255,255,.64) 48%,rgba(247,249,253,.54) 100%); }
-  .ambient::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:radial-gradient(ellipse 52% 68% at 50% 40%,rgba(255,255,255,.94) 0%,rgba(255,255,255,.76) 38%,rgba(255,255,255,.24) 66%,transparent 84%);
-    pointer-events:none;
-  }
-  .ambient-blob-brass{ width:1720px; height:1340px; top:-390px; left:-610px; background:radial-gradient(circle at 44% 42%,#DCC39D 0%,#F0E2CC 45%,transparent 78%); opacity:.62; }
-  .ambient-blob-grey{ width:1580px; height:1580px; top:-250px; right:-860px; background:radial-gradient(circle at 50% 44%,#C8D2E5 0%,#EEF2F8 48%,transparent 79%); opacity:.1; }
-  .ambient-blob-blue{ width:1780px; height:1780px; top:290px; left:31%; background:radial-gradient(circle at 48% 48%,#9EB3D5 0%,#DCE5F2 42%,transparent 80%); opacity:.14; }
-}
-@media (max-width:640px){
-  .ambient{ height:1020px; background:linear-gradient(118deg,rgba(255,249,239,.8) 0%,rgba(255,255,255,.72) 54%,rgba(248,250,253,.58) 100%); }
-  .ambient-blob{ filter:blur(92px); }
-  .ambient::after{ background:radial-gradient(ellipse 68% 64% at 50% 38%,rgba(255,255,255,.96) 0%,rgba(255,255,255,.8) 42%,rgba(255,255,255,.3) 70%,transparent 88%); }
-  .ambient-blob-brass{ width:1220px; height:1040px; top:-300px; left:-460px; background:radial-gradient(circle at 46% 42%,#DCC39D 0%,#F2E5D2 46%,transparent 79%); opacity:.64; }
-  .ambient-blob-grey{ width:1180px; height:1180px; top:-190px; right:-790px; opacity:.06; }
-  .ambient-blob-blue{ width:1320px; height:1320px; top:350px; left:38%; background:radial-gradient(circle at 48% 48%,#A9BBD9 0%,#E2E9F3 44%,transparent 81%); opacity:.12; }
+  background:linear-gradient(180deg, #F2F2F0 0%, #F8F7F5 55%, var(--paper) 100%);
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
 }
 
 /* ----------------------------------------------------------------
@@ -203,9 +137,9 @@
   letter-spacing:.03em;
   text-transform:uppercase;
 }
-.ov-card-tag.live{ background:rgba(15,42,92,.09); color:var(--blue); }
-.ov-card-tag.progress{ background:rgba(185,154,114,.16); color:var(--brass-text); }
-.ov-card-tag.concept{ background:rgba(6,8,26,.06); color:var(--ink-soft); }
+.ov-card-tag.live{ background:rgba(6,8,26,.08); color:var(--ink); }
+.ov-card-tag.progress{ background:rgba(6,8,26,.055); color:var(--ink-soft); }
+.ov-card-tag.concept{ background:rgba(6,8,26,.04); color:var(--ink-faint); }
 
 @media (max-width:900px){
   .ov-grid-3{ grid-template-columns:1fr 1fr; }
@@ -218,11 +152,7 @@
 </head>
 <body data-wst-page="overview">
 
-<div class="ambient" aria-hidden="true">
-  <span class="ambient-blob ambient-blob-brass"></span>
-  <span class="ambient-blob ambient-blob-grey"></span>
-  <span class="ambient-blob ambient-blob-blue"></span>
-</div>
+<div class="ambient" aria-hidden="true"></div>
 
 <main>
 
