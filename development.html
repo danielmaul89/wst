@@ -116,19 +116,6 @@
   line-height:1.65;
   margin:0;
 }
-.dev-hero-media{
-  max-width:840px;
-  margin:var(--sp-6) auto 0;
-  padding:0 var(--sp-4);
-}
-.dev-hero-media img{
-  width:100%;
-  height:auto;
-  max-height:52vh;
-  object-fit:cover;
-  border-radius:var(--r-lg);
-  filter:drop-shadow(0 40px 60px rgba(6,8,26,.16));
-}
 
 /* ----------------------------------------------------------------
    Process — fluid split scroll: a pinned dark media panel on the
@@ -137,13 +124,6 @@
    shadows — the opposite of a stacked-paper effect.
    ---------------------------------------------------------------- */
 .dev-process{ position:relative; background:var(--paper); }
-.dev-process-head{ padding:var(--sp-8) 0 clamp(48px,7vw,88px); }
-.dev-process-head span{
-  display:block; margin-bottom:16px;
-  font-family:var(--font-mono); font-size:13px; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--brass-text);
-}
-.dev-process-head h2{ max-width:16ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); color:var(--ink); margin:0; }
 
 .dev-steps{ display:flex; align-items:flex-start; }
 
@@ -277,7 +257,6 @@
 }
 @media (max-width:640px){
   .dev-hero{ min-height:auto; }
-  .dev-process-head{ padding:var(--sp-6) 0 32px; }
   .dev-depth{ padding:var(--sp-6) 0; }
 }
 @media (prefers-reduced-motion:reduce){
@@ -308,19 +287,9 @@
     <p>We are a full-service custom battery manufacturer, designing lithium battery packs to your specification with design, engineering and manufacturing competences under one roof. Every project starts with a drawing and a specification, worked through in 3D CAD, so there is always a shared reference for the work at hand.</p>
     <a href="contact-v2.html" class="btn btn-primary">Discuss your project</a>
   </div>
-  <figure class="dev-hero-media">
-    <img src="assets/general/_MG_7904.webp" alt="WS Technicals engineer holding a custom battery module with an exploded CAD assembly on screen behind it">
-  </figure>
 </section>
 
 <section class="dev-process">
-  <div class="container">
-    <div class="dev-process-head">
-      <span>Five stages, one team</span>
-      <h2>The same process, every project.</h2>
-    </div>
-  </div>
-
   <div class="dev-steps">
     <div class="dev-steps-media" aria-hidden="true">
       <div class="dev-steps-media-item"><img src="assets/general/_MG_1309 copy.webp" alt=""></div>
