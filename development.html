@@ -145,116 +145,70 @@
 }
 
 /* ----------------------------------------------------------------
-   Process — sticky-pinned step stack (same mechanic as the
-   product-drone.html engineering-proof section, retuned for 5 steps)
+   Process — fluid split scroll: a pinned dark media panel on the
+   right cross-fades between stages while the plain-white step list
+   on the left scrolls past underneath it. Full-bleed, no cards, no
+   shadows — the opposite of a stacked-paper effect.
    ---------------------------------------------------------------- */
-.dev-process{
-  --proof-card-top:calc(var(--nav-height,76px) + 16px);
-  --proof-peek:8px;
-  position:relative;
-  padding:var(--sp-8) 0;
-  overflow:clip;
-  background:
-    radial-gradient(circle at 12% 18%,rgba(203,176,138,.16),transparent 30%),
-    radial-gradient(circle at 88% 74%,rgba(84,112,166,.11),transparent 34%),
-    var(--paper);
-}
-.proof-circuit{
-  position:sticky;
-  top:var(--nav-height,76px);
-  z-index:0;
-  height:var(--proof-grid-h,calc(100vh - 76px));
-  margin-top:calc(-1 * var(--sp-8));
-  margin-bottom:calc(var(--sp-8) - var(--proof-grid-h,calc(100vh - 76px)));
-  overflow:hidden;
-  pointer-events:none;
-  background-image:
-    repeating-linear-gradient(to right,rgba(6,8,26,.06) 0 1px,transparent 1px 96px),
-    repeating-linear-gradient(to bottom,rgba(6,8,26,.06) 0 1px,transparent 1px 96px);
-  background-size:96px 96px;
-  -webkit-mask-image:
-    radial-gradient(30% 26% at 20% 22%,#000 0%,transparent 100%),
-    radial-gradient(26% 24% at 72% 34%,#000 0%,transparent 100%),
-    radial-gradient(24% 22% at 40% 68%,#000 0%,transparent 100%),
-    radial-gradient(22% 20% at 82% 78%,#000 0%,transparent 100%);
-  mask-image:
-    radial-gradient(30% 26% at 20% 22%,#000 0%,transparent 100%),
-    radial-gradient(26% 24% at 72% 34%,#000 0%,transparent 100%),
-    radial-gradient(24% 22% at 40% 68%,#000 0%,transparent 100%),
-    radial-gradient(22% 20% at 82% 78%,#000 0%,transparent 100%);
-}
-.dev-process-head{ position:relative; z-index:1; margin-bottom:clamp(48px,7vw,96px); }
+.dev-process{ position:relative; background:var(--paper); }
+.dev-process-head{ padding:var(--sp-8) 0 clamp(48px,7vw,88px); }
 .dev-process-head span{
   display:block; margin-bottom:16px;
   font-family:var(--font-mono); font-size:13px; letter-spacing:.1em; text-transform:uppercase;
   color:var(--brass-text);
 }
 .dev-process-head h2{ max-width:16ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); color:var(--ink); margin:0; }
-.proof-outcomes{ position:relative; display:flex; flex-direction:column; }
-.proof-stack-end{ flex:none; height:38vh; pointer-events:none; }
-.proof-outcome{
-  --handoff:0;
-  --depth:0;
-  --stack-index:0;
+
+.dev-steps{ display:flex; align-items:flex-start; }
+
+.dev-steps-media{
   position:sticky;
-  top:calc(var(--proof-card-top) + (var(--stack-index) * var(--proof-peek)));
-  isolation:isolate;
-  display:grid;
-  grid-template-columns:minmax(220px,.62fr) minmax(0,1.38fr);
-  gap:clamp(28px,4vw,56px);
-  align-items:center;
-  min-height:min(60vh,560px);
-  margin-bottom:6vh;
-  padding:16px 16px 16px clamp(32px,4vw,56px);
+  top:0;
+  flex:none;
+  width:46%;
+  height:100vh;
   overflow:hidden;
-  border-radius:12px;
-  background:linear-gradient(135deg,#fff,#f6f3ed);
-  box-shadow:
-    0 1px 1px rgba(3,11,33,.03),
-    0 6px 16px -14px rgba(3,11,33,.17),
-    0 30px 68px -42px rgba(3,11,33,.27);
-  transform-origin:50% 0;
-  will-change:transform;
-  transition:transform 260ms cubic-bezier(.22,.61,.36,1),box-shadow 520ms ease;
+  background:var(--blue-deep);
 }
-.proof-outcome:nth-child(1){ --stack-index:0; z-index:1; }
-.proof-outcome:nth-child(2){ --stack-index:1; z-index:2; }
-.proof-outcome:nth-child(3){ --stack-index:2; z-index:3; }
-.proof-outcome:nth-child(4){ --stack-index:3; z-index:4; }
-.proof-outcome:nth-child(5){ --stack-index:4; z-index:5; margin-bottom:0; }
-.proof-outcome{
-  transform:
-    scale(calc(1 - (var(--handoff) * .032) - (var(--depth) * .016)))
-    translateY(calc((var(--handoff) * -8px) + (var(--depth) * -4px)));
+.dev-steps-media-item{
+  position:absolute; inset:0;
+  opacity:0;
+  transition:opacity .7s var(--ease);
 }
-.proof-outcome.is-active{
-  box-shadow:
-    0 1px 1px rgba(3,11,33,.04),
-    0 7px 18px -14px rgba(3,11,33,.2),
-    0 calc(38px - (var(--handoff) * 17px)) calc(86px - (var(--handoff) * 36px)) -40px rgba(3,11,33,.33);
+.dev-steps-media-item.is-active{ opacity:1; }
+.dev-steps-media-item img{ width:100%; height:100%; object-fit:cover; }
+.dev-steps-media::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(115deg, rgba(3,11,33,.28) 0%, transparent 38%, transparent 100%);
+  pointer-events:none;
 }
-.proof-outcome.is-past{
-  box-shadow:
-    0 1px 1px rgba(3,11,33,.02),
-    0 5px 12px -12px rgba(3,11,33,.14),
-    0 18px 42px -36px rgba(3,11,33,.22);
+
+.dev-steps-list{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.dev-step{
+  min-height:92vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:56px clamp(32px,6vw,88px);
+  opacity:.32;
+  transition:opacity .5s var(--ease);
 }
-.proof-index{ display:block; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--brass); }
-.proof-copy h3{ max-width:15ch; margin-bottom:16px; font-size:var(--h3-subsection-featured); letter-spacing:var(--h3-ls); line-height:var(--h3-lh); color:var(--ink); }
-.proof-copy > p{ max-width:43ch; color:var(--ink-soft); font-size:16px; line-height:1.7; margin:0; }
-.proof-media{
-  position:relative;
-  min-height:360px;
-  align-self:stretch;
-  height:100%;
-  margin:0;
-  overflow:hidden;
-  border-radius:var(--r-lg);
-  background:linear-gradient(145deg,#ececef,#d9d9de);
+.dev-step.is-active{ opacity:1; }
+.dev-step-index{
+  display:block; margin-bottom:22px;
+  font-family:var(--font-display); font-size:clamp(40px,5vw,64px); font-weight:700;
+  letter-spacing:-.02em; color:var(--line-2);
+  transition:color .5s var(--ease);
 }
-.proof-media::after{ content:""; position:absolute; inset:0; box-shadow:inset 0 0 0 1px rgba(6,8,26,.05); pointer-events:none; border-radius:inherit; }
-.proof-media img{ width:100%; height:100%; min-height:360px; object-fit:cover; transition:transform 1s cubic-bezier(.2,.72,.2,1); }
-.proof-outcome.is-active .proof-media img{ transform:scale(calc(1.035 - (var(--handoff) * .035))) translateY(calc(var(--handoff) * -8px)); }
+.dev-step.is-active .dev-step-index{ color:var(--brass-hi); }
+.dev-step h3{
+  max-width:15ch; margin:0 0 18px;
+  font-family:var(--font-display); font-size:clamp(28px,3.2vw,42px); font-weight:700;
+  letter-spacing:-.02em; line-height:1.1; color:var(--ink);
+}
+.dev-step p{ max-width:44ch; margin:0; font-size:17px; line-height:1.7; color:var(--ink-soft); }
+.dev-step-media{ display:none; }
 
 /* ----------------------------------------------------------------
    Depth — 3D battery, subtle scroll-driven rotation
@@ -326,22 +280,23 @@
   .dev-hero-grid{ grid-template-columns:1fr; }
   .dev-hero-media{ order:-1; aspect-ratio:16/10; }
   .dev-intro-grid{ grid-template-columns:1fr; gap:20px; }
-  .proof-outcomes{ gap:var(--sp-4); padding-bottom:0; }
-  .proof-stack-end{ display:none; }
-  .proof-circuit{ position:absolute; inset:0; height:auto; margin-top:0; margin-bottom:0; }
-  .proof-outcome{ position:relative; top:auto; grid-template-columns:1fr; min-height:auto; margin-bottom:0 !important; padding:clamp(28px,6vw,40px); transform:none; opacity:1; }
-  .proof-outcome.is-active,.proof-outcome.is-past{ transform:none; opacity:1; }
-  .proof-media,.proof-media img{ min-height:280px; }
+  .dev-steps{ flex-direction:column; }
+  .dev-steps-media{ display:none; }
+  .dev-step{ min-height:auto; opacity:1; padding:40px clamp(24px,6vw,40px); }
+  .dev-step-index{ font-size:36px; margin-bottom:14px; }
+  .dev-step-media{ display:block; width:100%; aspect-ratio:16/10; margin-bottom:24px; border-radius:var(--r-lg); overflow:hidden; }
+  .dev-step-media img{ width:100%; height:100%; object-fit:cover; }
   .dev-depth-grid{ grid-template-columns:1fr; }
   .dev-close-grid{ grid-template-columns:1fr; gap:28px; }
 }
 @media (max-width:640px){
   .dev-hero{ padding:56px 0 64px; }
-  .dev-process,.dev-depth{ padding:var(--sp-6) 0; }
+  .dev-process-head{ padding:var(--sp-6) 0 32px; }
+  .dev-depth{ padding:var(--sp-6) 0; }
 }
 @media (prefers-reduced-motion:reduce){
-  .proof-outcome,.proof-outcome.is-active,.proof-outcome.is-past{ position:relative; top:auto; margin-bottom:var(--sp-4); transform:none; transition:none; }
-  .proof-outcome.is-active .proof-media img{ transform:none; }
+  .dev-steps-media-item{ transition:none; }
+  .dev-step{ transition:none; }
   .dev-depth-img{ transform:none !important; }
 }
 </style>
@@ -382,70 +337,57 @@
 </section>
 
 <section class="dev-process">
-  <div class="proof-circuit" aria-hidden="true"></div>
   <div class="container">
     <div class="dev-process-head">
       <span>Five stages, one team</span>
       <h2>The same process, every project.</h2>
     </div>
+  </div>
 
-    <div class="proof-outcomes">
-      <article class="proof-outcome">
-        <div class="proof-copy">
-          <span class="proof-index">01 / Design</span>
-          <h3>Design phase &amp; feasibility study.</h3>
-          <p>Every project starts with your operating profile and physical constraints. We assess feasibility, define the architecture and produce the first drawings and specification in 3D CAD.</p>
-        </div>
-        <figure class="proof-media">
-          <img src="assets/general/_MG_1309 copy.webp" alt="Engineer reviewing a 3D CAD battery assembly on dual monitors">
-        </figure>
-      </article>
+  <div class="dev-steps">
+    <div class="dev-steps-media" aria-hidden="true">
+      <div class="dev-steps-media-item"><img src="assets/general/_MG_1309 copy.webp" alt=""></div>
+      <div class="dev-steps-media-item"><img src="assets/general/_MG_1505.webp" alt=""></div>
+      <div class="dev-steps-media-item"><img src="assets/general/_MG_1590.webp" alt=""></div>
+      <div class="dev-steps-media-item"><img src="assets/general/_MG_1368 copy.webp" alt=""></div>
+      <div class="dev-steps-media-item"><img src="assets/general/_MG_8253_VN09GRAIN.webp" alt=""></div>
+    </div>
 
-      <article class="proof-outcome">
-        <div class="proof-copy">
-          <span class="proof-index">02 / Prototype</span>
-          <h3>Prototype &amp; testing.</h3>
-          <p>A representative pack is built and tested electrically, thermally and mechanically against the agreed profile, before anything moves toward production tooling.</p>
-        </div>
-        <figure class="proof-media">
-          <img src="assets/general/_MG_1505.webp" alt="Engineer testing a prototype battery circuit board with a multimeter">
-        </figure>
-      </article>
+    <div class="dev-steps-list">
+      <div class="dev-step">
+        <span class="dev-step-index">01</span>
+        <h3>Design phase &amp; feasibility study.</h3>
+        <p>Every project starts with your operating profile and physical constraints. We assess feasibility, define the architecture and produce the first drawings and specification in 3D CAD.</p>
+        <figure class="dev-step-media"><img src="assets/general/_MG_1309 copy.webp" alt="Engineer reviewing a 3D CAD battery assembly on dual monitors"></figure>
+      </div>
 
-      <article class="proof-outcome">
-        <div class="proof-copy">
-          <span class="proof-index">03 / Industrialization</span>
-          <h3>Industrialization &amp; quality management.</h3>
-          <p>The validated design is translated into a repeatable manufacturing definition: approved components, controlled work instructions and end-of-line testing for every unit.</p>
-        </div>
-        <figure class="proof-media">
-          <img src="assets/general/_MG_1590.webp" alt="Finished battery pack undergoing end-of-line testing on a production rig">
-        </figure>
-      </article>
+      <div class="dev-step">
+        <span class="dev-step-index">02</span>
+        <h3>Prototype &amp; testing.</h3>
+        <p>A representative pack is built and tested electrically, thermally and mechanically against the agreed profile, before anything moves toward production tooling.</p>
+        <figure class="dev-step-media"><img src="assets/general/_MG_1505.webp" alt="Engineer testing a prototype battery circuit board with a multimeter"></figure>
+      </div>
 
-      <article class="proof-outcome">
-        <div class="proof-copy">
-          <span class="proof-index">04 / Compliance</span>
-          <h3>Market compliance.</h3>
-          <p>Every system is verified against the certification requirements of its target market, covering safety, EMC and transport regulations before it ships anywhere.</p>
-        </div>
-        <figure class="proof-media">
-          <img src="assets/general/_MG_1368 copy.webp" alt="Engineer running an EMC compliance test with a spectrum analyser">
-        </figure>
-      </article>
+      <div class="dev-step">
+        <span class="dev-step-index">03</span>
+        <h3>Industrialization &amp; quality management.</h3>
+        <p>The validated design is translated into a repeatable manufacturing definition: approved components, controlled work instructions and end-of-line testing for every unit.</p>
+        <figure class="dev-step-media"><img src="assets/general/_MG_1590.webp" alt="Finished battery pack undergoing end-of-line testing on a production rig"></figure>
+      </div>
 
-      <article class="proof-outcome">
-        <div class="proof-copy">
-          <span class="proof-index">05 / Production</span>
-          <h3>Mass production &amp; SOP.</h3>
-          <p>Once released, the design moves into standard operating procedure: consistent, traceable output at the volume your project needs.</p>
-        </div>
-        <figure class="proof-media">
-          <img src="assets/general/_MG_8253_VN09GRAIN.webp" alt="Shelf of finished custom battery packs ready for shipment">
-        </figure>
-      </article>
+      <div class="dev-step">
+        <span class="dev-step-index">04</span>
+        <h3>Market compliance.</h3>
+        <p>Every system is verified against the certification requirements of its target market, covering safety, EMC and transport regulations before it ships anywhere.</p>
+        <figure class="dev-step-media"><img src="assets/general/_MG_1368 copy.webp" alt="Engineer running an EMC compliance test with a spectrum analyser"></figure>
+      </div>
 
-      <div class="proof-stack-end" aria-hidden="true"></div>
+      <div class="dev-step">
+        <span class="dev-step-index">05</span>
+        <h3>Mass production &amp; SOP.</h3>
+        <p>Once released, the design moves into standard operating procedure: consistent, traceable output at the volume your project needs.</p>
+        <figure class="dev-step-media"><img src="assets/general/_MG_8253_VN09GRAIN.webp" alt="Shelf of finished custom battery packs ready for shipment"></figure>
+      </div>
     </div>
   </div>
 </section>
@@ -493,57 +435,39 @@
     onScroll();
   }
 
-  // Process stack — each stage hands the viewport to the next as the
-  // reader scrolls, mirroring the engineering-proof mechanic used
-  // elsewhere on the site.
-  var proofSection = document.querySelector('.dev-process');
-  var proofOutcomes = Array.prototype.slice.call(document.querySelectorAll('.proof-outcome'));
-  var proofQueued = false;
-  function updateProofSequence() {
-    proofQueued = false;
-    if (!proofSection || !proofOutcomes.length || window.innerWidth <= 980) return;
-    var sectionTop = proofSection.getBoundingClientRect().top + window.scrollY;
-    var readingPoint = window.scrollY + window.innerHeight * .38;
-    var handoffDistance = Math.min(680, window.innerHeight * .72);
+  // Process split — the right-hand media panel stays pinned and
+  // cross-fades to the next stage's photo as its matching step in the
+  // left column reaches the reading point. Desktop only; on narrow
+  // viewports each step carries its own inline image instead.
+  var devSteps = Array.prototype.slice.call(document.querySelectorAll('.dev-step'));
+  var devMediaItems = Array.prototype.slice.call(document.querySelectorAll('.dev-steps-media-item'));
+  var devQueued = false;
+  function updateDevSteps() {
+    devQueued = false;
+    if (!devSteps.length) return;
+    var readingPoint = window.scrollY + window.innerHeight * .5;
     var activeIndex = 0;
-    proofOutcomes.forEach(function (outcome, index) {
-      if (readingPoint >= sectionTop + outcome.offsetTop) activeIndex = index;
+    devSteps.forEach(function (step, index) {
+      var top = step.getBoundingClientRect().top + window.scrollY;
+      if (readingPoint >= top) activeIndex = index;
     });
-    proofOutcomes.forEach(function (outcome, index) {
-      outcome.classList.toggle('is-active', index === activeIndex);
-      outcome.classList.toggle('is-past', index < activeIndex);
-      outcome.style.setProperty('--depth', Math.max(0, activeIndex - index));
-      var handoff = 0;
-      if (index < proofOutcomes.length - 1) {
-        var restTop = outcome.getBoundingClientRect().top;
-        var nextTop = proofOutcomes[index + 1].getBoundingClientRect().top;
-        var raw = Math.max(0, Math.min(1, (restTop + handoffDistance - nextTop) / handoffDistance));
-        handoff = raw * raw * (3 - 2 * raw);
-      }
-      outcome.style.setProperty('--handoff', handoff.toFixed(4));
+    devSteps.forEach(function (step, index) {
+      step.classList.toggle('is-active', index === activeIndex);
+    });
+    devMediaItems.forEach(function (item, index) {
+      item.classList.toggle('is-active', index === activeIndex);
     });
   }
-  function queueProofSequence() {
-    if (proofQueued) return;
-    proofQueued = true;
-    window.requestAnimationFrame(updateProofSequence);
+  function queueDevSteps() {
+    if (devQueued) return;
+    devQueued = true;
+    window.requestAnimationFrame(updateDevSteps);
   }
-  if (proofOutcomes.length) proofOutcomes[0].classList.add('is-active');
-  updateProofSequence();
-  window.addEventListener('scroll', queueProofSequence, { passive: true });
-  window.addEventListener('resize', queueProofSequence);
-
-  var proofCircuit = document.querySelector('.proof-circuit');
-  function sizeProofGrid() {
-    if (!proofCircuit) return;
-    var navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 76;
-    var cell = 96;
-    var available = window.innerHeight - navHeight;
-    var rows = Math.max(1, Math.round(available / cell));
-    proofCircuit.style.setProperty('--proof-grid-h', (rows * cell) + 'px');
-  }
-  sizeProofGrid();
-  window.addEventListener('resize', sizeProofGrid);
+  if (devSteps.length) devSteps[0].classList.add('is-active');
+  if (devMediaItems.length) devMediaItems[0].classList.add('is-active');
+  updateDevSteps();
+  window.addEventListener('scroll', queueDevSteps, { passive: true });
+  window.addEventListener('resize', queueDevSteps);
 
   // Depth section — subtle scroll-linked 3D rotation on the exploded
   // battery render.
