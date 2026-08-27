@@ -164,6 +164,7 @@
 .dev-steps-media{
   position:sticky;
   top:0;
+  order:2;
   flex:none;
   width:46%;
   height:100vh;
@@ -184,17 +185,18 @@
   pointer-events:none;
 }
 
-.dev-steps-list{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.dev-steps-list{ order:1; flex:1; min-width:0; display:flex; flex-direction:column; }
 .dev-step{
+  --reveal:.32;
   min-height:92vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   padding:56px clamp(32px,6vw,88px);
-  opacity:.32;
-  transition:opacity .5s var(--ease);
+  opacity:var(--reveal);
+  transform:translateY(calc((1 - var(--reveal)) * 10px));
+  transition:opacity .15s linear,transform .15s linear;
 }
-.dev-step.is-active{ opacity:1; }
 .dev-step-index{
   display:block; margin-bottom:22px;
   font-family:var(--font-display); font-size:clamp(40px,5vw,64px); font-weight:700;
@@ -445,11 +447,21 @@
   function updateDevSteps() {
     devQueued = false;
     if (!devSteps.length) return;
-    var readingPoint = window.scrollY + window.innerHeight * .5;
+    var viewportCenter = window.scrollY + window.innerHeight * .5;
+    var fadeRange = Math.max(240, window.innerHeight * .42);
     var activeIndex = 0;
+    var closestDist = Infinity;
     devSteps.forEach(function (step, index) {
       var top = step.getBoundingClientRect().top + window.scrollY;
-      if (readingPoint >= top) activeIndex = index;
+      var stepCenter = top + step.offsetHeight * .5;
+      var dist = Math.abs(viewportCenter - stepCenter);
+      if (dist < closestDist) { closestDist = dist; activeIndex = index; }
+      // Smoothstep: reveal ramps up gradually as the step nears the
+      // viewport centre, instead of snapping between two opacity values.
+      var t = Math.max(0, Math.min(1, 1 - dist / fadeRange));
+      var eased = t * t * (3 - 2 * t);
+      var reveal = .32 + eased * .68;
+      step.style.setProperty('--reveal', reveal.toFixed(3));
     });
     devSteps.forEach(function (step, index) {
       step.classList.toggle('is-active', index === activeIndex);
