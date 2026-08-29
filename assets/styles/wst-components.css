@@ -122,6 +122,64 @@
 
 
 /* ============================================================================
+   1B. HERO
+   Centered page hero: eyebrow, headline, one lead paragraph, one action. For
+   a page whose opening statement fills the first screen rather than sitting
+   further down the page. One per page.
+
+   Markup:
+     <section class="wst-hero">
+       <div class="wst-ambient wst-ambient--hero" aria-hidden="true">
+         <span class="wst-ambient-blob wst-ambient-blob--brass"></span>
+         <span class="wst-ambient-blob wst-ambient-blob--grey"></span>
+         <span class="wst-ambient-blob wst-ambient-blob--blue"></span>
+       </div>
+       <div class="container wst-hero-inner">
+         <span class="eyebrow">…</span>
+         <h1 class="t-display">…</h1>
+         <p class="wst-hero-lead">…</p>
+         <a href="…" class="btn btn-primary">…</a>
+       </div>
+     </section>
+
+   `overflow:hidden` on the section clips the fixed-height ambient wash to
+   this block instead of letting it bleed into whatever follows.
+   ========================================================================== */
+
+.wst-hero {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  padding: calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-6);
+  text-align: center;
+}
+
+.wst-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.wst-hero-inner .t-display {
+  max-width: 20ch;
+}
+
+.wst-hero-lead {
+  max-width: 700px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(var(--fs-body), 1.6vw, var(--fs-24));
+  line-height: 1.65;
+}
+
+
+/* ============================================================================
    2. AMBIENT WASH
    The soft out-of-focus brand-colour field behind a section. Two variants,
    because the canonical pages use it two genuinely different ways.
@@ -1072,6 +1130,14 @@
 }
 
 @media (max-width: 720px) {
+  .wst-hero {
+    padding-top: calc(var(--nav-height) + var(--sp-4));
+  }
+
+  .wst-hero-inner .t-display {
+    max-width: none;
+  }
+
   .wst-grid--2,
   .wst-grid--3,
   .wst-grid--4,

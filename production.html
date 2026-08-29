@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Production | WS Technicals</title>
+<meta name="description" content="How WS Technicals manufactures custom lithium battery packs at scale, with end-of-line testing, a traceable production flow and EU battery passport readiness.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.prod-partner-tag{ margin-bottom:var(--sp-2); }
+</style>
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/wst-components.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body data-wst-page="production">
+
+<div data-wst-header></div>
+
+<main>
+
+<section class="wst-hero">
+  <div class="wst-ambient wst-ambient--hero" aria-hidden="true">
+    <span class="wst-ambient-blob wst-ambient-blob--brass"></span>
+    <span class="wst-ambient-blob wst-ambient-blob--grey"></span>
+    <span class="wst-ambient-blob wst-ambient-blob--blue"></span>
+  </div>
+  <div class="container wst-hero-inner">
+    <span class="eyebrow">Production</span>
+    <h1 class="t-display">Built for series production, verified before it ships.</h1>
+    <p class="wst-hero-lead">Engineering, qualification and quality control stay under our own roof. Series manufacturing runs through a qualified partner facility in China, audited and managed to our specification, so the path from a validated prototype to a stable production line never leaves our oversight.</p>
+    <a href="contact-v2.html" class="btn btn-primary">Discuss your volumes</a>
+  </div>
+</section>
+
+<section class="wst-section" id="partner">
+  <div class="container">
+    <div class="wst-split">
+      <div class="wst-split-copy">
+        <span class="wst-tag prod-partner-tag">Manufacturing partner</span>
+        <h2>A managed partnership, not an outsourced black box.</h2>
+        <p>Our production partner, HAIDI, builds to our drawings, our approved component list and our work instructions. Every process step is defined by WS Technicals: incoming inspection, assembly sequence, in-line testing and final release. Nothing ships without meeting the same specification that was validated in Denmark.</p>
+        <p>A dedicated engineer follows every programme from first article through to stable series output, so a deviation is caught and corrected at the source rather than at the customer's door.</p>
+      </div>
+      <div class="wst-split-media">
+        <img src="assets/general/_MG_0754.webp" alt="Technician testing a finished battery pack on a charge and discharge rack">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wst-section wst-section--tint" id="quality">
+  <div class="container">
+    <div class="wst-section-head">
+      <h2>Three things every unit carries with it.</h2>
+      <p>Traceability and verification are built into the production flow, not added at the end.</p>
+    </div>
+    <div class="wst-grid wst-grid--3">
+      <div class="wst-step-card">
+        <span class="wst-index">EOL</span>
+        <h3>End-of-line testing</h3>
+        <p>Every single unit is functionally tested before it leaves the line: voltage, capacity, insulation resistance and communication with the host system. A unit that does not pass is not shipped.</p>
+      </div>
+      <div class="wst-step-card">
+        <span class="wst-index">FLOW</span>
+        <h3>Controlled production flow</h3>
+        <p>A defined sequence of work instructions, component lot tracking and in-process checks, so any batch can be traced back to the components and the station that built it.</p>
+      </div>
+      <div class="wst-step-card">
+        <span class="wst-index">PASSPORT</span>
+        <h3>Battery passport ready</h3>
+        <p>Production records are structured to meet the EU's upcoming digital battery passport requirements, giving every pack a documented history from cell to finished system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wst-section">
+  <div class="container">
+    <div class="wst-section-head">
+      <h2>Inside the production floor.</h2>
+      <p>A closer look at the assembly and test process behind every pack.</p>
+    </div>
+    <div class="wst-gallery wst-gallery--mosaic">
+      <div class="wst-gallery-item"><img src="assets/general/_MG_1337.webp" alt="Technician torquing a connection inside an open battery pack enclosure"></div>
+      <div class="wst-gallery-item"><img src="assets/general/_MG_8272_VN09GRAIN.webp" alt="Close-up of a cylindrical cell array with sensor and heating flex inside a pack enclosure"></div>
+      <div class="wst-gallery-item"><img src="assets/general/_MG_8253_VN09GRAIN.webp" alt="Shelf of finished custom battery packs ready for shipment"></div>
+    </div>
+  </div>
+</section>
+
+<section class="wst-cta-band">
+  <div class="container">
+    <h2>Ready to scope your production volumes?</h2>
+    <p>Tell us the application, the target volume and the timeline. We will help scope the right manufacturing path, from first article to stable series output.</p>
+    <div class="wst-cta-band-actions">
+      <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

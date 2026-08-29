@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>BMS | WS Technicals</title>
+<meta name="description" content="WS Technicals' battery management system platforms: integrated and distributed architectures spanning low-voltage light EVs to high-voltage, safety-certified systems.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.bms-card-head{ display:flex; align-items:baseline; justify-content:space-between; gap:var(--sp-2); margin-bottom:10px; }
+.bms-card-head h3{ margin:0; }
+.bms-specs{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin:var(--sp-2) 0 0;
+  padding-top:var(--sp-2);
+  border-top:1px solid var(--line-2);
+  list-style:none;
+}
+.bms-specs li{
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  letter-spacing:.01em;
+}
+</style>
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/wst-components.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+</head>
+<body data-wst-page="bms">
+
+<div data-wst-header></div>
+
+<main>
+
+<section class="wst-hero">
+  <div class="wst-ambient wst-ambient--hero" aria-hidden="true">
+    <span class="wst-ambient-blob wst-ambient-blob--brass"></span>
+    <span class="wst-ambient-blob wst-ambient-blob--grey"></span>
+    <span class="wst-ambient-blob wst-ambient-blob--blue"></span>
+  </div>
+  <div class="container wst-hero-inner">
+    <span class="eyebrow">Battery Management Systems</span>
+    <h1 class="t-display">Every cell, monitored and protected.</h1>
+    <p class="wst-hero-lead">Our BMS platforms span integrated and distributed architectures, designed and firmware-tuned in-house rather than bought off a shelf. From a compact low-voltage unit to a safety-certified system spanning hundreds of cells, the hardware and the software are engineered together, for your pack.</p>
+    <a href="contact-v2.html" class="btn btn-primary">Talk to our BMS engineers</a>
+  </div>
+</section>
+
+<section class="wst-section" id="overview">
+  <div class="container">
+    <div class="wst-split">
+      <div class="wst-split-copy">
+        <span class="wst-tag">Overview</span>
+        <h2>Hardware and firmware, engineered together.</h2>
+        <p>A BMS is only as good as its fit to the pack it protects. We design the board, write the firmware and set the safety strategy around your cell chemistry, topology and communication protocol, rather than adapting a generic platform after the fact.</p>
+        <p>The result is a management system that reports exactly what your application needs to know, on the interface it already speaks.</p>
+      </div>
+      <div class="wst-split-media">
+        <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wst-section wst-section--tint">
+  <div class="container">
+    <div class="wst-section-head">
+      <h2>Four platforms, one design philosophy.</h2>
+      <p>Pick by pack voltage, cell count and safety requirement. Each platform is a starting point we tailor to the application.</p>
+    </div>
+    <div class="wst-grid wst-grid--2 wst-grid--wide-gap">
+
+      <div class="wst-card" id="i-bms">
+        <div class="bms-card-head">
+          <h3>i-BMS</h3>
+          <span class="wst-tag">Integrated · low voltage</span>
+        </div>
+        <p>A compact, fully integrated management unit for low-voltage packs, with pre-charge, current shunt and pack disconnect built onto the same board. Suited to light electric vehicles and other compact systems where board space is tight.</p>
+        <ul class="bms-specs">
+          <li>Up to 15 voltage channels</li>
+          <li>17–60V pack range</li>
+          <li>Integrated pre-charge &amp; disconnect</li>
+        </ul>
+      </div>
+
+      <div class="wst-card" id="n-bms">
+        <div class="bms-card-head">
+          <h3>n-BMS</h3>
+          <span class="wst-tag">Distributed · scalable monitoring</span>
+        </div>
+        <p>A distributed architecture that scales across large series strings, with slave modules placed close to the cells and dual CAN channels back to the host. Built for systems that need extensive voltage and temperature coverage as the pack grows.</p>
+        <ul class="bms-specs">
+          <li>Up to 384 cells in series</li>
+          <li>12 voltage &amp; up to 12 temperature channels per module</li>
+          <li>Dual CAN</li>
+        </ul>
+      </div>
+
+      <div class="wst-card" id="n3-bms">
+        <div class="bms-card-head">
+          <h3>n3-BMS</h3>
+          <span class="wst-tag">Distributed · safety-certified</span>
+        </div>
+        <p>The distributed platform for high-voltage, safety-critical systems, engineered to ISO 26262 ASIL C and rated well beyond typical pack demands. Chosen where a functional safety case is part of the deliverable, not an afterthought.</p>
+        <ul class="bms-specs">
+          <li>Up to 360 cells in series</li>
+          <li>ISO 26262 ASIL C</li>
+          <li>Up to 1000V / 2000A</li>
+        </ul>
+      </div>
+
+      <div class="wst-card" id="c-bms24x">
+        <div class="bms-card-head">
+          <h3>c-BMS24x</h3>
+          <span class="wst-tag">Integrated · smart pack management</span>
+        </div>
+        <p>An integrated unit for mid-voltage packs that need more than monitoring: advanced state-of-charge estimation, parallel-pack operation and battery-swap support come built in, so pack-level intelligence does not need a separate controller.</p>
+        <ul class="bms-specs">
+          <li>Up to 24 voltage channels</li>
+          <li>12–100V, up to 2000A</li>
+          <li>Parallel pack &amp; battery swap support</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="wst-section">
+  <div class="container">
+    <div class="wst-split wst-split--reverse">
+      <div class="wst-split-copy">
+        <span class="wst-tag">Firmware</span>
+        <h2>Tuned to the application, not the shelf.</h2>
+        <p>Cell balancing strategy, state-of-charge estimation, fault handling and the communication protocol are calibrated to the cell chemistry and host system on every programme. The same board can speak CAN, RS485 or a custom protocol, because the firmware is ours to change.</p>
+      </div>
+      <div class="wst-split-media">
+        <img src="assets/general/_MG_7904.webp" alt="Engineer holding a cell pack beside a 3D CAD exploded view of a battery assembly on screen">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wst-cta-band">
+  <div class="container">
+    <h2>Not sure which platform fits?</h2>
+    <p>Tell us the pack voltage, cell count and safety requirement. We will help scope the right architecture before you commit to a design.</p>
+    <div class="wst-cta-band-actions">
+      <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>
