@@ -367,7 +367,7 @@
     }
 
     document.addEventListener("click", function (event) {
-      var card = event.target.closest(".cat-card, .app-tile, .show-row");
+      var card = event.target.closest(".cat-card, .app-tile, .show-row, .cat-carousel-slide");
       if (!card) return;
       event.preventDefault();
       openProductModal(card);
