@@ -577,75 +577,45 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   max-width:420px;
   font-size:16px;
 }
-.categories .section-head p{
-  margin-top:4px;
-  color:#5C5E68;
-  line-height:1.58;
-}
-.categories .section-head{
+/* ----------------------------------------------------------------
+   Application carousel — fixed intro card beside a single rotating
+   showcase image, cycled by arrows, dots or auto-advance. Only one
+   slide is ever in the DOM; prev/next/dot controls swap its image,
+   label and href rather than sliding a strip of markup.
+   ---------------------------------------------------------------- */
+.cat-carousel{
   display:grid;
-  grid-template-columns:minmax(0, 1.15fr) minmax(280px, .7fr);
-  align-items:start;
-  gap:clamp(48px, 8vw, 112px);
-  margin-bottom:56px;
+  grid-template-columns:minmax(280px, .62fr) minmax(0, 1.38fr);
+  align-items:center;
+  gap:clamp(40px, 6vw, 96px);
 }
-.categories .section-head h2{
-  max-width:16ch;
+.cat-carousel-intro{ max-width:420px; }
+.cat-carousel-intro h2{
+  max-width:14ch;
+  margin:0 0 var(--sp-3);
   font-size:var(--h2-section);
   line-height:var(--h2-lh);
   letter-spacing:-.035em;
 }
-.categories .section-head p{
-  max-width:35ch;
+.cat-carousel-intro p{
+  max-width:38ch;
+  margin:0 0 var(--sp-4);
+  color:#5C5E68;
   font-size:16px;
   line-height:1.64;
 }
 
-.cat-grid-wrap{
+.cat-carousel-stage{ position:relative; }
+.cat-carousel-frame{
   position:relative;
-}
-.cat-more-cta{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:32%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:11;
-}
-.cat-grid{
-  display:grid;
-  grid-template-columns:repeat(12, 1fr);
-  grid-auto-flow:row dense;
-  gap:16px;
-  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 66%, transparent 100%);
-  mask-image:linear-gradient(to bottom, black 0%, black 66%, transparent 100%);
-}
-.cat-card{
-  --ts:4;
-  grid-column:span var(--ts);
-  position:relative;
+  isolation:isolate;
   overflow:hidden;
   border-radius:var(--r-lg);
-  padding:0;
-  min-height:280px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
+  aspect-ratio:16/10;
   background:#F5F5F7;
-  border:none;
-  isolation:isolate;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.07);
-  transition:transform var(--dur) var(--ease);
-  text-decoration:none;
-  color:inherit;
 }
-.cat-card.t-lg{ --ts:6; }
-.cat-card.t-wide{ --ts:5; }
-.cat-card.t-sm{ --ts:3; }
-.cat-card::before{
+.cat-carousel-frame::before{
   content:"";
   position:absolute;
   inset:0;
@@ -653,91 +623,102 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   background:linear-gradient(to bottom, rgba(255,255,255,.94) 0%, rgba(255,255,255,.7) 24%, rgba(255,255,255,.22) 44%, transparent 60%);
   pointer-events:none;
 }
-.cat-card::after{
+.cat-carousel-frame::after{
   content:"";
   position:absolute;
   inset:0;
   z-index:1;
-  background:linear-gradient(to top, rgba(6,8,26,.085) 0%, transparent 30%);
+  background:linear-gradient(to top, rgba(6,8,26,.1) 0%, transparent 32%);
   pointer-events:none;
 }
-.cat-visual{
+.cat-carousel-slide{
   position:absolute;
   inset:0;
   z-index:0;
-  overflow:hidden;
+  display:block;
+  text-decoration:none;
+  color:inherit;
 }
-.cat-visual img{
+.cat-carousel-slide img{
   width:100%;
   height:100%;
   object-fit:cover;
   object-position:center center;
-  transition:transform .65s var(--ease);
+  opacity:1;
+  transition:opacity .38s var(--ease), transform 1.4s var(--ease);
 }
-.cat-text{
+.cat-carousel-slide.is-changing img{ opacity:0; }
+.cat-carousel-slide:hover img,
+.cat-carousel-slide:focus-visible img{ transform:scale(1.045); }
+.cat-carousel-slide:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
+.cat-carousel-label{
   position:absolute;
   z-index:2;
-  top:22px;
-  left:24px;
-  right:24px;
-  padding:0;
-  background:none;
-  border:none;
+  top:26px;
+  left:28px;
+  right:28px;
 }
-.cat-card p{ display:none; }
-.cat-explore{ display:none; }
-.cat-card h3{
-  font-size:clamp(16px, 1.6vw, 24px);
+.cat-carousel-label h3{
+  font-size:clamp(20px, 2vw, 28px);
   font-weight:600;
   line-height:1.15;
   letter-spacing:-.025em;
   margin:0;
   color:var(--blue-deep);
+  transition:opacity .38s var(--ease);
 }
-.cat-card:hover .cat-visual img,
-.cat-card:focus-within .cat-visual img{
-  transform:scale(1.06);
-}
-.cat-card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
-.cat-card:nth-last-child(-n+2){ pointer-events:none; }
-.cat-card:nth-last-child(-n+2) .cat-text{ opacity:.4; }
+.cat-carousel-slide.is-changing .cat-carousel-label h3{ opacity:0; }
 
-.cat-explore{
-  position:relative;
-  z-index:2;
-  align-self:flex-start;
-  display:inline-flex;
+.cat-carousel-arrow{
+  position:absolute;
+  top:50%;
+  z-index:3;
+  transform:translateY(-50%);
+  display:flex;
   align-items:center;
-  gap:8px;
-  margin-top:20px;
-  padding:12px 19px;
-  min-height:46px;
-  border-radius:var(--r);
+  justify-content:center;
+  width:46px;
+  height:46px;
+  border-radius:50%;
   background:linear-gradient(155deg, #101c3a 0%, var(--blue-deep) 72%);
   border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:blur(14px) saturate(160%);
-  -webkit-backdrop-filter:blur(14px) saturate(160%);
-  box-shadow:
-    0 12px 26px -15px rgba(3,11,33,.6),
-    inset 0 1px 0 rgba(255,255,255,.3),
-    inset 0 0 0 1px rgba(255,255,255,.035);
-  font-weight:600;
-  font-size:14px;
-  letter-spacing:-.01em;
+  box-shadow:0 12px 26px -15px rgba(3,11,33,.6), inset 0 1px 0 rgba(255,255,255,.3);
   color:#fff;
-  transition:background .5s var(--ease), border-color .5s var(--ease), box-shadow .55s var(--ease), color .5s var(--ease);
+  cursor:pointer;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
 }
-.cat-explore svg{ transition:opacity .5s var(--ease); }
-.cat-explore:hover,
-.cat-explore:focus-visible{
-  background:linear-gradient(155deg, #101c3a 0%, var(--blue-deep) 72%);
-  border-color:rgba(255,255,255,.22);
-  color:#fff;
-  transform:none;
-  box-shadow:
-    0 12px 26px -15px rgba(3,11,33,.6),
-    inset 0 1px 0 rgba(255,255,255,.34),
-    inset 0 0 0 1px rgba(255,255,255,.035);
+.cat-carousel-arrow:hover,
+.cat-carousel-arrow:focus-visible{ box-shadow:0 16px 30px -14px rgba(3,11,33,.65), inset 0 1px 0 rgba(255,255,255,.34); }
+.cat-carousel-arrow:active{ transform:translateY(-50%) scale(.94); }
+.cat-carousel-arrow.prev{ left:18px; }
+.cat-carousel-arrow.next{ right:18px; }
+
+.cat-carousel-dots{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:22px;
+}
+.cat-carousel-dot{
+  width:8px;
+  height:8px;
+  padding:0;
+  border-radius:50%;
+  border:none;
+  background:rgba(15,42,92,.18);
+  cursor:pointer;
+  transition:background .3s var(--ease), transform .3s var(--ease);
+}
+.cat-carousel-dot:hover{ background:rgba(15,42,92,.34); }
+.cat-carousel-dot[aria-current="true"]{ background:var(--brass-hi); transform:scale(1.25); }
+.cat-carousel-dot:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+@media (prefers-reduced-motion:reduce){
+  .cat-carousel-slide img,
+  .cat-carousel-label h3,
+  .cat-carousel-arrow,
+  .cat-carousel-dot{ transition:none; }
 }
 
 /* ============================================================
@@ -2237,18 +2218,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   body.menu-open .nav-item.open .dropdown{ display:block; }
 
   .categories{ padding:80px 0 112px; }
-  .categories .section-head{
-    grid-template-columns:1fr;
-    gap:18px;
-    margin-bottom:44px;
-  }
-  .categories .section-head h2{ max-width:17ch; }
-  .categories .section-head p{ margin-top:0; max-width:48ch; }
-  .cat-grid{ grid-template-columns:repeat(6, 1fr); gap:14px; }
-  .cat-card,
-  .cat-card.t-wide,
-  .cat-card.t-sm{ --ts:3; }
-  .cat-card.t-lg{ --ts:6; }
+  .cat-carousel{ grid-template-columns:1fr; gap:32px; }
+  .cat-carousel-intro{ max-width:none; }
+  .cat-carousel-intro h2{ max-width:17ch; }
+  .cat-carousel-intro p{ max-width:52ch; }
   .partner-wall{ padding:96px 0 108px; }
   .partner-wall-head{ grid-template-columns:1fr; gap:18px; margin-bottom:44px; }
   .partner-wall-head p{ max-width:48ch; }
@@ -2319,13 +2292,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .container{ padding:0 var(--sp-2); }
   .hero{ min-height:90svh; }
   .categories{ padding:68px 0 88px; }
-  .categories .section-head{ margin-bottom:34px; }
-
-  .cat-grid{ grid-template-columns:1fr 1fr; gap:11px; }
-  .cat-card,
-  .cat-card.t-lg,
-  .cat-card.t-wide,
-  .cat-card.t-sm{ grid-column:span 1; min-height:200px; }
+  .cat-carousel{ gap:26px; }
+  .cat-carousel-arrow{ width:38px; height:38px; }
+  .cat-carousel-arrow.prev{ left:10px; }
+  .cat-carousel-arrow.next{ right:10px; }
+  .cat-carousel-label{ top:18px; left:18px; right:18px; }
 
   .partner-wall{ padding:80px 0 88px; }
 
@@ -2422,49 +2393,28 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
      ============================================================ -->
 <section class="categories" id="categories">
   <div class="container">
-    <div class="section-head">
-      <h2>A starting point, not a limit.</h2>
-      <p>These are examples of what we have built, not the limits of what we can build. If it runs on a battery, we can engineer a custom system for it. Every project starts with your duty cycle, environment and certification needs, never a catalogue part number.</p>
-    </div>
+    <div class="cat-carousel">
+      <div class="cat-carousel-intro">
+        <h2>A starting point, not a limit.</h2>
+        <p>These are examples of what we have built, not the limits of what we can build. If it runs on a battery, we can engineer a custom system for it. Every project starts with your duty cycle, environment and certification needs, never a catalogue part number.</p>
+        <a href="solutions-v4.html" class="btn btn-primary">Explore more areas</a>
+      </div>
 
-    <div class="cat-grid-wrap">
-    <div class="cat-grid">
-
-      <a href="solutions-v4.html" class="cat-card t-lg">
-        <div class="cat-visual"><img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV"></div>
-        <div class="cat-text"><h3>Multirotor UAV</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card t-lg">
-        <div class="cat-visual"><img src="assets/products/web/excavator01.jpg" alt="Electric Excavator"></div>
-        <div class="cat-text"><h3>Electric Excavator</h3></div>
-      </a>
-
-      <a href="solutions-v4.html" class="cat-card t-wide">
-        <div class="cat-visual"><img src="assets/products/web/vtol-uav02.jpg" alt="VTOL UAV"></div>
-        <div class="cat-text"><h3>VTOL UAV</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card">
-        <div class="cat-visual"><img src="assets/products/web/pallet-truck.jpg" alt="Pallet Truck"></div>
-        <div class="cat-text"><h3>Pallet Truck</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card t-sm">
-        <div class="cat-visual"><img src="assets/products/web/usv_unmanned-surface-vehicle.jpg" alt="Unmanned Surface Vehicle"></div>
-        <div class="cat-text"><h3>Unmanned Surface Vehicle</h3></div>
-      </a>
-
-      <a href="solutions-v4.html" class="cat-card t-lg">
-        <div class="cat-visual"><img src="assets/products/web/humanoid02.jpg" alt="Humanoid Robotics"></div>
-        <div class="cat-text"><h3>Humanoid Robotics</h3></div>
-      </a>
-      <a href="solutions-v4.html" class="cat-card t-lg">
-        <div class="cat-visual"><img src="assets/products/web/ups-system.jpg" alt="Modular UPS Cabinet"></div>
-        <div class="cat-text"><h3>Modular UPS Cabinet</h3></div>
-      </a>
-
-    </div>
-    <div class="cat-more-cta">
-      <a href="solutions-v4.html" class="btn btn-primary">Explore more areas</a>
-    </div>
+      <div class="cat-carousel-stage">
+        <div class="cat-carousel-frame">
+          <button type="button" class="cat-carousel-arrow prev" aria-label="Previous application" data-cat-prev>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <a href="solutions-v4.html" class="cat-carousel-slide" id="catCarouselSlide">
+            <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV" id="catCarouselImg">
+            <div class="cat-carousel-label"><h3 id="catCarouselLabel">Multirotor UAV</h3></div>
+          </a>
+          <button type="button" class="cat-carousel-arrow next" aria-label="Next application" data-cat-next>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="cat-carousel-dots" id="catCarouselDots" role="tablist" aria-label="Applications"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -3140,6 +3090,92 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     }
     setWorkflowStep(0, false);
   }
+})();
+</script>
+
+<script>
+(function(){
+  var slides = [
+    { src: 'assets/products/web/hexacopter-grounded_scaled.jpg', alt: 'Multirotor UAV' },
+    { src: 'assets/products/web/excavator01.jpg', alt: 'Electric Excavator' },
+    { src: 'assets/products/web/vtol-uav02.jpg', alt: 'VTOL UAV' },
+    { src: 'assets/products/web/pallet-truck.jpg', alt: 'Pallet Truck' },
+    { src: 'assets/products/web/usv_unmanned-surface-vehicle.jpg', alt: 'Unmanned Surface Vehicle' },
+    { src: 'assets/products/web/humanoid02.jpg', alt: 'Humanoid Robotics' },
+    { src: 'assets/products/web/ups-system.jpg', alt: 'Modular UPS Cabinet' }
+  ];
+
+  var stage = document.querySelector('.cat-carousel-stage');
+  var slide = document.getElementById('catCarouselSlide');
+  if (!stage || !slide) return;
+
+  var img = document.getElementById('catCarouselImg');
+  var label = document.getElementById('catCarouselLabel');
+  var dotsWrap = document.getElementById('catCarouselDots');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var index = 0;
+  var dots = [];
+
+  slides.forEach(function(item, i){
+    var dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'cat-carousel-dot';
+    dot.setAttribute('aria-label', 'Show ' + item.alt);
+    dot.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+    dot.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(dot);
+    dots.push(dot);
+  });
+
+  function render(){
+    var item = slides[index];
+    img.src = item.src;
+    img.alt = item.alt;
+    label.textContent = item.alt;
+    dots.forEach(function(dot, i){ dot.setAttribute('aria-current', i === index ? 'true' : 'false'); });
+  }
+
+  function goTo(next){
+    if (next === index) return;
+    index = (next + slides.length) % slides.length;
+    if (reduceMotion) { render(); return; }
+    slide.classList.add('is-changing');
+    window.setTimeout(function(){
+      render();
+      slide.classList.remove('is-changing');
+    }, 200);
+  }
+
+  document.querySelector('[data-cat-prev]').addEventListener('click', function(){ goTo(index - 1); resetAuto(); });
+  document.querySelector('[data-cat-next]').addEventListener('click', function(){ goTo(index + 1); resetAuto(); });
+
+  stage.addEventListener('keydown', function(event){
+    if (event.key === 'ArrowLeft') { goTo(index - 1); resetAuto(); }
+    if (event.key === 'ArrowRight') { goTo(index + 1); resetAuto(); }
+  });
+
+  var autoTimer = null;
+  function startAuto(){
+    if (reduceMotion) return;
+    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 6000);
+  }
+  function stopAuto(){
+    window.clearInterval(autoTimer);
+  }
+  function resetAuto(){
+    stopAuto();
+    startAuto();
+  }
+
+  stage.addEventListener('mouseenter', stopAuto);
+  stage.addEventListener('mouseleave', startAuto);
+  stage.addEventListener('focusin', stopAuto);
+  stage.addEventListener('focusout', startAuto);
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) stopAuto(); else startAuto();
+  });
+
+  startAuto();
 })();
 </script>
 
