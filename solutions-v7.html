@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Applications (v7 concept) | WS Technicals</title>
+<meta name="description" content="Custom lithium battery systems grouped by application category, from unmanned platforms to heavy machinery.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
+<style>
+
+/* Ambient gradient wash — matches index.html hero background */
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1180px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(1980px, 158vw, 2540px); height:clamp(1420px, 108vw, 1860px);
+  top:-430px; left:-30%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.58;
+}
+.ambient-blob-grey{
+  width:clamp(2040px, 166vw, 2640px); height:clamp(2040px, 166vw, 2640px);
+  top:-360px; right:-38%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.34;
+}
+.ambient-blob-blue{
+  width:clamp(2680px, 230vw, 3540px); height:clamp(2680px, 230vw, 3540px);
+  top:180px; left:21%;
+  background:radial-gradient(circle at 48% 48%, var(--blue) 0%, #496594 38%, transparent 80%);
+  opacity:.26;
+}
+@media (min-width:981px){
+  .ambient::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:radial-gradient(ellipse 46% 112% at 50% 34%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.96) 42%, rgba(255,255,255,.78) 62%, rgba(255,255,255,.28) 78%, transparent 90%);
+  }
+}
+@media (min-width:981px) and (max-width:1440px){
+  .ambient{ background:linear-gradient(90deg,#FCF8EF 0%,#FFFFFF 38%,#FFFFFF 62%,#F8FAFF 100%); }
+  .ambient-blob-brass{
+    width:92vw; height:128vh; top:-25vh; left:-44vw;
+    background:radial-gradient(circle at 52% 42%,#D6B985 0%,#EBD8B8 43%,#F5EBDD 64%,transparent 82%);
+    opacity:.64;
+  }
+  .ambient-blob-grey{ width:88vw; height:128vh; top:-22vh; right:-42vw; opacity:.20; }
+  .ambient-blob-blue{ width:100vw; height:136vh; top:6vh; left:auto; right:-54vw; opacity:.16; }
+}
+@media (max-width:980px){
+  .ambient{ background:linear-gradient(112deg,rgba(255,250,242,.72) 0%,rgba(255,255,255,.64) 48%,rgba(247,249,253,.54) 100%); }
+  .ambient::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse 52% 68% at 50% 40%,rgba(255,255,255,.94) 0%,rgba(255,255,255,.76) 38%,rgba(255,255,255,.24) 66%,transparent 84%);
+    pointer-events:none;
+  }
+  .ambient-blob-brass{
+    width:1720px; height:1340px; top:-390px; left:-610px;
+    background:radial-gradient(circle at 44% 42%,#DCC39D 0%,#F0E2CC 45%,transparent 78%);
+    opacity:.62;
+  }
+  .ambient-blob-grey{
+    width:1580px; height:1580px; top:-250px; right:-860px;
+    background:radial-gradient(circle at 50% 44%,#C8D2E5 0%,#EEF2F8 48%,transparent 79%);
+    opacity:.1;
+  }
+  .ambient-blob-blue{
+    width:1780px; height:1780px; top:290px; left:31%;
+    background:radial-gradient(circle at 48% 48%,#9EB3D5 0%,#DCE5F2 42%,transparent 80%);
+    opacity:.14;
+  }
+}
+@media (max-width:640px){
+  .ambient{ height:1020px; background:linear-gradient(118deg,rgba(255,249,239,.8) 0%,rgba(255,255,255,.72) 54%,rgba(248,250,253,.58) 100%); }
+  .ambient-blob{ filter:blur(92px); }
+  .ambient::after{
+    background:radial-gradient(ellipse 68% 64% at 50% 38%,rgba(255,255,255,.96) 0%,rgba(255,255,255,.8) 42%,rgba(255,255,255,.3) 70%,transparent 88%);
+  }
+  .ambient-blob-brass{
+    width:1220px; height:1040px; top:-300px; left:-460px;
+    background:radial-gradient(circle at 46% 42%,#DCC39D 0%,#F2E5D2 46%,transparent 79%);
+    opacity:.64;
+  }
+  .ambient-blob-grey{ width:1180px; height:1180px; top:-190px; right:-790px; opacity:.06; }
+  .ambient-blob-blue{
+    width:1320px; height:1320px; top:350px; left:38%;
+    background:radial-gradient(circle at 48% 48%,#A9BBD9 0%,#E2E9F3 44%,transparent 81%);
+    opacity:.12;
+  }
+}
+
+/* ----------------------------------------------------------------
+   Hero
+   ---------------------------------------------------------------- */
+.app-hero{ position:relative; padding:80px 0 72px; overflow:hidden; }
+.app-hero-inner{ position:relative; z-index:1; }
+.app-hero h1{
+  font-family:var(--font-display);
+  font-size:var(--h1-display);
+  line-height:var(--h1-lh);
+  letter-spacing:var(--h1-ls);
+  color:var(--ink);
+  max-width:16ch;
+  margin:0 0 var(--sp-3);
+}
+.app-hero p{
+  font-size:18px;
+  color:var(--ink-soft);
+  line-height:1.6;
+  max-width:56ch;
+  margin:0 0 var(--sp-4);
+}
+
+/* ----------------------------------------------------------------
+   Wide showcase rows — same visual language as v5 (image right,
+   dissolving into application detail on the left), but each row is
+   now one category rather than one application. Prev/next cycle
+   through the real applications inside that category.
+   ---------------------------------------------------------------- */
+.app-showcase{ padding:40px 0 120px; }
+.show-rows{ display:flex; flex-direction:column; gap:16px; }
+
+.show-row{
+  position:relative;
+  isolation:isolate;
+  min-height:clamp(340px, 38vw, 460px);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  background:#F5F5F7;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.07);
+}
+.show-row-link{ position:absolute; inset:0; z-index:0; display:block; text-decoration:none; color:inherit; }
+
+.show-row-media{ position:absolute; inset:0; z-index:0; overflow:hidden;
+  background:radial-gradient(ellipse 90% 130% at 82% 18%, rgba(73,101,148,.22) 0%, rgba(95,121,179,.1) 40%, transparent 68%);
+}
+.show-row-media img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:100% center;
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, transparent 27%, black 70%);
+  mask-image:linear-gradient(to right, transparent 0%, transparent 27%, black 70%);
+}
+.show-row-media-incoming{
+  z-index:1;
+  opacity:0;
+  transition:opacity .9s cubic-bezier(.4,0,.2,1);
+}
+.show-row-media-incoming.is-visible{ opacity:1; }
+
+.show-row::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(to right, rgba(255,255,255,.97) 0%, rgba(255,255,255,.94) 24%, rgba(255,255,255,.7) 40%, rgba(255,255,255,.3) 56%, rgba(255,255,255,.06) 70%, transparent 84%);
+  pointer-events:none;
+}
+
+.show-row-text{
+  position:relative;
+  z-index:2;
+  max-width:400px;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:44px 40px;
+  pointer-events:none;
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+.show-row-text.is-changing{ opacity:0; transform:translateY(6px); }
+
+.show-row-eyebrow{
+  display:block;
+  margin-bottom:12px;
+  color:var(--brass-text);
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.show-row-title{
+  margin:0 0 12px;
+  color:var(--ink);
+  font-family:var(--font-display);
+  font-size:clamp(22px, 2.3vw, 32px);
+  line-height:1.15;
+  letter-spacing:-.02em;
+}
+.show-row-desc{ max-width:36ch; margin:0 0 22px; color:var(--ink-soft); font-size:15px; line-height:1.62; }
+.show-row-specs{ display:flex; flex-direction:column; gap:9px; margin:0 0 22px; padding:0; list-style:none; }
+.show-row-specs li{ display:flex; align-items:baseline; gap:10px; }
+.show-row-specs .k{ flex:none; min-width:112px; color:var(--ink-faint); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; }
+.show-row-specs .v{ color:var(--ink); font-size:13.5px; font-weight:600; }
+.show-row-counter{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); }
+.show-row-counter b{ color:var(--ink); font-weight:600; }
+
+.show-row-link:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
+
+.show-row-arrows{
+  position:absolute;
+  z-index:3;
+  right:20px;
+  bottom:20px;
+  display:flex;
+  gap:10px;
+}
+.show-row-single .show-row-arrows,
+.show-row-single .show-row-counter{ display:none; }
+.show-row-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:rgba(251,249,245,.7);
+  border:1px solid rgba(6,8,26,.09);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:0 8px 20px -12px rgba(6,8,26,.3);
+  color:var(--blue-deep);
+  cursor:pointer;
+  transition:background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+.show-row-arrow:hover,
+.show-row-arrow:focus-visible{ background:rgba(251,249,245,.95); border-color:rgba(6,8,26,.14); }
+.show-row-arrow:active{ transform:scale(.94); }
+
+@media (prefers-reduced-motion:reduce){
+  .show-row-media-incoming, .show-row-text, .show-row-arrow{ transition:none; }
+}
+
+/* ----------------------------------------------------------------
+   Close band
+   ---------------------------------------------------------------- */
+.app-close{ padding:96px 0; background:var(--blue-deep); }
+.app-close-grid{ display:grid; grid-template-columns:1fr auto; gap:48px; align-items:center; }
+.app-close h2{
+  font-family:var(--font-display);
+  font-size:var(--h2-section);
+  line-height:var(--h2-lh);
+  letter-spacing:var(--h2-ls);
+  color:var(--paper);
+  max-width:22ch;
+  margin:0 0 12px;
+}
+.app-close p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
+
+/* ----------------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------------- */
+@media (max-width:860px){
+  .show-row{ min-height:460px; }
+  .show-row::before{
+    background:linear-gradient(to bottom, rgba(255,255,255,.97) 0%, rgba(255,255,255,.93) 34%, rgba(255,255,255,.5) 56%, transparent 74%);
+  }
+  .show-row-text{ max-width:100%; justify-content:flex-start; padding:32px 26px; }
+  .show-row-media img{ object-position:center 100%; }
+  .show-row-arrows{ right:16px; bottom:16px; }
+}
+@media (max-width:640px){
+  .app-hero{ padding:56px 0 48px; }
+  .show-row{ min-height:440px; }
+  .show-row-arrow{ width:36px; height:36px; }
+  .app-close-grid{ grid-template-columns:1fr; gap:28px; }
+}
+
+</style>
+</head>
+<body data-wst-page="solutions">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-grey"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+
+<main>
+
+<section class="app-hero">
+  <div class="container">
+    <div class="app-hero-inner">
+      <h1>Engineered for any application.</h1>
+      <p>WS Technicals has experience across a wide range of applications, from underwater drones to agricultural machinery. Our solutions are made to fit your specific requirements.</p>
+      <a href="contact-v2.html" class="btn btn-primary">Discuss your application</a>
+    </div>
+  </div>
+</section>
+
+<section class="app-showcase">
+  <div class="container">
+    <div class="show-rows" id="showRows"></div>
+  </div>
+</section>
+
+<section class="app-close">
+  <div class="container app-close-grid">
+    <div>
+      <h2>Your application may not fit a category. That is the point.</h2>
+      <p>Bring us the operating profile, physical constraints and integration requirements. We will help determine whether a custom battery system creates the right result.</p>
+    </div>
+    <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+  </div>
+</section>
+
+</main>
+
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish1"></script>
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Same content as solutions-v6.html's categories, in the row layout
+  // instead of the split-card layout: content mirrors wst-shell.js's
+  // PRODUCT_INFO (desc + specs) for the specific application each row
+  // links to; "eyebrow" is the umbrella category, one per row.
+  var categories = [
+    {
+      eyebrow: 'Unmanned vehicles',
+      items: [
+        { key: 'Multirotor UAV', img: 'assets/products/web/hexacopter-grounded_scaled.jpg',
+          desc: 'Custom battery packs engineered for payload capacity, flight time and rapid field swaps in multirotor platforms.',
+          specs: [['Weight','Minimised for flight time'],['Vibration','Shock-isolated mounting'],['Peak load','Payload-dependent draw']] },
+        { key: 'Fixed-Wing UAV', img: 'assets/products/web/fixed-wing-uav02.jpg',
+          desc: 'Long-range power systems balancing weight, endurance and reliability for fixed-wing aircraft.',
+          specs: [['Energy density','High, for range'],['Weight','Balanced to CG'],['Altitude','Rated to -30°C']] },
+        { key: 'VTOL UAV', img: 'assets/products/web/vtol-uav02.jpg',
+          desc: 'Battery systems tuned for the high peak-power demands of vertical takeoff paired with efficient cruise flight.',
+          specs: [['Peak power','High-current hover draw'],['Thermal','Burst-load managed'],['Weight','Hover/cruise balanced']] },
+        { key: 'Long-Endurance UAV', img: 'assets/products/web/fixed-wing-uav01.jpg',
+          desc: 'High energy density packs designed to extend flight time without adding excess weight.',
+          specs: [['Energy density','Maximised per kg'],['Self-discharge','Low-leakage cells'],['Weight','Minimal, for endurance']] },
+        { key: 'Unmanned Surface Vehicle', img: 'assets/products/web/usv_unmanned-surface-vehicle.jpg',
+          desc: 'Marine-grade battery systems built for autonomous surface vessels operating in harsh conditions.',
+          specs: [['Waterproofing','IP67 sealed'],['Temperature','-20°C to 55°C'],['Corrosion','Marine-grade housing']] },
+        { key: 'Unmanned Ground Vehicle', img: 'assets/products/web/ugv.jpg',
+          desc: 'Rugged battery packs engineered for remote and autonomous ground operation in demanding environments.',
+          specs: [['Ingress','Dust and water sealed'],['Shock','Reinforced mounting'],['Temperature','Extreme-range rated']] }
+      ]
+    },
+    {
+      eyebrow: 'Warehouse robotics',
+      items: [
+        { key: 'AGV and AMR', img: 'assets/products/web/agv_scaled02.jpg',
+          desc: 'Battery systems built for continuous shift cycles and fast opportunity charging in automated warehouses.',
+          specs: [['Duty cycle','Multi-shift continuous'],['Charging','Opportunity-charge ready'],['Footprint','Chassis-constrained']] }
+      ]
+    },
+    {
+      eyebrow: 'Boats & maritime',
+      items: [
+        { key: 'Electric Workboat', img: 'assets/products/web/boat.jpg',
+          desc: 'Marine battery systems engineered for electric propulsion and onboard power in commercial workboats.',
+          specs: [['Waterproofing','IP-rated enclosure'],['Temperature','Marine-range rated'],['Corrosion','Salt-air resistant']] }
+      ]
+    },
+    {
+      eyebrow: 'Heavy machinery',
+      items: [
+        { key: 'Electric Excavator', img: 'assets/products/web/excavator02.jpg',
+          desc: 'High-voltage battery packs engineered for the torque and duty cycle of electric excavators.',
+          specs: [['Power draw','High, for digging torque'],['Thermal','Sustained high-current'],['Duty cycle','Full-shift rated']] },
+        { key: 'Agricultural Tractor', img: 'assets/products/web/traktor01.jpg',
+          desc: 'Battery systems built for the power demands and duty cycles of agricultural machinery.',
+          specs: [['Power draw','High, machine-scale'],['Duty cycle','Long field days'],['Ingress','Dust and mud sealed']] },
+        { key: 'Outdoor Maintenance', img: 'assets/products/web/lawn-mover.jpg',
+          desc: 'Battery systems built for the duty cycles of outdoor maintenance and grounds equipment.',
+          specs: [['Ingress','Dust and moisture sealed'],['Temperature','Year-round outdoor'],['Duty cycle','Extended shifts']] },
+        { key: 'Municipal Equipment', img: 'assets/products/web/fejemaskine.jpg',
+          desc: 'Custom power systems engineered for municipal vehicles and public works equipment.',
+          specs: [['Duty cycle','Full daily routes'],['Ingress','Weather-sealed'],['Charging','Depot-scheduled']] },
+        { key: 'Utility Vehicle', img: 'assets/products/web/utility-vehicle.jpg',
+          desc: 'Custom battery systems built for electric utility vehicles operating across varied terrain.',
+          specs: [['Terrain','On/off-road rated'],['Duty cycle','Multi-stop routes'],['Ingress','Dust and mud sealed']] }
+      ]
+    },
+    {
+      eyebrow: 'Robotics',
+      items: [
+        { key: 'Humanoid Robotics', img: 'assets/products/web/humanoid02.jpg',
+          desc: 'Compact, high-density battery systems built for the space and weight constraints of humanoid platforms.',
+          specs: [['Weight','Balance-critical'],['Size','Tightly constrained'],['Energy density','Maximised per litre']] }
+      ]
+    },
+    {
+      eyebrow: 'UPS & backup power',
+      items: [
+        { key: 'Infrastructure Bank', img: 'assets/products/web/ups-system02.jpg',
+          desc: 'Large-format battery installations built for grid support and facility-scale energy storage.',
+          specs: [['Capacity','Facility-scale'],['Thermal','Array-level managed'],['Safety','Unattended-rated']] },
+        { key: 'Modular UPS Cabinet', img: 'assets/products/web/ups-system.jpg',
+          desc: 'Scalable battery banks engineered for uninterrupted backup power in critical infrastructure.',
+          specs: [['Redundancy','N+1 capable'],['Thermal','Rack-load managed'],['Certification','Critical-infra rated']] }
+      ]
+    },
+    {
+      eyebrow: 'Material handling',
+      items: [
+        { key: 'Industrial Robotics', img: 'assets/products/web/robotic-arm.jpg',
+          desc: 'Custom power systems for robotic arms and automated production line equipment.',
+          specs: [['Footprint','Base-chassis sized'],['Duty cycle','Continuous production'],['EMI','Shielded from controls']] },
+        { key: 'Pallet Truck', img: 'assets/products/web/pallet-truck.jpg',
+          desc: 'Compact battery packs engineered for the daily cycles of electric pallet trucks.',
+          specs: [['Weight','Low-profile chassis'],['Cycle life','Frequent short lifts'],['Charging','Opportunity-charge sized']] },
+        { key: 'Electric Forklift', img: 'assets/products/web/forklift.jpg',
+          desc: 'High-cycle battery packs engineered for daily duty in material handling and warehouse operations.',
+          specs: [['Cycle life','High-cycle rated'],['Weight','Counterbalance-critical'],['Charging','Shift-length sized']] }
+      ]
+    }
+  ];
+
+  var arrowPrevSvg = '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var arrowNextSvg = '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function buildRow(cat){
+    var row = document.createElement('div');
+    row.className = 'show-row' + (cat.items.length < 2 ? ' show-row-single' : '');
+
+    row.innerHTML =
+      '<a class="show-row-link" href="solutions-v4.html">' +
+        '<div class="show-row-media"><img alt=""></div>' +
+        '<div class="show-row-text">' +
+          '<span class="show-row-eyebrow">' + cat.eyebrow + '</span>' +
+          '<h3 class="show-row-title"></h3>' +
+          '<p class="show-row-desc"></p>' +
+          '<ul class="show-row-specs"></ul>' +
+          '<span class="show-row-counter"><b class="show-row-counter-current">1</b>&nbsp;/&nbsp;' + cat.items.length + '</span>' +
+        '</div>' +
+      '</a>' +
+      '<div class="show-row-arrows">' +
+        '<button type="button" class="show-row-arrow prev" aria-label="Previous application">' + arrowPrevSvg + '</button>' +
+        '<button type="button" class="show-row-arrow next" aria-label="Next application">' + arrowNextSvg + '</button>' +
+      '</div>';
+
+    var link = row.querySelector('.show-row-link');
+    var media = row.querySelector('.show-row-media');
+    var img = media.querySelector('img');
+    var textEl = row.querySelector('.show-row-text');
+    var titleEl = row.querySelector('.show-row-title');
+    var descEl = row.querySelector('.show-row-desc');
+    var specsEl = row.querySelector('.show-row-specs');
+    var counterEl = row.querySelector('.show-row-counter-current');
+    var prevBtn = row.querySelector('.show-row-arrow.prev');
+    var nextBtn = row.querySelector('.show-row-arrow.next');
+
+    var index = 0;
+    var animating = false;
+
+    function renderText(item){
+      titleEl.textContent = item.key;
+      descEl.textContent = item.desc;
+      specsEl.innerHTML = item.specs.map(function(pair){
+        return '<li><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + '</span></li>';
+      }).join('');
+      if (counterEl) counterEl.textContent = String(index + 1);
+      link.setAttribute('aria-label', 'View ' + item.key + ' application');
+    }
+
+    function goTo(next){
+      if (animating) return;
+      var target = (next + cat.items.length) % cat.items.length;
+      if (target === index && img.src) return;
+      index = target;
+      var item = cat.items[index];
+
+      if (reduceMotion || !img.src) {
+        img.src = item.img;
+        img.alt = item.key;
+        renderText(item);
+        return;
+      }
+
+      animating = true;
+      textEl.classList.add('is-changing');
+
+      var incoming = new Image();
+      incoming.className = 'show-row-media-incoming';
+      incoming.alt = item.key;
+
+      function reveal(){
+        media.appendChild(incoming);
+        void incoming.offsetWidth;
+        incoming.classList.add('is-visible');
+
+        window.setTimeout(function(){
+          renderText(item);
+          textEl.classList.remove('is-changing');
+        }, 260);
+
+        window.setTimeout(function(){
+          img.src = incoming.src;
+          img.alt = item.key;
+          incoming.remove();
+          animating = false;
+        }, 900);
+      }
+
+      incoming.src = item.img;
+      if (incoming.complete) reveal(); else incoming.onload = reveal;
+    }
+
+    prevBtn.addEventListener('click', function(event){ event.preventDefault(); event.stopPropagation(); goTo(index - 1); });
+    nextBtn.addEventListener('click', function(event){ event.preventDefault(); event.stopPropagation(); goTo(index + 1); });
+
+    goTo(0);
+    return row;
+  }
+
+  var wrap = document.getElementById('showRows');
+  categories.forEach(function(cat){ wrap.appendChild(buildRow(cat)); });
+})();
+</script>
+
+</body>
+</html>
