@@ -167,7 +167,7 @@
   var CUSTOMER_COLOR = 0xcbb08a;
   var locations = [
     { name: 'Denmark', lat: 56.16, lon: 10.2, color: CUSTOMER_COLOR, hq: true, label: true },
-    { name: 'China', lat: 31.2, lon: 121.5, color: 0x496c9f, label: true, partner: true, traveler: true },
+    { name: 'China', lat: 31.2, lon: 121.5, color: 0x496c9f, label: true, partner: true, traveler: true, reverse: true },
 
     { name: 'United States · East', lat: 40.7, lon: -74, color: CUSTOMER_COLOR, traveler: true },
     { name: 'United States · West', lat: 37.8, lon: -122.4, color: CUSTOMER_COLOR },
@@ -342,6 +342,7 @@
     traveler.userData.curve = curve;
     globe.add(traveler);
     mesh.userData.traveler = traveler;
+    mesh.userData.reverse = Boolean(destination.reverse);
     return mesh;
   }
 
@@ -431,6 +432,9 @@
       route.material.opacity = route.userData.baseOpacity + 0.055 * Math.sin(elapsed * 0.62 + index);
       if (!route.userData.traveler) return;
       var progress = reduceMotion ? 0.62 : (elapsed * 0.09 + index * 0.17) % 1;
+      /* China is the production partner, so its traveler runs the arc
+         backwards - arriving at Denmark rather than departing from it. */
+      if (route.userData.reverse) progress = 1 - progress;
       route.userData.traveler.position.copy(route.userData.curve.getPointAt(progress));
     });
 
