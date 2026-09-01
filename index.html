@@ -615,22 +615,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   background:#F5F5F7;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.72), 0 2px 12px rgba(6,8,26,.07);
 }
-.cat-carousel-frame::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(to bottom, rgba(255,255,255,.94) 0%, rgba(255,255,255,.7) 24%, rgba(255,255,255,.22) 44%, transparent 60%);
-  pointer-events:none;
-}
-.cat-carousel-frame::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:linear-gradient(to top, rgba(6,8,26,.1) 0%, transparent 32%);
-  pointer-events:none;
-}
 .cat-carousel-slide{
   position:absolute;
   inset:0;
@@ -656,23 +640,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 .cat-carousel-img-incoming.is-visible{ opacity:1; }
 .cat-carousel-slide:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
-.cat-carousel-label{
-  position:absolute;
-  z-index:2;
-  top:26px;
-  left:28px;
-  right:28px;
-}
-.cat-carousel-label h3{
-  font-size:clamp(20px, 2vw, 28px);
-  font-weight:600;
-  line-height:1.15;
-  letter-spacing:-.025em;
-  margin:0;
-  color:var(--blue-deep);
-  transition:opacity .3s var(--ease), transform .3s var(--ease);
-}
-.cat-carousel-label.is-changing h3{ opacity:0; transform:translateY(4px); }
 
 .cat-carousel-arrow{
   position:absolute;
@@ -728,7 +695,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 @media (prefers-reduced-motion:reduce){
   .cat-carousel-slide img,
   .cat-carousel-img-incoming,
-  .cat-carousel-label h3,
   .cat-carousel-arrow,
   .cat-carousel-dot{ transition:none; }
 }
@@ -2308,7 +2274,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .cat-carousel-arrow{ width:38px; height:38px; }
   .cat-carousel-arrow.prev{ left:10px; }
   .cat-carousel-arrow.next{ right:10px; }
-  .cat-carousel-label{ top:18px; left:18px; right:18px; }
 
   .partner-wall{ padding:80px 0 88px; }
 
@@ -2417,9 +2382,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <button type="button" class="cat-carousel-arrow prev" aria-label="Previous application" data-cat-prev>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <a href="solutions-v4.html" class="cat-carousel-slide" id="catCarouselSlide">
+          <a href="solutions-v4.html" class="cat-carousel-slide" id="catCarouselSlide" aria-label="View Multirotor UAV application">
             <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV" id="catCarouselImg">
-            <div class="cat-carousel-label"><h3 id="catCarouselLabel">Multirotor UAV</h3></div>
           </a>
           <button type="button" class="cat-carousel-arrow next" aria-label="Next application" data-cat-next>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3122,8 +3086,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   if (!stage || !slide) return;
 
   var img = document.getElementById('catCarouselImg');
-  var labelText = document.getElementById('catCarouselLabel');
-  var labelWrap = labelText.closest('.cat-carousel-label');
   var dotsWrap = document.getElementById('catCarouselDots');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var index = 0;
@@ -3152,16 +3114,16 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     index = targetIndex;
     var item = slides[index];
 
+    slide.setAttribute('aria-label', 'View ' + item.alt + ' application');
+
     if (reduceMotion) {
       img.src = item.src;
       img.alt = item.alt;
-      labelText.textContent = item.alt;
       updateDots();
       return;
     }
 
     animating = true;
-    labelWrap.classList.add('is-changing');
 
     var incoming = new Image();
     incoming.className = 'cat-carousel-img-incoming';
@@ -3174,11 +3136,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       // the end state (which reads as an abrupt cut, not a fade).
       void incoming.offsetWidth;
       incoming.classList.add('is-visible');
-
-      window.setTimeout(function(){
-        labelText.textContent = item.alt;
-        labelWrap.classList.remove('is-changing');
-      }, 300);
 
       window.setTimeout(function(){
         img.src = incoming.src;
