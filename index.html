@@ -640,14 +640,23 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   color:inherit;
 }
 .cat-carousel-slide img{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
   object-position:center center;
-  opacity:1;
-  transition:opacity .38s var(--ease), transform 1.4s var(--ease);
+  transform:scale(1.001);
+  transition:transform 1.8s cubic-bezier(.16,.6,.24,1);
 }
-.cat-carousel-slide.is-changing img{ opacity:0; }
+/* Incoming image starts transparent and fades over the outgoing one -
+   a true crossfade with no gap where both are hidden at once. */
+.cat-carousel-img-incoming{
+  z-index:1;
+  opacity:0;
+  transition:opacity .9s cubic-bezier(.4,0,.2,1), transform 1.8s cubic-bezier(.16,.6,.24,1);
+}
+.cat-carousel-img-incoming.is-visible{ opacity:1; }
 .cat-carousel-slide:hover img,
 .cat-carousel-slide:focus-visible img{ transform:scale(1.045); }
 .cat-carousel-slide:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
@@ -665,9 +674,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   letter-spacing:-.025em;
   margin:0;
   color:var(--blue-deep);
-  transition:opacity .38s var(--ease);
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
 }
-.cat-carousel-slide.is-changing .cat-carousel-label h3{ opacity:0; }
+.cat-carousel-label.is-changing h3{ opacity:0; transform:translateY(4px); }
 
 .cat-carousel-arrow{
   position:absolute;
@@ -677,18 +686,24 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   display:flex;
   align-items:center;
   justify-content:center;
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
   border-radius:50%;
-  background:linear-gradient(155deg, #101c3a 0%, var(--blue-deep) 72%);
-  border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 12px 26px -15px rgba(3,11,33,.6), inset 0 1px 0 rgba(255,255,255,.3);
-  color:#fff;
+  background:rgba(251,249,245,.6);
+  border:1px solid rgba(6,8,26,.09);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:0 8px 20px -12px rgba(6,8,26,.3);
+  color:var(--blue-deep);
   cursor:pointer;
-  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  transition:background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease);
 }
 .cat-carousel-arrow:hover,
-.cat-carousel-arrow:focus-visible{ box-shadow:0 16px 30px -14px rgba(3,11,33,.65), inset 0 1px 0 rgba(255,255,255,.34); }
+.cat-carousel-arrow:focus-visible{
+  background:rgba(251,249,245,.92);
+  border-color:rgba(6,8,26,.14);
+  box-shadow:0 10px 24px -12px rgba(6,8,26,.34);
+}
 .cat-carousel-arrow:active{ transform:translateY(-50%) scale(.94); }
 .cat-carousel-arrow.prev{ left:18px; }
 .cat-carousel-arrow.next{ right:18px; }
@@ -716,6 +731,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 
 @media (prefers-reduced-motion:reduce){
   .cat-carousel-slide img,
+  .cat-carousel-img-incoming,
   .cat-carousel-label h3,
   .cat-carousel-arrow,
   .cat-carousel-dot{ transition:none; }
@@ -3110,10 +3126,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   if (!stage || !slide) return;
 
   var img = document.getElementById('catCarouselImg');
-  var label = document.getElementById('catCarouselLabel');
+  var labelText = document.getElementById('catCarouselLabel');
+  var labelWrap = labelText.closest('.cat-carousel-label');
   var dotsWrap = document.getElementById('catCarouselDots');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var index = 0;
+  var animating = false;
   var dots = [];
 
   slides.forEach(function(item, i){
@@ -3127,23 +3145,57 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     dots.push(dot);
   });
 
-  function render(){
-    var item = slides[index];
-    img.src = item.src;
-    img.alt = item.alt;
-    label.textContent = item.alt;
+  function updateDots(){
     dots.forEach(function(dot, i){ dot.setAttribute('aria-current', i === index ? 'true' : 'false'); });
   }
 
   function goTo(next){
-    if (next === index) return;
-    index = (next + slides.length) % slides.length;
-    if (reduceMotion) { render(); return; }
-    slide.classList.add('is-changing');
-    window.setTimeout(function(){
-      render();
-      slide.classList.remove('is-changing');
-    }, 200);
+    if (animating) return;
+    var targetIndex = (next + slides.length) % slides.length;
+    if (targetIndex === index) return;
+    index = targetIndex;
+    var item = slides[index];
+
+    if (reduceMotion) {
+      img.src = item.src;
+      img.alt = item.alt;
+      labelText.textContent = item.alt;
+      updateDots();
+      return;
+    }
+
+    animating = true;
+    labelWrap.classList.add('is-changing');
+
+    var incoming = new Image();
+    incoming.className = 'cat-carousel-img-incoming';
+    incoming.alt = item.alt;
+
+    function reveal(){
+      slide.appendChild(incoming);
+      // Force layout before adding the opacity class, so the browser
+      // always animates from 0 -> 1 instead of skipping straight to
+      // the end state (which reads as an abrupt cut, not a fade).
+      void incoming.offsetWidth;
+      incoming.classList.add('is-visible');
+
+      window.setTimeout(function(){
+        labelText.textContent = item.alt;
+        labelWrap.classList.remove('is-changing');
+      }, 300);
+
+      window.setTimeout(function(){
+        img.src = incoming.src;
+        img.alt = item.alt;
+        incoming.remove();
+        updateDots();
+        animating = false;
+      }, 900);
+    }
+
+    incoming.src = item.src;
+    if (incoming.complete) reveal();
+    else incoming.onload = reveal;
   }
 
   document.querySelector('[data-cat-prev]').addEventListener('click', function(){ goTo(index - 1); resetAuto(); });
@@ -3157,7 +3209,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   var autoTimer = null;
   function startAuto(){
     if (reduceMotion) return;
-    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 6000);
+    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 7000);
   }
   function stopAuto(){
     window.clearInterval(autoTimer);
