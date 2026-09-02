@@ -224,8 +224,6 @@
 .show-row-counter{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); }
 .show-row-counter b{ color:var(--ink); font-weight:600; }
 
-.show-row-link:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
-
 .show-row-arrows{
   position:absolute;
   z-index:3;
@@ -479,7 +477,7 @@
     row.className = 'show-row' + (cat.items.length < 2 ? ' show-row-single' : '');
 
     row.innerHTML =
-      '<a class="show-row-link" href="solutions-v4.html">' +
+      '<div class="show-row-link">' +
         '<div class="show-row-media"><img alt=""></div>' +
         '<div class="show-row-text">' +
           '<span class="show-row-eyebrow">' + cat.eyebrow + '</span>' +
@@ -488,7 +486,7 @@
           '<ul class="show-row-specs"></ul>' +
           '<span class="show-row-counter"><b class="show-row-counter-current">1</b>&nbsp;/&nbsp;' + cat.items.length + '</span>' +
         '</div>' +
-      '</a>' +
+      '</div>' +
       '<div class="show-row-arrows">' +
         '<button type="button" class="show-row-arrow prev" aria-label="Previous application">' + arrowPrevSvg + '</button>' +
         '<button type="button" class="show-row-arrow next" aria-label="Next application">' + arrowNextSvg + '</button>' +
@@ -515,7 +513,6 @@
         return '<li><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + '</span></li>';
       }).join('');
       if (counterEl) counterEl.textContent = String(index + 1);
-      link.setAttribute('aria-label', 'View ' + item.key + ' application');
     }
 
     function goTo(next){
@@ -561,6 +558,7 @@
       if (incoming.complete) reveal(); else incoming.onload = reveal;
     }
 
+    link.addEventListener('click', function(event){ event.stopPropagation(); });
     prevBtn.addEventListener('click', function(event){ event.preventDefault(); event.stopPropagation(); goTo(index - 1); });
     nextBtn.addEventListener('click', function(event){ event.preventDefault(); event.stopPropagation(); goTo(index + 1); });
 
