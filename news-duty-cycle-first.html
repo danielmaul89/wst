@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Why Projects Start With the Duty Cycle | WS Technicals</title>
+<meta name="description" content="The first useful drawing of a battery system isn't electrical — it's how the machine actually intends to use power.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.article-hero{ position:relative; padding:140px 0 56px; }
+.article-hero-inner{ position:relative; z-index:1; max-width:720px; }
+.article-hero h1{ max-width:16ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:58ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+
+.article-media{ position:relative; z-index:1; margin:0 0 88px; }
+.article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.article-body{ position:relative; z-index:1; padding-bottom:140px; }
+.article-body-inner{ max-width:720px; margin:0 auto; }
+.article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
+.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p:first-of-type{ margin-top:0; }
+
+.article-inline-media{ margin:56px 0; }
+.article-inline-media img{ display:block; width:100%; max-height:440px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+.article-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
+
+.article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.article-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .article-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .article-hero{ padding-top:112px; }
+  .article-media img,
+  .article-inline-media img{ max-height:320px; }
+  .article-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="article-hero">
+    <div class="container article-hero-inner">
+      <h1>Why projects start with the duty cycle, not the schematic.</h1>
+      <p class="lead">The first useful drawing of a battery system isn't electrical. It's a description of how the machine actually intends to use power — and it decides more of the final design than any datasheet does.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="article-media">
+      <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
+    </figure>
+  </div>
+
+  <section class="article-body">
+    <div class="article-body-inner">
+
+      <p>It's tempting to think a battery project begins with a cell. Pick the right chemistry, size the pack, wire up a BMS, done. In practice, none of those decisions mean anything until one question has an answer: what does this machine actually do with power, second by second, across a real duty cycle?</p>
+
+      <h2>The application writes the spec</h2>
+      <p>A drone pulls a short, extreme peak on takeoff and then settles into a steady, moderate draw. A warehouse robot cycles between idle, acceleration and regenerative braking dozens of times an hour. A backup power system sits at rest for months and then has to deliver everything at once, on demand. Three completely different batteries — not because the chemistry differs, but because the load profile does.</p>
+      <p>Sizing a pack around a nameplate power rating instead of the actual duty cycle is one of the most common ways a project gets more expensive later. Oversized packs cost weight and money; undersized ones fail quietly, at the exact moment the application needed the margin.</p>
+
+      <h2>Where the number actually comes from</h2>
+      <p>The duty cycle isn't guessed — it's measured or modelled from how the machine is used in the field: peak current draw, how long that peak lasts, ambient temperature range, charge behaviour, and what a safe failure mode looks like if the pack is ever pushed outside its limits. That data shapes everything downstream: cell selection, thermal design, the balancing strategy in the BMS, even the connector rating.</p>
+      <p>This is also why the same conversation happens whether the application is a piece of heavy machinery or a small mobile robot. The questions don't change — only the answers do.</p>
+
+      <figure class="article-inline-media">
+        <img src="assets/general/_MG_1505.webp" alt="Engineer probing a circuit board with a multimeter">
+        <figcaption>Bench measurements get compared against the modelled duty cycle, not just the schematic.</figcaption>
+      </figure>
+
+      <h2>The schematic comes second</h2>
+      <p>Once the duty cycle is understood, the electronics follow from it rather than the other way around. A BMS built around an assumed, generic load profile can pass every bench test and still misbehave in the field, because the field never matches the assumption. A BMS built around the application's actual duty cycle is validated against the conditions it will really see.</p>
+      <p>That ordering — application first, electronics second — is a small discipline with a large effect. It's the difference between a battery that happens to work, and a system that was engineered to.</p>
+
+    </div>
+  </section>
+
+  <section class="article-cta on-dark">
+    <div class="container article-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>More engineering perspectives on how battery systems get built, tested and taken into series production.</p></div>
+      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=about-pages1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>

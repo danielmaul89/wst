@@ -1,0 +1,662 @@
+﻿{
+    "generated":  "2026-08-14 00:01",
+    "weights":  {
+                    "headingTiers":  25,
+                    "typeScale":  15,
+                    "spacing":  15,
+                    "noDuplication":  20,
+                    "sharedShell":  10,
+                    "accessibility":  10,
+                    "componentLayer":  5
+                },
+    "pages":  [
+                  {
+                      "file":  "component-library.html",
+                      "score":  77,
+                      "parts":  {
+                                    "headingTiers":  20,
+                                    "typeScale":  6,
+                                    "spacing":  11.5,
+                                    "noDuplication":  20,
+                                    "sharedShell":  8.5,
+                                    "accessibility":  6,
+                                    "componentLayer":  5
+                                },
+                      "detail":  {
+                                     "headingTiers":  "4/5 tier-token",
+                                     "typeScale":  "4/10 on-scale",
+                                     "offScaleSizes":  "13px 15px",
+                                     "spacing":  "10/13 tokenised",
+                                     "shadowedClasses":  0,
+                                     "shell":  "8.5/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  true,
+                                     "localCssLines":  157
+                                 }
+                  },
+                  {
+                      "file":  "page-index.html",
+                      "score":  65,
+                      "parts":  {
+                                    "headingTiers":  25,
+                                    "typeScale":  3.9,
+                                    "spacing":  7.2,
+                                    "noDuplication":  20,
+                                    "sharedShell":  3,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "2/2 tier-token",
+                                     "typeScale":  "5/19 on-scale",
+                                     "offScaleSizes":  "11px 12.5px 12px 13.5px 13px 15px",
+                                     "spacing":  "11/23 tokenised",
+                                     "shadowedClasses":  0,
+                                     "shell":  "3/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  287
+                                 }
+                  },
+                  {
+                      "file":  "solutions-v3.html",
+                      "score":  62,
+                      "parts":  {
+                                    "headingTiers":  25,
+                                    "typeScale":  14.6,
+                                    "spacing":  2.8,
+                                    "noDuplication":  4,
+                                    "sharedShell":  10,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "16/16 tier-token",
+                                     "typeScale":  "36/37 on-scale",
+                                     "offScaleSizes":  "22px",
+                                     "spacing":  "16/86 tokenised",
+                                     "shadowedClasses":  31,
+                                     "shell":  "10/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  343
+                                 }
+                  },
+                  {
+                      "file":  "about.html",
+                      "score":  61,
+                      "parts":  {
+                                    "headingTiers":  22.5,
+                                    "typeScale":  5.2,
+                                    "spacing":  7.7,
+                                    "noDuplication":  6,
+                                    "sharedShell":  10,
+                                    "accessibility":  10,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "9/10 tier-token",
+                                     "typeScale":  "8/23 on-scale",
+                                     "offScaleSizes":  "11px 12px 13.5px 14.5px 15.5px 15px 18px 20px 26px 42px 50px",
+                                     "spacing":  "24/47 tokenised",
+                                     "shadowedClasses":  28,
+                                     "shell":  "10/10",
+                                     "a11y":  "10/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  456
+                                 }
+                  },
+                  {
+                      "file":  "product-drone.html",
+                      "score":  60,
+                      "parts":  {
+                                    "headingTiers":  25,
+                                    "typeScale":  7,
+                                    "spacing":  6.8,
+                                    "noDuplication":  4,
+                                    "sharedShell":  7,
+                                    "accessibility":  10,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "13/13 tier-token",
+                                     "typeScale":  "15/32 on-scale",
+                                     "offScaleSizes":  "10.5px 10px 11px 12.5px 12px 13px 14.5px 15px 16.5px 21px",
+                                     "spacing":  "32/71 tokenised",
+                                     "shadowedClasses":  33,
+                                     "shell":  "7/10",
+                                     "a11y":  "10/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  823
+                                 }
+                  },
+                  {
+                      "file":  "index.html",
+                      "score":  58,
+                      "parts":  {
+                                    "headingTiers":  20.3,
+                                    "typeScale":  12.8,
+                                    "spacing":  4.5,
+                                    "noDuplication":  0,
+                                    "sharedShell":  10,
+                                    "accessibility":  10,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "13/16 tier-token",
+                                     "typeScale":  "46/54 on-scale",
+                                     "offScaleSizes":  "112px 11px 12px 13px 18px 96px",
+                                     "spacing":  "43/144 tokenised",
+                                     "shadowedClasses":  48,
+                                     "shell":  "10/10",
+                                     "a11y":  "10/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  2182
+                                 }
+                  },
+                  {
+                      "file":  "contact-v2.html",
+                      "score":  53,
+                      "parts":  {
+                                    "headingTiers":  25,
+                                    "typeScale":  3.2,
+                                    "spacing":  7.9,
+                                    "noDuplication":  4,
+                                    "sharedShell":  7,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "2/2 tier-token",
+                                     "typeScale":  "3/14 on-scale",
+                                     "offScaleSizes":  "12.5px 12px 13.5px 13px 14.5px 15.5px 15px",
+                                     "spacing":  "20/38 tokenised",
+                                     "shadowedClasses":  31,
+                                     "shell":  "7/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  267
+                                 }
+                  },
+                  {
+                      "file":  "design-system.html",
+                      "score":  46,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  15,
+                                    "spacing":  1.2,
+                                    "noDuplication":  18,
+                                    "sharedShell":  8.5,
+                                    "accessibility":  3,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/8 tier-token",
+                                     "typeScale":  "20/20 on-scale",
+                                     "offScaleSizes":  "",
+                                     "spacing":  "4/48 tokenised",
+                                     "shadowedClasses":  4,
+                                     "shell":  "8.5/10",
+                                     "a11y":  "3/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  123
+                                 }
+                  },
+                  {
+                      "file":  "careers.html",
+                      "score":  44,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  12,
+                                    "spacing":  0,
+                                    "noDuplication":  20,
+                                    "sharedShell":  10,
+                                    "accessibility":  1.5,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/4 tier-token",
+                                     "typeScale":  "8/10 on-scale",
+                                     "offScaleSizes":  "17px 18px",
+                                     "spacing":  "0/12 tokenised",
+                                     "shadowedClasses":  0,
+                                     "shell":  "10/10",
+                                     "a11y":  "1.5/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  27
+                                 }
+                  },
+                  {
+                      "file":  "news.html",
+                      "score":  42,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  10.7,
+                                    "spacing":  0,
+                                    "noDuplication":  20,
+                                    "sharedShell":  10,
+                                    "accessibility":  1.5,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/3 tier-token",
+                                     "typeScale":  "5/7 on-scale",
+                                     "offScaleSizes":  "13px 18px",
+                                     "spacing":  "0/8 tokenised",
+                                     "shadowedClasses":  0,
+                                     "shell":  "10/10",
+                                     "a11y":  "1.5/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  23
+                                 }
+                  },
+                  {
+                      "file":  "layout-options.html",
+                      "score":  39,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  5.4,
+                                    "spacing":  10.7,
+                                    "noDuplication":  20,
+                                    "sharedShell":  3,
+                                    "accessibility":  0,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/5 tier-token",
+                                     "typeScale":  "5/14 on-scale",
+                                     "offScaleSizes":  "11px 13.5px 13px 15px 16.5px",
+                                     "spacing":  "10/14 tokenised",
+                                     "shadowedClasses":  1,
+                                     "shell":  "3/10",
+                                     "a11y":  "0/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  48
+                                 }
+                  },
+                  {
+                      "file":  "production.html",
+                      "score":  28,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.6,
+                                    "spacing":  9.8,
+                                    "noDuplication":  1,
+                                    "sharedShell":  10,
+                                    "accessibility":  4.5,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/6 tier-token",
+                                     "typeScale":  "4/23 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12.5px 12px 13.5px 14.5px 15.5px 15px 17px 19px",
+                                     "spacing":  "26/40 tokenised",
+                                     "shadowedClasses":  39,
+                                     "shell":  "10/10",
+                                     "a11y":  "4.5/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  170
+                                 }
+                  },
+                  {
+                      "file":  "contact.html",
+                      "score":  28,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  4.3,
+                                    "spacing":  7.3,
+                                    "noDuplication":  0,
+                                    "sharedShell":  10,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/3 tier-token",
+                                     "typeScale":  "6/21 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12.5px 12px 13.5px 13px 14.5px 15px",
+                                     "spacing":  "18/37 tokenised",
+                                     "shadowedClasses":  41,
+                                     "shell":  "10/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  186
+                                 }
+                  },
+                  {
+                      "file":  "bms.html",
+                      "score":  28,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  4.2,
+                                    "spacing":  8.4,
+                                    "noDuplication":  1,
+                                    "sharedShell":  10,
+                                    "accessibility":  4.5,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/5 tier-token",
+                                     "typeScale":  "5/18 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12px 13.5px 14.5px 15.5px 15px",
+                                     "spacing":  "18/32 tokenised",
+                                     "shadowedClasses":  38,
+                                     "shell":  "10/10",
+                                     "a11y":  "4.5/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  137
+                                 }
+                  },
+                  {
+                      "file":  "development.html",
+                      "score":  27,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.9,
+                                    "spacing":  8.8,
+                                    "noDuplication":  1,
+                                    "sharedShell":  10,
+                                    "accessibility":  4.5,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/4 tier-token",
+                                     "typeScale":  "4/21 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12px 13.5px 14.5px 15px 16.5px 20px",
+                                     "spacing":  "24/41 tokenised",
+                                     "shadowedClasses":  39,
+                                     "shell":  "10/10",
+                                     "a11y":  "4.5/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  173
+                                 }
+                  },
+                  {
+                      "file":  "product.html",
+                      "score":  24,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  3.9,
+                                    "spacing":  5.3,
+                                    "noDuplication":  0,
+                                    "sharedShell":  8.5,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/7 tier-token",
+                                     "typeScale":  "8/31 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 13px 14.5px 15.5px 17px 22px",
+                                     "spacing":  "18/51 tokenised",
+                                     "shadowedClasses":  42,
+                                     "shell":  "8.5/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  267
+                                 }
+                  },
+                  {
+                      "file":  "index-v3.html",
+                      "score":  23,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  3.5,
+                                    "spacing":  9.9,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  10,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/12 tier-token",
+                                     "typeScale":  "10/43 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12.5px 12px 13.5px 13px 14.5px 15.5px 15px 17px 18px 19px 22px 26px 28px 36px",
+                                     "spacing":  "53/80 tokenised",
+                                     "shadowedClasses":  57,
+                                     "shell":  "0/10",
+                                     "a11y":  "10/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  292
+                                 }
+                  },
+                  {
+                      "file":  "index-v4.html",
+                      "score":  23,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  3.8,
+                                    "spacing":  9.1,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  10,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/12 tier-token",
+                                     "typeScale":  "11/43 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 13px 14.5px 15.5px 15px 17px 18px 22px 26px",
+                                     "spacing":  "50/82 tokenised",
+                                     "shadowedClasses":  56,
+                                     "shell":  "0/10",
+                                     "a11y":  "10/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  310
+                                 }
+                  },
+                  {
+                      "file":  "index-v5.html",
+                      "score":  23,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  4.5,
+                                    "spacing":  8.5,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  10,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/11 tier-token",
+                                     "typeScale":  "12/40 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 13px 14.5px 15px 19px 26px",
+                                     "spacing":  "40/71 tokenised",
+                                     "shadowedClasses":  46,
+                                     "shell":  "0/10",
+                                     "a11y":  "10/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  282
+                                 }
+                  },
+                  {
+                      "file":  "bms-v2.html",
+                      "score":  20,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  3.9,
+                                    "spacing":  9.1,
+                                    "noDuplication":  1,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/5 tier-token",
+                                     "typeScale":  "5/19 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12px 13.5px 14.5px 15.5px 15px 19px",
+                                     "spacing":  "20/33 tokenised",
+                                     "shadowedClasses":  37,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  150
+                                 }
+                  },
+                  {
+                      "file":  "production-v2.html",
+                      "score":  19,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.6,
+                                    "spacing":  9.8,
+                                    "noDuplication":  1,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/6 tier-token",
+                                     "typeScale":  "4/23 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12.5px 12px 13.5px 14.5px 15.5px 15px 17px 19px",
+                                     "spacing":  "26/40 tokenised",
+                                     "shadowedClasses":  39,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  174
+                                 }
+                  },
+                  {
+                      "file":  "about-v2.html",
+                      "score":  19,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.9,
+                                    "spacing":  10.5,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/8 tier-token",
+                                     "typeScale":  "5/26 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12px 13.5px 13px 14.5px 15.5px 15px 17px 18px 26px",
+                                     "spacing":  "30/43 tokenised",
+                                     "shadowedClasses":  42,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  191
+                                 }
+                  },
+                  {
+                      "file":  "development-v2.html",
+                      "score":  19,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.9,
+                                    "spacing":  8.8,
+                                    "noDuplication":  1,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/4 tier-token",
+                                     "typeScale":  "4/21 on-scale",
+                                     "offScaleSizes":  "11.5px 11px 12px 13.5px 14.5px 15px 16.5px 20px",
+                                     "spacing":  "24/41 tokenised",
+                                     "shadowedClasses":  39,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  177
+                                 }
+                  },
+                  {
+                      "file":  "solutions-v2.html",
+                      "score":  18,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  3.6,
+                                    "spacing":  7.9,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/5 tier-token",
+                                     "typeScale":  "6/25 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 14.5px 16.5px 19px 26px",
+                                     "spacing":  "18/34 tokenised",
+                                     "shadowedClasses":  40,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  171
+                                 }
+                  },
+                  {
+                      "file":  "solutions.html",
+                      "score":  18,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  3.6,
+                                    "spacing":  7.9,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/5 tier-token",
+                                     "typeScale":  "6/25 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 14.5px 16.5px 19px 26px",
+                                     "spacing":  "18/34 tokenised",
+                                     "shadowedClasses":  40,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  168
+                                 }
+                  },
+                  {
+                      "file":  "index-v2.html",
+                      "score":  18,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.9,
+                                    "spacing":  9.1,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/11 tier-token",
+                                     "typeScale":  "10/52 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 14.5px 15.5px 17px 19px 20px 26px",
+                                     "spacing":  "45/74 tokenised",
+                                     "shadowedClasses":  51,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  343
+                                 }
+                  },
+                  {
+                      "file":  "product-v2.html",
+                      "score":  15,
+                      "parts":  {
+                                    "headingTiers":  0,
+                                    "typeScale":  2.7,
+                                    "spacing":  6.4,
+                                    "noDuplication":  0,
+                                    "sharedShell":  0,
+                                    "accessibility":  6,
+                                    "componentLayer":  0
+                                },
+                      "detail":  {
+                                     "headingTiers":  "0/7 tier-token",
+                                     "typeScale":  "6/33 on-scale",
+                                     "offScaleSizes":  "10.5px 11.5px 11px 12.5px 12px 13.5px 13px 14.5px 15.5px 17px 22px",
+                                     "spacing":  "21/49 tokenised",
+                                     "shadowedClasses":  43,
+                                     "shell":  "0/10",
+                                     "a11y":  "6/10",
+                                     "componentLayer":  false,
+                                     "localCssLines":  212
+                                 }
+                  }
+              ]
+}

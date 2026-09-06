@@ -4,63 +4,239 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>News and stories | WS Technicals</title>
-<meta name="description" content="Success stories, employee perspectives and company news from WS Technicals.">
+<title>News | WS Technicals</title>
+<meta name="description" content="Engineering perspectives from WS Technicals — how battery systems get built, tested and taken into series production.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css">
 <style>
 body{ background:var(--paper); }
-.news-hero{ padding:170px 0 92px; overflow:hidden; background:radial-gradient(circle at 14% 0,rgba(203,176,138,.34),transparent 35%),radial-gradient(circle at 88% 18%,rgba(126,136,172,.25),transparent 38%),var(--paper); }
-.news-hero-grid{ display:grid; grid-template-columns:1fr .72fr; gap:clamp(56px,10vw,150px); align-items:start; }
-.news-hero h1{ max-width:12ch; margin-top:18px; font-size:clamp(48px,6vw,72px); }
-.news-intro{ padding-top:38px; color:var(--ink-soft); font-size:18px; line-height:1.7; }
-.editorial{ padding:40px 0 140px; }
-.feature{ position:relative; display:grid; grid-template-columns:1.05fr .95fr; min-height:470px; overflow:hidden; border-radius:var(--r-lg); background:var(--blue-deep); color:var(--paper); }
-.feature-copy{ display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(40px,6vw,76px); }
-.feature-copy h2{ max-width:11ch; margin:18px 0; color:var(--paper); font-size:48px; }
-.feature-copy p{ max-width:48ch; color:var(--ink-soft-on-dark); line-height:1.7; }
-.feature-visual{ position:relative; overflow:hidden; background:linear-gradient(145deg,rgba(46,91,157,.4),rgba(3,11,33,.2)),url('assets/about/gallery/production-testing.jpg') center/cover; }
-.feature-visual::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg,var(--blue-deep),transparent 45%); }
-.channels{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:24px; }
-.channel{ min-height:300px; padding:32px; border-radius:var(--r-lg); background:rgba(255,255,255,.66); box-shadow:inset 0 1px 0 #fff,0 24px 54px -46px rgba(3,11,33,.4); transition:transform .45s var(--ease),box-shadow .45s var(--ease); }
-.channel:hover{ transform:translateY(-5px); box-shadow:inset 0 1px 0 #fff,0 30px 64px -42px rgba(3,11,33,.42); }
-.channel-index{ display:block; margin-bottom:88px; color:var(--brass-text); font-family:var(--font-mono); font-size:13px; }
-.channel h3{ margin-bottom:14px; font-size:32px; }
-.channel p{ color:var(--ink-soft); line-height:1.65; }
-.archive-note{ display:flex; justify-content:space-between; gap:40px; margin-top:72px; padding-top:28px; border-top:1px solid var(--line); }
-.archive-note strong{ font-family:var(--font-display); font-size:24px; }
-.archive-note p{ max-width:54ch; color:var(--ink-soft); }
-@media(max-width:800px){ .news-hero-grid,.feature{ grid-template-columns:1fr; } .feature-visual{ min-height:320px; order:-1; } .channels{ grid-template-columns:1fr; } .channel{ min-height:240px; } .channel-index{ margin-bottom:56px; } }
-@media(max-width:560px){ .news-hero{ padding-top:120px; } .news-hero h1{ font-size:48px; } .feature-copy h2{ font-size:40px; } .archive-note{ flex-direction:column; } }
+
+/* Ambient gradient wash — bleeds from the hero down through the first
+   row of news cards so there's no hard edge where the hero box ends. */
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1180px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){
+  .ambient{ height:900px; }
+}
+
+.news-hero{ position:relative; min-height:52svh; display:flex; align-items:center; overflow:hidden; padding:140px 0 80px; }
+.news-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.news-hero h1{ max-width:14ch; margin:18px 0 24px; font-size:clamp(40px,6vw,64px); }
+.news-hero .lead{ max-width:58ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+
+.news-grid-section{ position:relative; z-index:1; padding:0 0 140px; }
+.news-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:32px 28px;
+}
+.news-card{ display:block; }
+.news-card-media{
+  position:relative;
+  height:280px;
+  margin-bottom:20px;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:var(--blue-deep);
+  box-shadow:0 2px 12px rgba(6,8,26,.07);
+}
+.news-card-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.82) brightness(.86) contrast(1.06);
+  transform:scale(1.001);
+  transition:transform .7s var(--ease),filter .7s var(--ease);
+}
+.news-card-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(115deg,rgba(15,42,92,.1),transparent 48%,rgba(185,154,114,.05));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.news-card-tag{
+  position:absolute;
+  top:16px; left:16px;
+  z-index:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+  padding:8px 15px;
+  border-radius:999px;
+  background:rgba(6,8,26,.82);
+  box-shadow:0 4px 14px rgba(6,8,26,.28);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  color:#fff;
+  font-family:var(--font-mono);
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+@media (hover:hover){
+  .news-card:hover .news-card-media img{ transform:scale(1.03); filter:saturate(.92) brightness(.92) contrast(1.03); }
+}
+.news-card h3{ margin:0 0 8px; font-family:var(--font-display); font-size:22px; letter-spacing:-.01em; }
+.news-card p{ margin:0; max-width:38ch; color:var(--ink-soft); font-size:15px; line-height:1.6; }
+.news-card-link{ display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-weight:600; font-size:14px; color:var(--blue); }
+.news-card-link svg{ transition:transform .3s var(--ease); }
+.news-card-link:hover svg{ transform:translateX(3px); }
+
+.news-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.news-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.news-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:48px; }
+.news-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.news-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .news-grid{ grid-template-columns:1fr 1fr; }
+  .news-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .news-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .news-hero{ padding-top:112px; }
+  .news-grid{ grid-template-columns:1fr; }
+  .news-card-media{ height:240px; }
+  .news-cta h2{ font-size:40px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
 </style>
 </head>
 <body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
 <div data-wst-header></div>
 <main>
   <section class="news-hero">
-    <div class="container news-hero-grid">
-      <div><span class="eyebrow">News and perspectives</span><h1>Engineering stories from inside the work.</h1></div>
-      <p class="news-intro">Follow customer applications, the people behind the engineering and the developments shaping WS Technicals.</p>
+    <div class="container news-hero-inner">
+      <span class="eyebrow">News</span>
+      <h1>Engineering perspectives from inside the work.</h1>
+      <p class="lead">Articles, updates and conversations with the people behind the work — how battery systems actually get built, tested and taken into series production.</p>
     </div>
   </section>
 
-  <section class="editorial">
+  <section class="news-grid-section">
     <div class="container">
-      <article class="feature">
-        <div class="feature-copy"><span class="eyebrow">Editorial focus</span><h2>From requirement to working system.</h2><p>Future stories will show how application requirements become battery architecture, validated hardware and dependable series production.</p></div>
-        <div class="feature-visual" role="img" aria-label="Battery testing and production environment"></div>
-      </article>
-      <div class="channels">
-        <article class="channel"><span class="channel-index">01</span><h3>Success stories</h3><p>Real applications, engineering constraints and the decisions behind each custom battery solution.</p></article>
-        <article class="channel"><span class="channel-index">02</span><h3>Employee stories</h3><p>Perspectives from the engineers and specialists who develop, test and industrialize each system.</p></article>
-        <article class="channel"><span class="channel-index">03</span><h3>Company news</h3><p>Updates from WS Technicals, its capabilities and the wider transition toward electrification.</p></article>
+      <div class="news-grid">
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter"></div>
+          <h3>Why projects start with the duty cycle, not the schematic</h3>
+          <p>The first useful drawing of a battery system isn't electrical — it's how the machine actually intends to use power.</p>
+          <a class="news-card-link" href="news-duty-cycle-first.html">Read the article <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_0754.webp" alt="Technician testing a battery pack on a charge and discharge rack in the workshop"></div>
+          <h3>Production verification</h3>
+          <p>Every finished pack runs a full charge and discharge cycle before it leaves the floor.</p>
+          <a class="news-card-link" href="interview-production-technician.html">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1590.webp" alt="Technician inspecting a battery module by hand under workshop lighting"></div>
+          <h3>What changes at the transition to series production</h3>
+          <p>A validated prototype and a repeatable production process are two different engineering problems.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_1505.webp" alt="Engineer probing a circuit board with a multimeter"></div>
+          <h3>BMS engineering</h3>
+          <p>Electronics and communication protocols built and tested around the specific application.</p>
+          <a class="news-card-link" href="interview-electronics-engineer.html">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1309%20copy.webp" alt="Engineer reviewing a 3D CAD assembly on dual monitors"></div>
+          <h3>From exploded assembly to physical part</h3>
+          <p>A CAD model only proves itself once it's been checked against a part you can actually hold.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_8380.webp" alt="Engineers reviewing an exploded 3D CAD battery assembly on screen"></div>
+          <h3>Design collaboration</h3>
+          <p>Exploded assemblies reviewed together before a single part is ordered.</p>
+          <a class="news-card-link" href="interview-mechanical-design-engineer.html">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1368%20copy.webp" alt="Technician checking a power electronics enclosure with a handheld RF test instrument"></div>
+          <h3>The last checkpoint before a pack ships</h3>
+          <p>Every finished pack runs a full charge and discharge cycle — the one step that never gets skipped.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_1337.webp" alt="Close-up of hands wiring a connector inside an open battery enclosure"></div>
+          <h3>Hand assembly</h3>
+          <p>Wiring and connectors built the way the drawing specifies, not the way that's fastest.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/products/web/robotic-arm.jpg" alt="Industrial robotic arm powered by a custom battery system"></div>
+          <h3>Engineering across four disciplines, one system</h3>
+          <p>Mechanics, electronics, software and production don't hand off a project in sequence — they hold it together.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_7904.webp" alt="Engineer comparing a physical cell block against its 3D CAD model on screen"></div>
+          <h3>From CAD to cell block</h3>
+          <p>A model only proves itself once it becomes a physical part you can hold.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle powered by a custom battery system"></div>
+          <h3>Built for the application, not the datasheet</h3>
+          <p>From ground robots to maritime power, the application defines the pack long before the cell chemistry does.</p>
+        </article>
+        <article class="news-card">
+          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_8322.webp" alt="Engineer reviewing test data at a workbench surrounded by lab equipment"></div>
+          <h3>Reading the data</h3>
+          <p>Test logs get the same attention as the schematic that produced them.</p>
+        </article>
       </div>
-      <div class="archive-note"><strong>Articles are being prepared.</strong><p>This page establishes the editorial structure without presenting placeholder stories as published company news.</p></div>
+    </div>
+  </section>
+
+  <section class="news-cta on-dark">
+    <div class="container news-cta-inner">
+      <div><h2>Have a project in mind?</h2><p>Tell us about the application and the constraints it has to work within. We'll tell you what a dependable battery system for it actually looks like.</p></div>
+      <a class="btn btn-on-dark news-cta-action" href="contact-v2.html">Start the conversation</a>
     </div>
   </section>
 </main>
 <div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
 <script src="assets/scripts/wst-shell.js?v=about-pages1"></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>

@@ -5,7 +5,8 @@
       "name": "wst-static",
       "runtimeExecutable": "powershell.exe",
       "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "scripts/serve.ps1"],
-      "port": 8973
+      "port": 8973,
+      "autoPort": true
     }
   ]
 }

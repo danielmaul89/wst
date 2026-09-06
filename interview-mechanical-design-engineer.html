@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Inside Mechanical Design | WS Technicals</title>
+<meta name="description" content="A conversation with one of our mechanical design engineers about the work between a 3D model and a finished battery pack.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.interview-hero{ position:relative; padding:140px 0 56px; }
+.interview-hero-inner{ position:relative; z-index:1; max-width:720px; }
+.interview-hero h1{ max-width:14ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.interview-hero .lead{ max-width:58ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+
+.interview-media{ position:relative; z-index:1; margin:0 0 88px; }
+.interview-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.interview-body{ position:relative; z-index:1; padding-bottom:140px; }
+.interview-body-inner{ max-width:720px; margin:0 auto; }
+.qa{ padding:32px 0; border-top:1px solid var(--line); }
+.qa:first-child{ border-top:0; padding-top:0; }
+.qa-q{ margin:0 0 14px; font-family:var(--font-display); font-size:22px; letter-spacing:-.01em; color:var(--ink); }
+.qa-a{ margin:0; max-width:60ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+
+.interview-inline-media{ margin:56px 0; }
+.interview-inline-media img{ display:block; width:100%; max-height:440px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+.interview-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
+
+.interview-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.interview-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.interview-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.interview-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.interview-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .interview-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .interview-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .interview-hero{ padding-top:112px; }
+  .interview-media img,
+  .interview-inline-media img{ max-height:320px; }
+  .interview-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="interview-hero">
+    <div class="container interview-hero-inner">
+      <h1>Where a model becomes a part.</h1>
+      <p class="lead">A battery pack is a 3D model long before it's a physical object. We sat down with one of our mechanical design engineers to talk through what happens between the drawing and the finished part.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="interview-media">
+      <img src="assets/general/_MG_8380.webp" alt="Engineers reviewing an exploded 3D CAD battery assembly on screen">
+    </figure>
+  </div>
+
+  <section class="interview-body">
+    <div class="container interview-body-inner">
+
+      <div class="qa">
+        <h3 class="qa-q">What does a mechanical design engineer actually own on a project?</h3>
+        <p class="qa-a">Everything that has to physically fit together — enclosure, mounting, thermal paths, how the electronics and cells sit relative to each other. If two things can't be in the same place at the same time, that's a mechanical design problem.</p>
+      </div>
+
+      <figure class="interview-inline-media">
+        <img src="assets/general/_MG_1309%20copy.webp" alt="Engineer reviewing a 3D CAD assembly on dual monitors">
+        <figcaption>Reviewing an assembly against its drawing before it goes to production.</figcaption>
+      </figure>
+
+      <div class="qa">
+        <h3 class="qa-q">How much of the day is spent in CAD versus anywhere else?</h3>
+        <p class="qa-a">Less than people assume. A model is only useful once it's been checked against the drawing, the tolerances, and eventually the physical part. A lot of the real work happens comparing what's on screen to what's actually in front of you.</p>
+      </div>
+
+      <div class="qa">
+        <h3 class="qa-q">Where do design problems usually surface?</h3>
+        <p class="qa-a">At the interfaces — where a bracket meets a cell, where a connector has to reach through a wall it wasn't drawn to reach through. Nothing fails in isolation; it fails against a neighbouring part.</p>
+      </div>
+
+      <figure class="interview-inline-media">
+        <img src="assets/general/_MG_7904.webp" alt="Engineer comparing a physical cell block against its 3D CAD model on screen">
+        <figcaption>A model only proves itself once it becomes a physical part you can hold.</figcaption>
+      </figure>
+
+      <div class="qa">
+        <h3 class="qa-q">How do you know a design is manufacturable, not just correct on screen?</h3>
+        <p class="qa-a">By building it, or getting as close to that as early as possible. A first article gets measured against the model, not just eyeballed, and any gap between the two gets resolved before it becomes a production problem.</p>
+      </div>
+
+      <div class="qa">
+        <h3 class="qa-q">What's satisfying about this part of the job?</h3>
+        <p class="qa-a">Watching an exploded assembly on a screen become an actual pack you can pick up and hold, with every part landing exactly where the drawing said it would.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="interview-cta on-dark">
+    <div class="container interview-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>This is one conversation from a normal week at WS Technicals. There are more moments — and more roles — behind every pack we build.</p></div>
+      <a class="btn btn-on-dark interview-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=about-pages1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>
