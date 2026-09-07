@@ -119,11 +119,26 @@
 
 /* ----------------------------------------------------------------
    Process — fluid split scroll: a pinned dark media panel on the
-   right cross-fades between stages while the plain-white step list
-   on the left scrolls past underneath it. Full-bleed, no cards, no
-   shadows — the opposite of a stacked-paper effect.
+   right cross-fades between stages while the step list on the left
+   scrolls past underneath it. Full-bleed, no cards, no shadows — the
+   opposite of a stacked-paper effect. A conventional section head
+   (eyebrow + heading + intro, the same pattern as the rest of the
+   site) frames it so it reads as a real section, not a standalone
+   scroll gimmick.
    ---------------------------------------------------------------- */
-.dev-process{ position:relative; background:var(--paper); }
+.dev-process{ position:relative; background:var(--paper-2); padding-top:var(--sp-8); }
+
+.dev-process-head{ margin-bottom:var(--sp-6); }
+.dev-process-eyebrow{
+  display:block; margin-bottom:14px;
+  font-family:var(--font-mono); font-size:13px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--brass-text);
+}
+.dev-process-head h2{
+  font-family:var(--font-display);
+  font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls);
+  color:var(--ink);
+}
 
 .dev-steps{ display:flex; align-items:flex-start; }
 
@@ -140,9 +155,10 @@
 .dev-steps-media-item{
   position:absolute; inset:0;
   opacity:0;
-  transition:opacity .7s var(--ease);
+  transform:scale(1.035);
+  transition:opacity .9s var(--ease), transform 1.1s var(--ease);
 }
-.dev-steps-media-item.is-active{ opacity:1; }
+.dev-steps-media-item.is-active{ opacity:1; transform:scale(1); }
 .dev-steps-media-item img{ width:100%; height:100%; object-fit:cover; }
 .dev-steps-media::after{
   content:"";
@@ -150,32 +166,52 @@
   background:linear-gradient(115deg, rgba(3,11,33,.28) 0%, transparent 38%, transparent 100%);
   pointer-events:none;
 }
+.dev-steps-media-counter{
+  position:absolute; z-index:1; left:32px; bottom:32px;
+  display:flex; align-items:baseline; gap:6px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.04em;
+  color:rgba(251,249,245,.7);
+  pointer-events:none;
+}
+.dev-steps-media-counter b{ font-size:14px; font-weight:600; color:var(--paper); }
 
 .dev-steps-list{ order:1; flex:1; min-width:0; display:flex; flex-direction:column; }
 .dev-step{
-  --reveal:.32;
-  min-height:92vh;
+  --reveal:.62;
+  min-height:82vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:56px clamp(32px,6vw,88px);
+  padding:64px clamp(32px,6vw,88px);
+  border-top:1px solid var(--line-2);
   opacity:var(--reveal);
-  transform:translateY(calc((1 - var(--reveal)) * 10px));
-  transition:opacity .15s linear,transform .15s linear;
+  transform:translateY(calc((1 - var(--reveal)) * 16px)) scale(calc(.99 + var(--reveal) * .01));
+  transition:opacity .32s var(--ease), transform .32s var(--ease);
 }
+.dev-step:first-child{ border-top:none; }
 .dev-step-index{
-  display:block; margin-bottom:22px;
-  font-family:var(--font-display); font-size:clamp(40px,5vw,64px); font-weight:700;
-  letter-spacing:-.02em; color:var(--line-2);
+  display:block; margin-bottom:28px;
+  font-family:var(--font-display); font-size:clamp(44px,5.6vw,72px); font-weight:700;
+  letter-spacing:-.02em; color:var(--ink-faint);
   transition:color .5s var(--ease);
 }
 .dev-step.is-active .dev-step-index{ color:var(--brass-hi); }
 .dev-step h3{
-  max-width:15ch; margin:0 0 18px;
-  font-family:var(--font-display); font-size:clamp(28px,3.2vw,42px); font-weight:700;
-  letter-spacing:-.02em; line-height:1.1; color:var(--ink);
+  max-width:15ch; margin:0 0 22px;
+  font-family:var(--font-display); font-size:clamp(30px,3.4vw,46px); font-weight:700;
+  letter-spacing:-.02em; line-height:1.15; color:var(--ink);
 }
-.dev-step p{ max-width:44ch; margin:0; font-size:17px; line-height:1.7; color:var(--ink-soft); }
+.dev-step p{ max-width:44ch; margin:0 0 26px; font-size:18px; line-height:1.7; color:var(--ink-soft); }
+.dev-step-tags{ display:flex; flex-wrap:wrap; gap:10px 28px; margin:0; padding:0; list-style:none; }
+.dev-step-tags li{
+  display:flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.03em;
+  color:var(--ink-faint);
+}
+.dev-step-tags li::before{
+  content:""; flex:none; width:5px; height:5px; border-radius:50%;
+  background:var(--brass-hi);
+}
 .dev-step-media{ display:none; }
 
 /* ----------------------------------------------------------------
@@ -290,6 +326,11 @@
 </section>
 
 <section class="dev-process">
+  <div class="container dev-process-head">
+    <span class="dev-process-eyebrow">Five stages, one team</span>
+    <h2>Every project follows the same accountable path.</h2>
+  </div>
+
   <div class="dev-steps">
     <div class="dev-steps-media" aria-hidden="true">
       <div class="dev-steps-media-item"><img src="assets/general/_MG_1309 copy.webp" alt=""></div>
@@ -297,6 +338,7 @@
       <div class="dev-steps-media-item"><img src="assets/general/_MG_1590.webp" alt=""></div>
       <div class="dev-steps-media-item"><img src="assets/general/_MG_1368 copy.webp" alt=""></div>
       <div class="dev-steps-media-item"><img src="assets/general/_MG_8253_VN09GRAIN.webp" alt=""></div>
+      <div class="dev-steps-media-counter"><b class="dev-steps-media-counter-current">01</b>&nbsp;/&nbsp;05</div>
     </div>
 
     <div class="dev-steps-list">
@@ -304,6 +346,10 @@
         <span class="dev-step-index">01</span>
         <h3>Design phase &amp; feasibility study.</h3>
         <p>Every project starts with your operating profile and physical constraints. We assess feasibility, define the architecture and produce the first drawings and specification in 3D CAD.</p>
+        <ul class="dev-step-tags">
+          <li>Architecture defined</li>
+          <li>3D CAD specification</li>
+        </ul>
         <figure class="dev-step-media"><img src="assets/general/_MG_1309 copy.webp" alt="Engineer reviewing a 3D CAD battery assembly on dual monitors"></figure>
       </div>
 
@@ -311,6 +357,10 @@
         <span class="dev-step-index">02</span>
         <h3>Prototype &amp; testing.</h3>
         <p>A representative pack is built and tested electrically, thermally and mechanically against the agreed profile, before anything moves toward production tooling.</p>
+        <ul class="dev-step-tags">
+          <li>Electrical, thermal &amp; mechanical</li>
+          <li>Validated before tooling</li>
+        </ul>
         <figure class="dev-step-media"><img src="assets/general/_MG_1505.webp" alt="Engineer testing a prototype battery circuit board with a multimeter"></figure>
       </div>
 
@@ -318,6 +368,10 @@
         <span class="dev-step-index">03</span>
         <h3>Industrialization &amp; quality management.</h3>
         <p>The validated design is translated into a repeatable manufacturing definition: approved components, controlled work instructions and end-of-line testing for every unit.</p>
+        <ul class="dev-step-tags">
+          <li>Controlled work instructions</li>
+          <li>End-of-line testing, every unit</li>
+        </ul>
         <figure class="dev-step-media"><img src="assets/general/_MG_1590.webp" alt="Finished battery pack undergoing end-of-line testing on a production rig"></figure>
       </div>
 
@@ -325,6 +379,10 @@
         <span class="dev-step-index">04</span>
         <h3>Market compliance.</h3>
         <p>Every system is verified against the certification requirements of its target market, covering safety, EMC and transport regulations before it ships anywhere.</p>
+        <ul class="dev-step-tags">
+          <li>Safety, EMC &amp; transport</li>
+          <li>Cleared for target market</li>
+        </ul>
         <figure class="dev-step-media"><img src="assets/general/_MG_1368 copy.webp" alt="Engineer running an EMC compliance test with a spectrum analyser"></figure>
       </div>
 
@@ -332,6 +390,10 @@
         <span class="dev-step-index">05</span>
         <h3>Mass production &amp; SOP.</h3>
         <p>Once released, the design moves into standard operating procedure: consistent, traceable output at the volume your project needs.</p>
+        <ul class="dev-step-tags">
+          <li>Standard operating procedure</li>
+          <li>Traceable, at-volume output</li>
+        </ul>
         <figure class="dev-step-media"><img src="assets/general/_MG_8253_VN09GRAIN.webp" alt="Shelf of finished custom battery packs ready for shipment"></figure>
       </div>
     </div>
@@ -387,6 +449,7 @@
   // viewports each step carries its own inline image instead.
   var devSteps = Array.prototype.slice.call(document.querySelectorAll('.dev-step'));
   var devMediaItems = Array.prototype.slice.call(document.querySelectorAll('.dev-steps-media-item'));
+  var devCounter = document.querySelector('.dev-steps-media-counter-current');
   var devQueued = false;
   function updateDevSteps() {
     devQueued = false;
@@ -404,7 +467,7 @@
       // viewport centre, instead of snapping between two opacity values.
       var t = Math.max(0, Math.min(1, 1 - dist / fadeRange));
       var eased = t * t * (3 - 2 * t);
-      var reveal = .32 + eased * .68;
+      var reveal = .62 + eased * .38;
       step.style.setProperty('--reveal', reveal.toFixed(3));
     });
     devSteps.forEach(function (step, index) {
@@ -413,6 +476,7 @@
     devMediaItems.forEach(function (item, index) {
       item.classList.toggle('is-active', index === activeIndex);
     });
+    if (devCounter) devCounter.textContent = String(activeIndex + 1).padStart(2, '0');
   }
   function queueDevSteps() {
     if (devQueued) return;

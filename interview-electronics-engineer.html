@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Inside the Electronics Team | WS Technicals</title>
+<meta name="description" content="A conversation with one of our electronics engineers about building and testing the BMS that keeps a battery pack honest.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.interview-hero{ position:relative; padding:140px 0 56px; }
+.interview-hero-inner{ position:relative; z-index:1; max-width:720px; }
+.interview-hero h1{ max-width:14ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.interview-hero .lead{ max-width:58ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+
+.interview-media{ position:relative; z-index:1; margin:0 0 88px; }
+.interview-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.interview-body{ position:relative; z-index:1; padding-bottom:140px; }
+.interview-body-inner{ max-width:720px; margin:0 auto; }
+.qa{ padding:32px 0; border-top:1px solid var(--line); }
+.qa:first-child{ border-top:0; padding-top:0; }
+.qa-q{ margin:0 0 14px; font-family:var(--font-display); font-size:22px; letter-spacing:-.01em; color:var(--ink); }
+.qa-a{ margin:0; max-width:60ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+
+.interview-inline-media{ margin:56px 0; }
+.interview-inline-media img{ display:block; width:100%; max-height:440px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+.interview-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
+
+.interview-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.interview-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.interview-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.interview-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.interview-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .interview-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .interview-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .interview-hero{ padding-top:112px; }
+  .interview-media img,
+  .interview-inline-media img{ max-height:320px; }
+  .interview-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="interview-hero">
+    <div class="container interview-hero-inner">
+      <h1>Inside the electronics team.</h1>
+      <p class="lead">Every pack that leaves WS Technicals carries a battery management system built and proven in-house. We sat down with one of our electronics engineers to talk through what that work actually looks like, week to week.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="interview-media">
+      <img src="assets/general/_MG_8322.webp" alt="Electronics engineer reviewing test data at a workbench surrounded by lab equipment">
+    </figure>
+  </div>
+
+  <section class="interview-body">
+    <div class="container interview-body-inner">
+
+      <div class="qa">
+        <h3 class="qa-q">What does a battery management system actually have to do?</h3>
+        <p class="qa-a">It has to know the exact state of every cell in the pack, all the time, and act on that faster than the application can get itself into trouble. Voltage, temperature, current, balance between cells — the BMS is the thing that keeps all of that inside safe limits, and reports it honestly to whatever the pack is powering.</p>
+      </div>
+
+      <div class="qa">
+        <h3 class="qa-q">Where does a project like that start?</h3>
+        <p class="qa-a">With the application, not the electronics. A drone pack and a warehouse robot pack have completely different duty cycles, so the first real work is understanding how the machine is actually going to use the battery — peak draw, ambient temperature range, how it charges, how it fails safely if something goes wrong. The schematic comes after that, not before.</p>
+      </div>
+
+      <figure class="interview-inline-media">
+        <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
+        <figcaption>Bench-testing a BMS board before it goes anywhere near a finished pack.</figcaption>
+      </figure>
+
+      <div class="qa">
+        <h3 class="qa-q">How much of the work is at a desk versus at a bench?</h3>
+        <p class="qa-a">More bench than people expect. A schematic can look correct and still behave differently once it is soldered, powered and put under real load. So a lot of the week is probing boards, comparing what the multimeter shows against what the simulation predicted, and figuring out why they disagree when they do.</p>
+      </div>
+
+      <div class="qa">
+        <h3 class="qa-q">What's the hardest part of the job to get right?</h3>
+        <p class="qa-a">Edge cases. The system has to behave correctly not just when everything is normal, but when a sensor fails, a connector is loose, or the pack is charged in weather it was never meant to see. Most of the engineering time goes into those situations, not the happy path.</p>
+      </div>
+
+      <figure class="interview-inline-media">
+        <img src="assets/general/_MG_1337.webp" alt="Close-up of hands wiring a connector inside an open battery enclosure">
+        <figcaption>Wiring built to the drawing, checked against it twice.</figcaption>
+      </figure>
+
+      <div class="qa">
+        <h3 class="qa-q">What tells you a design is actually ready?</h3>
+        <p class="qa-a">When it survives the tests we designed specifically to break it, not just the ones it was obviously going to pass. Every finished pack still goes through a full charge and discharge cycle on the production floor before it ships — that's the last checkpoint, and it doesn't get skipped.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="interview-cta on-dark">
+    <div class="container interview-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>This is one conversation from a normal week at WS Technicals. There are more moments — and more roles — behind every pack we build.</p></div>
+      <a class="btn btn-on-dark interview-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=about-pages1"></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>

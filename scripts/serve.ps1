@@ -1,5 +1,5 @@
 $root = (Resolve-Path "$PSScriptRoot\..").Path
-$port = 8973
+$port = if ($env:PORT) { [int]$env:PORT } else { 8973 }
 $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, $port)
 $listener.Start()
 Write-Host "Serving $root at http://127.0.0.1:$port/"

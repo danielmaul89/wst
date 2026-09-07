@@ -201,6 +201,13 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 }
 .about-hero-lead:first-of-type{ color:var(--ink-soft); font-size:20px; font-weight:400; }
 .about-hero-copy .link-arrow{ margin-top:12px; }
+.leadership-signature{
+  display:block;
+  width:clamp(140px,16vw,190px);
+  height:auto;
+  margin-top:8px;
+  opacity:.92;
+}
 .visually-hidden{
   position:absolute!important;
   width:1px!important;
@@ -240,7 +247,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   overflow:hidden;
   border-radius:var(--r-lg);
   background:var(--blue-deep);
-  cursor:zoom-in;
   text-align:left;
 }
 .about-gallery-item:first-child{ grid-column:span 7; grid-row:1 / 3; }
@@ -263,30 +269,34 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   background:linear-gradient(115deg,rgba(15,42,92,.08),transparent 48%,rgba(185,154,114,.05));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
 }
-.about-gallery-zoom{
+.about-gallery-link{
   position:absolute;
   right:18px;
   bottom:18px;
   z-index:2;
-  display:grid;
-  place-items:center;
-  width:42px;
-  height:42px;
-  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 18px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:600;
   color:var(--blue-deep);
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.92);
   box-shadow:0 8px 30px rgba(3,11,33,.14);
   backdrop-filter:blur(12px);
   opacity:0;
-  transform:scale(.9);
+  transform:translateY(6px);
   transition:opacity .35s var(--ease),transform .35s var(--ease);
 }
+.about-gallery-link svg{ transition:transform .35s var(--ease); }
 @media (hover:hover){
   .about-gallery-item:hover img{
     transform:scale(1.025);
     filter:saturate(.88) brightness(.84) contrast(1.08);
   }
-  .about-gallery-item:hover .about-gallery-zoom{ opacity:1; transform:none; }
+  .about-gallery-item:hover .about-gallery-link{ opacity:1; transform:none; }
+  .about-gallery-item:hover .about-gallery-link svg{ transform:translateX(3px); }
 }
 .about-gallery-item:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
 .about-gallery-item{ transition:opacity .55s var(--ease), transform .55s var(--ease), box-shadow .55s var(--ease); }
@@ -314,23 +324,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 .work-principle .index{ display:block; margin-bottom:12px; font-family:var(--font-body); font-size:12px; letter-spacing:.12em; color:var(--brass); }
 .work-principle h3{ margin:0 0 7px; font-size:var(--h5-card-sm); letter-spacing:var(--h5-ls); line-height:var(--h5-lh); }
 .work-principle p{ margin:0; max-width:31ch; color:var(--ink-soft); font-size:14px; line-height:1.5; }
-.gallery-lightbox{
-  width:min(1180px,calc(100vw - 32px));
-  max-width:none;
-  padding:0;
-  border:0;
-  border-radius:var(--r-lg);
-  overflow:hidden;
-  background:#06081a;
-  color:#fff;
-  box-shadow:0 40px 120px rgba(3,11,33,.42);
-}
-.gallery-lightbox::backdrop{ background:rgba(3,11,33,.78); backdrop-filter:blur(12px); }
-.gallery-lightbox img{ display:block; width:100%; max-height:78vh; object-fit:contain; background:#06081a; }
-.gallery-lightbox-footer{ display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 20px; }
-.gallery-lightbox-copy strong{ display:block; font-size:16px; }
-.gallery-lightbox-copy span{ display:block; margin-top:4px; color:rgba(255,255,255,.7); font-size:14px; }
-.gallery-lightbox-close{ flex:none; width:42px; height:42px; border:1px solid rgba(255,255,255,.18); border-radius:50%; color:#fff; background:rgba(255,255,255,.06); cursor:pointer; }
 .about-byline{
   display:flex;
   align-items:center;
@@ -373,7 +366,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center 18%;
+  object-position:80% 18%;
 }
 @media (max-width:980px){
   :root{ --sp-8:96px; --sp-7:72px; }
@@ -424,6 +417,10 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
     box-shadow:0 24px 48px -28px rgba(6,8,26,.35);
   }
   .about-hero-visual img{ object-position:center 20%; }
+  /* Stacked layout puts the photo in normal flow at the top of the section, right after
+     the section's own top padding; clip the decorative grid out of that whole band
+     (padding + photo height) so it can't paint over the photo. */
+  .about-hero::before{ clip-path:inset(calc(76px + var(--sp-7) + 300px) 0 0 0); }
 }
 @media (prefers-reduced-motion:reduce){
   .about-gallery-item,
@@ -452,7 +449,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 
 <section class="about-hero" id="company">
   <figure class="about-hero-visual">
-    <img src="assets/people/_MG_8173.jpg" alt="Editorial leadership portrait, placeholder until a final photo is provided">
+    <img src="assets/people/_MG_8195_Expanded background.jpg" alt="Editorial portrait of WS Technicals leadership">
   </figure>
 
   <div class="container about-hero-grid">
@@ -462,6 +459,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       <p class="about-hero-lead">The pace of technological progress in our field is intense, and for us, the most natural mindset is one of collaboration: we are all navigating the same transition, and the more we share what we learn, the better solutions we can create - for our customers, for the industry, and for the wider electrification journey.</p>
       <p class="about-hero-lead">Our role is to make electrification more accessible. We want to make it easier for companies to take part in the transition by offering a complete battery solution built around their specific application. From the custom design of the battery pack to the selection and implementation of the Battery Management System and the move into mass production, we support our customers throughout the entire process.</p>
       <p class="about-hero-lead">For us, electrification is not just about technology. It is about building the right partnerships and creating solutions that help more people and more industries move forward.</p>
+      <img class="leadership-signature" src="assets/people/LBD-signature.png" alt="Signed, Louis B. Danielsen">
     </div>
   </div>
 </section>
@@ -473,18 +471,18 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       <p>Our work moves between engineering, electronics and production. These environments are connected by the same objective: turning complex requirements into dependable systems.</p>
     </div>
     <div class="about-gallery-grid">
-    <button class="about-gallery-item is-related" type="button" data-work-image="production" data-gallery-title="Production verification" data-gallery-copy="Focused end-of-line testing before a battery system leaves production.">
+    <a class="about-gallery-item" href="interview-production-technician.html">
       <img src="assets/general/_MG_0754.webp" alt="Technician testing a battery pack on a charge and discharge rack in the workshop">
-      <span class="about-gallery-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7.5 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11Zm4-1 4 4M7.5 5v5M5 7.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-    </button>
-    <button class="about-gallery-item" type="button" data-work-image="electronics" data-gallery-title="BMS engineering" data-gallery-copy="Electronics and communication developed around the application.">
+      <span class="about-gallery-link">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+    <a class="about-gallery-item" href="interview-electronics-engineer.html">
       <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
-      <span class="about-gallery-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7.5 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11Zm4-1 4 4M7.5 5v5M5 7.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-    </button>
-    <button class="about-gallery-item" type="button" data-work-image="collaboration" data-gallery-title="Design collaboration" data-gallery-copy="Mechanical integration reviewed closely with the customer team.">
+      <span class="about-gallery-link">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+    <a class="about-gallery-item" href="interview-mechanical-design-engineer.html">
       <img src="assets/general/_MG_8380.webp" alt="Engineers reviewing an exploded 3D CAD battery assembly on screen">
-      <span class="about-gallery-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7.5 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11Zm4-1 4 4M7.5 5v5M5 7.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-    </button>
+      <span class="about-gallery-link">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
     </div>
     <div class="work-rail" aria-label="The way we work">
       <article class="work-principle">
@@ -510,17 +508,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
     </div>
   </div>
 </section>
-
-<dialog class="gallery-lightbox" id="galleryLightbox" aria-labelledby="galleryLightboxTitle">
-  <img id="galleryLightboxImage" src="" alt="">
-  <div class="gallery-lightbox-footer">
-    <div class="gallery-lightbox-copy">
-      <strong id="galleryLightboxTitle"></strong>
-      <span id="galleryLightboxText"></span>
-    </div>
-    <button class="gallery-lightbox-close" type="button" aria-label="Close image preview">×</button>
-  </div>
-</dialog>
 
 <section class="career" id="career">
   <div class="container career-grid">
@@ -594,36 +581,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
-
-  var galleryDialog = document.getElementById('galleryLightbox');
-  if (galleryDialog) {
-    var galleryImage = document.getElementById('galleryLightboxImage');
-    var galleryTitle = document.getElementById('galleryLightboxTitle');
-    var galleryText = document.getElementById('galleryLightboxText');
-    var galleryClose = galleryDialog.querySelector('.gallery-lightbox-close');
-
-    document.querySelectorAll('.about-gallery-item').forEach(function(item){
-      item.addEventListener('click', function(){
-        var source = item.querySelector('img');
-        galleryImage.src = source.currentSrc || source.src;
-        galleryImage.alt = source.alt;
-        galleryTitle.textContent = item.dataset.galleryTitle || '';
-        galleryText.textContent = item.dataset.galleryCopy || '';
-        galleryDialog.showModal();
-      });
-    });
-
-    galleryClose.addEventListener('click', function(){ galleryDialog.close(); });
-    galleryDialog.addEventListener('click', function(event){
-      var rect = galleryDialog.getBoundingClientRect();
-      var outside = event.clientX < rect.left || event.clientX > rect.right ||
-        event.clientY < rect.top || event.clientY > rect.bottom;
-      if (outside) galleryDialog.close();
-    });
-    galleryDialog.addEventListener('close', function(){
-      galleryImage.removeAttribute('src');
-    });
-  }
 
 })();
 </script>
