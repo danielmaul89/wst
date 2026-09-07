@@ -334,9 +334,7 @@
       return Array.prototype.slice.call(productDialog.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
     }
 
-    function openProductModal(card) {
-      var img = card.querySelector("img");
-      var name = img ? img.getAttribute("alt") : "";
+    function openProductModalByName(name, trigger) {
       var info = PRODUCT_INFO[name];
       productTitle.textContent = name;
       productDesc.textContent = info ? info.desc : "Every system is engineered around your application, from operating profile to certification.";
@@ -347,7 +345,7 @@
       }).join("");
 
       window.clearTimeout(productCloseTimer);
-      lastProductTrigger = card;
+      lastProductTrigger = trigger || null;
       productModal.hidden = false;
       document.body.classList.add("wst-modal-open");
       window.requestAnimationFrame(function () {
@@ -355,6 +353,24 @@
         productDialog.focus({ preventScroll: true });
       });
     }
+
+    function openProductModal(card) {
+      var img = card.querySelector("img");
+      var name = img ? img.getAttribute("alt") : "";
+      openProductModalByName(name, card);
+    }
+
+    // Lets a page's own script (e.g. solutions-v7.html's row builder)
+    // check whether a product has real spec data before showing a CTA
+    // for it, and open the same shared modal by name directly.
+    window.WSTProductModal = {
+      has: function (name) {
+        return Object.prototype.hasOwnProperty.call(PRODUCT_INFO, name);
+      },
+      open: function (name, trigger) {
+        openProductModalByName(name, trigger);
+      }
+    };
 
     function closeProductModal() {
       productModal.classList.remove("is-open");
