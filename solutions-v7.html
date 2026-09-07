@@ -223,6 +223,24 @@
 .show-row-specs li{ display:flex; align-items:baseline; gap:10px; }
 .show-row-specs .k{ flex:none; min-width:112px; color:var(--ink-faint); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; }
 .show-row-specs .v{ color:var(--ink); font-size:13.5px; font-weight:600; }
+.show-row-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  width:fit-content;
+  margin:0 0 22px;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--blue);
+  font-family:var(--font-body);
+  font-size:13.5px;
+  font-weight:600;
+  cursor:pointer;
+  pointer-events:auto;
+}
+.show-row-cta svg{ transition:transform .3s var(--ease); }
+.show-row-cta:hover svg{ transform:translateX(3px); }
 .show-row-counter{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); }
 .show-row-counter b{ color:var(--ink); font-weight:600; }
 
@@ -504,6 +522,9 @@
           '<h3 class="show-row-title"></h3>' +
           '<p class="show-row-desc"></p>' +
           '<ul class="show-row-specs"></ul>' +
+          '<button type="button" class="show-row-cta" hidden>View full specs' +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</button>' +
           '<span class="show-row-counter"><b class="show-row-counter-current">1</b>&nbsp;/&nbsp;' + cat.items.length + '</span>' +
         '</div>' +
       '</div>' +
@@ -519,6 +540,7 @@
     var titleEl = row.querySelector('.show-row-title');
     var descEl = row.querySelector('.show-row-desc');
     var specsEl = row.querySelector('.show-row-specs');
+    var ctaEl = row.querySelector('.show-row-cta');
     var counterEl = row.querySelector('.show-row-counter-current');
     var prevBtn = row.querySelector('.show-row-arrow.prev');
     var nextBtn = row.querySelector('.show-row-arrow.next');
@@ -533,6 +555,12 @@
         return '<li><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + '</span></li>';
       }).join('');
       if (counterEl) counterEl.textContent = String(index + 1);
+      ctaEl.hidden = !(window.WSTProductModal && window.WSTProductModal.has(item.key));
+      ctaEl.onclick = function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        if (window.WSTProductModal) window.WSTProductModal.open(item.key, ctaEl);
+      };
     }
 
     function goTo(next){
