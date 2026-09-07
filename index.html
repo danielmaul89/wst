@@ -620,8 +620,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   inset:0;
   z-index:0;
   display:block;
-  text-decoration:none;
-  color:inherit;
 }
 .cat-carousel-slide img{
   position:absolute;
@@ -639,7 +637,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   transition:opacity .9s cubic-bezier(.4,0,.2,1);
 }
 .cat-carousel-img-incoming.is-visible{ opacity:1; }
-.cat-carousel-slide:focus-visible{ outline:2px solid var(--blue); outline-offset:-2px; }
 
 .cat-carousel-arrow{
   position:absolute;
@@ -2382,9 +2379,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
           <button type="button" class="cat-carousel-arrow prev" aria-label="Previous application" data-cat-prev>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <a href="solutions-v7.html" class="cat-carousel-slide" id="catCarouselSlide" aria-label="View Multirotor UAV application">
+          <div class="cat-carousel-slide" id="catCarouselSlide">
             <img src="assets/products/web/hexacopter-grounded_scaled.jpg" alt="Multirotor UAV" id="catCarouselImg">
-          </a>
+          </div>
           <button type="button" class="cat-carousel-arrow next" aria-label="Next application" data-cat-next>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -3114,8 +3111,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     index = targetIndex;
     var item = slides[index];
 
-    slide.setAttribute('aria-label', 'View ' + item.alt + ' application');
-
     if (reduceMotion) {
       img.src = item.src;
       img.alt = item.alt;
@@ -3162,7 +3157,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   var autoTimer = null;
   function startAuto(){
     if (reduceMotion) return;
-    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 7000);
+    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 10000);
   }
   function stopAuto(){
     window.clearInterval(autoTimer);
