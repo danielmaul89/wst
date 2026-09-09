@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Danish Engineering Meets Chinese Battery Expertise | WS Technicals</title>
+<meta name="description" content="Qingpeng He, Chief Supply Chain Officer at WS Technicals, on building the bridge between Danish engineering and Chinese battery manufacturing.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.article-hero{ position:relative; padding:140px 0 56px; }
+.article-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.article-hero h1{ max-width:18ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-meta{ display:flex; align-items:center; gap:10px; margin-top:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.article-meta span:not(:last-child)::after{ content:"·"; margin-left:10px; color:var(--line); }
+
+.article-media{ position:relative; z-index:1; margin:0 0 88px; }
+.article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.article-body{ position:relative; z-index:1; padding-bottom:140px; }
+.article-body-inner{ max-width:720px; margin:0 auto; }
+.article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
+.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p:first-of-type{ margin-top:0; }
+.article-body blockquote{ margin:32px 0; padding:4px 0 4px 22px; border-left:2px solid rgba(185,154,114,.55); color:var(--ink); font-family:var(--font-display); font-size:20px; line-height:1.5; letter-spacing:-.01em; }
+.article-body blockquote cite{ display:block; margin-top:10px; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; font-style:normal; letter-spacing:.04em; text-transform:uppercase; }
+
+.article-inline-media{ margin:56px 0; }
+.article-inline-media img{ display:block; width:100%; max-height:440px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+.article-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
+
+.article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.article-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .article-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .article-hero{ padding-top:112px; }
+  .article-media img,
+  .article-inline-media img{ max-height:320px; }
+  .article-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="article-hero">
+    <div class="container article-hero-inner">
+      <h1>Danish engineering meets Chinese battery expertise</h1>
+      <p class="lead">At WS Technicals, developing a battery solution is never just a matter of choosing the right cells and putting them into a box. It is a complex process where customer requirements, certifications, mechanical design, electronics, production capabilities and supplier insight all have to come together.</p>
+      <div class="article-meta">
+        <span>Engineering Perspective</span>
+        <span>Qingpeng He, Chief Supply Chain Officer</span>
+        <span>May 8, 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="article-media">
+      <img src="assets/news/qingpeng-he/hero.jpg" alt="Qingpeng He, Chief Supply Chain Officer at WS Technicals">
+    </figure>
+  </div>
+
+  <section class="article-body">
+    <div class="article-body-inner">
+
+      <p>This article is part of WS Technicals' series Engineering Perspectives, where we highlight the people behind our battery solutions. Each article gives insight into the expertise, challenges and partnerships that shape the way we work.</p>
+
+      <h2>Access to the centre of battery technology</h2>
+      <p>For Qingpeng He, Chief Supply Chain Officer at WS Technicals, one of the most important parts of that work is building the connection between Danish engineering and Chinese battery manufacturing. Because while WS Technicals designs and develops battery solutions in Denmark, production often takes place in China, a country that has become one of the most advanced and mature markets for battery technology.</p>
+      <p>China's position in battery technology is no coincidence. According to Qingpeng, it is the result of long-term national focus, energy needs and years of industrial development.</p>
+      <blockquote>"It has been a national strategy for many years. China has had a strong need for energy, and energy security is very important for a big country like China."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>Over time, that focus has helped create a complete battery supply chain, from raw materials and refined components to cell manufacturers, battery packs, applications and end customers.</p>
+      <blockquote>"In battery technology, China has a complete supply chain. Upstream you have minerals and refined materials, then you have cell manufacturers, then battery packs, then applications and customers. The whole chain is there."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>For European companies, this matters. Battery technology is not only about having a strong design or a good idea. It is also about being able to produce reliably, at scale and with access to the right suppliers.</p>
+      <blockquote>"The challenge and the goal is not only to acquire the best technology. The hard part is having stable production capacity."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>He points to the struggles of European battery production as an example of how difficult it is to build this capability from scratch. Northvolt, once seen as Europe's flagship battery manufacturer, filed for bankruptcy in Sweden in March 2025 after a prolonged financial crisis and production ramp-up challenges.</p>
+      <blockquote>"In China, it is not only about fancy technology. It is about stable production capacity and a stable supply chain."<cite>Qingpeng He, CSCO</cite></blockquote>
+
+      <h2>Danish engineering still plays a critical role</h2>
+      <p>While China provides access to technology, suppliers and production capacity, Qingpeng is clear that the Danish part of the setup is just as important.</p>
+      <p>At WS Technicals, the work begins with understanding the customer, the application and the requirements that the final battery solution must meet. This includes certifications, regulations, mechanical constraints, performance demands and market expectations.</p>
+      <blockquote>"We have a very good understanding of the customer, especially the requirements for the European and the North American market. We know about certifications, regulations and what is required."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>This is especially important because WS Technicals does not provide standard battery products. The company develops customized battery solutions for industrial customers, where each project has its own technical and commercial conditions.</p>
+      <blockquote>"What we are doing is not providing a standard product. We are providing customized products for industrial customers. That involves a lot of regulations, customer specifications, market trends, and also how the end product should look and function."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>This is where Qingpeng sees one of the strengths of Danish engineering.</p>
+      <blockquote>"Good communication, understanding of the market, understanding the needs of the customer, and knowledge about regulations and certifications. For a company like us, one of our strengths is innovation and thinking out of the box."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>Many large battery manufacturers are built for mass production and high-volume markets. WS Technicals operates in a different space, where niche applications, complex requirements and close customer dialogue are often more important than volume alone.</p>
+      <blockquote>"A lot of Chinese battery companies are very big. They are often highly focused on the mass market. They want to design something that fits a large market. But for niche markets, and for special customer needs, I think WS Technicals are good, because we work closely with the customer and build solutions around the actual application, not around a standard product."<cite>Qingpeng He, CSCO</cite></blockquote>
+
+      <h2>More than sourcing: building bridges between two business cultures</h2>
+      <p>Qingpeng's role is not simply to find suppliers or negotiate prices. It is to make sure the right production setup supports the technical solution, the customer requirement and the long-term quality of the project.</p>
+      <blockquote>"We do not really have one standard product. We select the right cells and the right supplier for each project, depending on performance, lifetime, price and the customer's requirements."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>Some customers have very specific demands, for example cycle life, temperature range, environmental conditions or mechanical integration. In those cases, the supplier network becomes a strategic part of the solution.</p>
+      <blockquote>"We are special because we have access to many different suppliers. Every project is different."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>That flexibility gives WS Technicals the ability to match each project with the right technology and production partner. But it also requires deep knowledge of the supplier landscape and continuous dialogue with manufacturers.</p>
+      <blockquote>"We need to stay in close contact with suppliers and understand the details. That is both unique and challenging."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>Working across Denmark and China also means working across cultures, languages and time zones. Misunderstandings can occur, especially when technical details, expectations and responsibilities need to be aligned.</p>
+      <blockquote>"Communication is always an important factor and a possible challenge. The culture is different, the language is different."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>This is where Qingpeng's background becomes a key part of WS Technicals' setup. Originally from China and now working in Denmark, he is able to understand both sides of the collaboration, playing both the insider and the outsider, the customer and the supplier.</p>
+      <blockquote>"I understand the Chinese side, but I also work here in Denmark and understand how we think here."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>This gives him a unique position and viewpoint, and according to Qingpeng's experience, the key to establishing a solid partnership within the supply chain is not to focus on the differences. It is to find the shared motivation.</p>
+      <blockquote>"In business, both parties want the project to work. Both parties want profit. So you need to find the motivation. What is the win-win situation?"<cite>Qingpeng He, CSCO</cite></blockquote>
+
+      <figure class="article-inline-media">
+        <img src="assets/news/qingpeng-he/inline-1.jpg" alt="Qingpeng He, Chief Supply Chain Officer at WS Technicals">
+      </figure>
+
+      <h2>Trust makes projects move faster</h2>
+      <p>In supply chain work, strong relationships are not built through emails alone. They require time, trust and a willingness to understand the other party's situation.</p>
+      <blockquote>"You need to invest time. You need to meet people and understand what they want, what their motivation is, and why they behave the way they do."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>When a problem arises, the reaction from a supplier is rarely random. It may be about cost, workload, production risk, capacity or contractual responsibility. Understanding that motivation makes it easier to solve problems before they escalate.</p>
+      <blockquote>"Most of the time, there is a reason. It can be about cost, workload, risk or capacity. You need to understand the motivation behind the reaction. Then you can find a solution."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>That understanding becomes especially valuable when the project is under pressure. A strong supplier relationship can turn a long email chain into a direct discussion and a faster solution.</p>
+      <blockquote>"A long-term relationship has a lot of value. When there is trust, you can solve problems much faster. You can sit at the table and discuss instead of writing emails back and forth forever."<cite>Qingpeng He, CSCO</cite></blockquote>
+
+      <h2>Looking beyond the lowest price</h2>
+      <p>One of the most common mistakes Qingpeng sees when companies work with Asian manufacturing is focusing too narrowly on cost. Of course, price matters. But according to Qingpeng He, the lowest price is rarely the same as the best value when it comes to battery solutions. A battery must meet safety requirements, performance expectations, lifetime demands and application-specific conditions.</p>
+      <blockquote>"If you only focus on cost, you can end up with a product that does not qualify for your standard. You may get a low price, but then you might have problems with quality or performance."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>For WS Technicals, cost optimization is not about simply pushing suppliers for a lower number. It is about choosing the right design, the right production model and the right supplier. That is also why Qingpeng believes companies should be careful not to view China through outdated assumptions.</p>
+      <blockquote>"China used to be seen as very cheap, and in the past maybe that was true in some cases. But now it is different. China has definitely caught up in high-end technology."<cite>Qingpeng He, CSCO</cite></blockquote>
+
+      <h2>Understanding China is part of understanding batteries</h2>
+      <p>For companies working with battery technology, Qingpeng believes China cannot simply be avoided, not if the goal is to develop durable, high-performance and commercially viable battery solutions.</p>
+      <blockquote>"China is leading in the battery industry, not only in the very top technology, but in mass production technology for industrial products."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>The point is not that everything must come from China. The point is that understanding the Chinese battery ecosystem gives companies access to knowledge, production experience and supplier capabilities that are difficult to replicate elsewhere.</p>
+      <blockquote>"When you look at the battery ecosystem and supply chain, you can buy many things in Europe: motors, plastic parts, metal parts and so on. But for batteries, if you completely exclude China, it is almost impossible."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>For Qingpeng, this is not necessarily a matter of competition, he perceives it as a matter of cooperation.</p>
+      <blockquote>"From a European perspective, China can be seen as a competitor. But another way to see it is that we also need to understand China and cooperate where it makes sense."<cite>Qingpeng He, CSCO</cite></blockquote>
+
+      <h2>From drawing to real product</h2>
+      <p>When asked what he takes pride in, Qingpeng returns to moments where the work becomes tangible, where specifications, drawings, discussions and supplier coordination turn into a physical product.</p>
+      <p>Even though he is not part of the design team, his work touches many parts of the project, from technical discussions and requirements to deliveries, import and production communication.</p>
+      <blockquote>"I get to see the drawings, the design, and then later the physical product. When you see something go from an idea to a real product, that feels good."<cite>Qingpeng He, CSCO</cite></blockquote>
+      <p>At WS Technicals, that transformation depends on more than engineering alone. It depends on being able to connect the right knowledge, the right suppliers and the right production setup, across borders. And for Qingpeng, that is exactly where the strength of WS Technicals lies.</p>
+      <p>Danish engineering defines the solution. Chinese battery expertise helps bring it to life. And in between, strong relationships, cultural understanding and supply chain experience make sure the project moves from idea to reality.</p>
+
+    </div>
+  </section>
+
+  <section class="article-cta on-dark">
+    <div class="container article-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
+      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Turning Complex Requirements into Solutions | WS Technicals</title>
+<meta name="description" content="Project Engineer Anders on turning hundreds of customer requirements into concrete, certified battery solutions — from sketch to certified prototype.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.article-hero{ position:relative; padding:140px 0 56px; }
+.article-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.article-hero h1{ max-width:18ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-meta{ display:flex; align-items:center; gap:10px; margin-top:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.article-meta span:not(:last-child)::after{ content:"·"; margin-left:10px; color:var(--line); }
+
+.article-media{ position:relative; z-index:1; margin:0 0 88px; }
+.article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.article-body{ position:relative; z-index:1; padding-bottom:140px; }
+.article-body-inner{ max-width:720px; margin:0 auto; }
+.article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
+.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p:first-of-type{ margin-top:0; }
+.article-body blockquote{ margin:32px 0; padding:4px 0 4px 22px; border-left:2px solid rgba(185,154,114,.55); color:var(--ink); font-family:var(--font-display); font-size:20px; line-height:1.5; letter-spacing:-.01em; }
+.article-body blockquote cite{ display:block; margin-top:10px; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; font-style:normal; letter-spacing:.04em; text-transform:uppercase; }
+
+.article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.article-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .article-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .article-hero{ padding-top:112px; }
+  .article-media img{ max-height:320px; }
+  .article-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="article-hero">
+    <div class="container article-hero-inner">
+      <h1>Turning complex requirements into solutions</h1>
+      <p class="lead">Anders holds a degree in Electronics Engineering with a postgraduate qualification from BSS. Today, he works as a Project Engineer at WS Technicals, where technical and design challenges are rarely seen as obstacles, but rather as opportunities to develop new and innovative solutions.</p>
+      <div class="article-meta">
+        <span>Engineering Perspective</span>
+        <span>Anders, Project Engineer</span>
+        <span>September 23, 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="article-media">
+      <img src="assets/news/anders/hero.jpg" alt="Anders, Project Engineer at WS Technicals">
+    </figure>
+  </div>
+
+  <section class="article-body">
+    <div class="article-body-inner">
+
+      <p>This article is part of WS Technicals' series Engineering Perspectives, where we highlight the people behind our battery solutions. Each article gives insight into the expertise, challenges, and innovations that drive our engineers and technicians, and how their work shapes the technologies of tomorrow.</p>
+
+      <h2>From curiosity to engineering expertise</h2>
+      <p>His curiosity for technology has been present since childhood, when he spent countless hours dismantling cars and computers to understand how they worked, and how they could be optimized. That same drive has followed him into his professional career, where technical and design challenges are rarely seen as obstacles, but rather as opportunities to develop new and innovative solutions.</p>
+
+      <h2>Understanding the customer's perspective</h2>
+      <p>At WS Technicals, projects range from small-scale applications to large machinery. When a new project lands on his desk, Anders' first step is to view the assignment through the customer's lens. He immerses himself in the use case and the associated requirements. This is followed by close dialogue, where the right questions are asked so it quickly can become clear which of the customer's wishes conflict with each other. This is where Anders' expertise plays a crucial role. With his technical overview and several years in the industry, he can sort through the many requirements and clarify what is feasible.</p>
+      <blockquote>"Some customers arrive with hundreds of specifications that don't always align, for example, a very strict weight limit paired with a demand for high capacity. In such cases, I help the client to identify realistic alternatives and priorities."<cite>Anders, Project Engineer</cite></blockquote>
+      <p>The ability to analyze and translate complex requirements into concrete solutions is one of Anders' greatest strengths. For a Project Engineer, a battery is never "just a battery." It is a complex unit made up of cells, relays, fuses, printed circuit boards, and numerous other components. Added to this is the mechanical design, which must be tailored precisely to the specific application. WS Technicals has developed particular expertise in this area, designing and building batteries where even the tightest spatial constraints must accommodate advanced electronics. It requires creativity, experience in series production, thorough component research, and in some cases, the development of completely new components in close collaboration with manufacturers.</p>
+
+      <h2>From sketch to certified prototype</h2>
+      <p>The path from idea to finished battery is rarely linear. The process requires many iterations. Anders typically begins with a simple hand-drawn sketch to get an overview. From there, a colleague with CAD expertise develops a digital 3D model, which then forms the basis for 3D-printing the first prototype of the battery enclosure.</p>
+      <blockquote>"The prototype is a crucial element, both to give the customer something tangible and visual to respond to, and to test whether the chosen materials are robust enough."<cite>Anders, Project Engineer</cite></blockquote>
+      <p>In one project for a customer in industrial automation, the requirements were particularly demanding: the battery had to remain fully functional and maintain IP67 certification, even after multiple shock loads exceeding 100 G. The early plastic prototypes could not withstand the stress; the material fractured, and components failed. The solution was to completely rethink the internal design and protect the most critical parts. Through multiple iterations involving simulations, 3D-printing, and physical tests, Anders and his team ultimately developed a construction and material combination capable of passing the stringent test requirements.</p>
+
+      <h2>Transparent collaboration with customers</h2>
+      <p>The process of creating a battery system takes time, and patience, also on the customer's side. This is why continuous dialogue and transparency are a vital part of Anders' work. At WS Technicals, it is a top priority to keep customers engaged throughout, so they always know the project's status. As a Senior Project Engineer, Anders frequently visits customers on-site. This provides reassurance and allows questions to be addressed directly. More importantly, it gives him the chance to see the application in real life.</p>
+      <blockquote>"By observing where the battery will be installed and hearing the customer's own reflections, I often gain insights that lead to new perspectives and solutions that would not otherwise have emerged."<cite>Anders, Project Engineer</cite></blockquote>
+      <p>At the core of Anders' role is the ability to recognize and identify the different requirements of a battery system, to accommodate the client as best as possible but also to stand firm in his professional judgement. To have the courage to say: "This cannot be done, but if we do A, B, or C, we can reach a solution that works." It's about finding the paths that ensure the final solution meets every requirement for functionality, safety, certification, and design quality.</p>
+
+    </div>
+  </section>
+
+  <section class="article-cta on-dark">
+    <div class="container article-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
+      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
+</body>
+</html>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>News | WS Technicals</title>
-<meta name="description" content="Engineering perspectives from WS Technicals — how battery systems get built, tested and taken into series production.">
+<meta name="description" content="Explore our latest customer success stories, employee interviews and industry insights from WS Technicals.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css">
@@ -53,7 +53,7 @@ body{ position:relative; background:var(--paper); }
 .news-hero{ position:relative; min-height:52svh; display:flex; align-items:center; overflow:hidden; padding:140px 0 80px; }
 .news-hero-inner{ position:relative; z-index:1; max-width:760px; }
 .news-hero h1{ max-width:14ch; margin:18px 0 24px; font-size:clamp(40px,6vw,64px); }
-.news-hero .lead{ max-width:58ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.news-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
 
 .news-grid-section{ position:relative; z-index:1; padding:0 0 140px; }
 .news-grid{
@@ -87,30 +87,10 @@ body{ position:relative; background:var(--paper); }
   background:linear-gradient(115deg,rgba(15,42,92,.1),transparent 48%,rgba(185,154,114,.05));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
 }
-.news-card-tag{
-  position:absolute;
-  top:16px; left:16px;
-  z-index:1;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  line-height:1;
-  padding:8px 15px;
-  border-radius:999px;
-  background:rgba(6,8,26,.82);
-  box-shadow:0 4px 14px rgba(6,8,26,.28);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  color:#fff;
-  font-family:var(--font-mono);
-  font-weight:600;
-  font-size:11px;
-  letter-spacing:.07em;
-  text-transform:uppercase;
-}
 @media (hover:hover){
   .news-card:hover .news-card-media img{ transform:scale(1.03); filter:saturate(.92) brightness(.92) contrast(1.03); }
 }
+.news-card-eyebrow{ display:block; margin-bottom:8px; color:var(--brass-text); font-family:var(--font-mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; }
 .news-card h3{ margin:0 0 8px; font-family:var(--font-display); font-size:22px; letter-spacing:-.01em; }
 .news-card p{ margin:0; max-width:38ch; color:var(--ink-soft); font-size:15px; line-height:1.6; }
 .news-card-link{ display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-weight:600; font-size:14px; color:var(--blue); }
@@ -151,77 +131,118 @@ body{ position:relative; background:var(--paper); }
     <div class="container news-hero-inner">
       <span class="eyebrow">News</span>
       <h1>Engineering perspectives from inside the work.</h1>
-      <p class="lead">Articles, updates and conversations with the people behind the work — how battery systems actually get built, tested and taken into series production.</p>
+      <p class="lead">Explore our latest customer success stories, employee interviews and industry insights. We are dedicated to sharing our knowledge and experience from the battery industry, while keeping you updated on relevant trends, developments and technologies.</p>
     </div>
   </section>
 
   <section class="news-grid-section">
     <div class="container">
       <div class="news-grid">
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter"></div>
-          <h3>Why projects start with the duty cycle, not the schematic</h3>
-          <p>The first useful drawing of a battery system isn't electrical — it's how the machine actually intends to use power.</p>
-          <a class="news-card-link" href="news-duty-cycle-first.html">Read the article <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="news-card-media"><img src="assets/news/liftra/hero.webp" alt="Liftra's Self-Hoisting Crane climbing a wind turbine tower"></div>
+          <span class="news-card-eyebrow">Success Story</span>
+          <h3>Liftra lifts the future of wind energy</h3>
+          <p>A crane that climbs the wind turbine itself, and the battery systems that made going electric possible.</p>
+          <a class="news-card-link" href="news-liftra.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_0754.webp" alt="Technician testing a battery pack on a charge and discharge rack in the workshop"></div>
-          <h3>Production verification</h3>
-          <p>Every finished pack runs a full charge and discharge cycle before it leaves the floor.</p>
-          <a class="news-card-link" href="interview-production-technician.html">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="news-card-media"><img src="assets/news/soren-norby/hero.jpg" alt="Søren Nørby, Senior Project Engineer at WS Technicals"></div>
+          <span class="news-card-eyebrow">Engineering Perspective</span>
+          <h3>A complex battery design requires a creative mind</h3>
+          <p>For Senior Project Engineer Søren Nørby, the hardest problems are rarely the ones that sound most advanced.</p>
+          <a class="news-card-link" href="news-soren-norby.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1590.webp" alt="Technician inspecting a battery module by hand under workshop lighting"></div>
-          <h3>What changes at the transition to series production</h3>
-          <p>A validated prototype and a repeatable production process are two different engineering problems.</p>
+          <div class="news-card-media"><img src="assets/news/farmdroid/hero.jpg" alt="Aerial view of a FarmDroid solar-powered seeding and weeding robot in a field"></div>
+          <span class="news-card-eyebrow">Success Story</span>
+          <h3>FarmDroid cultivates the future of agriculture</h3>
+          <p>A solar-powered seeding and weeding robot that can eliminate up to 80% of manual hand weeding.</p>
+          <a class="news-card-link" href="news-farmdroid.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_1505.webp" alt="Engineer probing a circuit board with a multimeter"></div>
-          <h3>BMS engineering</h3>
-          <p>Electronics and communication protocols built and tested around the specific application.</p>
-          <a class="news-card-link" href="interview-electronics-engineer.html">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="news-card-media"><img src="assets/news/qingpeng-he/hero.jpg" alt="Qingpeng He, Chief Supply Chain Officer at WS Technicals"></div>
+          <span class="news-card-eyebrow">Engineering Perspective</span>
+          <h3>Danish engineering meets Chinese battery expertise</h3>
+          <p>How WS Technicals bridges Danish engineering and Chinese battery manufacturing.</p>
+          <a class="news-card-link" href="news-qingpeng-he.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1309%20copy.webp" alt="Engineer reviewing a 3D CAD assembly on dual monitors"></div>
-          <h3>From exploded assembly to physical part</h3>
-          <p>A CAD model only proves itself once it's been checked against a part you can actually hold.</p>
+          <div class="news-card-media"><img src="assets/news/cell-contacting-system/hero.jpg" alt="A WS Technicals Cell Contacting System module"></div>
+          <span class="news-card-eyebrow">News</span>
+          <h3>Bringing Cell Contacting System development in-house</h3>
+          <p>A new in-house capability that gives WS Technicals greater control over a critical part of the battery module.</p>
+          <a class="news-card-link" href="news-cell-contacting-system.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_8380.webp" alt="Engineers reviewing an exploded 3D CAD battery assembly on screen"></div>
-          <h3>Design collaboration</h3>
-          <p>Exploded assemblies reviewed together before a single part is ordered.</p>
-          <a class="news-card-link" href="interview-mechanical-design-engineer.html">Read the interview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="news-card-media"><img src="assets/news/linddana/hero.jpg" alt="Hans Anker Holm, CEO of Linddana, with an electric TP woodchipper"></div>
+          <span class="news-card-eyebrow">Success Story</span>
+          <h3>Electric first movers, before the market was ready</h3>
+          <p>Linddana's electric woodchippers are the result of a deliberate decision to lead the way.</p>
+          <a class="news-card-link" href="news-linddana.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/general/_MG_1368%20copy.webp" alt="Technician checking a power electronics enclosure with a handheld RF test instrument"></div>
-          <h3>The last checkpoint before a pack ships</h3>
-          <p>Every finished pack runs a full charge and discharge cycle — the one step that never gets skipped.</p>
+          <div class="news-card-media"><img src="assets/news/peter-bms/hero.jpg" alt="Peter, Electronics Engineer at WS Technicals"></div>
+          <span class="news-card-eyebrow">Engineering Perspective</span>
+          <h3>Electronics at the heart of the battery</h3>
+          <p>Electronics Engineer Peter sits at the intersection of chemistry, mechanics and software.</p>
+          <a class="news-card-link" href="news-peter-bms.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_1337.webp" alt="Close-up of hands wiring a connector inside an open battery enclosure"></div>
-          <h3>Hand assembly</h3>
-          <p>Wiring and connectors built the way the drawing specifies, not the way that's fastest.</p>
+          <div class="news-card-media"><img src="assets/news/variodrive/hero.jpg" alt="Vario Drive electric motion control system"></div>
+          <span class="news-card-eyebrow">Success Story</span>
+          <h3>Vario Drive accelerates electrification</h3>
+          <p>When tradition meets transformation: adapting a motion-control business for an electrified future.</p>
+          <a class="news-card-link" href="news-variodrive.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/products/web/robotic-arm.jpg" alt="Industrial robotic arm powered by a custom battery system"></div>
-          <h3>Engineering across four disciplines, one system</h3>
-          <p>Mechanics, electronics, software and production don't hand off a project in sequence — they hold it together.</p>
+          <div class="news-card-media"><img src="assets/news/ibms15/hero.png" alt="Lithium Balance i-BMS15 battery management system board"></div>
+          <span class="news-card-eyebrow">News</span>
+          <h3>Ensuring safety with i-BMS15</h3>
+          <p>How the i-BMS15 helps AGVs and AMRs meet Performance Level C safety requirements.</p>
+          <a class="news-card-link" href="news-ibms15.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_7904.webp" alt="Engineer comparing a physical cell block against its 3D CAD model on screen"></div>
-          <h3>From CAD to cell block</h3>
-          <p>A model only proves itself once it becomes a physical part you can hold.</p>
+          <div class="news-card-media"><img src="assets/news/anders/hero.jpg" alt="Anders, Project Engineer at WS Technicals"></div>
+          <span class="news-card-eyebrow">Engineering Perspective</span>
+          <h3>Turning complex requirements into solutions</h3>
+          <p>Project Engineer Anders on translating hundreds of customer specifications into one working battery.</p>
+          <a class="news-card-link" href="news-anders.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">News</span><img src="assets/products/web/ugv.jpg" alt="Unmanned ground vehicle powered by a custom battery system"></div>
-          <h3>Built for the application, not the datasheet</h3>
-          <p>From ground robots to maritime power, the application defines the pack long before the cell chemistry does.</p>
+          <div class="news-card-media"><img src="assets/news/anticimex/hero.avif" alt="Anticimex Smart Box electronic rodent trap"></div>
+          <span class="news-card-eyebrow">Success Story</span>
+          <h3>Anticimex fights rodents intelligently, poison-free</h3>
+          <p>The batteries powering an electronic, poison-free rodent trap built for reliability and long service life.</p>
+          <a class="news-card-link" href="news-anticimex.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
         <article class="news-card">
-          <div class="news-card-media"><span class="news-card-tag">Interview</span><img src="assets/general/_MG_8322.webp" alt="Engineer reviewing test data at a workbench surrounded by lab equipment"></div>
-          <h3>Reading the data</h3>
-          <p>Test logs get the same attention as the schematic that produced them.</p>
+          <div class="news-card-media"><img src="assets/news/louis-15-years/hero.jpg" alt="Louis Billesøe Danielsen, CEO and founder of WS Technicals"></div>
+          <span class="news-card-eyebrow">Engineering Perspective</span>
+          <h3>When technology turns into momentum</h3>
+          <p>Fifteen years of lithium batteries at WS Technicals, told by founder and CEO Louis Billesøe Danielsen.</p>
+          <a class="news-card-link" href="news-louis-15-years.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </article>
+
+        <article class="news-card">
+          <div class="news-card-media"><img src="assets/news/noyes/hero.jpg" alt="Top-down render of a NOYESStorage modular automated warehouse system"></div>
+          <span class="news-card-eyebrow">Success Story</span>
+          <h3>NOYES: rethinking automated storage</h3>
+          <p>A modular automated warehouse robot that had to fit tight space constraints without compromising fire safety.</p>
+          <a class="news-card-link" href="news-noyes.html">Read the story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+
       </div>
     </div>
   </section>
@@ -238,6 +259,6 @@ body{ position:relative; background:var(--paper); }
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/scripts/wst-shell.js?v=publish3"></script>
-<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
 </body>
 </html>
