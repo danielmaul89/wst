@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>NOYES: Rethinking Automated Storage | WS Technicals</title>
+<meta name="description" content="NOYES Technologies set out to redefine how smaller warehouses can access automation — WS Technicals supplies the battery system inside the NOYESBot.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.article-hero{ position:relative; padding:140px 0 56px; }
+.article-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.article-hero h1{ max-width:18ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-meta{ display:flex; align-items:center; gap:10px; margin-top:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.article-meta span:not(:last-child)::after{ content:"·"; margin-left:10px; color:var(--line); }
+
+.article-media{ position:relative; z-index:1; margin:0 0 88px; }
+.article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.article-body{ position:relative; z-index:1; padding-bottom:140px; }
+.article-body-inner{ max-width:720px; margin:0 auto; }
+.article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
+.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p:first-of-type{ margin-top:0; }
+.article-body blockquote{ margin:32px 0; padding:4px 0 4px 22px; border-left:2px solid rgba(185,154,114,.55); color:var(--ink); font-family:var(--font-display); font-size:20px; line-height:1.5; letter-spacing:-.01em; }
+.article-body blockquote cite{ display:block; margin-top:10px; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; font-style:normal; letter-spacing:.04em; text-transform:uppercase; }
+
+.article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.article-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .article-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .article-hero{ padding-top:112px; }
+  .article-media img{ max-height:320px; }
+  .article-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="article-hero">
+    <div class="container article-hero-inner">
+      <h1>NOYES Technologies: rethinking automated storage for smaller warehouses</h1>
+      <p class="lead">NOYES Technologies has set out to redefine how smaller warehouses can access the benefits of automation without requiring major infrastructure investments.</p>
+      <div class="article-meta">
+        <span>Success Story</span>
+        <span>NOYES Technologies</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="article-media">
+      <img src="assets/news/noyes/hero.jpg" alt="Top-down render of a NOYESStorage modular automated warehouse system">
+    </figure>
+  </div>
+
+  <section class="article-body">
+    <div class="article-body-inner">
+
+      <p>With the NOYESStorage system, the company provides a highly flexible and modular automated warehouse solution that can be scaled from as little as 10 square meters up to thousands of storage locations. This approach enables facilities that would traditionally fall below the minimum capacity threshold to embrace automation and unlock advantages such as increased speed, efficiency gains, reduced operational costs, and significantly lower manual workloads.</p>
+      <blockquote>"The NOYESStorage is a modular automated warehouse which can be used as low as 10 m² to multiple thousand storage places, enabling 2.5 times more storage capacity with faster picking."<cite>NOYES Technologies</cite></blockquote>
+      <p>Unlike many conventional automated racking solutions, which often rely on complex and potentially fragile shelving systems requiring continuous support, NOYES has chosen a different strategy. The company has opted for static racking combined with a highly versatile, dynamic, and intelligent robot. This design philosophy not only improves overall system reliability but also ensures that any support or maintenance needs can be addressed quickly and efficiently.</p>
+      <p>The NOYESBot itself is engineered to deliver impressive performance: with a load capacity of 40 kilograms and an exceptionally low weight of just 15 kilograms, each robot can move and place goods with speed and precision across the storage area. This capability allows customers to optimize their floor space while improving throughput and reducing reliance on manual handling.</p>
+      <p>For businesses considering automation, one of the most compelling aspects of the NOYES approach is the lower upfront investment. By removing the need to relocate or construct larger facilities to meet the technical requirements of automated systems, NOYES empowers clients to scale operations at their own pace and budget.</p>
+
+      <h2>A battery built for tight spaces and fire safety</h2>
+      <p>However, developing a robot capable of fulfilling this vision brought a series of highly specific technical challenges, particularly regarding the energy source powering the NOYESBot. The battery system needed to accommodate tight space constraints inside the compact robot design while also satisfying stringent safety standards, including fire safety regulations applicable to automated warehouses.</p>
+      <blockquote>"Tight space constraint inside the robot while retaining fire safety, fast charging and long lifetime of the battery with few service required."<cite>NOYES Technologies, on choosing WS Technicals as their battery supplier</cite></blockquote>
+      <p>Beyond the hardware itself, NOYES also valued the engineering collaboration and the support tools offered by WS Technicals during the integration process.</p>
+      <blockquote>"Through good engineering support and software tools provided with the battery, it was possible to fulfill our strict requirements."<cite>NOYES Technologies</cite></blockquote>
+      <p>By combining innovative design, a clear focus on customer needs, and carefully selected partners such as WS Technicals, NOYES Technologies is paving the way for a new generation of scalable, automated warehouse solutions, bringing the efficiency of large-scale logistics within reach for operations of any size.</p>
+
+    </div>
+  </section>
+
+  <section class="article-cta on-dark">
+    <div class="container article-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
+      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
+</body>
+</html>

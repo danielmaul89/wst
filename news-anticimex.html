@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Why Projects Start With the Duty Cycle | WS Technicals</title>
-<meta name="description" content="The first useful drawing of a battery system isn't electrical — it's how the machine actually intends to use power.">
+<title>Anticimex Fights Rodents Intelligently, Poison-Free | WS Technicals</title>
+<meta name="description" content="WS Technicals supplies the lithium batteries powering the Anticimex Smart Box, an electronic, poison-free rodent trap.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css">
@@ -47,9 +47,11 @@ body{ position:relative; background:var(--paper); }
 @media(max-width:900px){ .ambient{ height:760px; } }
 
 .article-hero{ position:relative; padding:140px 0 56px; }
-.article-hero-inner{ position:relative; z-index:1; max-width:720px; }
-.article-hero h1{ max-width:16ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
-.article-hero .lead{ max-width:58ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.article-hero h1{ max-width:18ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-meta{ display:flex; align-items:center; gap:10px; margin-top:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.article-meta span:not(:last-child)::after{ content:"·"; margin-left:10px; color:var(--line); }
 
 .article-media{ position:relative; z-index:1; margin:0 0 88px; }
 .article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
@@ -59,10 +61,6 @@ body{ position:relative; background:var(--paper); }
 .article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
 .article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
 .article-body p:first-of-type{ margin-top:0; }
-
-.article-inline-media{ margin:56px 0; }
-.article-inline-media img{ display:block; width:100%; max-height:440px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
-.article-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
 
 .article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
 .article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
@@ -76,8 +74,7 @@ body{ position:relative; background:var(--paper); }
 }
 @media(max-width:560px){
   .article-hero{ padding-top:112px; }
-  .article-media img,
-  .article-inline-media img{ max-height:320px; }
+  .article-media img{ max-height:320px; }
   .article-cta h2{ font-size:36px; }
 }
 
@@ -95,45 +92,41 @@ body{ position:relative; background:var(--paper); }
 <main>
   <section class="article-hero">
     <div class="container article-hero-inner">
-      <h1>Why projects start with the duty cycle, not the schematic.</h1>
-      <p class="lead">The first useful drawing of a battery system isn't electrical. It's a description of how the machine actually intends to use power — and it decides more of the final design than any datasheet does.</p>
+      <h1>Anticimex fights rodents intelligently and poison-free</h1>
+      <p class="lead">At WS Technicals, we are glad to support Anticimex in their work with intelligent and more sustainable pest control solutions.</p>
+      <div class="article-meta">
+        <span>Success Story</span>
+        <span>Anticimex</span>
+      </div>
     </div>
   </section>
 
   <div class="container">
     <figure class="article-media">
-      <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
+      <img src="assets/news/anticimex/hero.avif" alt="Anticimex Smart Box electronic rodent trap">
     </figure>
   </div>
 
   <section class="article-body">
     <div class="article-body-inner">
 
-      <p>It's tempting to think a battery project begins with a cell. Pick the right chemistry, size the pack, wire up a BMS, done. In practice, none of those decisions mean anything until one question has an answer: what does this machine actually do with power, second by second, across a real duty cycle?</p>
+      <p>Anticimex is one of the world's leading companies within pest control and prevention, and they've actually been at it since 1934. Back then, the company started as a family business joining forces in the fight against bed bugs. In fact, the name Anticimex literally means "against bed bugs" in Latin.</p>
+      <p>Today, Anticimex works proactively with prevention, modern technology, and effective solutions against all kinds of pests. For Anticimex, pest control is not only about solving an immediate problem, it's also about protecting people, the environment, and surrounding ecosystems through a smarter and more preventive approach.</p>
 
-      <h2>The application writes the spec</h2>
-      <p>A drone pulls a short, extreme peak on takeoff and then settles into a steady, moderate draw. A warehouse robot cycles between idle, acceleration and regenerative braking dozens of times an hour. A backup power system sits at rest for months and then has to deliver everything at once, on demand. Three completely different batteries — not because the chemistry differs, but because the load profile does.</p>
-      <p>Sizing a pack around a nameplate power rating instead of the actual duty cycle is one of the most common ways a project gets more expensive later. Oversized packs cost weight and money; undersized ones fail quietly, at the exact moment the application needed the margin.</p>
+      <h2>An electronic, poison-free trap</h2>
+      <p>And this is where WS Technicals comes into the picture. One example from Anticimex's extensive portfolio of pest control solutions is the Smart Box, an electronic rodent trap designed to eliminate rats and mice without the use of poison. When a rodent enters the trap, it's instantly eliminated using electricity, after which the trap automatically resets and prepares for the next capture. At the same time, notifications are sent directly to Anticimex's monitoring system, allowing activity to be registered and action to be taken quickly.</p>
+      <p>This battery-powered and poison-free approach eliminates the need for rodenticides and helps reduce the risk of harming other animals and wildlife. At the same time, the solution supports a more targeted and preventive pest control strategy, where data and digital monitoring play a central role.</p>
 
-      <h2>Where the number actually comes from</h2>
-      <p>The duty cycle isn't guessed — it's measured or modelled from how the machine is used in the field: peak current draw, how long that peak lasts, ambient temperature range, charge behaviour, and what a safe failure mode looks like if the pack is ever pushed outside its limits. That data shapes everything downstream: cell selection, thermal design, the balancing strategy in the BMS, even the connector rating.</p>
-      <p>This is also why the same conversation happens whether the application is a piece of heavy machinery or a small mobile robot. The questions don't change — only the answers do.</p>
-
-      <figure class="article-inline-media">
-        <img src="assets/general/_MG_1505.webp" alt="Engineer probing a circuit board with a multimeter">
-        <figcaption>Bench measurements get compared against the modelled duty cycle, not just the schematic.</figcaption>
-      </figure>
-
-      <h2>The schematic comes second</h2>
-      <p>Once the duty cycle is understood, the electronics follow from it rather than the other way around. A BMS built around an assumed, generic load profile can pass every bench test and still misbehave in the field, because the field never matches the assumption. A BMS built around the application's actual duty cycle is validated against the conditions it will really see.</p>
-      <p>That ordering — application first, electronics second — is a small discipline with a large effect. It's the difference between a battery that happens to work, and a system that was engineered to.</p>
+      <h2>Batteries built for stability and long service life</h2>
+      <p>WS Technicals supplies the lithium batteries used in the Anticimex Smart Box. The batteries are developed with a strong focus on stability and long service life, ensuring reliable operation over extended periods of time. This is an important part of a solution that needs to remain active, dependable, and ready to respond whenever activity occurs.</p>
+      <p>We're pleased to deliver a small but quite important component to Anticimex's vision for the future of pest control: intelligent, poison-free, and focused on both prevention and environmental responsibility.</p>
 
     </div>
   </section>
 
   <section class="article-cta on-dark">
     <div class="container article-cta-inner">
-      <div><h2>Read more from WS Technicals.</h2><p>More engineering perspectives on how battery systems get built, tested and taken into series production.</p></div>
+      <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
       <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
     </div>
   </section>
@@ -143,6 +136,6 @@ body{ position:relative; background:var(--paper); }
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/scripts/wst-shell.js?v=publish3"></script>
-<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
 </body>
 </html>

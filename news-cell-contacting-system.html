@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Bringing Cell Contacting System Development In-House | WS Technicals</title>
+<meta name="description" content="WS Technicals now develops Cell Contacting Systems (CCS) in-house, giving greater control over a critical part of the battery module.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.article-hero{ position:relative; padding:140px 0 56px; }
+.article-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.article-hero h1{ max-width:18ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-meta{ display:flex; align-items:center; gap:10px; margin-top:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.article-meta span:not(:last-child)::after{ content:"·"; margin-left:10px; color:var(--line); }
+
+.article-media{ position:relative; z-index:1; margin:0 0 88px; }
+.article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.article-body{ position:relative; z-index:1; padding-bottom:140px; }
+.article-body-inner{ max-width:720px; margin:0 auto; }
+.article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
+.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p:first-of-type{ margin-top:0; }
+
+.article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.article-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .article-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .article-hero{ padding-top:112px; }
+  .article-media img{ max-height:320px; }
+  .article-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="article-hero">
+    <div class="container article-hero-inner">
+      <h1>Bringing Cell Contacting System development in-house</h1>
+      <p class="lead">In advanced lithium battery systems, performance and reliability are shaped not only by the cells themselves, but also by the way they are connected, monitored, and integrated into the final battery pack.</p>
+      <div class="article-meta">
+        <span>News</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="article-media">
+      <img src="assets/news/cell-contacting-system/hero.jpg" alt="A WS Technicals Cell Contacting System (CCS) module">
+    </figure>
+  </div>
+
+  <section class="article-body">
+    <div class="article-body-inner">
+
+      <p>One of the components that plays an important role in this process is the Cell Contacting System, often referred to as CCS. A Cell Contacting System is a technical solution used inside a battery module to connect the cells and gather key measurement signals, such as voltage and temperature. In simple terms, it helps create the electrical connections between the cells while also making it possible for the Battery Management System to monitor what is happening inside the module.</p>
+      <p>Traditionally, this can involve several separate components: individual busbars, cable sets, connectors, sensors, and other parts that must be handled and mounted during production. A CCS brings these functions together in one more integrated and controlled component. Instead of working with many loose parts, the production team can mount a more complete system directly onto the cell group. Once positioned, the busbars can be welded to the cells, and the module is much closer to being ready for further integration.</p>
+      <p>For battery production, this has several important advantages.</p>
+      <p>First, a CCS can make the assembly process more efficient. By reducing the number of separate components that need to be handled, positioned, and connected manually, the production flow becomes simpler and more streamlined. This can help reduce complexity on the production line and support a more consistent way of building battery modules.</p>
+      <p>Second, it can improve quality. In battery systems, precision matters. Each connection must be placed correctly, and measurement points for voltage and temperature must be reliable. When these elements are integrated into one well-designed component, there is less variation from module to module. This creates a more repeatable production process and helps ensure that each module is assembled in the same controlled way.</p>
+      <p>Third, a CCS can support a more compact and clean module design. By combining electrical connections and measurement interfaces into one system, the internal layout of the battery module can be optimized. This can reduce unnecessary wiring, improve space utilization, and make the overall design easier to manage during both production and later integration into the full battery pack.</p>
+
+      <h2>Greater control over a critical part of the module</h2>
+      <p>For WS Technicals, the ability to develop Cell Contacting Systems in-house is an important step. It gives us greater control over a critical part of the battery module and allows us to design the CCS around the specific needs of each project.</p>
+      <p>Because the CCS is closely connected to the battery's mechanical layout, cell configuration, BMS integration, and production method, it should not be treated as an isolated standard component. When we are able to develop it ourselves, we can make sure that it fits the full battery design from the beginning. This creates a stronger link between engineering, production, and the final customer application.</p>
+      <p>It also allows us to respond more quickly and precisely during the development process. If a project requires a specific module layout, special measurement points, optimized welding access, or a more compact design, these requirements can be considered directly in the CCS design. This helps reduce compromises and supports a more tailored battery solution.</p>
+      <p>In-house CCS development also strengthens our ability to design for production. A battery pack must not only perform well on paper; it must also be possible to manufacture efficiently and consistently. By developing the CCS ourselves, we can consider production requirements early in the engineering phase. This includes assembly flow, quality control, welding processes, handling, and error prevention. The result is a design that is not only technically suitable, but also more practical and robust in production.</p>
+
+      <h2>What it means for our customers</h2>
+      <p>For customers, this means a more integrated development process. Instead of relying only on external standard components, WS Technicals can take responsibility for a larger part of the module design. This supports better alignment between the battery pack, the BMS, the module construction, and the production setup.</p>
+      <p>Ultimately, a Cell Contacting System is a small part of the battery when seen from the outside, but it plays a significant role inside the module. It helps connect, measure, simplify, and control. By bringing this capability in-house, WS Technicals strengthens its ability to deliver battery solutions where design, quality, and production are considered as one connected process.</p>
+      <p>For our customers, that means more flexibility, better integration, and a battery solution designed not only to meet technical requirements, but also to be built with consistency, reliability, and long-term quality in mind.</p>
+
+    </div>
+  </section>
+
+  <section class="article-cta on-dark">
+    <div class="container article-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
+      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
+</body>
+</html>

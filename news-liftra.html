@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Liftra Lifts the Future of Wind Energy | WS Technicals</title>
+<meta name="description" content="Liftra's Self-Hoisting Crane climbs the wind turbine itself — and WS Technicals supplies the battery systems that power its electrified lifting solutions.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); }
+
+.ambient{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 52%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(15,42,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,42,92,.04) 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(90deg,transparent,#000 52%,transparent);
+}
+@media(max-width:900px){ .ambient{ height:760px; } }
+
+.article-hero{ position:relative; padding:140px 0 56px; }
+.article-hero-inner{ position:relative; z-index:1; max-width:760px; }
+.article-hero h1{ max-width:18ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.article-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.article-meta{ display:flex; align-items:center; gap:10px; margin-top:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+.article-meta span:not(:last-child)::after{ content:"·"; margin-left:10px; color:var(--line); }
+
+.article-media{ position:relative; z-index:1; margin:0 0 88px; }
+.article-media img{ display:block; width:100%; max-height:560px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+
+.article-body{ position:relative; z-index:1; padding-bottom:140px; }
+.article-body-inner{ max-width:720px; margin:0 auto; }
+.article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
+.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p:first-of-type{ margin-top:0; }
+.article-body blockquote{ margin:32px 0; padding:4px 0 4px 22px; border-left:2px solid rgba(185,154,114,.55); color:var(--ink); font-family:var(--font-display); font-size:20px; line-height:1.5; letter-spacing:-.01em; }
+.article-body blockquote cite{ display:block; margin-top:10px; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; font-style:normal; letter-spacing:.04em; text-transform:uppercase; }
+.article-body .about-block{ margin-top:56px; padding-top:28px; border-top:1px solid var(--line); }
+.article-body .about-block p{ font-size:14px; color:var(--ink-faint); line-height:1.7; }
+
+.article-inline-media{ margin:56px 0; }
+.article-inline-media img{ display:block; width:100%; max-height:440px; object-fit:cover; border-radius:var(--r-lg); box-shadow:0 2px 12px rgba(6,8,26,.07); }
+.article-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
+
+.article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
+.article-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
+  .article-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .article-hero{ padding-top:112px; }
+  .article-media img,
+  .article-inline-media img{ max-height:320px; }
+  .article-cta h2{ font-size:36px; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="article-hero">
+    <div class="container article-hero-inner">
+      <h1>Liftra lifts the future of wind energy with electrified innovation and strong partnerships</h1>
+      <p class="lead">Liftra is driven by a clear ambition: to help shape a more sustainable future. They do so through advanced engineering and strong strategic partnerships, including LEAP Solutions, a Danish startup specializing in complex energy solutions. WS Technicals is proud to supply the battery systems that power Liftra's electrified lifting equipment.</p>
+      <div class="article-meta">
+        <span>Success Story</span>
+        <span>Liftra</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <figure class="article-media">
+      <img src="assets/news/liftra/hero.webp" alt="Liftra's Self-Hoisting Crane climbing a wind turbine tower above open farmland">
+    </figure>
+  </div>
+
+  <section class="article-body">
+    <div class="article-body-inner">
+
+      <p>Together, this collaboration highlights how cutting-edge engineering, electrification, and close partnerships can redefine what is possible – not only within the wind industry, but across industries as a whole.</p>
+
+      <h2>A crane that climbs, and changes the rules</h2>
+      <p>At the heart of Liftra's innovation is the Self-Hoisting Crane, a solution that severely challenges conventional thinking about heavy lifting. Instead of relying on massive ground-based cranes, Liftra has developed a system that climbs the wind turbine itself.</p>
+      <blockquote>"We were the first in the world to develop a crane that climbs up the wind turbine and replaces components. Back then, many people didn't believe it would work – but today we have nearly 100 cranes operating worldwide."<cite>Jakob Brix Hansen, Product Group Manager of Self Hoisting Cranes, Liftra</cite></blockquote>
+      <p>The crane is transported in a standard container, after which its interface is assembled inside the turbine. It is then hoisted to the nacelle using smaller lifting tools, where it becomes capable of handling some of the most demanding operations in the industry.</p>
+      <blockquote>"We can lift up to 78 ton, including full rotors with blades, and replace major components like gearboxes and main bearings."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>This capability is not only technically impressive, but it also fundamentally changes how maintenance and installation tasks can be performed.</p>
+
+      <figure class="article-inline-media">
+        <img src="assets/news/liftra/inline-1.jpg" alt="Liftra's Self-Hoisting Crane lifting equipment inside a wind turbine tower">
+      </figure>
+
+      <h2>Solving real-world challenges in wind energy</h2>
+      <p>Wind turbines are growing taller and more powerful, and with that comes new logistical challenges. Traditional cranes require extensive transport, setup, and ground space. In some cases, up to 30–40 trucks are needed just to mobilize a single crane. Liftra's solution offers a radically different approach.</p>
+      <blockquote>"Our system becomes especially competitive on taller towers. Where traditional cranes become extremely large and expensive, our crane can lift the same weight regardless of height. It just needs more wire."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>In practice, this means wind turbine operators can carry out complex operations more efficiently, and with fewer environmental and logistical constraints, through lower costs and faster deployment, minimal ground impact and reduced site preparation, and greater flexibility in remote or difficult locations.</p>
+
+      <h2>Electrification as a competitive advantage</h2>
+      <p>While the mechanical innovation is, to say the least, remarkable, one of the most important aspects of Liftra's solution is its transition to battery-powered operation. Traditionally, large cranes rely on diesel generators. Liftra initially followed the same path but quickly encountered limitations.</p>
+      <blockquote>"We were very restricted by weight. The generator became a problem, so we started looking at batteries, and it turned out to be a win-win."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>Today, all Liftra's products are fully electrified, including solutions like the innovative Installation Crane, which can install turbines with hub heights of up to 250 meters and lift components weighing up to 120 tons, while significantly reducing both mobilization and on-site impact.</p>
+      <blockquote>"Since electrifying our production, we haven't looked back. Batteries give us higher energy density, lower weight, and a more sustainable solution."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>Liftra is a great example of the fact that electrification isn't just a sustainability initiative. It's also a performance advantage. In fact, the battery-powered system enables design possibilities that would not be feasible with traditional fuel-based systems.</p>
+
+      <h2>Engineering complexity requires the right partners</h2>
+      <p>Developing a system like the Self-Hoisting Crane is far from simple. One of the biggest challenges is balancing strength and weight.</p>
+      <blockquote>"We are limited by what a container can weigh. So we constantly optimize, removing unnecessary weight while maintaining strength. It's a very complex engineering process."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>This is where partnerships become critical. LEAP Solutions entered the project as a technical advisor, helping Liftra navigate the complexity of battery systems and energy integration.</p>
+      <blockquote>"Liftra wanted to move away from assembling batteries themselves. Our role was to help define the right solution – from initial evaluations of system designs, to selecting the right suppliers."<cite>Simon Bork Kristensen, Project Engineer, LEAP Solutions</cite></blockquote>
+      <p>The process involved evaluating multiple vendors across Europe before selecting WS Technicals.</p>
+      <blockquote>"We looked at several options, but WST offered the most complete solution. That was a key factor."<cite>Simon Bork Kristensen, LEAP Solutions</cite></blockquote>
+
+      <h2>From complexity to plug-and-play</h2>
+      <p>Before the collaboration, Liftra's battery setup involved multiple suppliers across different countries, creating logistical challenges and inefficiencies. With WST, the solution became significantly simpler.</p>
+      <blockquote>"Previously, we sourced components from different places and assembled them ourselves. Now we receive a complete plug-and-play solution. It's both easier and more efficient for us."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>The batteries supplied by WS Technicals are high-voltage systems with integrated monitoring and heating, designed specifically for demanding industrial applications like wind turbine installation. As part of this complete solution, the systems include an integrated Battery Management System (BMS) delivered by Danish Lithium Balance, of which WS Technicals is a co-owner, ensuring reliable performance and seamless system integration.</p>
+
+      <h2>The value of flexibility and strong relationships</h2>
+      <p>Beyond the technology itself, the collaboration highlights the strength of partnerships rooted in committed people and a flexible approach, enabling solutions that function cohesively from concept to execution. Throughout the project, both Liftra and LEAP Solutions emphasize how crucial responsiveness and collaboration have been.</p>
+      <blockquote>"We suddenly couldn't source key components in time, and it put our production at risk. WST stepped in and helped us, even redirecting components from their own internal production. That level of flexibility makes a huge difference. They don't feel like just a supplier – they feel like a partner."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>This mindset, where collaboration goes beyond transactions, is essential in complex engineering projects where challenges are inevitable.</p>
+
+      <h2>Driving a more sustainable wind industry</h2>
+      <p>Sustainability is deeply embedded in Liftra's work, not as a standalone goal, but as an integral part of the wind energy ecosystem.</p>
+      <blockquote>"It doesn't make sense to install sustainable wind turbines using non-sustainable equipment. We want to support the entire value chain in becoming more climate-friendly."<cite>Jakob Brix Hansen, Liftra</cite></blockquote>
+      <p>With more than 3,000+ development projects completed and over 1,000 major component replacements carried out, Liftra has already made a significant impact on the industry, and the company continues to grow.</p>
+
+      <h2>A glimpse into the future of heavy lifting</h2>
+      <p>The collaboration between Liftra, LEAP Solutions, and WS Technicals demonstrates how electrification, engineering excellence, and strong partnerships can unlock entirely new possibilities. From cranes that climb wind turbines to battery systems that outperform traditional generators, the case shows that electric solutions are not just viable – more and more often they are actually superior. And as the industry continues to evolve, one thing is clear: the future of heavy lifting is not only powerful – it is electric.</p>
+
+      <div class="about-block">
+        <p><strong>About Liftra:</strong> Liftra is a global corporation recognized by the international wind turbine industry as a specialist within lifting and transportation solutions. Liftra designs, engineers, manufactures, and delivers tailor-made solutions to enable more sustainable, time-efficient, and cost-effective wind turbine installation and maintenance for onshore and offshore locations. Since 2003, Liftra has brought high quality equipment and services to the wind energy sector, striving to push boundaries and set new standards that can lower the cost of green energy.</p>
+        <p><strong>About LEAP Solutions:</strong> LEAP Solutions is a Danish engineering consultancy specializing in complex energy solutions. With expertise spanning energy engineering, automation, control systems, and industrial software, LEAP supports clients across the entire project lifecycle, from concept and design to implementation and commissioning, working closely with partners to develop efficient, reliable, and future-ready solutions within emerging energy technologies such as battery systems, PtX, and green energy infrastructure.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="article-cta on-dark">
+    <div class="container article-cta-inner">
+      <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
+      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
+</body>
+</html>
