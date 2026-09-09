@@ -10,7 +10,7 @@
   if (!canvas || !stage || !scrollTrack || !window.THREE || !window.THREE.FBXLoader) return;
 
   var THREE = window.THREE;
-  var MODEL_URL = 'assets/models/sl02.fbx';
+  var MODEL_URL = 'assets/models/c4e.fbx';
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var renderer;
@@ -144,16 +144,26 @@
           }
           worldDir.normalize();
           var localDir = worldDirToLocal(child, worldDir);
+          /* Clamp per-part travel to the model's own scale. Without this,
+             a large enclosing part (e.g. an outer casing shell) whose
+             centroid sits close to the overall center — but whose surface
+             is huge — could swing an oversized panel right up against the
+             camera mid-scroll, filling the frame at near-clip range. */
+          var dist = Math.min(Math.max(baseDist, sphere.radius * 0.1) * 1.9, sphere.radius * 1.1);
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
             localDir: localDir,
-            dist: Math.max(baseDist, sphere.radius * 0.1) * 1.9
+            dist: dist
           });
           index++;
         });
 
-        fitCameraToSphere(sphere.radius, overallCenter);
+        var maxReach = sphere.radius;
+        for (var pi = 0; pi < parts.length; pi++) {
+          maxReach = Math.max(maxReach, sphere.radius + parts[pi].dist);
+        }
+        fitCameraToSphere(maxReach, overallCenter);
         applyExplode(1);
         hideStatus();
         modelReady = true;
