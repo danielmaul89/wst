@@ -3,10 +3,11 @@
 
   var canvas = document.getElementById('productViewerCanvas');
   var stage = document.getElementById('viewerStage');
+  var scrollTrack = document.getElementById('viewerScroll');
   var statusEl = document.getElementById('viewerStatus');
   var statusText = document.getElementById('viewerStatusText');
-  var replayBtn = document.getElementById('viewerReplay');
-  if (!canvas || !stage || !window.THREE || !window.THREE.FBXLoader) return;
+  var scrollCopy = document.getElementById('viewerScrollCopy');
+  if (!canvas || !stage || !scrollTrack || !window.THREE || !window.THREE.FBXLoader) return;
 
   var THREE = window.THREE;
   var MODEL_URL = 'assets/models/sl02.fbx';
@@ -56,8 +57,6 @@
     window.addEventListener('resize', resize);
   }
 
-  var cameraDistance = null;
-
   function fitCameraToSphere(radius, center) {
     var fov = camera.fov * (Math.PI / 180);
     var dist = (radius / Math.sin(fov / 2)) * 1.5;
@@ -66,11 +65,6 @@
     camera.near = Math.max(0.01, dist / 100);
     camera.far = dist * 20;
     camera.updateProjectionMatrix();
-    /* Captured here (not lazily on the first render frame) — frames render
-       before the async model load resolves, so deriving this from
-       camera.position.length() on "first frame seen" would lock onto the
-       camera's pre-load default position (the origin) instead. */
-    cameraDistance = camera.position.length();
   }
 
   /* Convert a world-space direction into the local space of a mesh's
@@ -83,21 +77,17 @@
   }
 
   var parts = [];
-  var explodeT = 1;
-  var anim = null;
-
-  function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
+  var modelReady = false;
+  var explodeCurrent = 1; // 1 = fully separated, 0 = fully combined
+  var ROT_Y_START = -0.55;
+  var ROT_Y_END = 0.32;
+  var ROT_X = -0.1;
 
   function applyExplode(t) {
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
       p.mesh.position.copy(p.basePos).addScaledVector(p.localDir, p.dist * t);
     }
-  }
-
-  function startAnimation(from, to, duration) {
-    anim = { from: from, to: to, start: performance.now(), duration: duration };
-    if (replayBtn) replayBtn.classList.add('is-animating');
   }
 
   function hideStatus() {
@@ -164,10 +154,9 @@
         });
 
         fitCameraToSphere(sphere.radius, overallCenter);
-        applyExplode(reduceMotion ? 0 : 1);
+        applyExplode(1);
         hideStatus();
-
-        if (!reduceMotion) startAnimation(1, 0, 2000);
+        modelReady = true;
       } catch (setupError) {
         showError('The 3D model could not be displayed (' + setupError.message + ')');
       }
@@ -183,81 +172,39 @@
     }
   );
 
-  if (replayBtn) {
-    replayBtn.addEventListener('click', function () {
-      if (!parts.length) return;
-      applyExplode(1);
-      startAnimation(1, 0, 1600);
-    });
+  /* Scroll progress through the tall track (0 at the top of the track,
+     1 once it has fully scrolled past, while the stage stays pinned). */
+  function getScrollProgress() {
+    var rect = scrollTrack.getBoundingClientRect();
+    var travel = rect.height - window.innerHeight;
+    if (travel <= 0) return 1;
+    return Math.min(1, Math.max(0, -rect.top / travel));
   }
-
-  /* Pointer drag to orbit, matching the pattern used by wst-globe-webgl.js */
-  var dragging = false;
-  var lastX = 0, lastY = 0;
-  var velocityX = 0, velocityY = 0;
-  var rotY = 0.35, rotX = -0.12;
-
-  stage.addEventListener('pointerdown', function (event) {
-    dragging = true;
-    lastX = event.clientX;
-    lastY = event.clientY;
-    stage.setPointerCapture(event.pointerId);
-  });
-  stage.addEventListener('pointermove', function (event) {
-    if (!dragging) return;
-    var dx = event.clientX - lastX;
-    var dy = event.clientY - lastY;
-    lastX = event.clientX;
-    lastY = event.clientY;
-    velocityX = dx * 0.005;
-    velocityY = dy * 0.005;
-    rotY += velocityX;
-    rotX = Math.max(-0.9, Math.min(0.9, rotX + velocityY));
-  });
-  function releasePointer(event) {
-    dragging = false;
-    if (event && stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
-  }
-  stage.addEventListener('pointerup', releasePointer);
-  stage.addEventListener('pointercancel', releasePointer);
-
-  var zoom = 1;
-  stage.addEventListener('wheel', function (event) {
-    event.preventDefault();
-    zoom = Math.max(0.55, Math.min(2.2, zoom + event.deltaY * 0.0012));
-  }, { passive: false });
 
   var visible = true;
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; }, { rootMargin: '160px 0px' }).observe(stage);
+    new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; }, { rootMargin: '200px 0px' }).observe(scrollTrack);
   }
 
   function render() {
     requestAnimationFrame(render);
     if (!visible) return;
 
-    if (anim) {
-      var now = performance.now();
-      var t = Math.min(1, (now - anim.start) / anim.duration);
-      var eased = easeOutCubic(t);
-      applyExplode(anim.from + (anim.to - anim.from) * eased);
-      if (t >= 1) {
-        anim = null;
-        if (replayBtn) replayBtn.classList.remove('is-animating');
-      }
+    var progress = getScrollProgress();
+
+    if (scrollCopy) {
+      var hintOpacity = 1 - Math.min(1, progress / 0.12);
+      scrollCopy.style.opacity = hintOpacity.toFixed(2);
+      scrollCopy.style.pointerEvents = hintOpacity > 0.05 ? 'auto' : 'none';
     }
 
-    if (!dragging && !reduceMotion) {
-      rotY += 0.0016 + velocityX;
-      velocityX *= 0.94;
-      velocityY *= 0.94;
-    }
-    group.rotation.y = rotY;
-    group.rotation.x = rotX;
+    if (modelReady) {
+      var target = 1 - progress;
+      explodeCurrent += (target - explodeCurrent) * (reduceMotion ? 1 : 0.14);
+      applyExplode(explodeCurrent);
 
-    if (cameraDistance !== null) {
-      var dir = camera.position.clone().normalize();
-      camera.position.copy(dir.multiplyScalar(cameraDistance * zoom));
+      group.rotation.y = ROT_Y_START + (ROT_Y_END - ROT_Y_START) * progress;
+      group.rotation.x = ROT_X;
     }
 
     renderer.render(scene, camera);
