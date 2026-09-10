@@ -61,13 +61,31 @@
       window.addEventListener('resize', resize);
     }
 
-    function fitCameraToSphere(radius, center) {
+    /* A fixed viewing direction, not a fixed camera position — distance
+       along it is animated with the explode progress (see render()), so
+       the combined result doesn't sit small in a frame sized for the
+       widest (exploded) spread. */
+    var VIEW_DIR = new THREE.Vector3(0.18, 0.32, 0.92).normalize();
+    var camCenter = new THREE.Vector3();
+    var distExploded = 1;
+    var distCombined = 1;
+
+    function distanceForRadius(radius, margin) {
       var fov = camera.fov * (Math.PI / 180);
-      var dist = (radius / Math.sin(fov / 2)) * 1.5;
-      camera.position.set(center.x + dist * 0.18, center.y + radius * 0.32, center.z + dist * 0.92);
-      camera.lookAt(center);
-      camera.near = Math.max(0.01, dist / 100);
-      camera.far = dist * 20;
+      return (radius / Math.sin(fov / 2)) * margin;
+    }
+
+    function setCameraTargets(explodedRadius, combinedRadius, center) {
+      camCenter.copy(center);
+      distExploded = distanceForRadius(explodedRadius, 1.15);
+      /* Tighter margin for the assembled result — this is the payoff of
+         the scroll interaction, so it should read as a substantial
+         product shot rather than a small object with a lot of dead
+         space around it. 1.05 is a near-exact vertical fit (checked
+         against the actual on-screen fraction, not just assumed). */
+      distCombined = distanceForRadius(combinedRadius, 1.05);
+      camera.near = Math.max(0.01, distCombined / 100);
+      camera.far = distExploded * 20;
       camera.updateProjectionMatrix();
     }
 
@@ -158,7 +176,7 @@
                before the sticky stage had settled) when the last resize
                ran, and camera framing needs the real aspect ratio. */
             resize();
-            fitCameraToSphere(maxReach, overallCenter);
+            setCameraTargets(maxReach, sphere.radius, overallCenter);
             applyExplode(1);
             hideStatus();
             modelReady = true;
@@ -218,6 +236,13 @@
         applyExplode(explodeCurrent);
         group.rotation.y = ROT_Y_START + (ROT_Y_END - ROT_Y_START) * progress;
         group.rotation.x = ROT_X;
+
+        /* Dolly in as the parts come together — a fixed camera sized to
+           fit the exploded spread left the assembled result looking
+           small by comparison. */
+        var camDist = distCombined + (distExploded - distCombined) * explodeCurrent;
+        camera.position.copy(camCenter).addScaledVector(VIEW_DIR, camDist);
+        camera.lookAt(camCenter);
       }
 
       renderer.render(scene, camera);

@@ -41,11 +41,14 @@
   rim.position.set(0, 4, -8);
   scene.add(rim);
 
-  var width = 1, height = 1;
+  var lastWidth = 0, lastHeight = 0;
   function resize() {
     var rect = stage.getBoundingClientRect();
-    width = Math.max(1, rect.width);
-    height = Math.max(1, rect.height);
+    var width = Math.max(1, Math.round(rect.width));
+    var height = Math.max(1, Math.round(rect.height));
+    if (width === lastWidth && height === lastHeight) return;
+    lastWidth = width;
+    lastHeight = height;
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
@@ -57,13 +60,26 @@
     window.addEventListener('resize', resize);
   }
 
-  function fitCameraToSphere(radius, center) {
+  /* A fixed viewing direction, not a fixed camera position — distance
+     along it is animated with the explode progress (see render()), so
+     the combined result doesn't sit small in a frame sized for the
+     widest (exploded) spread. */
+  var VIEW_DIR = new THREE.Vector3(0.18, 0.32, 0.92).normalize();
+  var camCenter = new THREE.Vector3();
+  var distExploded = 1;
+  var distCombined = 1;
+
+  function distanceForRadius(radius, margin) {
     var fov = camera.fov * (Math.PI / 180);
-    var dist = (radius / Math.sin(fov / 2)) * 1.5;
-    camera.position.set(center.x + dist * 0.18, center.y + radius * 0.32, center.z + dist * 0.92);
-    camera.lookAt(center);
-    camera.near = Math.max(0.01, dist / 100);
-    camera.far = dist * 20;
+    return (radius / Math.sin(fov / 2)) * margin;
+  }
+
+  function setCameraTargets(explodedRadius, combinedRadius, center) {
+    camCenter.copy(center);
+    distExploded = distanceForRadius(explodedRadius, 1.15);
+    distCombined = distanceForRadius(combinedRadius, 1.05);
+    camera.near = Math.max(0.01, distCombined / 100);
+    camera.far = distExploded * 20;
     camera.updateProjectionMatrix();
   }
 
@@ -163,7 +179,8 @@
         for (var pi = 0; pi < parts.length; pi++) {
           maxReach = Math.max(maxReach, sphere.radius + parts[pi].dist);
         }
-        fitCameraToSphere(maxReach, overallCenter);
+        resize();
+        setCameraTargets(maxReach, sphere.radius, overallCenter);
         applyExplode(1);
         hideStatus();
         modelReady = true;
@@ -199,6 +216,7 @@
   function render() {
     requestAnimationFrame(render);
     if (!visible) return;
+    resize();
 
     var progress = getScrollProgress();
 
@@ -215,6 +233,13 @@
 
       group.rotation.y = ROT_Y_START + (ROT_Y_END - ROT_Y_START) * progress;
       group.rotation.x = ROT_X;
+
+      /* Dolly in as the parts come together — a fixed camera sized to
+         fit the exploded spread left the assembled result looking
+         small by comparison. */
+      var camDist = distCombined + (distExploded - distCombined) * explodeCurrent;
+      camera.position.copy(camCenter).addScaledVector(VIEW_DIR, camDist);
+      camera.lookAt(camCenter);
     }
 
     renderer.render(scene, camera);
