@@ -95,6 +95,81 @@
       return worldDir.clone().applyQuaternion(parentQuat.invert());
     }
 
+    /* Choreographed entry directions: real, named parts (a lid, a cable
+       harness, a row of screws) get a deliberate direction based on what
+       kind of component they are, instead of every mesh exploding straight
+       outward from the model's overall center. Matched by keyword against
+       the FBX mesh name (CAD exports keep names like
+       "P_C4E5_CasingLid_REV04_C4E5-0002"); most-specific categories are
+       checked first so e.g. "lid" wins over the "casing" it's glued to. */
+    var PART_KEYWORDS = [
+      { test: 'lid', dir: [0.1, 1, 0.25] },
+      { test: 'cover', dir: [0.1, 1, 0.25] },
+      { test: 'bottom', dir: [0, -1, 0.2] },
+      { test: 'top', dir: [0, 1, 0.15] },
+      { test: 'harness', dir: [1, 0.1, 0.3] },
+      { test: 'cable', dir: [1, 0.1, 0.3] },
+      { test: 'wire', dir: [1, 0.1, 0.3] },
+      { test: 'connector', dir: [1, 0.1, 0.3] },
+      { test: 'plug', dir: [1, 0.1, 0.3] },
+      { test: 'socket', dir: [1, 0.1, 0.3] },
+      { test: 'solder', dir: [1, 0.1, 0.3] },
+      { test: 'ntc', dir: [1, 0.1, 0.3] },
+      { test: 'relay', dir: [1, 0.1, 0.3] },
+      { test: 'switch', dir: [1, 0.1, 0.3] },
+      { test: 'fuse', dir: [1, 0.1, 0.3] },
+      { test: 'fan', dir: [1, 0.1, 0.3] },
+      { test: 'busbar', dir: [0.55, -0.25, -0.5] },
+      { test: 'terminal', dir: [0.55, -0.25, -0.5] },
+      { test: 'holder', dir: [0, -0.45, 0.9] },
+      { test: 'tray', dir: [0, -0.45, 0.9] },
+      { test: 'divider', dir: [0, -0.45, 0.9] },
+      { test: 'spacer', dir: [0, -0.45, 0.9] },
+      { test: 'foam', dir: [0.15, 0.7, -0.55] },
+      { test: 'eva', dir: [0.15, 0.7, -0.55] },
+      { test: 'rubber', dir: [0.15, 0.7, -0.55] },
+      { test: 'gasket', dir: [0.15, 0.7, -0.55] },
+      { test: 'seal', dir: [0.15, 0.7, -0.55] },
+      { test: 'tape', dir: [0.15, 0.7, -0.55] },
+      { test: 'cell', dir: [0, 0.05, 1] },
+      { test: 'battery', dir: [0, 0.05, 1] },
+      { test: 'highstar', dir: [0, 0.05, 1] },
+      { test: 'eve_c', dir: [0, 0.05, 1] },
+      { test: 'board', dir: [-1, 0.15, 0.35] },
+      { test: 'pcb', dir: [-1, 0.15, 0.35] },
+      { test: 'fr4', dir: [-1, 0.15, 0.35] },
+      { test: 'cmu', dir: [-1, 0.15, 0.35] },
+      { test: 'bms', dir: [-1, 0.15, 0.35] },
+      { test: 'dzlr', dir: [-1, 0.15, 0.35] },
+      { test: 'screw', dir: [0.2, -1, -0.4] },
+      { test: 'bolt', dir: [0.2, -1, -0.4] },
+      { test: 'nut', dir: [0.2, -1, -0.4] },
+      { test: 'washer', dir: [0.2, -1, -0.4] },
+      { test: 'rivet', dir: [0.2, -1, -0.4] },
+      { test: 'press_nut', dir: [0.2, -1, -0.4] },
+      { test: 'plate', dir: [-0.6, 0.35, -0.65] },
+      { test: 'flange', dir: [-0.6, 0.35, -0.65] },
+      { test: 'bend', dir: [-0.6, 0.35, -0.65] },
+      { test: 'bracket', dir: [-0.6, 0.35, -0.65] },
+      { test: 'support', dir: [-0.6, 0.35, -0.65] },
+      { test: 'corner', dir: [-0.6, 0.35, -0.65] },
+      { test: 'mount', dir: [-0.6, 0.35, -0.65] },
+      { test: 'casing', anchor: true },
+      { test: 'enclosure', anchor: true },
+      { test: 'housing', anchor: true },
+      { test: 'chassis', anchor: true },
+      { test: 'shell', anchor: true },
+      { test: 'case', anchor: true }
+    ];
+
+    function choreographyForName(name) {
+      var lower = (name || '').toLowerCase();
+      for (var i = 0; i < PART_KEYWORDS.length; i++) {
+        if (lower.indexOf(PART_KEYWORDS[i].test) !== -1) return PART_KEYWORDS[i];
+      }
+      return null;
+    }
+
     var parts = [];
     var modelReady = false;
     var loadStarted = false;
@@ -161,8 +236,26 @@
                 baseDist = Math.max(sphere.radius * 0.12, 0.05);
               }
               worldDir.normalize();
+
+              /* Blend the authored direction on top of the radial one, so
+                 parts sharing a category (sixteen cells, a dozen screws)
+                 still fan out from each other rather than travelling on
+                 parallel lines. Anchor parts (the main casing/enclosure)
+                 barely move, so the rest of the assembly reads as coming
+                 together around a fixed body. */
+              var choreo = choreographyForName(child.name);
+              var distScale = 1;
+              if (choreo) {
+                if (choreo.anchor) {
+                  distScale = 0.22;
+                } else {
+                  var authoredDir = new THREE.Vector3(choreo.dir[0], choreo.dir[1], choreo.dir[2]).normalize();
+                  worldDir = authoredDir.multiplyScalar(0.7).add(worldDir.multiplyScalar(0.3)).normalize();
+                }
+              }
+
               var localDir = worldDirToLocal(child, worldDir);
-              var dist = Math.min(Math.max(baseDist, sphere.radius * 0.1) * 1.9, sphere.radius * 1.1);
+              var dist = Math.min(Math.max(baseDist, sphere.radius * 0.1) * 1.9, sphere.radius * 1.1) * distScale;
               parts.push({ mesh: child, basePos: child.position.clone(), localDir: localDir, dist: dist });
               index++;
             });

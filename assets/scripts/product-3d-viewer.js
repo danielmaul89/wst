@@ -83,13 +83,85 @@
     camera.updateProjectionMatrix();
   }
 
-  /* Convert a world-space direction into the local space of a mesh's
-     immediate parent, so offsetting mesh.position (local) by it produces
-     the intended world-space displacement even inside a rotated hierarchy. */
-  function worldDirToLocal(mesh, worldDir) {
-    var parentQuat = new THREE.Quaternion();
-    if (mesh.parent) mesh.parent.getWorldQuaternion(parentQuat);
-    return worldDir.clone().applyQuaternion(parentQuat.invert());
+  /* Convert a desired WORLD-space displacement into the LOCAL-space delta
+     for mesh.position, via a full point transform through the parent's
+     world matrix (not just a rotated unit vector). CAD-exported FBX files
+     often nest sub-assemblies under their own internal unit-conversion
+     scale node (e.g. a 0.0264 scale a few levels up) — a world-space
+     distance added directly to local position would get crushed or
+     blown up by that sub-tree's own scale, so the offset has to be
+     computed by transforming the actual start/end WORLD points into the
+     parent's local space and taking the difference. */
+  function worldDisplacementToLocalDelta(mesh, worldPos, worldOffset) {
+    var parent = mesh.parent;
+    if (!parent) return worldOffset.clone();
+    var targetWorld = worldPos.clone().add(worldOffset);
+    var localOrigin = parent.worldToLocal(worldPos.clone());
+    var localTarget = parent.worldToLocal(targetWorld);
+    return localTarget.sub(localOrigin);
+  }
+
+  /* Vertical layer stack: real, named parts (a lid, a cell holder, a
+     harness) are grouped into a handful of functional layers and lifted
+     straight up — not scattered outward — so the model reads as a stack
+     of flat slabs pulled apart, each layer moving as one rigid unit.
+     Matched by keyword against the FBX mesh name (CAD exports keep names
+     like "P_C4E5_CellHolderTop_REV03_C4E5-0004"); most-specific groups are
+     checked first so e.g. "top" wins over the "cell" it's glued to. The
+     outer casing/enclosure is the anchor layer and barely moves, so the
+     rest of the stack reads as rising out of a fixed shell. Anything
+     unmatched (mostly small hardware) rises by an amount based on its own
+     height in the model, so it still lands near the layer it sits close
+     to. */
+  var LAYER_TIERS = [
+    { test: 'lid', y: 2.6 },
+    { test: 'cover', y: 2.6 },
+    { test: 'harness', y: 2.05 },
+    { test: 'cable', y: 2.05 },
+    { test: 'wire', y: 2.05 },
+    { test: 'connector', y: 2.05 },
+    { test: 'plug', y: 2.05 },
+    { test: 'socket', y: 2.05 },
+    { test: 'solder', y: 2.05 },
+    { test: 'ntc', y: 2.05 },
+    { test: 'board', y: 2.05 },
+    { test: 'pcb', y: 2.05 },
+    { test: 'fr4', y: 2.05 },
+    { test: 'cmu', y: 2.05 },
+    { test: 'bms', y: 2.05 },
+    { test: 'dzlr', y: 2.05 },
+    { test: 'foam', y: 2.05 },
+    { test: 'eva', y: 2.05 },
+    { test: 'rubber', y: 2.05 },
+    { test: 'gasket', y: 2.05 },
+    { test: 'seal', y: 2.05 },
+    { test: 'tape', y: 2.05 },
+    { test: 'top', y: 1.55 },
+    { test: 'busbar', y: 1.55 },
+    { test: 'terminal', y: 1.55 },
+    { test: 'bottom', y: 0.55 },
+    { test: 'holder', y: 0.55 },
+    { test: 'tray', y: 0.55 },
+    { test: 'divider', y: 0.55 },
+    { test: 'spacer', y: 0.55 },
+    { test: 'cell', y: 1.05 },
+    { test: 'battery', y: 1.05 },
+    { test: 'highstar', y: 1.05 },
+    { test: 'eve_c', y: 1.05 },
+    { test: 'casing', anchor: true },
+    { test: 'enclosure', anchor: true },
+    { test: 'housing', anchor: true },
+    { test: 'chassis', anchor: true },
+    { test: 'shell', anchor: true },
+    { test: 'case', anchor: true }
+  ];
+
+  function layerTierForName(name) {
+    var lower = (name || '').toLowerCase();
+    for (var i = 0; i < LAYER_TIERS.length; i++) {
+      if (lower.indexOf(LAYER_TIERS[i].test) !== -1) return LAYER_TIERS[i];
+    }
+    return null;
   }
 
   var parts = [];
@@ -102,7 +174,7 @@
   function applyExplode(t) {
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
-      p.mesh.position.copy(p.basePos).addScaledVector(p.localDir, p.dist * t);
+      p.mesh.position.copy(p.basePos).addScaledVector(p.localDelta, t);
     }
   }
 
@@ -147,32 +219,38 @@
         var sphere = box2.getBoundingSphere(new THREE.Sphere());
         var overallCenter = sphere.center.clone();
 
-        var index = 0;
+        var overallMinY = box2.min.y;
+        var overallHeight = Math.max(box2.max.y - overallMinY, 1e-4);
+        var UP = new THREE.Vector3(0, 1, 0);
+
         object.traverse(function (child) {
           if (!child.isMesh) return;
           var worldPos = new THREE.Vector3();
           child.getWorldPosition(worldPos);
-          var worldDir = worldPos.clone().sub(overallCenter);
-          var baseDist = worldDir.length();
-          if (baseDist < 1e-5) {
-            worldDir.set(Math.sin(index * 1.31), Math.cos(index * 0.71) * 0.6, Math.cos(index * 1.93));
-            baseDist = Math.max(sphere.radius * 0.12, 0.05);
+          var yFrac = (worldPos.y - overallMinY) / overallHeight;
+
+          var tier = layerTierForName(child.name);
+          var dist;
+          if (tier && tier.anchor) {
+            /* The outer casing/enclosure barely lifts, so it reads as the
+               fixed shell everything else rises out of. */
+            dist = sphere.radius * 0.12;
+          } else if (tier) {
+            dist = sphere.radius * tier.y;
+          } else {
+            /* Unmatched hardware (small fasteners, odd tapes) rises by an
+               amount based on its own height in the model, so it still
+               lands near the layer it physically sits close to. */
+            dist = sphere.radius * (0.2 + Math.min(Math.max(yFrac, 0), 1) * 2.4);
           }
-          worldDir.normalize();
-          var localDir = worldDirToLocal(child, worldDir);
-          /* Clamp per-part travel to the model's own scale. Without this,
-             a large enclosing part (e.g. an outer casing shell) whose
-             centroid sits close to the overall center — but whose surface
-             is huge — could swing an oversized panel right up against the
-             camera mid-scroll, filling the frame at near-clip range. */
-          var dist = Math.min(Math.max(baseDist, sphere.radius * 0.1) * 1.9, sphere.radius * 1.1);
+
+          var localDelta = worldDisplacementToLocalDelta(child, worldPos, UP.clone().multiplyScalar(dist));
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
-            localDir: localDir,
+            localDelta: localDelta,
             dist: dist
           });
-          index++;
         });
 
         var maxReach = sphere.radius;
