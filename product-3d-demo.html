@@ -106,7 +106,7 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 
 .viewer-scroll-copy{
   position:absolute;
-  left:0; right:0; bottom:56px;
+  left:0; right:0; bottom:108px;
   z-index:2;
   display:flex;
   flex-direction:column;
@@ -130,6 +130,36 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 }
 .viewer-scroll-arrow{ animation:viewer-bob 1.8s var(--ease) infinite; }
 @keyframes viewer-bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
+
+/* Model switcher — stays pinned at the bottom of the sticky stage (not
+   further down the page) so it's usable without losing sight of the
+   model, and always visible (doesn't fade with the scroll hint). */
+.viewer-model-switcher{
+  position:absolute;
+  left:0; right:0; bottom:32px;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+}
+.viewer-model-name{
+  padding:7px 14px;
+  border-radius:999px;
+  background:rgba(6,8,26,.68);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.viewer-next-btn{ min-height:40px; padding:9px 18px; }
+@media(max-width:560px){
+  .viewer-model-switcher{ bottom:20px; flex-direction:column; gap:10px; }
+  .viewer-scroll-copy{ bottom:96px; }
+}
 
 .viewer-cta{ position:relative; z-index:1; padding:100px 0 140px; }
 .viewer-cta-inner{
@@ -187,6 +217,10 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
         <span class="viewer-scroll-hint">Scroll to assemble</span>
         <svg class="viewer-scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#0F1A33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+      <div class="viewer-model-switcher">
+        <span class="viewer-model-name" id="viewerModelName">Compact battery platform</span>
+        <button type="button" class="btn btn-primary viewer-next-btn" id="viewerNextBtn">Next model →</button>
+      </div>
     </div>
   </section>
 
@@ -205,6 +239,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 <script src="assets/vendor/three.r128.min.js"></script>
 <script src="assets/vendor/fflate.min.js"></script>
 <script src="assets/vendor/FBXLoader.js"></script>
-<script src="assets/scripts/product-3d-viewer.js?v=3" defer></script>
+<script src="assets/scripts/product-3d-viewer.js?v=4" defer></script>
 </body>
 </html>
