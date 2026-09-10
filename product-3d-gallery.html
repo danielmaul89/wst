@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>3D Model Gallery | WS Technicals</title>
+<meta name="description" content="Five real production 3D battery models, each assembling from separated parts into the finished platform as you scroll.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); overflow-x:hidden; }
+
+.ambient-top{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, black 0%, black 45%, transparent 100%);
+  mask-image:linear-gradient(to bottom, black 0%, black 45%, transparent 100%);
+}
+.ambient-bottom{
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:980px;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to top, black 0%, black 45%, transparent 100%);
+  mask-image:linear-gradient(to top, black 0%, black 45%, transparent 100%);
+}
+.ambient-blob{ position:absolute; border-radius:50%; filter:blur(124px); }
+.ambient-top .ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  top:-260px; left:-14%;
+  background:radial-gradient(circle at 40% 40%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.5;
+}
+.ambient-top .ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  top:-360px; right:-24%;
+  background:radial-gradient(circle at 50% 44%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.3;
+}
+.ambient-bottom .ambient-blob-blue{
+  width:clamp(1000px,80vw,1440px); height:clamp(1000px,80vw,1440px);
+  bottom:-360px; left:-20%;
+  background:radial-gradient(circle at 50% 56%, #5F79B3 0%, #A6B3D0 43%, transparent 78%);
+  opacity:.32;
+}
+.ambient-bottom .ambient-blob-brass{
+  width:clamp(900px,72vw,1300px); height:clamp(760px,58vw,1080px);
+  bottom:-300px; right:-16%;
+  background:radial-gradient(circle at 50% 60%, var(--brass-hi) 0%, var(--brass-soft) 46%, transparent 78%);
+  opacity:.42;
+}
+
+.viewer-hero{ position:relative; z-index:1; padding:140px 0 40px; }
+.viewer-hero-inner{ max-width:760px; }
+.viewer-hero h1{ max-width:16ch; margin:18px 0 22px; font-size:clamp(40px,6vw,60px); }
+.viewer-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+
+.viewer-intro{ position:relative; z-index:1; padding:72px 0 8px; }
+.viewer-intro-inner{ max-width:620px; }
+.viewer-intro-eyebrow{ display:block; margin-bottom:10px; color:var(--brass-text); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; }
+.viewer-intro h2{ margin:0 0 10px; font-size:clamp(28px,3.4vw,38px); }
+.viewer-intro p{ max-width:56ch; color:var(--ink-soft); font-size:16px; line-height:1.65; }
+
+.viewer-scroll{ position:relative; z-index:1; height:260vh; }
+.viewer-sticky{ position:sticky; top:0; height:100vh; overflow:hidden; }
+.viewer-canvas{ position:absolute; inset:0; display:block; width:100%; height:100%; }
+
+.viewer-status{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:13px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  background:var(--paper);
+  transition:opacity .5s var(--ease);
+  pointer-events:none;
+}
+.viewer-status[hidden]{ display:none; }
+.viewer-status .spin{
+  width:14px; height:14px;
+  border-radius:50%;
+  border:2px solid rgba(15,42,92,.18);
+  border-top-color:var(--blue);
+  animation:viewer-spin .8s linear infinite;
+}
+@keyframes viewer-spin{ to{ transform:rotate(360deg); } }
+
+.viewer-scroll-copy{
+  position:absolute;
+  left:0; right:0; bottom:56px;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  text-align:center;
+  pointer-events:none;
+  transition:opacity .4s var(--ease);
+}
+.viewer-scroll-hint{
+  padding:7px 14px;
+  border-radius:999px;
+  background:rgba(6,8,26,.68);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.viewer-scroll-arrow{ animation:viewer-bob 1.8s var(--ease) infinite; }
+@keyframes viewer-bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
+@media(prefers-reduced-motion:reduce){ .viewer-scroll-arrow{ animation:none; } }
+
+.viewer-cta{ position:relative; z-index:1; padding:100px 0 140px; }
+.viewer-cta-inner{
+  display:grid;
+  grid-template-columns:1fr .7fr;
+  gap:60px;
+  align-items:end;
+  padding:56px clamp(28px,5vw,64px);
+  border-radius:var(--r-lg);
+  background:rgba(255,255,255,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 2px 24px -14px rgba(6,8,26,.16);
+}
+.viewer-cta h2{ max-width:16ch; font-size:32px; margin-bottom:10px; }
+.viewer-cta p{ color:var(--ink-soft); font-size:15px; line-height:1.65; }
+.viewer-cta-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .viewer-cta-inner{ grid-template-columns:1fr; gap:24px; }
+  .viewer-cta-action{ justify-self:start; }
+}
+@media(max-width:560px){
+  .viewer-hero{ padding-top:112px; }
+  .viewer-intro{ padding-top:56px; }
+  .viewer-scroll{ height:220vh; }
+}
+
+.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
+</style>
+</head>
+<body data-wst-page="about">
+
+<div class="ambient-top" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-brass"></span>
+  <span class="ambient-blob ambient-blob-blue"></span>
+</div>
+<div class="ambient-bottom" aria-hidden="true">
+  <span class="ambient-blob ambient-blob-blue"></span>
+  <span class="ambient-blob ambient-blob-brass"></span>
+</div>
+
+<div data-wst-header></div>
+<main>
+  <section class="viewer-hero">
+    <div class="container viewer-hero-inner">
+      <span class="eyebrow">3D Demo</span>
+      <h1>Five platforms, part by part.</h1>
+      <p class="lead">Five real production 3D models. Scroll through each one to watch its individual components come together into the finished, assembled platform.</p>
+    </div>
+  </section>
+
+  <section class="viewer-intro">
+    <div class="container viewer-intro-inner">
+      <span class="viewer-intro-eyebrow">01 · Compact battery platform</span>
+      <h2>Casing, cell holders and lid.</h2>
+      <p>Main casing, top and bottom cell holders, casing lid and cable harness — a clean, compact pack assembly.</p>
+    </div>
+  </section>
+  <section class="viewer-scroll" data-model="assets/models/c4e.fbx">
+    <div class="viewer-sticky">
+      <canvas class="viewer-canvas"></canvas>
+      <div class="viewer-status"><span class="spin"></span><span class="viewer-status-text">Loading model</span></div>
+      <div class="viewer-scroll-copy">
+        <span class="viewer-scroll-hint">Scroll to assemble</span>
+        <svg class="viewer-scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#0F1A33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="viewer-intro">
+    <div class="container viewer-intro-inner">
+      <span class="viewer-intro-eyebrow">02 · Heavy machinery platform</span>
+      <h2>Enclosure, cells and thermal pad.</h2>
+      <p>Enclosure case, enclosure lid, a full block of cells, thermal heatpad and wiring, built for demanding heavy-equipment duty cycles.</p>
+    </div>
+  </section>
+  <section class="viewer-scroll" data-model="assets/models/HDR.fbx">
+    <div class="viewer-sticky">
+      <canvas class="viewer-canvas"></canvas>
+      <div class="viewer-status"><span class="spin"></span><span class="viewer-status-text">Loading model</span></div>
+      <div class="viewer-scroll-copy">
+        <span class="viewer-scroll-hint">Scroll to assemble</span>
+        <svg class="viewer-scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#0F1A33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="viewer-intro">
+    <div class="container viewer-intro-inner">
+      <span class="viewer-intro-eyebrow">03 · UPS platform</span>
+      <h2>A rack-mounted power module.</h2>
+      <p>Rear and side metal panels, front plastic fascia, internal PCB decks and connector block — the anatomy of a rack-mounted UPS battery module.</p>
+    </div>
+  </section>
+  <section class="viewer-scroll" data-model="assets/models/wl03.fbx">
+    <div class="viewer-sticky">
+      <canvas class="viewer-canvas"></canvas>
+      <div class="viewer-status"><span class="spin"></span><span class="viewer-status-text">Loading model</span></div>
+      <div class="viewer-scroll-copy">
+        <span class="viewer-scroll-hint">Scroll to assemble</span>
+        <svg class="viewer-scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#0F1A33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="viewer-intro">
+    <div class="container viewer-intro-inner">
+      <span class="viewer-intro-eyebrow">04 · AGV platform</span>
+      <h2>Down to the last fastener.</h2>
+      <p>This model is built from over a hundred individual parts, right down to the screws and connectors — every fastener finds its place.</p>
+    </div>
+  </section>
+  <section class="viewer-scroll" data-model="assets/models/sl02.fbx">
+    <div class="viewer-sticky">
+      <canvas class="viewer-canvas"></canvas>
+      <div class="viewer-status"><span class="spin"></span><span class="viewer-status-text">Loading model</span></div>
+      <div class="viewer-scroll-copy">
+        <span class="viewer-scroll-hint">Scroll to assemble</span>
+        <svg class="viewer-scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#0F1A33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="viewer-intro">
+    <div class="container viewer-intro-inner">
+      <span class="viewer-intro-eyebrow">05 · Heavy machinery chassis</span>
+      <h2>A structural bend-plate frame.</h2>
+      <p>Outer and inner bend plates and support plates forming the structural chassis a heavy-machinery pack is built around.</p>
+    </div>
+  </section>
+  <section class="viewer-scroll" data-model="assets/models/B7W.fbx">
+    <div class="viewer-sticky">
+      <canvas class="viewer-canvas"></canvas>
+      <div class="viewer-status"><span class="spin"></span><span class="viewer-status-text">Loading model</span></div>
+      <div class="viewer-scroll-copy">
+        <span class="viewer-scroll-hint">Scroll to assemble</span>
+        <svg class="viewer-scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#0F1A33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="viewer-cta">
+    <div class="container viewer-cta-inner">
+      <div><h2>This is a working demo.</h2><p>Five real production 3D models, each rigged from the same scroll-driven assembly logic, to test how this could work on a future product or case page.</p></div>
+      <a class="btn btn-primary viewer-cta-action" href="news.html">Back to news</a>
+    </div>
+  </section>
+</main>
+<div data-wst-footer></div>
+
+<div class="blueprint-grid" aria-hidden="true"></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/vendor/three.r128.min.js"></script>
+<script src="assets/vendor/fflate.min.js"></script>
+<script src="assets/vendor/FBXLoader.js"></script>
+<script src="assets/scripts/product-3d-gallery.js" defer></script>
+</body>
+</html>
