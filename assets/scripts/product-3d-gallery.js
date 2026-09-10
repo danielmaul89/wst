@@ -42,10 +42,14 @@
     rim.position.set(0, 4, -8);
     scene.add(rim);
 
+    var lastWidth = 0, lastHeight = 0;
     function resize() {
       var rect = stage.getBoundingClientRect();
-      var width = Math.max(1, rect.width);
-      var height = Math.max(1, rect.height);
+      var width = Math.max(1, Math.round(rect.width));
+      var height = Math.max(1, Math.round(rect.height));
+      if (width === lastWidth && height === lastHeight) return;
+      lastWidth = width;
+      lastHeight = height;
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
@@ -149,6 +153,11 @@
             for (var pi = 0; pi < parts.length; pi++) {
               maxReach = Math.max(maxReach, sphere.radius + parts[pi].dist);
             }
+            /* Re-check size right before framing — the container may have
+               been at a stale/transitional size (e.g. mid-layout, or
+               before the sticky stage had settled) when the last resize
+               ran, and camera framing needs the real aspect ratio. */
+            resize();
             fitCameraToSphere(maxReach, overallCenter);
             applyExplode(1);
             hideStatus();
@@ -193,6 +202,7 @@
       var visible = isNearViewport();
       if (!visible) return;
       if (!loadStarted) loadModel();
+      resize();
 
       var progress = getScrollProgress();
 
