@@ -83,75 +83,71 @@
     camera.updateProjectionMatrix();
   }
 
-  /* Convert a world-space direction into the local space of a mesh's
-     immediate parent, so offsetting mesh.position (local) by it produces
-     the intended world-space displacement even inside a rotated hierarchy. */
-  function worldDirToLocal(mesh, worldDir) {
-    var parentQuat = new THREE.Quaternion();
-    if (mesh.parent) mesh.parent.getWorldQuaternion(parentQuat);
-    return worldDir.clone().applyQuaternion(parentQuat.invert());
+  /* Convert a desired WORLD-space displacement into the LOCAL-space delta
+     for mesh.position, via a full point transform through the parent's
+     world matrix (not just a rotated unit vector). CAD-exported FBX files
+     often nest sub-assemblies under their own internal unit-conversion
+     scale node (e.g. a 0.0264 scale a few levels up) — a world-space
+     distance added directly to local position would get crushed or
+     blown up by that sub-tree's own scale, so the offset has to be
+     computed by transforming the actual start/end WORLD points into the
+     parent's local space and taking the difference. */
+  function worldDisplacementToLocalDelta(mesh, worldPos, worldOffset) {
+    var parent = mesh.parent;
+    if (!parent) return worldOffset.clone();
+    var targetWorld = worldPos.clone().add(worldOffset);
+    var localOrigin = parent.worldToLocal(worldPos.clone());
+    var localTarget = parent.worldToLocal(targetWorld);
+    return localTarget.sub(localOrigin);
   }
 
-  /* Choreographed entry directions: real, named parts (a lid, a cable
-     harness, a row of screws) get a deliberate direction based on what
-     kind of component they are, instead of every mesh exploding straight
-     outward from the model's overall center. Matched by keyword against
-     the FBX mesh name (CAD exports keep names like
-     "P_C4E5_CasingLid_REV04_C4E5-0002"); most-specific categories are
-     checked first so e.g. "lid" wins over the "casing" it's glued to.
-     Anything unmatched falls back to the radial heuristic below. */
-  var PART_KEYWORDS = [
-    { test: 'lid', dir: [0.1, 1, 0.25] },
-    { test: 'cover', dir: [0.1, 1, 0.25] },
-    { test: 'bottom', dir: [0, -1, 0.2] },
-    { test: 'top', dir: [0, 1, 0.15] },
-    { test: 'harness', dir: [1, 0.1, 0.3] },
-    { test: 'cable', dir: [1, 0.1, 0.3] },
-    { test: 'wire', dir: [1, 0.1, 0.3] },
-    { test: 'connector', dir: [1, 0.1, 0.3] },
-    { test: 'plug', dir: [1, 0.1, 0.3] },
-    { test: 'socket', dir: [1, 0.1, 0.3] },
-    { test: 'solder', dir: [1, 0.1, 0.3] },
-    { test: 'ntc', dir: [1, 0.1, 0.3] },
-    { test: 'relay', dir: [1, 0.1, 0.3] },
-    { test: 'switch', dir: [1, 0.1, 0.3] },
-    { test: 'fuse', dir: [1, 0.1, 0.3] },
-    { test: 'fan', dir: [1, 0.1, 0.3] },
-    { test: 'busbar', dir: [0.55, -0.25, -0.5] },
-    { test: 'terminal', dir: [0.55, -0.25, -0.5] },
-    { test: 'holder', dir: [0, -0.45, 0.9] },
-    { test: 'tray', dir: [0, -0.45, 0.9] },
-    { test: 'divider', dir: [0, -0.45, 0.9] },
-    { test: 'spacer', dir: [0, -0.45, 0.9] },
-    { test: 'foam', dir: [0.15, 0.7, -0.55] },
-    { test: 'eva', dir: [0.15, 0.7, -0.55] },
-    { test: 'rubber', dir: [0.15, 0.7, -0.55] },
-    { test: 'gasket', dir: [0.15, 0.7, -0.55] },
-    { test: 'seal', dir: [0.15, 0.7, -0.55] },
-    { test: 'tape', dir: [0.15, 0.7, -0.55] },
-    { test: 'cell', dir: [0, 0.05, 1] },
-    { test: 'battery', dir: [0, 0.05, 1] },
-    { test: 'highstar', dir: [0, 0.05, 1] },
-    { test: 'eve_c', dir: [0, 0.05, 1] },
-    { test: 'board', dir: [-1, 0.15, 0.35] },
-    { test: 'pcb', dir: [-1, 0.15, 0.35] },
-    { test: 'fr4', dir: [-1, 0.15, 0.35] },
-    { test: 'cmu', dir: [-1, 0.15, 0.35] },
-    { test: 'bms', dir: [-1, 0.15, 0.35] },
-    { test: 'dzlr', dir: [-1, 0.15, 0.35] },
-    { test: 'screw', dir: [0.2, -1, -0.4] },
-    { test: 'bolt', dir: [0.2, -1, -0.4] },
-    { test: 'nut', dir: [0.2, -1, -0.4] },
-    { test: 'washer', dir: [0.2, -1, -0.4] },
-    { test: 'rivet', dir: [0.2, -1, -0.4] },
-    { test: 'press_nut', dir: [0.2, -1, -0.4] },
-    { test: 'plate', dir: [-0.6, 0.35, -0.65] },
-    { test: 'flange', dir: [-0.6, 0.35, -0.65] },
-    { test: 'bend', dir: [-0.6, 0.35, -0.65] },
-    { test: 'bracket', dir: [-0.6, 0.35, -0.65] },
-    { test: 'support', dir: [-0.6, 0.35, -0.65] },
-    { test: 'corner', dir: [-0.6, 0.35, -0.65] },
-    { test: 'mount', dir: [-0.6, 0.35, -0.65] },
+  /* Vertical layer stack: real, named parts (a lid, a cell holder, a
+     harness) are grouped into a handful of functional layers and lifted
+     straight up — not scattered outward — so the model reads as a stack
+     of flat slabs pulled apart, each layer moving as one rigid unit.
+     Matched by keyword against the FBX mesh name (CAD exports keep names
+     like "P_C4E5_CellHolderTop_REV03_C4E5-0004"); most-specific groups are
+     checked first so e.g. "top" wins over the "cell" it's glued to. The
+     outer casing/enclosure is the anchor layer and barely moves, so the
+     rest of the stack reads as rising out of a fixed shell. Anything
+     unmatched (mostly small hardware) rises by an amount based on its own
+     height in the model, so it still lands near the layer it sits close
+     to. */
+  var LAYER_TIERS = [
+    { test: 'lid', y: 1.85 },
+    { test: 'cover', y: 1.85 },
+    { test: 'harness', y: 1.35 },
+    { test: 'cable', y: 1.35 },
+    { test: 'wire', y: 1.35 },
+    { test: 'connector', y: 1.35 },
+    { test: 'plug', y: 1.35 },
+    { test: 'socket', y: 1.35 },
+    { test: 'solder', y: 1.35 },
+    { test: 'ntc', y: 1.35 },
+    { test: 'board', y: 1.35 },
+    { test: 'pcb', y: 1.35 },
+    { test: 'fr4', y: 1.35 },
+    { test: 'cmu', y: 1.35 },
+    { test: 'bms', y: 1.35 },
+    { test: 'dzlr', y: 1.35 },
+    { test: 'foam', y: 1.35 },
+    { test: 'eva', y: 1.35 },
+    { test: 'rubber', y: 1.35 },
+    { test: 'gasket', y: 1.35 },
+    { test: 'seal', y: 1.35 },
+    { test: 'tape', y: 1.35 },
+    { test: 'top', y: 1.05 },
+    { test: 'busbar', y: 1.05 },
+    { test: 'terminal', y: 1.05 },
+    { test: 'bottom', y: 0.4 },
+    { test: 'holder', y: 0.4 },
+    { test: 'tray', y: 0.4 },
+    { test: 'divider', y: 0.4 },
+    { test: 'spacer', y: 0.4 },
+    { test: 'cell', y: 0.7 },
+    { test: 'battery', y: 0.7 },
+    { test: 'highstar', y: 0.7 },
+    { test: 'eve_c', y: 0.7 },
     { test: 'casing', anchor: true },
     { test: 'enclosure', anchor: true },
     { test: 'housing', anchor: true },
@@ -160,10 +156,10 @@
     { test: 'case', anchor: true }
   ];
 
-  function choreographyForName(name) {
+  function layerTierForName(name) {
     var lower = (name || '').toLowerCase();
-    for (var i = 0; i < PART_KEYWORDS.length; i++) {
-      if (lower.indexOf(PART_KEYWORDS[i].test) !== -1) return PART_KEYWORDS[i];
+    for (var i = 0; i < LAYER_TIERS.length; i++) {
+      if (lower.indexOf(LAYER_TIERS[i].test) !== -1) return LAYER_TIERS[i];
     }
     return null;
   }
@@ -178,7 +174,7 @@
   function applyExplode(t) {
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
-      p.mesh.position.copy(p.basePos).addScaledVector(p.localDir, p.dist * t);
+      p.mesh.position.copy(p.basePos).addScaledVector(p.localDelta, t);
     }
   }
 
@@ -223,50 +219,38 @@
         var sphere = box2.getBoundingSphere(new THREE.Sphere());
         var overallCenter = sphere.center.clone();
 
-        var index = 0;
+        var overallMinY = box2.min.y;
+        var overallHeight = Math.max(box2.max.y - overallMinY, 1e-4);
+        var UP = new THREE.Vector3(0, 1, 0);
+
         object.traverse(function (child) {
           if (!child.isMesh) return;
           var worldPos = new THREE.Vector3();
           child.getWorldPosition(worldPos);
-          var worldDir = worldPos.clone().sub(overallCenter);
-          var baseDist = worldDir.length();
-          if (baseDist < 1e-5) {
-            worldDir.set(Math.sin(index * 1.31), Math.cos(index * 0.71) * 0.6, Math.cos(index * 1.93));
-            baseDist = Math.max(sphere.radius * 0.12, 0.05);
-          }
-          worldDir.normalize();
+          var yFrac = (worldPos.y - overallMinY) / overallHeight;
 
-          /* Blend the authored direction in on top of the radial one, so
-             parts sharing a category (sixteen cells, a dozen screws) still
-             fan out from each other rather than travelling on parallel
-             lines. Anchor parts (the main casing/enclosure) barely move,
-             so the rest of the assembly reads as coming together around a
-             fixed body rather than every part converging on empty space. */
-          var choreo = choreographyForName(child.name);
-          var distScale = 1;
-          if (choreo) {
-            if (choreo.anchor) {
-              distScale = 0.22;
-            } else {
-              var authoredDir = new THREE.Vector3(choreo.dir[0], choreo.dir[1], choreo.dir[2]).normalize();
-              worldDir = authoredDir.multiplyScalar(0.7).add(worldDir.multiplyScalar(0.3)).normalize();
-            }
+          var tier = layerTierForName(child.name);
+          var dist;
+          if (tier && tier.anchor) {
+            /* The outer casing/enclosure barely lifts, so it reads as the
+               fixed shell everything else rises out of. */
+            dist = sphere.radius * 0.12;
+          } else if (tier) {
+            dist = sphere.radius * tier.y;
+          } else {
+            /* Unmatched hardware (small fasteners, odd tapes) rises by an
+               amount based on its own height in the model, so it still
+               lands near the layer it physically sits close to. */
+            dist = sphere.radius * (0.3 + Math.min(Math.max(yFrac, 0), 1) * 1.5);
           }
 
-          var localDir = worldDirToLocal(child, worldDir);
-          /* Clamp per-part travel to the model's own scale. Without this,
-             a large enclosing part (e.g. an outer casing shell) whose
-             centroid sits close to the overall center — but whose surface
-             is huge — could swing an oversized panel right up against the
-             camera mid-scroll, filling the frame at near-clip range. */
-          var dist = Math.min(Math.max(baseDist, sphere.radius * 0.1) * 1.9, sphere.radius * 1.1) * distScale;
+          var localDelta = worldDisplacementToLocalDelta(child, worldPos, UP.clone().multiplyScalar(dist));
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
-            localDir: localDir,
+            localDelta: localDelta,
             dist: dist
           });
-          index++;
         });
 
         var maxReach = sphere.radius;
