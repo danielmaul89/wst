@@ -286,6 +286,50 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 .sc-rail-acts li.is-on{ color:var(--paper-on-dark); }
 .sc-rail-acts li.is-on b{ color:var(--brass-on-dark); }
 
+/* ---- Model switcher ----
+   Sits bottom-left on the caption column's axis, so it reads as part of the
+   same text rail rather than floating over the product. */
+.sc-switch{
+  position:absolute;
+  left:clamp(24px, 5.5vw, 92px);
+  bottom:34px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.sc-switch-index{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  color:var(--brass-on-dark);
+  font-variant-numeric:tabular-nums;
+}
+.sc-switch-name{
+  font-size:13px;
+  letter-spacing:-.005em;
+  color:rgba(255,255,255,.72);
+  white-space:nowrap;
+}
+.sc-switch-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.92);
+  font-family:var(--font-body);
+  font-size:12px;
+  letter-spacing:-.005em;
+  cursor:pointer;
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.sc-switch-btn:hover{ background:rgba(255,255,255,.11); border-color:rgba(255,255,255,.4); }
+.sc-switch-btn:focus-visible{ outline:2px solid var(--brass-on-dark); outline-offset:3px; }
+.sc-switch-btn[disabled]{ opacity:.42; cursor:default; }
+
 /* ---- Scroll hint ---- */
 .sc-hint{
   position:absolute;
@@ -342,6 +386,13 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
     text-align:center;
   }
   .sc-caption p{ max-width:44ch; margin:0 auto; }
+  .sc-switch{
+    left:20px; right:20px;
+    bottom:22px;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
 }
 @media(max-width:640px){
   .sc-intro{ padding-top:108px; }
@@ -365,8 +416,8 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
       <h1>Anatomy of a battery pack.</h1>
       <p class="lead">Every pack we ship is an assembly of deliberate decisions — how cells are held, how current is carried, how heat escapes, how it all survives a decade of vibration. This is one of our production platforms, taken apart and put back together.</p>
       <dl class="sc-intro-meta">
-        <div class="sc-meta-item"><dt>Platform</dt><dd>Compact battery platform</dd></div>
-        <div class="sc-meta-item"><dt>Cell format</dt><dd>21700 cylindrical</dd></div>
+        <div class="sc-meta-item"><dt>Platform</dt><dd id="scPlatform">—</dd></div>
+        <div class="sc-meta-item"><dt>Cell format</dt><dd id="scCellFormat">—</dd></div>
         <div class="sc-meta-item"><dt>Source</dt><dd>Production CAD</dd></div>
         <div class="sc-meta-item"><dt>Components</dt><dd id="scPartCount">—</dd></div>
       </dl>
@@ -415,6 +466,15 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
         </ol>
       </div>
 
+      <div class="sc-switch">
+        <span class="sc-switch-index" id="scSwitchIndex">01 / 02</span>
+        <span class="sc-switch-name" id="scSwitchName">Loading</span>
+        <button type="button" class="sc-switch-btn" id="scNextBtn">
+          Next platform
+          <svg width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true"><path d="M1 4.5h10M7.5 1l3.5 3.5L7.5 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
       <div class="sc-hint" id="scHint">
         <span>Scroll</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -446,6 +506,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 <script src="assets/vendor/three.r128.min.js"></script>
 <script src="assets/vendor/fflate.min.js"></script>
 <script src="assets/vendor/FBXLoader.js"></script>
-<script src="assets/scripts/product-3d-showcase.js?v=1" defer></script>
+<script src="assets/scripts/product-3d-showcase.js?v=2" defer></script>
 </body>
 </html>
