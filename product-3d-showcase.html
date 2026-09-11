@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Anatomy of a Battery Pack | WS Technicals</title>
+<meta name="description" content="A cinematic, scroll-driven teardown of a real WS Technicals battery platform — every layer, engineered.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); overflow-x:hidden; }
+
+/* ================================================================
+   Light intro / outro
+   ================================================================ */
+.sc-intro{ position:relative; z-index:1; padding:132px 0 96px; }
+.sc-intro-inner{ max-width:820px; }
+.sc-intro h1{
+  max-width:15ch;
+  margin:18px 0 24px;
+  font-family:var(--font-display);
+  font-size:var(--h1-display);
+  line-height:var(--h1-lh);
+  letter-spacing:var(--h1-ls);
+}
+.sc-intro .lead{ max-width:56ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.sc-intro-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:36px;
+  margin-top:44px;
+  padding-top:26px;
+  border-top:1px solid var(--line);
+}
+.sc-meta-item{ display:flex; flex-direction:column; gap:5px; }
+.sc-meta-item dt{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.sc-meta-item dd{ margin:0; font-size:var(--fs-body); color:var(--ink); font-weight:600; }
+
+/* ================================================================
+   The theatre — tall scroll track, pinned dark stage
+   ================================================================ */
+.sc-theatre{ position:relative; z-index:2; height:460vh; }
+/* The dark screen is inset rather than full-bleed, so the site's
+   light-themed sticky nav always sits on paper instead of going
+   dark-on-dark and failing contrast over the stage. */
+.sc-stage{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  padding:78px clamp(14px, 2vw, 28px) clamp(14px, 2vw, 28px);
+}
+.sc-screen{
+  position:relative;
+  flex:1;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:#05070d;
+  box-shadow:0 30px 80px -40px rgba(6,8,26,.55);
+}
+/* Studio backdrop: soft pool of light behind the product, falling off
+   to near-black at the edges — the canvas renders transparent on top. */
+.sc-backdrop{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 48% at 50% 88%, rgba(93,122,178,.20) 0%, transparent 70%),
+    radial-gradient(ellipse 110% 78% at 50% 38%, #1d2740 0%, #0e1422 46%, #06080f 100%);
+}
+.sc-backdrop::after{
+  /* faint engineering grid, fading out toward the edges */
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(to right, rgba(178,198,240,.16) 0 1px, transparent 1px 88px),
+    repeating-linear-gradient(to bottom, rgba(178,198,240,.16) 0 1px, transparent 1px 88px);
+  -webkit-mask-image:radial-gradient(ellipse 62% 56% at 50% 46%, black 0%, transparent 78%);
+  mask-image:radial-gradient(ellipse 62% 56% at 50% 46%, black 0%, transparent 78%);
+  opacity:.5;
+}
+.sc-vignette{
+  position:absolute; inset:0;
+  pointer-events:none;
+  box-shadow:inset 0 0 240px 60px rgba(3,5,11,.92);
+}
+.sc-canvas{ position:absolute; inset:0; display:block; width:100%; height:100%; }
+
+/* ---- Loading ---- */
+.sc-loader{
+  position:absolute; inset:0;
+  z-index:6;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  background:#05070d;
+  transition:opacity .9s var(--ease);
+}
+.sc-loader[hidden]{ display:none; }
+.sc-loader.is-done{ opacity:0; pointer-events:none; }
+.sc-loader-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(199,204,222,.6);
+}
+.sc-loader-bar{
+  position:relative;
+  width:190px; height:1px;
+  background:rgba(199,204,222,.18);
+  overflow:hidden;
+}
+.sc-loader-bar span{
+  position:absolute; left:0; top:0; bottom:0;
+  width:0%;
+  background:var(--brass-on-dark);
+  transition:width .25s linear;
+}
+.sc-loader-pct{
+  font-family:var(--font-mono);
+  font-size:30px;
+  letter-spacing:-.02em;
+  color:var(--paper-on-dark);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---- Act captions ----
+   A left-hand title column rather than a centred banner: the product is a
+   tall vertical stack once it comes apart, so the middle of the frame has
+   to stay clear. Children are grid-stacked in one cell so they cross-fade
+   in place and the column centres on its tallest caption. */
+.sc-captions{
+  position:absolute;
+  left:clamp(24px, 5.5vw, 92px);
+  top:50%;
+  z-index:4;
+  display:grid;
+  width:min(330px, 32vw);
+  transform:translateY(-50%);
+  pointer-events:none;
+  transition:opacity .6s var(--ease);
+}
+.sc-caption{
+  grid-area:1 / 1;
+  transform:translateY(14px);
+  opacity:0;
+  transition:opacity .32s var(--ease), transform .5s var(--ease);
+}
+/* The incoming caption waits for the outgoing one to clear. Without the
+   delay both sit at part opacity mid-crossfade and the stacked text reads
+   as a jumble. */
+.sc-caption.is-active{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .45s var(--ease) .28s, transform .55s var(--ease) .28s;
+}
+.sc-caption-eyebrow{
+  display:block;
+  margin-bottom:14px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--brass-on-dark);
+}
+.sc-caption h2{
+  margin:0 0 12px;
+  font-family:var(--font-display);
+  font-size:clamp(24px, 2.5vw, 36px);
+  line-height:1.12;
+  letter-spacing:-.03em;
+  color:var(--paper-on-dark);
+}
+.sc-caption p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--ink-soft-on-dark);
+}
+
+/* ---- Part callouts ----
+   Two elements per callout, transformed independently: a leader line
+   pinned and rotated to the part's projected position, and a label pinned
+   to a shared alignment column. Splitting them lets a label slide
+   vertically clear of its neighbours while its leader keeps pointing
+   exactly at the part. */
+.sc-callouts{ position:absolute; inset:0; z-index:5; pointer-events:none; }
+.sc-leader{
+  position:absolute;
+  left:0; top:0;
+  height:1px;
+  transform-origin:0 50%;
+  background:linear-gradient(to right, rgba(226,205,174,.9), rgba(226,205,174,.3));
+  opacity:0;
+  transition:opacity .5s var(--ease);
+  will-change:transform, opacity, width;
+}
+/* Rotation-invariant, so it can ride on the rotated leader. */
+.sc-leader::before{
+  content:"";
+  position:absolute;
+  left:-3.5px; top:-3.5px;
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--brass-on-dark);
+  box-shadow:0 0 0 4px rgba(226,205,174,.15);
+}
+.sc-leader.is-on{ opacity:1; }
+.sc-callout{
+  position:absolute;
+  left:0; top:0;
+  padding-left:12px;
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity .5s var(--ease);
+  text-shadow:0 1px 10px rgba(3,5,11,.85);
+  will-change:transform, opacity;
+}
+.sc-callout.is-on{ opacity:1; }
+.sc-callout-title{
+  display:block;
+  font-family:var(--font-display);
+  font-size:15px;
+  letter-spacing:-.01em;
+  color:var(--paper-on-dark);
+}
+.sc-callout-sub{
+  display:block;
+  margin-top:2px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  color:rgba(199,204,222,.62);
+}
+/* ---- Act rail ---- */
+.sc-rail{
+  position:absolute;
+  right:clamp(20px, 3.4vw, 48px);
+  top:50%;
+  transform:translateY(-50%);
+  z-index:4;
+  display:flex;
+  gap:16px;
+  pointer-events:none;
+}
+.sc-rail-track{
+  position:relative;
+  width:1px;
+  background:rgba(199,204,222,.16);
+}
+.sc-rail-fill{
+  position:absolute; left:0; top:0; right:0;
+  height:0%;
+  background:var(--brass-on-dark);
+}
+.sc-rail-acts{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:22px;
+  margin:0; padding:0;
+  list-style:none;
+}
+.sc-rail-acts li{
+  display:flex;
+  align-items:baseline;
+  gap:9px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:rgba(199,204,222,.34);
+  transition:color .45s var(--ease);
+}
+.sc-rail-acts li b{ font-weight:500; color:rgba(199,204,222,.24); transition:color .45s var(--ease); }
+.sc-rail-acts li.is-on{ color:var(--paper-on-dark); }
+.sc-rail-acts li.is-on b{ color:var(--brass-on-dark); }
+
+/* ---- Scroll hint ---- */
+.sc-hint{
+  position:absolute;
+  left:0; right:0; bottom:38px;
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:9px;
+  pointer-events:none;
+  transition:opacity .5s var(--ease);
+}
+.sc-hint span{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(199,204,222,.55);
+}
+.sc-hint svg{ animation:sc-bob 2s var(--ease) infinite; }
+@keyframes sc-bob{ 0%,100%{ transform:translateY(0); opacity:.75; } 50%{ transform:translateY(7px); opacity:1; } }
+
+/* ================================================================
+   Outro
+   ================================================================ */
+.sc-outro{ position:relative; z-index:1; padding:110px 0 150px; }
+.sc-outro-inner{
+  display:grid;
+  grid-template-columns:1fr .62fr;
+  gap:56px;
+  align-items:end;
+  padding:54px clamp(28px,5vw,62px);
+  border-radius:var(--r-lg);
+  background:rgba(255,255,255,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 2px 24px -14px rgba(6,8,26,.16);
+}
+.sc-outro h2{ max-width:17ch; font-size:var(--fs-32); margin:0 0 12px; }
+.sc-outro p{ color:var(--ink-soft); font-size:15px; line-height:1.65; margin:0; }
+.sc-outro-action{ justify-self:end; }
+
+@media(max-width:900px){
+  .sc-outro-inner{ grid-template-columns:1fr; gap:24px; }
+  .sc-outro-action{ justify-self:start; }
+  .sc-rail{ display:none; }
+}
+@media(max-width:900px){
+  /* No room for a side column — the caption moves to the top of the frame
+     and the model gets the rest. */
+  .sc-captions{
+    left:24px; right:24px;
+    top:clamp(76px, 11vh, 110px);
+    width:auto;
+    transform:none;
+    text-align:center;
+  }
+  .sc-caption p{ max-width:44ch; margin:0 auto; }
+}
+@media(max-width:640px){
+  .sc-intro{ padding-top:108px; }
+  .sc-theatre{ height:380vh; }
+  .sc-callout-sub{ display:none; }
+  .sc-callout-title{ font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce){
+  .sc-hint svg{ animation:none; }
+}
+</style>
+</head>
+<body data-wst-page="about">
+
+<div data-wst-header></div>
+<main>
+
+  <section class="sc-intro">
+    <div class="container sc-intro-inner">
+      <span class="eyebrow">Engineering showcase</span>
+      <h1>Anatomy of a battery pack.</h1>
+      <p class="lead">Every pack we ship is an assembly of deliberate decisions — how cells are held, how current is carried, how heat escapes, how it all survives a decade of vibration. This is one of our production platforms, taken apart and put back together.</p>
+      <dl class="sc-intro-meta">
+        <div class="sc-meta-item"><dt>Platform</dt><dd>Compact battery platform</dd></div>
+        <div class="sc-meta-item"><dt>Cell format</dt><dd>21700 cylindrical</dd></div>
+        <div class="sc-meta-item"><dt>Source</dt><dd>Production CAD</dd></div>
+        <div class="sc-meta-item"><dt>Components</dt><dd id="scPartCount">—</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sc-theatre" id="scTheatre">
+    <div class="sc-stage">
+     <div class="sc-screen" id="scScreen">
+      <div class="sc-backdrop" aria-hidden="true"></div>
+      <canvas class="sc-canvas" id="scCanvas"></canvas>
+      <div class="sc-vignette" aria-hidden="true"></div>
+
+      <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
+
+      <div class="sc-captions" id="scCaptions">
+        <div class="sc-caption is-active" data-act="0">
+          <span class="sc-caption-eyebrow">01 — The finished pack</span>
+          <h2>What the customer receives.</h2>
+          <p>A sealed, IP-rated enclosure. Everything that matters is on the inside.</p>
+        </div>
+        <div class="sc-caption" data-act="1">
+          <span class="sc-caption-eyebrow">02 — Teardown</span>
+          <h2>Every layer, engineered.</h2>
+          <p>Lid, harness, board, busbars, cells, holders, casing — lifted apart in assembly order.</p>
+        </div>
+        <div class="sc-caption" data-act="2">
+          <span class="sc-caption-eyebrow">03 — The components</span>
+          <h2>Nothing here is off the shelf.</h2>
+          <p>Each layer is specified, sourced and validated for the application it ships into.</p>
+        </div>
+        <div class="sc-caption" data-act="3">
+          <span class="sc-caption-eyebrow">04 — Back together</span>
+          <h2>Built to be built.</h2>
+          <p>Designed so it can be assembled repeatably, at volume, without compromise.</p>
+        </div>
+      </div>
+
+      <div class="sc-rail" aria-hidden="true">
+        <div class="sc-rail-track"><div class="sc-rail-fill" id="scRailFill"></div></div>
+        <ol class="sc-rail-acts" id="scRailActs">
+          <li class="is-on"><b>01</b> Pack</li>
+          <li><b>02</b> Teardown</li>
+          <li><b>03</b> Components</li>
+          <li><b>04</b> Assembly</li>
+        </ol>
+      </div>
+
+      <div class="sc-hint" id="scHint">
+        <span>Scroll</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="sc-loader" id="scLoader">
+        <span class="sc-loader-label">Loading production model</span>
+        <span class="sc-loader-pct" id="scLoaderPct">0%</span>
+        <span class="sc-loader-bar"><span id="scLoaderBar"></span></span>
+      </div>
+     </div>
+    </div>
+  </section>
+
+  <section class="sc-outro">
+    <div class="container sc-outro-inner">
+      <div>
+        <h2>This is a real production model.</h2>
+        <p>Geometry taken straight from the CAD that goes to manufacturing — not an illustration. If you are evaluating a pack for your platform, we can walk you through yours the same way.</p>
+      </div>
+      <a class="btn btn-primary sc-outro-action" href="contact-v2.html">Talk to engineering</a>
+    </div>
+  </section>
+
+</main>
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/vendor/three.r128.min.js"></script>
+<script src="assets/vendor/fflate.min.js"></script>
+<script src="assets/vendor/FBXLoader.js"></script>
+<script src="assets/scripts/product-3d-showcase.js?v=1" defer></script>
+</body>
+</html>
