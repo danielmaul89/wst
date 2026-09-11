@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Platform Teardown | WS Technicals</title>
+<meta name="description" content="A production battery platform, shown layer by layer.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+body{ position:relative; background:var(--paper); overflow-x:hidden; }
+
+/* ================================================================
+   Intro
+   ================================================================ */
+.tw-intro{ position:relative; z-index:1; padding:136px 0 84px; }
+.tw-intro-inner{ max-width:760px; }
+.tw-intro h1{
+  max-width:14ch;
+  margin:20px 0 22px;
+  font-family:var(--font-display);
+  font-size:clamp(var(--fs-40), 5vw, var(--fs-56));
+  line-height:1.04;
+  letter-spacing:-.04em;
+}
+.tw-intro .lead{ max-width:48ch; color:var(--ink-soft); font-size:17px; line-height:1.7; }
+
+/* Specification strip — hairline rules, tabular values. */
+.tw-spec{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  margin-top:52px;
+  border-top:1px solid var(--line);
+}
+.tw-spec div{
+  padding:20px 22px 0 0;
+  border-right:1px solid var(--line);
+}
+.tw-spec div:last-child{ border-right:0; }
+.tw-spec dt{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.tw-spec dd{
+  margin:8px 0 0;
+  font-size:var(--fs-body);
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+
+/* ================================================================
+   Stage
+   ================================================================ */
+.tw-theatre{ position:relative; z-index:2; height:460vh; }
+.tw-stage{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  padding:78px clamp(14px, 2vw, 30px) clamp(14px, 2vw, 30px);
+}
+.tw-screen{
+  position:relative;
+  flex:1;
+  overflow:hidden;
+  border-radius:var(--r-lg);
+  background:#0a0b0d;
+  box-shadow:0 30px 80px -44px rgba(6,8,26,.5);
+}
+/* Neutral graphite rather than a blue-tinted studio — reads closer to a
+   product photograph and further from a 3D demo. */
+.tw-backdrop{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 64% 44% at 50% 90%, rgba(214,222,236,.10) 0%, transparent 72%),
+    radial-gradient(ellipse 104% 74% at 50% 40%, #191a1e 0%, #111216 52%, #0a0b0d 100%);
+}
+.tw-vignette{
+  position:absolute; inset:0;
+  pointer-events:none;
+  box-shadow:inset 0 0 170px 26px rgba(6,7,9,.62);
+}
+.tw-canvas{ position:absolute; inset:0; display:block; width:100%; height:100%; }
+
+/* ---- Loading ---- */
+.tw-loader{
+  position:absolute; inset:0;
+  z-index:6;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  background:#0a0b0d;
+  transition:opacity .9s var(--ease);
+}
+.tw-loader[hidden]{ display:none; }
+.tw-loader.is-done{ opacity:0; pointer-events:none; }
+.tw-loader-label{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.38);
+}
+.tw-loader-pct{
+  font-family:var(--font-mono);
+  font-size:22px;
+  letter-spacing:-.01em;
+  color:rgba(255,255,255,.86);
+  font-variant-numeric:tabular-nums;
+}
+.tw-loader-bar{
+  position:relative;
+  width:150px; height:1px;
+  background:rgba(255,255,255,.14);
+  overflow:hidden;
+}
+.tw-loader-bar span{
+  position:absolute; left:0; top:0; bottom:0;
+  width:0%;
+  background:rgba(255,255,255,.72);
+  transition:width .25s linear;
+}
+
+/* ---- Act captions ---- */
+.tw-captions{
+  position:absolute;
+  left:clamp(22px, 4.5vw, 76px);
+  top:50%;
+  z-index:4;
+  display:grid;
+  width:min(280px, 30vw);
+  transform:translateY(-50%);
+  pointer-events:none;
+  transition:opacity .6s var(--ease);
+}
+.tw-caption{
+  grid-area:1 / 1;
+  transform:translateY(10px);
+  opacity:0;
+  transition:opacity .3s var(--ease), transform .48s var(--ease);
+}
+.tw-caption.is-active{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .45s var(--ease) .26s, transform .55s var(--ease) .26s;
+}
+.tw-caption-label{
+  display:block;
+  margin-bottom:16px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.40);
+}
+.tw-caption h2{
+  margin:0 0 10px;
+  font-family:var(--font-display);
+  font-size:clamp(21px, 2vw, 28px);
+  line-height:1.16;
+  letter-spacing:-.025em;
+  color:rgba(255,255,255,.94);
+}
+.tw-caption p{
+  margin:0;
+  font-size:13.5px;
+  line-height:1.6;
+  color:rgba(255,255,255,.5);
+}
+
+/* ---- Numbered callouts ----
+   Leader and label are separate elements so a label can slide clear of a
+   neighbour while its leader keeps pointing at the part. */
+.tw-callouts{ position:absolute; inset:0; z-index:5; pointer-events:none; }
+.tw-leader{
+  position:absolute;
+  left:0; top:0;
+  height:1px;
+  transform-origin:0 50%;
+  background:rgba(255,255,255,.34);
+  opacity:0;
+  transition:opacity .5s var(--ease);
+  will-change:transform, opacity, width;
+}
+.tw-leader::before{
+  content:"";
+  position:absolute;
+  left:-2.5px; top:-2.5px;
+  width:5px; height:5px;
+  border-radius:50%;
+  background:var(--brass-on-dark);
+}
+.tw-leader.is-on{ opacity:1; }
+.tw-callout{
+  position:absolute;
+  left:0; top:0;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding-left:12px;
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity .5s var(--ease);
+  will-change:transform, opacity;
+}
+.tw-callout.is-on{ opacity:1; }
+.tw-callout-num{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.1em;
+  color:var(--brass-on-dark);
+  font-variant-numeric:tabular-nums;
+}
+.tw-callout-name{
+  font-family:var(--font-body);
+  font-size:13.5px;
+  letter-spacing:-.005em;
+  color:rgba(255,255,255,.9);
+}
+
+/* ---- Progress rail: ticks only ---- */
+.tw-rail{
+  position:absolute;
+  right:clamp(20px, 3vw, 44px);
+  top:50%;
+  transform:translateY(-50%);
+  z-index:4;
+  display:flex;
+  align-items:stretch;
+  gap:12px;
+  height:132px;
+  pointer-events:none;
+}
+.tw-rail-track{ position:relative; width:1px; background:rgba(255,255,255,.14); }
+.tw-rail-fill{ position:absolute; left:0; top:0; right:0; height:0%; background:rgba(255,255,255,.75); }
+.tw-rail-acts{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  margin:0; padding:0;
+  list-style:none;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.12em;
+}
+.tw-rail-acts li{ color:rgba(255,255,255,.26); transition:color .45s var(--ease); }
+.tw-rail-acts li.is-on{ color:var(--brass-on-dark); }
+
+/* ---- Scroll hint ---- */
+.tw-hint{
+  position:absolute;
+  left:0; right:0; bottom:30px;
+  z-index:4;
+  text-align:center;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.34);
+  pointer-events:none;
+  transition:opacity .5s var(--ease);
+}
+
+/* ================================================================
+   Outro
+   ================================================================ */
+.tw-outro{ position:relative; z-index:1; padding:104px 0 140px; }
+.tw-outro-inner{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:56px;
+  align-items:end;
+  padding-top:30px;
+  border-top:1px solid var(--line);
+}
+.tw-outro h2{
+  max-width:16ch;
+  font-family:var(--font-display);
+  font-size:var(--fs-32);
+  letter-spacing:-.03em;
+  margin:0 0 12px;
+}
+.tw-outro p{ max-width:50ch; color:var(--ink-soft); font-size:15px; line-height:1.65; margin:0; }
+
+@media(max-width:900px){
+  .tw-rail{ display:none; }
+  .tw-captions{
+    left:22px; right:22px;
+    top:clamp(70px, 10vh, 100px);
+    width:auto;
+    transform:none;
+  }
+  .tw-spec{ grid-template-columns:1fr 1fr; }
+  .tw-spec div:nth-child(2){ border-right:0; }
+  .tw-outro-inner{ grid-template-columns:1fr; gap:26px; align-items:start; }
+}
+@media(max-width:640px){
+  .tw-intro{ padding-top:110px; }
+  .tw-theatre{ height:380vh; }
+  .tw-callout-name{ font-size:12.5px; }
+}
+</style>
+</head>
+<body data-wst-page="about">
+
+<div data-wst-header></div>
+<main>
+
+  <section class="tw-intro">
+    <div class="container tw-intro-inner">
+      <span class="eyebrow">Platform teardown</span>
+      <h1>Inside a production pack.</h1>
+      <p class="lead">One of our battery platforms, shown layer by layer — from sealed enclosure to individual cell.</p>
+      <dl class="tw-spec">
+        <div><dt>Platform</dt><dd>Compact battery</dd></div>
+        <div><dt>Cell format</dt><dd>21700 cylindrical</dd></div>
+        <div><dt>Components</dt><dd id="twPartCount">—</dd></div>
+        <div><dt>Geometry</dt><dd>Production CAD</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="tw-theatre" id="twTheatre">
+    <div class="tw-stage">
+     <div class="tw-screen" id="twScreen">
+      <div class="tw-backdrop" aria-hidden="true"></div>
+      <canvas class="tw-canvas" id="twCanvas"></canvas>
+      <div class="tw-vignette" aria-hidden="true"></div>
+
+      <div class="tw-callouts" id="twCallouts" aria-hidden="true"></div>
+
+      <div class="tw-captions" id="twCaptions">
+        <div class="tw-caption is-active" data-act="0">
+          <span class="tw-caption-label">01 / Enclosure</span>
+          <h2>Sealed unit.</h2>
+          <p>IP-rated housing.</p>
+        </div>
+        <div class="tw-caption" data-act="1">
+          <span class="tw-caption-label">02 / Separation</span>
+          <h2>Seven layers.</h2>
+          <p>Lifted in assembly order.</p>
+        </div>
+        <div class="tw-caption" data-act="2">
+          <span class="tw-caption-label">03 / Components</span>
+          <h2>Every layer specified.</h2>
+          <p>Validated for the application.</p>
+        </div>
+        <div class="tw-caption" data-act="3">
+          <span class="tw-caption-label">04 / Assembly</span>
+          <h2>Repeatable at volume.</h2>
+          <p>Designed for the line.</p>
+        </div>
+      </div>
+
+      <div class="tw-rail" aria-hidden="true">
+        <div class="tw-rail-track"><div class="tw-rail-fill" id="twRailFill"></div></div>
+        <ol class="tw-rail-acts" id="twRailActs">
+          <li class="is-on">01</li><li>02</li><li>03</li><li>04</li>
+        </ol>
+      </div>
+
+      <div class="tw-hint" id="twHint">Scroll</div>
+
+      <div class="tw-loader" id="twLoader">
+        <span class="tw-loader-label">Loading model</span>
+        <span class="tw-loader-pct" id="twLoaderPct">0%</span>
+        <span class="tw-loader-bar"><span id="twLoaderBar"></span></span>
+      </div>
+     </div>
+    </div>
+  </section>
+
+  <section class="tw-outro">
+    <div class="container tw-outro-inner">
+      <div>
+        <h2>Real production geometry.</h2>
+        <p>This is the CAD that goes to manufacturing. We can take your platform through the same review.</p>
+      </div>
+      <a class="btn btn-primary" href="contact-v2.html">Talk to engineering</a>
+    </div>
+  </section>
+
+</main>
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/vendor/three.r128.min.js"></script>
+<script src="assets/vendor/fflate.min.js"></script>
+<script src="assets/vendor/FBXLoader.js"></script>
+<script src="assets/scripts/product-3d-showcase-v2.js?v=1" defer></script>
+</body>
+</html>
