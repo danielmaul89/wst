@@ -143,6 +143,38 @@
 .ov-card-tag.progress{ background:rgba(6,8,26,.055); color:var(--ink-soft); }
 .ov-card-tag.concept{ background:rgba(6,8,26,.04); color:var(--ink-faint); }
 
+/* Compact list for sub-pages — thirteen article cards would swamp the
+   directory, so these get a denser treatment that reads as subordinate to
+   the card sections above. */
+.ov-list{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:0 44px;
+}
+.ov-list a{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:18px;
+  padding:13px 2px;
+  border-bottom:1px solid var(--line-2);
+  text-decoration:none;
+  color:inherit;
+  transition:border-color var(--dur) var(--ease);
+}
+.ov-list a:hover{ border-bottom-color:var(--ink-soft); }
+.ov-list-title{ font-size:15px; line-height:1.4; color:var(--ink); letter-spacing:-.01em; }
+.ov-list-path{
+  flex:none;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--ink-faint);
+}
+
+@media (max-width:720px){
+  .ov-list{ grid-template-columns:1fr; }
+}
+
 @media (max-width:900px){
   .ov-grid-3{ grid-template-columns:1fr 1fr; }
 }
@@ -307,6 +339,49 @@
         <p>All 5 real production 3D models on one page, each with its own scroll-driven exploded-to-assembled animation, parts choreographed by name (lid, harness, busbar, etc).</p>
         <span class="ov-card-tag concept">Prototype</span>
       </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="ov-section">
+  <div class="container">
+
+    <div class="ov-section-head">
+      <h2>News &amp; stories — articles</h2>
+      <span>Individual pieces, reached from news.html</span>
+    </div>
+    <div class="ov-list">
+
+      <a href="news-anticimex.html"><span class="ov-list-title">Anticimex Fights Rodents Intelligently, Poison-Free</span><span class="ov-list-path">news-anticimex.html</span></a>
+      <a href="news-farmdroid.html"><span class="ov-list-title">FarmDroid Cultivates the Future of Agriculture</span><span class="ov-list-path">news-farmdroid.html</span></a>
+      <a href="news-liftra.html"><span class="ov-list-title">Liftra Lifts the Future of Wind Energy</span><span class="ov-list-path">news-liftra.html</span></a>
+      <a href="news-linddana.html"><span class="ov-list-title">Electric First Movers, Before the Market Was Ready</span><span class="ov-list-path">news-linddana.html</span></a>
+      <a href="news-noyes.html"><span class="ov-list-title">NOYES: Rethinking Automated Storage</span><span class="ov-list-path">news-noyes.html</span></a>
+      <a href="news-variodrive.html"><span class="ov-list-title">Vario Drive Accelerates Electrification</span><span class="ov-list-path">news-variodrive.html</span></a>
+      <a href="news-anders.html"><span class="ov-list-title">Turning Complex Requirements into Solutions</span><span class="ov-list-path">news-anders.html</span></a>
+      <a href="news-peter-bms.html"><span class="ov-list-title">Electronics at the Heart of the Battery</span><span class="ov-list-path">news-peter-bms.html</span></a>
+      <a href="news-soren-norby.html"><span class="ov-list-title">A Complex Battery Design Requires a Creative Mind</span><span class="ov-list-path">news-soren-norby.html</span></a>
+      <a href="news-qingpeng-he.html"><span class="ov-list-title">Danish Engineering Meets Chinese Battery Expertise</span><span class="ov-list-path">news-qingpeng-he.html</span></a>
+      <a href="news-louis-15-years.html"><span class="ov-list-title">When Technology Turns into Momentum</span><span class="ov-list-path">news-louis-15-years.html</span></a>
+      <a href="news-cell-contacting-system.html"><span class="ov-list-title">Bringing Cell Contacting System Development In-House</span><span class="ov-list-path">news-cell-contacting-system.html</span></a>
+      <a href="news-ibms15.html"><span class="ov-list-title">Ensuring Safety with i-BMS15 and ISO 13849</span><span class="ov-list-path">news-ibms15.html</span></a>
+
+    </div>
+  </div>
+</section>
+
+<section class="ov-section">
+  <div class="container">
+
+    <div class="ov-section-head">
+      <h2>Legacy &amp; internal</h2>
+      <span>Not part of the site — kept for reference</span>
+    </div>
+    <div class="ov-list">
+
+      <a href="index-v3.html"><span class="ov-list-title">Homepage, earlier version — superseded by index.html</span><span class="ov-list-path">index-v3.html</span></a>
+      <a href="rebuild-test.html"><span class="ov-list-title">Internal rebuild approval page</span><span class="ov-list-path">rebuild-test.html</span></a>
 
     </div>
   </div>
