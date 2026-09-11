@@ -37,8 +37,12 @@
   var railActs = document.getElementById('scRailActs');
   var hintEl = document.getElementById('scHint');
   var partCountEl = document.getElementById('scPartCount');
+  var platformEl = document.getElementById('scPlatform');
+  var cellsEl = document.getElementById('scCellFormat');
+  var nextBtn = document.getElementById('scNextBtn');
+  var switchName = document.getElementById('scSwitchName');
+  var switchIndex = document.getElementById('scSwitchIndex');
 
-  var MODEL_URL = 'assets/models/c4e.fbx';
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------------------------------------------------------------
@@ -174,6 +178,8 @@
     { test: 'cell', mat: 'cell' },
     { test: 'highstar', mat: 'cell' },
     { test: 'inr2', mat: 'cell' },
+    { test: 'eve_c', mat: 'cell' },
+    { test: 'heatpad', mat: 'soft' },
     { test: 'holder', mat: 'polymer' },
     { test: 'tray', mat: 'polymer' },
     { test: 'divider', mat: 'polymer' },
@@ -225,6 +231,7 @@
     { test: 'bms', y: 2.62 },
     { test: 'dzlr', y: 2.62 },
     { test: 'tape', y: 2.20 },
+    { test: 'heatpad', y: 2.20 },
     { test: 'eva', y: 2.20 },
     { test: 'foam', y: 2.20 },
     { test: 'rubber', y: 2.20 },
@@ -238,6 +245,7 @@
     { test: 'cell', y: 1.16 },
     { test: 'highstar', y: 1.16 },
     { test: 'inr2', y: 1.16 },
+    { test: 'eve_c', y: 1.16 },
     { test: 'bottom', y: 0.60 },
     { test: 'holder', y: 0.60 },
     { test: 'tray', y: 0.60 },
@@ -258,17 +266,44 @@
     return null;
   }
 
-  /* Callouts: one anchor mesh per real, named component. Picked by the
-     largest matching mesh so the leader line lands on the body of the
-     part, not on some incidental fastener. */
-  var CALLOUT_SPECS = [
-    { test: 'casinglid', title: 'Casing lid', sub: 'Sealed top cover' },
-    { test: 'harness', title: 'Cable harness', sub: 'Sense + power' },
-    { test: 'dzlr', title: 'BMS board', sub: 'Protection + balancing' },
-    { test: 'busbar', title: 'Busbars', sub: 'Cell interconnect' },
-    { test: 'highstar', title: '21700 cells', sub: 'Cylindrical array' },
-    { test: 'cellholder', title: 'Cell holders', sub: 'Retention + spacing' },
-    { test: 'maincasing', title: 'Main casing', sub: 'Structural enclosure' }
+  /* Each platform gets its own callout set, because the anchors are matched
+     against real mesh names out of the CAD and those are specific to the
+     model — c4e's cells are Highstar 21700s, HDR's are EVE prismatics, and
+     neither keyword finds anything in the other file. Titles are taken from
+     what the geometry is actually called, not invented.
+
+     Callouts are declared top of stack downward so the leaders read in
+     order. One anchor mesh per component, picked by largest match so the
+     line lands on the body of the part and not an incidental fastener. */
+  var MODELS = [
+    {
+      url: 'assets/models/c4e.fbx',
+      name: 'Compact battery platform',
+      cells: '21700 cylindrical',
+      callouts: [
+        { test: 'casinglid', title: 'Casing lid', sub: 'Sealed top cover' },
+        { test: 'harness', title: 'Cable harness', sub: 'Sense + power' },
+        { test: 'dzlr', title: 'BMS board', sub: 'Protection + balancing' },
+        { test: 'busbar', title: 'Busbars', sub: 'Cell interconnect' },
+        { test: 'cellholder', title: 'Cell holders', sub: 'Retention + spacing' },
+        { test: 'highstar', title: '21700 cells', sub: 'Cylindrical array' },
+        { test: 'maincasing', title: 'Main casing', sub: 'Structural enclosure' }
+      ]
+    },
+    {
+      url: 'assets/models/HDR.fbx',
+      name: 'Heavy machinery platform',
+      cells: 'EVE C40 prismatic',
+      callouts: [
+        { test: 'enclosure_lid', title: 'Enclosure lid', sub: 'Sealed top cover' },
+        { test: 'hdrcable', title: 'Power cables', sub: 'Pack terminals' },
+        { test: 'cmu_pcb', title: 'CMU board', sub: 'Cell monitoring' },
+        { test: 'heatpad', title: 'Heat pads', sub: 'Thermal interface' },
+        { test: 'busbarseries', title: 'Series busbars', sub: 'Cell interconnect' },
+        { test: 'eve_c40', title: 'EVE C40 cells', sub: 'Prismatic array' },
+        { test: 'enclosure_case', title: 'Enclosure', sub: 'Structural housing' }
+      ]
+    }
   ];
 
   /* ---------------------------------------------------------------
@@ -310,6 +345,9 @@
   var center = new THREE.Vector3();
   var distTight = 10, distWide = 20, stackRise = 1, composeBase = 0;
   var shadowMesh = null, shadowBaseScale = 1;
+  var currentObject = null;
+  var currentModel = 0;
+  var loadToken = 0;
 
   var progress = 0;      // damped
   var introMix = 1;      // 1 = intro pose, 0 = handed over to scroll
@@ -357,13 +395,55 @@
     return mesh;
   }
 
+  /* Releases a model's GPU resources before the next one takes its place.
+     Without this, switching back and forth would strand geometry and
+     textures for every model left behind. */
+  function disposeObject3D(object) {
+    object.traverse(function (child) {
+      if (!child.isMesh) return;
+      if (child.geometry) child.geometry.dispose();
+      var mats = Array.isArray(child.material) ? child.material : [child.material];
+      mats.forEach(function (mat) {
+        if (!mat) return;
+        for (var k in mat) { if (mat[k] && mat[k].isTexture) mat[k].dispose(); }
+        mat.dispose();
+      });
+    });
+  }
+
   /* ---------------------------------------------------------------
      Load + build
      --------------------------------------------------------------- */
+  function loadModel(spec) {
+    var token = ++loadToken;
+    modelReady = false;
+    if (nextBtn) nextBtn.disabled = true;
+    if (loaderEl) {
+      loaderEl.hidden = false;
+      loaderEl.classList.remove('is-done');
+      if (loaderPct) loaderPct.textContent = '0%';
+      if (loaderBar) loaderBar.style.width = '0%';
+    }
+
   new THREE.FBXLoader().load(
-    MODEL_URL,
+    spec.url,
     function (object) {
+      if (token !== loadToken) return; // a newer switch already started
       try {
+        /* Clear the outgoing model before measuring the incoming one. */
+        if (currentObject) { group.remove(currentObject); disposeObject3D(currentObject); currentObject = null; }
+        if (shadowMesh) {
+          group.remove(shadowMesh);
+          if (shadowMesh.material.map) shadowMesh.material.map.dispose();
+          shadowMesh.material.dispose();
+          shadowMesh.geometry.dispose();
+          shadowMesh = null;
+        }
+        currentObject = object;
+        parts = [];
+        callouts = [];
+        if (calloutLayer) calloutLayer.innerHTML = '';
+
         var box = new THREE.Box3().setFromObject(object);
         var size = new THREE.Vector3();
         box.getSize(size);
@@ -439,8 +519,8 @@
 
           /* Track the biggest mesh per callout keyword. */
           var lname = (child.name || '').toLowerCase();
-          for (var ci = 0; ci < CALLOUT_SPECS.length; ci++) {
-            if (lname.indexOf(CALLOUT_SPECS[ci].test) === -1) continue;
+          for (var ci = 0; ci < spec.callouts.length; ci++) {
+            if (lname.indexOf(spec.callouts[ci].test) === -1) continue;
             var b = new THREE.Box3().setFromObject(child);
             var s = new THREE.Vector3(); b.getSize(s);
             var vol = Math.max(s.x * s.y * s.z, 1e-9);
@@ -477,55 +557,80 @@
         camera.updateProjectionMatrix();
 
         /* Build callout DOM in the declared order, not discovery order. */
-        for (var k = 0; k < CALLOUT_SPECS.length; k++) {
+        for (var k = 0; k < spec.callouts.length; k++) {
           if (!candidates[k]) continue;
-          var spec = CALLOUT_SPECS[k];
+          var cs = spec.callouts[k];
           var leader = document.createElement('div');
           leader.className = 'sc-leader';
           var el = document.createElement('div');
           el.className = 'sc-callout';
           el.innerHTML =
-            '<span class="sc-callout-title">' + spec.title + '</span>' +
-            '<span class="sc-callout-sub">' + spec.sub + '</span>';
+            '<span class="sc-callout-title">' + cs.title + '</span>' +
+            '<span class="sc-callout-sub">' + cs.sub + '</span>';
           if (calloutLayer) { calloutLayer.appendChild(leader); calloutLayer.appendChild(el); }
           callouts.push({
             el: el,
             leader: leader,
             mesh: candidates[k].mesh,
             on: false,
-            ly: 0,
-            settled: false
+            ly: 0
           });
         }
 
         if (partCountEl) partCountEl.textContent = parts.length + ' parts';
+        if (platformEl) platformEl.textContent = spec.name;
+        if (cellsEl) cellsEl.textContent = spec.cells;
+        if (switchName) switchName.textContent = spec.name;
+        if (switchIndex) {
+          switchIndex.textContent =
+            ('0' + (currentModel + 1)).slice(-2) + ' / ' + ('0' + MODELS.length).slice(-2);
+        }
 
         applyLayout();
         modelReady = true;
+        /* Replay the opening assembly for the incoming model. The existing
+           hand-off cancels it immediately if the reader is already scrolled
+           into the teardown, so it only actually plays from the top. */
+        introMix = 1;
+        introDone = false;
         introStart = (window.performance || Date).now();
+        if (nextBtn) nextBtn.disabled = false;
         if (loaderEl) {
           loaderEl.classList.add('is-done');
-          setTimeout(function () { loaderEl.hidden = true; }, 950);
+          setTimeout(function () { if (token === loadToken) loaderEl.hidden = true; }, 950);
         }
       } catch (err) {
         if (loaderPct) loaderPct.textContent = 'Error';
         if (loaderBar) loaderBar.parentNode.style.display = 'none';
         var lbl = loaderEl ? loaderEl.querySelector('.sc-loader-label') : null;
         if (lbl) lbl.textContent = 'Could not display the model (' + err.message + ')';
+        if (nextBtn) nextBtn.disabled = false;
       }
     },
     function (xhr) {
-      if (!xhr.lengthComputable) return;
+      if (token !== loadToken || !xhr.lengthComputable) return;
       var pct = Math.round((xhr.loaded / xhr.total) * 100);
       if (loaderPct) loaderPct.textContent = pct + '%';
       if (loaderBar) loaderBar.style.width = pct + '%';
     },
     function () {
+      if (token !== loadToken) return;
       if (loaderPct) loaderPct.textContent = 'Error';
       var lbl = loaderEl ? loaderEl.querySelector('.sc-loader-label') : null;
       if (lbl) lbl.textContent = 'The model could not be loaded';
+      if (nextBtn) nextBtn.disabled = false;
     }
   );
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      currentModel = (currentModel + 1) % MODELS.length;
+      loadModel(MODELS[currentModel]);
+    });
+  }
+
+  loadModel(MODELS[currentModel]);
 
   /* ---------------------------------------------------------------
      Per-frame layout
