@@ -31,10 +31,6 @@
   var loaderPct = document.getElementById('scLoaderPct');
   var loaderBar = document.getElementById('scLoaderBar');
   var calloutLayer = document.getElementById('scCallouts');
-  var captionsEl = document.getElementById('scCaptions');
-  var captionEls = document.querySelectorAll('.sc-caption');
-  var railFill = document.getElementById('scRailFill');
-  var railActs = document.getElementById('scRailActs');
   var hintEl = document.getElementById('scHint');
   var partCountEl = document.getElementById('scPartCount');
   var platformEl = document.getElementById('scPlatform');
@@ -689,40 +685,12 @@
     };
   }
 
-  var lastAct = -1;
-  function setAct(act) {
-    if (act === lastAct) return;
-    lastAct = act;
-    for (var i = 0; i < captionEls.length; i++) {
-      captionEls[i].classList.toggle('is-active', Number(captionEls[i].getAttribute('data-act')) === act);
-    }
-    if (railActs) {
-      var items = railActs.children;
-      for (var j = 0; j < items.length; j++) items[j].classList.toggle('is-on', j === act);
-    }
-  }
-
-  function actFor(p) {
-    if (p < ACT_SEPARATE) return 0;
-    if (p < ACT_INSPECT) return 1;
-    if (p < ACT_ASSEMBLE) return 2;
-    return 3;
-  }
-
-  var lastCaptionDim = -1;
-
   function updateCallouts(p, w, h) {
     /* Fade in across the inspection act, one after another; clear out
        again as reassembly starts. */
     var reveal = clamp01((p - (ACT_INSPECT - 0.06)) / 0.16);
     var fade = 1 - clamp01((p - (ACT_ASSEMBLE - 0.04)) / 0.07);
 
-    /* Let the caption recede while the callouts are doing the talking —
-       otherwise the title column competes with the leader lines. */
-    if (captionsEl) {
-      var dim = Math.round((1 - reveal * fade * 0.74) * 100) / 100;
-      if (dim !== lastCaptionDim) { lastCaptionDim = dim; captionsEl.style.opacity = dim; }
-    }
     /* Pass 1 — project each anchor and decide visibility. */
     var live = [];
     for (var i = 0; i < callouts.length; i++) {
@@ -865,8 +833,6 @@
       }
 
       updateCallouts(timeline, lastW, lastH);
-      setAct(actFor(timeline));
-      if (railFill) railFill.style.height = (timeline * 100).toFixed(1) + '%';
 
       var shouldHide = raw > 0.02;
       if (shouldHide !== hintHidden && hintEl) {
