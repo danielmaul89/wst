@@ -138,14 +138,99 @@
   scene.add(fill);
 
   /* ---------------------------------------------------------------
+     Screen-space finishing: ambient occlusion and component glow.
+
+     Both are composited onto the normal on-screen render instead of
+     running the scene through an off-screen post chain. Measured here,
+     routing through render targets drops a mid-grey from 132 to 58 unless
+     a gamma step is added, and dark gradients need half-float buffers to
+     avoid banding (~150MB of GPU memory at desktop resolution). Drawing the
+     beauty pass straight to the canvas keeps native MSAA, tone mapping and
+     sRGB output exactly as before; AO is multiplied over it and the glow
+     added on top. Falls back to the plain render if the add-ons are
+     missing; AO is off on narrow screens and switches off if frames run
+     long.
+     --------------------------------------------------------------- */
+  var post = null;
+  if (THREE.SSAOPass && THREE.OutlinePass && THREE.FullScreenQuad && THREE.SSAOShader && THREE.SimplexNoise) {
+    try {
+      var aoPass = new THREE.SSAOPass(scene, camera, 2, 2);
+      /* 24-bit depth for the normal pass. At the wide exploded shot the
+         camera sits ~26 units out, where 16-bit depth steps are ~0.19
+         units — far coarser than the occlusion cut-off — so rounding noise
+         read as occlusion across the whole model. */
+      aoPass.normalRenderTarget.depthTexture.type = THREE.UnsignedIntType;
+      /* Composite through a threshold rather than the raw AO: the faint
+         veil SSAO leaves across whole parts when they are small on screen
+         is dropped, strong contact occlusion is kept and deepened.
+         Measured: the share of the model dimmed at all falls from 93% to
+         15% at the exploded shot and from 38% to 3% on the assembled shot,
+         while the deepest contact shading goes from 0.65 to 0.55. */
+      var aoComposite = aoPass.copyMaterial.clone();
+      aoComposite.uniforms = { tDiffuse: { value: null }, lo: { value: 0.08 }, hi: { value: 0.40 }, maxDark: { value: 0.50 } };
+      aoComposite.fragmentShader =
+        'uniform sampler2D tDiffuse; uniform float lo; uniform float hi; uniform float maxDark; varying vec2 vUv;\n' +
+        'void main() { float occ = smoothstep(lo, hi, 1.0 - texture2D(tDiffuse, vUv).r);' +
+        ' gl_FragColor = vec4(vec3(1.0 - occ * maxDark), 1.0); }';
+      aoComposite.blending = THREE.CustomBlending;
+      aoComposite.needsUpdate = true;
+      /* Radius and cut-off tuned by measuring rendered frames: a 0.16
+         radius with a near-zero cut-off dimmed 92% of the assembled model
+         (flat faces shading themselves); 0.34 with a 0.008 cut-off puts the
+         shading where parts meet. */
+      aoPass.kernelRadius = 0.34;
+      var glowPass = new THREE.OutlinePass(new THREE.Vector2(2, 2), scene, camera, []);
+      glowPass.visibleEdgeColor.set(0xe2cdae);
+      glowPass.hiddenEdgeColor.set(0x6b563c);
+      glowPass.edgeGlow = 1.6;
+      glowPass.edgeThickness = 2.4;
+      glowPass.edgeStrength = 0;
+      post = { ao: aoPass, composite: aoComposite, glow: glowPass, aoOn: window.innerWidth >= 900, glowOn: false, frameSum: 0, frameN: 0 };
+    } catch (postError) {
+      post = null;
+    }
+  }
+
+  function renderFrame() {
+    renderer.setRenderTarget(null);
+    renderer.render(scene, camera);
+    if (!post || !modelReady) return;
+    var autoClear = renderer.autoClear;
+    renderer.autoClear = false;
+    if (post.aoOn) {
+      var a = post.ao, u = a.ssaoMaterial.uniforms;
+      /* The camera's focal length and depth range change over the timeline
+         and per model; the pass only reads them at construction. */
+      u.cameraNear.value = camera.near;
+      u.cameraFar.value = camera.far;
+      u.cameraProjectionMatrix.value.copy(camera.projectionMatrix);
+      u.cameraInverseProjectionMatrix.value.copy(camera.projectionMatrixInverse);
+      u.kernelRadius.value = a.kernelRadius;
+      u.minDistance.value = a.minDistance;
+      u.maxDistance.value = a.maxDistance;
+      a.overrideVisibility();
+      a.renderOverride(renderer, a.normalMaterial, a.normalRenderTarget, 0x7777ff, 1.0);
+      a.restoreVisibility();
+      a.renderPass(renderer, a.ssaoMaterial, a.ssaoRenderTarget);
+      a.renderPass(renderer, a.blurMaterial, a.blurRenderTarget);
+      post.composite.uniforms.tDiffuse.value = a.blurRenderTarget.texture;
+      a.renderPass(renderer, post.composite, null); // multiplied onto the canvas
+    }
+    if (post.glowOn) post.glow.render(renderer, null, null, 0, false);
+    renderer.autoClear = autoClear;
+  }
+  /* ---------------------------------------------------------------
      Material palette, assigned by part name
      --------------------------------------------------------------- */
   function std(color, metalness, roughness) {
     return new THREE.MeshStandardMaterial({ color: color, metalness: metalness, roughness: roughness });
   }
   var MATS = {
-    casing:  std(0x171b23, 0.62, 0.44),
-    lid:     std(0x272d38, 0.70, 0.34),
+    /* Satin powder-coat: a less metallic base under a soft clearcoat, so
+       the enclosure picks up a broad, controlled sheen from the studio
+       environment instead of the hard metal glints of the internals. */
+    casing:  new THREE.MeshPhysicalMaterial({ color: 0x1a1f28, metalness: 0.35, roughness: 0.52, clearcoat: 0.55, clearcoatRoughness: 0.32 }),
+    lid:     new THREE.MeshPhysicalMaterial({ color: 0x2a303b, metalness: 0.40, roughness: 0.46, clearcoat: 0.60, clearcoatRoughness: 0.28 }),
     polymer: std(0x2b303b, 0.10, 0.82),
     cell:    std(0xb9c0ca, 0.92, 0.26),
     busbar:  std(0xc08842, 0.94, 0.24),
@@ -321,6 +406,13 @@
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    if (post) {
+      /* AO at half resolution (it is blurred anyway); the glow's mask and
+         edge buffers at three-quarters. */
+      var db = renderer.getDrawingBufferSize(new THREE.Vector2());
+      post.ao.setSize(Math.max(1, Math.round(db.x / 2)), Math.max(1, Math.round(db.y / 2)));
+      post.glow.setSize(Math.max(1, Math.round(db.x * 0.75)), Math.max(1, Math.round(db.y * 0.75)));
+    }
   }
   resize();
   if ('ResizeObserver' in window) new ResizeObserver(resize).observe(stage);
@@ -376,14 +468,16 @@
      softer than a shadow map over 280 meshes, and it is what grounds the
      pack instead of leaving it floating in black. */
   function makeContactShadow(radius, floorY) {
-    var size = 256;
+    var size = 512;
     var c = document.createElement('canvas');
     c.width = c.height = size;
     var ctx = c.getContext('2d');
     var g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-    g.addColorStop(0, 'rgba(0,0,0,0.85)');
-    g.addColorStop(0.45, 'rgba(0,0,0,0.34)');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
+    /* Many stops approximating a gaussian falloff: a firm core where the
+       pack meets the floor, then a long soft penumbra. Three stops read as
+       a hard-edged disc. */
+    [[0, 0.9], [0.12, 0.82], [0.26, 0.6], [0.4, 0.36], [0.55, 0.18], [0.7, 0.08], [0.85, 0.025], [1, 0]]
+      .forEach(function (s) { g.addColorStop(s[0], 'rgba(0,0,0,' + s[1] + ')'); });
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, size, size);
     var tex = new THREE.CanvasTexture(c);
@@ -451,6 +545,7 @@
         currentObject = object;
         parts = [];
         callouts = [];
+        if (post) { post.glow.selectedObjects = []; post.glowOn = false; }
         if (calloutLayer) calloutLayer.innerHTML = '';
 
         var box = new THREE.Box3().setFromObject(object);
@@ -476,6 +571,7 @@
         var UP = new THREE.Vector3(0, 1, 0);
 
         var candidates = {};
+        var groupsByCallout = {};
         var index = 0;
 
         object.traverse(function (child) {
@@ -532,6 +628,7 @@
           var lname = (child.name || '').toLowerCase();
           for (var ci = 0; ci < spec.callouts.length; ci++) {
             if (lname.indexOf(spec.callouts[ci].test) === -1) continue;
+            (groupsByCallout[ci] = groupsByCallout[ci] || []).push(child);
             var b = new THREE.Box3().setFromObject(child);
             var s = new THREE.Vector3(); b.getSize(s);
             var vol = Math.max(s.x * s.y * s.z, 1e-9);
@@ -659,8 +756,20 @@
         /* Nudges the assembled pack below the caption. */
         composeBase = halfH * 0.20;
         camera.near = Math.max(0.01, distTight / 140);
-        camera.far = distWide * 24;
+        /* Just enough depth range for the widest shot. A far plane 24x too
+           deep squeezes the whole model into a sliver of the depth buffer,
+           and AO compares depths in that normalized range. */
+        camera.far = distWide * 4;
         camera.updateProjectionMatrix();
+        if (post) {
+          /* The shader's distance cut-offs are fractions of the depth range,
+             so derive them from world sizes: ignore depth differences under
+             0.008 units (a flat face occluding itself) and stop gathering
+             beyond ~0.35 units, about half a cell diameter. */
+          var depthSpan = camera.far - camera.near;
+          post.ao.minDistance = 0.008 / depthSpan;
+          post.ao.maxDistance = 0.35 / depthSpan;
+        }
 
         /* Build callout DOM in the declared order, not discovery order. */
         for (var k = 0; k < spec.callouts.length; k++) {
@@ -678,8 +787,13 @@
             el: el,
             leader: leader,
             mesh: candidates[k].mesh,
+            /* Every mesh of the component, so the glow outlines the whole
+               thing (all 48 cells), not just the one anchor mesh. */
+            meshes: groupsByCallout[k] || [candidates[k].mesh],
             on: false,
-            ly: 0
+            ly: 0,
+            draw: 0,
+            emph: null
           });
         }
 
@@ -781,24 +895,53 @@
     }
   }
 
+  /* Camera path. Easing each segment separately (smoothstep between
+     neighbouring keys) brings the camera to a standstill at every keyframe,
+     which reads as stop-start. Instead each channel is a single
+     monotone cubic through all keys (Fritsch–Carlson): velocity is
+     continuous through the keys, it still passes exactly through them, and
+     unlike a Catmull-Rom it never overshoots a key — the zoom or azimuth
+     cannot swing past the framing it was set to. Zero tangents at both ends
+     keep the gentle start and landing. */
+  var CAM_CHANNELS = ['az', 'pol', 'zoom', 'fov'];
+  var camTangents = (function () {
+    var n = CAM_KEYS.length, out = {};
+    CAM_CHANNELS.forEach(function (ch) {
+      var d = [], m = new Array(n);
+      for (var i = 0; i < n - 1; i++) {
+        d.push((CAM_KEYS[i + 1][ch] - CAM_KEYS[i][ch]) / (CAM_KEYS[i + 1].at - CAM_KEYS[i].at));
+      }
+      m[0] = 0;
+      m[n - 1] = 0;
+      for (var j = 1; j < n - 1; j++) m[j] = d[j - 1] * d[j] <= 0 ? 0 : (d[j - 1] + d[j]) / 2;
+      for (var k = 0; k < n - 1; k++) {
+        if (d[k] === 0) { m[k] = 0; m[k + 1] = 0; continue; }
+        var a = m[k] / d[k], b = m[k + 1] / d[k], s = a * a + b * b;
+        if (s > 9) { var t = 3 / Math.sqrt(s); m[k] = t * a * d[k]; m[k + 1] = t * b * d[k]; }
+      }
+      out[ch] = m;
+    });
+    return out;
+  })();
+
   function sampleCamera(p) {
-    var a = CAM_KEYS[0], b = CAM_KEYS[CAM_KEYS.length - 1];
-    for (var i = 0; i < CAM_KEYS.length - 1; i++) {
-      if (p >= CAM_KEYS[i].at && p <= CAM_KEYS[i + 1].at) { a = CAM_KEYS[i]; b = CAM_KEYS[i + 1]; break; }
-      if (p < CAM_KEYS[0].at) { a = b = CAM_KEYS[0]; break; }
-      if (p > CAM_KEYS[CAM_KEYS.length - 1].at) { a = b = CAM_KEYS[CAM_KEYS.length - 1]; break; }
+    var n = CAM_KEYS.length;
+    if (p < CAM_KEYS[0].at) p = CAM_KEYS[0].at;
+    if (p > CAM_KEYS[n - 1].at) p = CAM_KEYS[n - 1].at;
+    var i = 0;
+    while (i < n - 2 && p > CAM_KEYS[i + 1].at) i++;
+    var a = CAM_KEYS[i], b = CAM_KEYS[i + 1], h = b.at - a.at;
+    var t = h > 0 ? (p - a.at) / h : 0, t2 = t * t, t3 = t2 * t;
+    var h00 = 2 * t3 - 3 * t2 + 1, h10 = t3 - 2 * t2 + t, h01 = -2 * t3 + 3 * t2, h11 = t3 - t2;
+    var out = {};
+    for (var c = 0; c < CAM_CHANNELS.length; c++) {
+      var ch = CAM_CHANNELS[c];
+      out[ch] = h00 * a[ch] + h10 * h * camTangents[ch][i] + h01 * b[ch] + h11 * h * camTangents[ch][i + 1];
     }
-    var span = b.at - a.at;
-    var k = span <= 0 ? 0 : smoothstep(clamp01((p - a.at) / span));
-    return {
-      az: a.az + (b.az - a.az) * k,
-      pol: a.pol + (b.pol - a.pol) * k,
-      zoom: a.zoom + (b.zoom - a.zoom) * k,
-      fov: a.fov + (b.fov - a.fov) * k
-    };
+    return out;
   }
 
-  function updateCallouts(p, w, h) {
+  function updateCallouts(p, w, h, dt) {
     /* Fade in across the inspection act, one after another; clear out
        again as reassembly starts. */
     var reveal = clamp01((p - (ACT_INSPECT - 0.06)) / 0.16);
@@ -819,9 +962,16 @@
         c.on = on;
         c.el.classList.toggle('is-on', on);
         c.leader.classList.toggle('is-on', on);
-        if (!on) c.settled = false;
+        if (!on) {
+          c.draw = 0;
+          c.leader.style.opacity = '';
+          c.leader.style.width = '0px';
+          c.el.style.opacity = '';
+        }
       }
       if (!on) continue;
+      c.draw = Math.min(1, c.draw + (dt || 1 / 60) / 0.55);
+      c.leader.style.opacity = '1';
       c.ax = (_v.x * 0.5 + 0.5) * w;
       c.ay = (1 - (_v.y * 0.5 + 0.5)) * h;
       live.push(c);
@@ -855,11 +1005,15 @@
       var dy = d.ly - d.ay;
       var len = Math.sqrt(dx * dx + dy * dy);
       var ang = Math.atan2(dy, dx);
-      d.leader.style.width = len.toFixed(1) + 'px';
+      /* Draw-in: the leader grows out from the part to its label and the
+         label settles in from a short offset, rather than both just fading. */
+      var dr = easeOutCubic(reduceMotion ? 1 : d.draw);
+      d.leader.style.width = (len * dr).toFixed(1) + 'px';
       d.leader.style.transform =
         'translate(' + d.ax.toFixed(1) + 'px,' + d.ay.toFixed(1) + 'px) rotate(' + ang.toFixed(4) + 'rad)';
       d.el.style.transform =
-        'translate(' + colX.toFixed(1) + 'px,' + d.ly.toFixed(1) + 'px) translateY(-50%)';
+        'translate(' + (colX + (1 - dr) * 14).toFixed(1) + 'px,' + d.ly.toFixed(1) + 'px) translateY(-50%)';
+      d.el.style.opacity = d.emph === null ? '' : d.emph.toFixed(2);
     }
   }
 
@@ -876,16 +1030,37 @@
   }
 
   var hintHidden = false;
+  var lastFrameAt = 0;
 
   function frame() {
     requestAnimationFrame(frame);
     if (!inView()) return;
     resize();
 
+    var now = (window.performance || Date).now();
+    var dt = lastFrameAt ? Math.min(0.1, (now - lastFrameAt) / 1000) : 1 / 60;
+    lastFrameAt = now;
+
+    /* Adaptive quality: if frames consistently run long (below ~34fps
+       over two seconds), drop AO — it costs an extra scene render. Gaps of
+       90ms or more are a backgrounded or throttled tab, not GPU load, and
+       are left out of the average. */
+    if (post && post.aoOn && dt < 0.09) {
+      post.frameSum += dt;
+      post.frameN++;
+      if (post.frameN >= 120) {
+        if (post.frameSum / post.frameN > 0.029) post.aoOn = false;
+        post.frameSum = 0;
+        post.frameN = 0;
+      }
+    }
+
     var raw = scrollProgress();
-    /* Damped scrub — the weight is what makes it feel directed rather
-       than nervously tracking the scrollbar. */
-    progress += (raw - progress) * (reduceMotion ? 1 : 0.09);
+    /* Damped scrub, integrated against real elapsed time so it settles at
+       the same speed on 60Hz and 120Hz displays — a fixed per-frame lerp
+       runs twice as fast on a 120Hz screen. 5.66/s equals the previous
+       0.09-per-frame weight at 60fps. */
+    progress += (raw - progress) * (reduceMotion ? 1 : 1 - Math.exp(-5.66 * dt));
 
     if (modelReady && !introDone) {
       var elapsed = (window.performance || Date).now() - introStart;
@@ -949,7 +1124,30 @@
         shadowMesh.scale.set(s, s, 1);
       }
 
-      updateCallouts(timeline, lastW, lastH);
+      /* Component glow walks down the stack through the inspection act, in
+         step with the labels: each component gets a slot in which the glow
+         ramps up, holds, and hands over to the next, while its label comes
+         forward and the others recede. */
+      var GLOW_FROM = 0.505, GLOW_TO = 0.70;
+      var glowIdx = -1, glowAmt = 0;
+      if (post && callouts.length && introDone && timeline > GLOW_FROM && timeline < GLOW_TO) {
+        var gf = (timeline - GLOW_FROM) / (GLOW_TO - GLOW_FROM) * callouts.length;
+        glowIdx = Math.min(callouts.length - 1, Math.floor(gf));
+        var gu = gf - glowIdx;
+        glowAmt = smoothstep(clamp01(gu / 0.22)) * smoothstep(clamp01((1 - gu) / 0.22));
+      }
+      for (var gi = 0; gi < callouts.length; gi++) {
+        callouts[gi].emph = glowIdx < 0 ? null : (gi === glowIdx ? 0.45 + 0.55 * glowAmt : 0.45);
+      }
+      if (post) {
+        post.glowOn = glowIdx >= 0 && glowAmt > 0.01;
+        if (post.glowOn) {
+          post.glow.selectedObjects = callouts[glowIdx].meshes;
+          post.glow.edgeStrength = 3.2 * glowAmt;
+        }
+      }
+
+      updateCallouts(timeline, lastW, lastH, dt);
 
       var shouldHide = raw > 0.02;
       if (shouldHide !== hintHidden && hintEl) {
@@ -958,7 +1156,7 @@
       }
     }
 
-    renderer.render(scene, camera);
+    renderFrame();
   }
   frame();
 })();
