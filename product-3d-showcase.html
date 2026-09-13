@@ -133,60 +133,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
   font-variant-numeric:tabular-nums;
 }
 
-/* ---- Act captions ----
-   A left-hand title column rather than a centred banner: the product is a
-   tall vertical stack once it comes apart, so the middle of the frame has
-   to stay clear. Children are grid-stacked in one cell so they cross-fade
-   in place and the column centres on its tallest caption. */
-.sc-captions{
-  position:absolute;
-  left:clamp(24px, 5.5vw, 92px);
-  top:50%;
-  z-index:4;
-  display:grid;
-  width:min(330px, 32vw);
-  transform:translateY(-50%);
-  pointer-events:none;
-  transition:opacity .6s var(--ease);
-}
-.sc-caption{
-  grid-area:1 / 1;
-  transform:translateY(14px);
-  opacity:0;
-  transition:opacity .32s var(--ease), transform .5s var(--ease);
-}
-/* The incoming caption waits for the outgoing one to clear. Without the
-   delay both sit at part opacity mid-crossfade and the stacked text reads
-   as a jumble. */
-.sc-caption.is-active{
-  opacity:1;
-  transform:translateY(0);
-  transition:opacity .45s var(--ease) .28s, transform .55s var(--ease) .28s;
-}
-.sc-caption-eyebrow{
-  display:block;
-  margin-bottom:14px;
-  font-family:var(--font-mono);
-  font-size:11px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--brass-on-dark);
-}
-.sc-caption h2{
-  margin:0 0 12px;
-  font-family:var(--font-display);
-  font-size:clamp(24px, 2.5vw, 36px);
-  line-height:1.12;
-  letter-spacing:-.03em;
-  color:var(--paper-on-dark);
-}
-.sc-caption p{
-  margin:0;
-  font-size:14px;
-  line-height:1.6;
-  color:var(--ink-soft-on-dark);
-}
-
 /* ---- Part callouts ----
    Two elements per callout, transformed independently: a leader line
    pinned and rotated to the part's projected position, and a label pinned
@@ -242,50 +188,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
   text-transform:uppercase;
   color:rgba(199,204,222,.62);
 }
-/* ---- Act rail ---- */
-.sc-rail{
-  position:absolute;
-  right:clamp(20px, 3.4vw, 48px);
-  top:50%;
-  transform:translateY(-50%);
-  z-index:4;
-  display:flex;
-  gap:16px;
-  pointer-events:none;
-}
-.sc-rail-track{
-  position:relative;
-  width:1px;
-  background:rgba(199,204,222,.16);
-}
-.sc-rail-fill{
-  position:absolute; left:0; top:0; right:0;
-  height:0%;
-  background:var(--brass-on-dark);
-}
-.sc-rail-acts{
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  gap:22px;
-  margin:0; padding:0;
-  list-style:none;
-}
-.sc-rail-acts li{
-  display:flex;
-  align-items:baseline;
-  gap:9px;
-  font-family:var(--font-mono);
-  font-size:10.5px;
-  letter-spacing:.11em;
-  text-transform:uppercase;
-  color:rgba(199,204,222,.34);
-  transition:color .45s var(--ease);
-}
-.sc-rail-acts li b{ font-weight:500; color:rgba(199,204,222,.24); transition:color .45s var(--ease); }
-.sc-rail-acts li.is-on{ color:var(--paper-on-dark); }
-.sc-rail-acts li.is-on b{ color:var(--brass-on-dark); }
-
 /* ---- Model switcher ----
    Sits bottom-left on the caption column's axis, so it reads as part of the
    same text rail rather than floating over the product. */
@@ -373,19 +275,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 @media(max-width:900px){
   .sc-outro-inner{ grid-template-columns:1fr; gap:24px; }
   .sc-outro-action{ justify-self:start; }
-  .sc-rail{ display:none; }
-}
-@media(max-width:900px){
-  /* No room for a side column — the caption moves to the top of the frame
-     and the model gets the rest. */
-  .sc-captions{
-    left:24px; right:24px;
-    top:clamp(76px, 11vh, 110px);
-    width:auto;
-    transform:none;
-    text-align:center;
-  }
-  .sc-caption p{ max-width:44ch; margin:0 auto; }
   .sc-switch{
     left:20px; right:20px;
     bottom:22px;
@@ -433,39 +322,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 
       <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
 
-      <div class="sc-captions" id="scCaptions">
-        <div class="sc-caption is-active" data-act="0">
-          <span class="sc-caption-eyebrow">01 — The finished pack</span>
-          <h2>What the customer receives.</h2>
-          <p>A sealed, IP-rated enclosure. Everything that matters is on the inside.</p>
-        </div>
-        <div class="sc-caption" data-act="1">
-          <span class="sc-caption-eyebrow">02 — Teardown</span>
-          <h2>Every layer, engineered.</h2>
-          <p>Lid, harness, board, busbars, cells, holders, casing — lifted apart in assembly order.</p>
-        </div>
-        <div class="sc-caption" data-act="2">
-          <span class="sc-caption-eyebrow">03 — The components</span>
-          <h2>Nothing here is off the shelf.</h2>
-          <p>Each layer is specified, sourced and validated for the application it ships into.</p>
-        </div>
-        <div class="sc-caption" data-act="3">
-          <span class="sc-caption-eyebrow">04 — Back together</span>
-          <h2>Built to be built.</h2>
-          <p>Designed so it can be assembled repeatably, at volume, without compromise.</p>
-        </div>
-      </div>
-
-      <div class="sc-rail" aria-hidden="true">
-        <div class="sc-rail-track"><div class="sc-rail-fill" id="scRailFill"></div></div>
-        <ol class="sc-rail-acts" id="scRailActs">
-          <li class="is-on"><b>01</b> Pack</li>
-          <li><b>02</b> Teardown</li>
-          <li><b>03</b> Components</li>
-          <li><b>04</b> Assembly</li>
-        </ol>
-      </div>
-
       <div class="sc-switch">
         <span class="sc-switch-index" id="scSwitchIndex">01 / 02</span>
         <span class="sc-switch-name" id="scSwitchName">Loading</span>
@@ -506,6 +362,6 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 <script src="assets/vendor/three.r128.min.js"></script>
 <script src="assets/vendor/fflate.min.js"></script>
 <script src="assets/vendor/FBXLoader.js"></script>
-<script src="assets/scripts/product-3d-showcase.js?v=2" defer></script>
+<script src="assets/scripts/product-3d-showcase.js?v=3" defer></script>
 </body>
 </html>
