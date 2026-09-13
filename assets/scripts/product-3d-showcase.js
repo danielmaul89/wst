@@ -347,6 +347,7 @@
   var center = new THREE.Vector3();
   var distTight = 10, distWide = 20, stackRise = 1, composeBase = 0;
   var shadowMesh = null, shadowBaseScale = 1;
+  var occluder = null;
   var currentObject = null;
   var currentModel = 0;
   var loadToken = 0;
@@ -434,6 +435,12 @@
       try {
         /* Clear the outgoing model before measuring the incoming one. */
         if (currentObject) { group.remove(currentObject); disposeObject3D(currentObject); currentObject = null; }
+        if (occluder) {
+          group.remove(occluder);
+          occluder.geometry.dispose();
+          occluder.material.dispose();
+          occluder = null;
+        }
         if (shadowMesh) {
           group.remove(shadowMesh);
           if (shadowMesh.material.map) shadowMesh.material.map.dispose();
@@ -553,6 +560,79 @@
                            pb.min.z >= anchorBox.min.z - eps && pb.max.z <= anchorBox.max.z + eps;
             if (insideXZ && pb.min.y < anchorBox.max.y) {
               pp.clearT = clamp01((anchorBox.max.y - pb.min.y) / pp.dist);
+            }
+          }
+        }
+
+        /* Inner shell. The casing export has genuine openings — its side
+           panels are open skins and the shell has thousands of unstitched
+           edges; welding does not close them (they stay open at every
+           tolerance until real detail starts collapsing). Instead a rounded
+           shell in the casing material is placed inside the wall thickness
+           while the pack is fully assembled, so an opening reads as
+           continuous casing rather than bright cells behind it. It is sized from this
+           model's own casing: halfway between the internals and the outer
+           wall on each axis, with its corner radius pulled in far enough to
+           stay inside the casing's rounded corners. Skipped when a model
+           leaves no room for it. */
+        if (!anchorBox.isEmpty()) {
+          var ac = new THREE.Vector3(); anchorBox.getCenter(ac);
+          var ah = new THREE.Vector3(); anchorBox.getSize(ah).multiplyScalar(0.5);
+          var ePad = Math.max(ah.x, ah.z) * 0.02;
+          var inner = new THREE.Box3();
+          for (var oi = 0; oi < parts.length; oi++) {
+            if (parts[oi].anchor) continue;
+            var ob = new THREE.Box3().setFromObject(parts[oi].mesh);
+            var ocy = (ob.min.y + ob.max.y) / 2;
+            if (ob.min.x >= anchorBox.min.x - ePad && ob.max.x <= anchorBox.max.x + ePad &&
+                ob.min.z >= anchorBox.min.z - ePad && ob.max.z <= anchorBox.max.z + ePad &&
+                ocy < anchorBox.max.y - ah.y * 0.1) inner.union(ob);
+          }
+
+          var outerX = 0, outerZ = 0, outerDiag = 0, wv = new THREE.Vector3();
+          var yLo = anchorBox.min.y + ah.y * 0.7, yHi = anchorBox.max.y - ah.y * 0.7;
+          for (var aj = 0; aj < parts.length; aj++) {
+            if (!parts[aj].anchor) continue;
+            var am = parts[aj].mesh, ap = am.geometry.attributes.position;
+            for (var vi = 0; vi < ap.count; vi++) {
+              wv.fromBufferAttribute(ap, vi).applyMatrix4(am.matrixWorld);
+              if (wv.y < yLo || wv.y > yHi) continue;
+              var wdx = Math.abs(wv.x - ac.x), wdz = Math.abs(wv.z - ac.z);
+              if (wdx > outerX) outerX = wdx;
+              if (wdz > outerZ) outerZ = wdz;
+              if (wdx + wdz > outerDiag) outerDiag = wdx + wdz;
+            }
+          }
+
+          if (!inner.isEmpty()) {
+            var icx = Math.max(Math.abs(inner.min.x - ac.x), Math.abs(inner.max.x - ac.x));
+            var icz = Math.max(Math.abs(inner.min.z - ac.z), Math.abs(inner.max.z - ac.z));
+            var halfX = (icx + outerX) / 2, halfZ = (icz + outerZ) / 2;
+            var cornerR = (outerX + outerZ - outerDiag) / (2 - Math.SQRT2);
+            var r2 = cornerR - Math.max(outerX - halfX, outerZ - halfZ) - Math.min(outerX, outerZ) * 0.01;
+            r2 = Math.max(0, Math.min(r2, halfX, halfZ));
+            if (halfX > icx && halfX < outerX && halfZ > icz && halfZ < outerZ) {
+              var shape = new THREE.Shape();
+              shape.moveTo(-halfX + r2, -halfZ);
+              shape.lineTo(halfX - r2, -halfZ);
+              shape.absarc(halfX - r2, -halfZ + r2, r2, -Math.PI / 2, 0, false);
+              shape.lineTo(halfX, halfZ - r2);
+              shape.absarc(halfX - r2, halfZ - r2, r2, 0, Math.PI / 2, false);
+              shape.lineTo(-halfX + r2, halfZ);
+              shape.absarc(-halfX + r2, halfZ - r2, r2, Math.PI / 2, Math.PI, false);
+              shape.lineTo(-halfX, -halfZ + r2);
+              shape.absarc(-halfX + r2, -halfZ + r2, r2, Math.PI, Math.PI * 1.5, false);
+              var oy0 = anchorBox.min.y + ah.y * 0.06, oy1 = anchorBox.max.y - ah.y * 0.06;
+              var og = new THREE.ExtrudeGeometry(shape, { depth: oy1 - oy0, bevelEnabled: false, curveSegments: 12 });
+              og.rotateX(-Math.PI / 2);
+              og.translate(ac.x, oy0, ac.z);
+              /* Same lit material as the casing, not a dark fill: the openings
+                 are large enough that a dark shell shows as seams. Sitting
+                 just behind the wall at the same orientation, it shades like
+                 the wall, so an opening reads as continuous casing. */
+              occluder = new THREE.Mesh(og, MATS.casing.clone());
+              occluder.visible = false;
+              group.add(occluder);
             }
           }
         }
@@ -858,6 +938,10 @@
          held down by the casing, which never leaves the floor. */
       _target.set(center.x, center.y + composeBase + reach * stackRise * 0.52, center.z);
       camera.lookAt(_target);
+
+      /* Only while every part is seated — the lid is the first thing to
+         move, so the shell is gone before the inside can be seen. */
+      if (occluder) occluder.visible = reach < 0.002;
 
       if (shadowMesh) {
         shadowMesh.material.opacity = 0.8 * (1 - avg * 0.72);
