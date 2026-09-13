@@ -180,11 +180,19 @@
          shading where parts meet. */
       aoPass.kernelRadius = 0.34;
       var glowPass = new THREE.OutlinePass(new THREE.Vector2(2, 2), scene, camera, []);
+      /* Kept faint and diffuse — a haze around the part rather than an
+         outline. The wide quarter-resolution blur carries most of it, the
+         crisp edge is barely there, and edges hidden behind other parts
+         glow only a trace. */
       glowPass.visibleEdgeColor.set(0xe2cdae);
-      glowPass.hiddenEdgeColor.set(0x6b563c);
-      glowPass.edgeGlow = 1.6;
-      glowPass.edgeThickness = 2.4;
+      glowPass.hiddenEdgeColor.set(0x1c1710);
+      glowPass.edgeGlow = 3.0;
+      glowPass.edgeThickness = 4.0;
       glowPass.edgeStrength = 0;
+      /* Blur at quarter resolution rather than half: the pass's blur
+         kernels are fixed in texels, so this doubles how far the haze
+         spreads on screen without making it any brighter. */
+      glowPass.downSampleRatio = 4;
       post = { ao: aoPass, composite: aoComposite, glow: glowPass, aoOn: window.innerWidth >= 900, glowOn: false, frameSum: 0, frameN: 0 };
     } catch (postError) {
       post = null;
@@ -218,8 +226,7 @@
     }
     if (post.glowOn) post.glow.render(renderer, null, null, 0, false);
     renderer.autoClear = autoClear;
-  }
-  /* ---------------------------------------------------------------
+  }  /* ---------------------------------------------------------------
      Material palette, assigned by part name
      --------------------------------------------------------------- */
   function std(color, metalness, roughness) {
@@ -664,14 +671,11 @@
         /* Inner shell. The casing export has genuine openings — its side
            panels are open skins and the shell has thousands of unstitched
            edges; welding does not close them (they stay open at every
-           tolerance until real detail starts collapsing). Instead a rounded
-           shell in the casing material is placed inside the wall thickness
-           while the pack is fully assembled, so an opening reads as
-           continuous casing rather than bright cells behind it. It is sized from this
-           model's own casing: halfway between the internals and the outer
-           wall on each axis, with its corner radius pulled in far enough to
-           stay inside the casing's rounded corners. Skipped when a model
-           leaves no room for it. */
+           tolerance until real detail starts collapsing). Instead a shell in
+           the casing material, shaped to the wall's own taper and corners,
+           sits just inside it while the pack is fully assembled, so a gap
+           reads as continuous casing rather than bright cells behind it.
+           Skipped when a model leaves no room for it. */
         if (!anchorBox.isEmpty()) {
           var ac = new THREE.Vector3(); anchorBox.getCenter(ac);
           var ah = new THREE.Vector3(); anchorBox.getSize(ah).multiplyScalar(0.5);
@@ -686,48 +690,172 @@
                 ocy < anchorBox.max.y - ah.y * 0.1) inner.union(ob);
           }
 
-          var outerX = 0, outerZ = 0, outerDiag = 0, wv = new THREE.Vector3();
-          var yLo = anchorBox.min.y + ah.y * 0.7, yHi = anchorBox.max.y - ah.y * 0.7;
-          for (var aj = 0; aj < parts.length; aj++) {
-            if (!parts[aj].anchor) continue;
-            var am = parts[aj].mesh, ap = am.geometry.attributes.position;
-            for (var vi = 0; vi < ap.count; vi++) {
-              wv.fromBufferAttribute(ap, vi).applyMatrix4(am.matrixWorld);
-              if (wv.y < yLo || wv.y > yHi) continue;
-              var wdx = Math.abs(wv.x - ac.x), wdz = Math.abs(wv.z - ac.z);
-              if (wdx > outerX) outerX = wdx;
-              if (wdz > outerZ) outerZ = wdz;
-              if (wdx + wdz > outerDiag) outerDiag = wdx + wdz;
-            }
-          }
-
           if (!inner.isEmpty()) {
             var icx = Math.max(Math.abs(inner.min.x - ac.x), Math.abs(inner.max.x - ac.x));
             var icz = Math.max(Math.abs(inner.min.z - ac.z), Math.abs(inner.max.z - ac.z));
-            var halfX = (icx + outerX) / 2, halfZ = (icz + outerZ) / 2;
-            var cornerR = (outerX + outerZ - outerDiag) / (2 - Math.SQRT2);
-            var r2 = cornerR - Math.max(outerX - halfX, outerZ - halfZ) - Math.min(outerX, outerZ) * 0.01;
-            r2 = Math.max(0, Math.min(r2, halfX, halfZ));
-            if (halfX > icx && halfX < outerX && halfZ > icz && halfZ < outerZ) {
-              var shape = new THREE.Shape();
-              shape.moveTo(-halfX + r2, -halfZ);
-              shape.lineTo(halfX - r2, -halfZ);
-              shape.absarc(halfX - r2, -halfZ + r2, r2, -Math.PI / 2, 0, false);
-              shape.lineTo(halfX, halfZ - r2);
-              shape.absarc(halfX - r2, halfZ - r2, r2, 0, Math.PI / 2, false);
-              shape.lineTo(-halfX + r2, halfZ);
-              shape.absarc(-halfX + r2, halfZ - r2, r2, Math.PI / 2, Math.PI, false);
-              shape.lineTo(-halfX, -halfZ + r2);
-              shape.absarc(-halfX + r2, -halfZ + r2, r2, Math.PI, Math.PI * 1.5, false);
-              var oy0 = anchorBox.min.y + ah.y * 0.06, oy1 = anchorBox.max.y - ah.y * 0.06;
-              var og = new THREE.ExtrudeGeometry(shape, { depth: oy1 - oy0, bevelEnabled: false, curveSegments: 12 });
-              og.rotateX(-Math.PI / 2);
-              og.translate(ac.x, oy0, ac.z);
-              /* Same lit material as the casing, not a dark fill: the openings
-                 are large enough that a dark shell shows as seams. Sitting
-                 just behind the wall at the same orientation, it shades like
-                 the wall, so an opening reads as continuous casing. */
+
+            /* Measure the outer wall with horizontal rays, not from vertices:
+               a flat face has almost no vertices at mid-height, so a vertex
+               scan finds whatever inner sheet is densest instead of the
+               outside (on c4e, a perforated sheet ~2 units behind the front
+               face). Per height band, rays go from the casing centre along
+               ±X, ±Z and towards the four corners; the furthest hit is the
+               outer surface. Three side-by-side rays per direction, median
+               taken, so a ray that passes through one of the export's slits
+               is outvoted. Triangles are bucketed by band first so each ray
+               only tests the wall at its own height. */
+            var BANDS = 16;
+            var yA = anchorBox.min.y, yH = Math.max(anchorBox.max.y - yA, 1e-6);
+            var tris = [], buckets = [];
+            for (var bi = 0; bi < BANDS; bi++) buckets.push([]);
+            var va = new THREE.Vector3(), vb = new THREE.Vector3(), vc = new THREE.Vector3();
+            for (var aj = 0; aj < parts.length; aj++) {
+              if (!parts[aj].anchor) continue;
+              var am = parts[aj].mesh, ag = am.geometry, ap = ag.attributes.position, aix = ag.index;
+              var triCount = aix ? aix.count / 3 : ap.count / 3;
+              for (var ti = 0; ti < triCount; ti++) {
+                va.fromBufferAttribute(ap, aix ? aix.getX(ti * 3) : ti * 3).applyMatrix4(am.matrixWorld);
+                vb.fromBufferAttribute(ap, aix ? aix.getX(ti * 3 + 1) : ti * 3 + 1).applyMatrix4(am.matrixWorld);
+                vc.fromBufferAttribute(ap, aix ? aix.getX(ti * 3 + 2) : ti * 3 + 2).applyMatrix4(am.matrixWorld);
+                var tBase = tris.length / 9;
+                tris.push(va.x, va.y, va.z, vb.x, vb.y, vb.z, vc.x, vc.y, vc.z);
+                var bLo = Math.floor((Math.min(va.y, vb.y, vc.y) - yA) / yH * BANDS);
+                var bHi = Math.floor((Math.max(va.y, vb.y, vc.y) - yA) / yH * BANDS);
+                for (var bk = Math.max(0, bLo); bk <= Math.min(BANDS - 1, bHi); bk++) buckets[bk].push(tBase);
+              }
+            }
+
+            /* Furthest hit of a horizontal ray (Möller–Trumbore, dir.y = 0). */
+            var castFar = function (band, y, ox, oz, dx, dz) {
+              var list = buckets[band], best = -1;
+              for (var li = 0; li < list.length; li++) {
+                var o = list[li] * 9, ax = tris[o], ay = tris[o + 1], az = tris[o + 2];
+                var e1x = tris[o + 3] - ax, e1y = tris[o + 4] - ay, e1z = tris[o + 5] - az;
+                var e2x = tris[o + 6] - ax, e2y = tris[o + 7] - ay, e2z = tris[o + 8] - az;
+                var px = -dz * e2y, py = dz * e2x - dx * e2z, pz = dx * e2y;
+                var det = e1x * px + e1y * py + e1z * pz;
+                if (det > -1e-16 && det < 1e-16) continue;
+                var inv = 1 / det, sx = ox - ax, sy = y - ay, sz = oz - az;
+                var u = (sx * px + sy * py + sz * pz) * inv;
+                if (u < 0 || u > 1) continue;
+                var qx = sy * e1z - sz * e1y, qy = sz * e1x - sx * e1z, qz = sx * e1y - sy * e1x;
+                var vv = (dx * qx + dz * qz) * inv;
+                if (vv < 0 || u + vv > 1) continue;
+                var tt = (e2x * qx + e2y * qy + e2z * qz) * inv;
+                if (tt > best) best = tt;
+              }
+              return best;
+            };
+            var spread = Math.min(ah.x, ah.z) * 0.06;
+            var farAlong = function (band, y, dx, dz) {
+              var h0 = castFar(band, y, ac.x - dz * spread, ac.z + dx * spread, dx, dz);
+              var h1 = castFar(band, y, ac.x, ac.z, dx, dz);
+              var h2 = castFar(band, y, ac.x + dz * spread, ac.z - dx * spread, dx, dz);
+              return Math.max(Math.min(h0, h1), Math.min(Math.max(h0, h1), h2));
+            };
+
+            /* Internals extent per band, so the tapered bottom and the rim
+               are judged against what is actually at that height. */
+            var inBand = [];
+            for (var ib = 0; ib < BANDS; ib++) inBand.push({ x: 0, z: 0 });
+            for (var oj = 0; oj < parts.length; oj++) {
+              if (parts[oj].anchor) continue;
+              var obb = new THREE.Box3().setFromObject(parts[oj].mesh), oyc = (obb.min.y + obb.max.y) / 2;
+              if (!(obb.min.x >= anchorBox.min.x - ePad && obb.max.x <= anchorBox.max.x + ePad &&
+                    obb.min.z >= anchorBox.min.z - ePad && obb.max.z <= anchorBox.max.z + ePad &&
+                    oyc < anchorBox.max.y - ah.y * 0.1)) continue;
+              var om = parts[oj].mesh, opa = om.geometry.attributes.position;
+              for (var ov = 0; ov < opa.count; ov++) {
+                va.fromBufferAttribute(opa, ov).applyMatrix4(om.matrixWorld);
+                var obn = Math.floor((va.y - yA) / yH * BANDS);
+                if (obn < 0 || obn >= BANDS) continue;
+                inBand[obn].x = Math.max(inBand[obn].x, Math.abs(va.x - ac.x));
+                inBand[obn].z = Math.max(inBand[obn].z, Math.abs(va.z - ac.z));
+              }
+            }
+
+            /* Per band: inset half-extents, and the corner radius solved
+               from where the corner ray meets the wall (on a rounded
+               rectangle, a point at distances a, b inside the box corner
+               lies on an arc of radius (a + b) + sqrt(2ab)). */
+            var inset = Math.max(ah.x, ah.z) * 0.006;
+            var profile = [];
+            for (var pbn = 0; pbn < BANDS; pbn++) {
+              var yb = yA + (pbn + 0.5) / BANDS * yH;
+              var xp = farAlong(pbn, yb, 1, 0), xn = farAlong(pbn, yb, -1, 0);
+              var zp = farAlong(pbn, yb, 0, 1), zn = farAlong(pbn, yb, 0, -1);
+              if (xp <= 0 || xn <= 0 || zp <= 0 || zn <= 0) { profile.push(null); continue; }
+              var hx = Math.min(xp, xn) - inset, hz = Math.min(zp, zn) - inset;
+              var diagLen = Math.sqrt(hx * hx + hz * hz), rr = 0;
+              var corners = [[1, 1], [-1, 1], [-1, -1], [1, -1]];
+              for (var cq = 0; cq < 4; cq++) {
+                var cdx = corners[cq][0] * hx / diagLen, cdz = corners[cq][1] * hz / diagLen;
+                var tc = farAlong(pbn, yb, cdx, cdz) - inset;
+                if (tc <= 0) continue;
+                var ca = hx - tc * hx / diagLen, cb = hz - tc * hz / diagLen;
+                if (ca < 0 || cb < 0) continue;
+                rr = Math.max(rr, ca + cb + Math.sqrt(2 * ca * cb));
+              }
+              var clear = hx > inBand[pbn].x + inset && hz > inBand[pbn].z + inset;
+              profile.push(clear ? { y: yb, x: hx, z: hz, r: Math.min(rr, hx, hz) } : null);
+            }
+
+            /* Use the longest unbroken run of good bands. The rim and the
+               floor are where measurements go wrong (lips, bosses, the
+               floor itself), so they drop out instead of vetoing the shell. */
+            var runStart = -1, runLen = 0;
+            for (var rs = 0, cur = 0; rs <= BANDS; rs++) {
+              if (rs < BANDS && profile[rs]) {
+                cur++;
+                if (cur > runLen) { runLen = cur; runStart = rs - cur + 1; }
+              } else {
+                cur = 0;
+              }
+            }
+
+            if (runLen >= BANDS / 2) {
+              var run = profile.slice(runStart, runStart + runLen);
+              /* Light smoothing that never widens a band (min for extents)
+                 and never sharpens a corner (max for radius). */
+              var sm = run.map(function (p, i) {
+                var a = run[Math.max(0, i - 1)], c = run[Math.min(run.length - 1, i + 1)];
+                return {
+                  y: p.y,
+                  x: Math.min(p.x, (a.x + 2 * p.x + c.x) / 4),
+                  z: Math.min(p.z, (a.z + 2 * p.z + c.z) / 4),
+                  r: Math.min(Math.max(p.r, (a.r + 2 * p.r + c.r) / 4), Math.min(p.x, p.z))
+                };
+              });
+
+              var ARC = 10, ringN = ARC * 4, pos = [];
+              var ringAt = function (y, p) {
+                var sx = [1, -1, -1, 1], sz = [1, 1, -1, -1];
+                for (var qd = 0; qd < 4; qd++) {
+                  var ccx = sx[qd] * (p.x - p.r), ccz = sz[qd] * (p.z - p.r);
+                  for (var s = 0; s < ARC; s++) {
+                    var th = (qd + s / (ARC - 1)) * Math.PI / 2;
+                    pos.push(ac.x + ccx + p.r * Math.cos(th), y, ac.z + ccz + p.r * Math.sin(th));
+                  }
+                }
+              };
+              var bandH = yH / BANDS;
+              ringAt(sm[0].y - bandH * 0.35, sm[0]);
+              for (var rb = 0; rb < sm.length; rb++) ringAt(sm[rb].y, sm[rb]);
+              ringAt(sm[sm.length - 1].y + bandH * 0.35, sm[sm.length - 1]);
+
+              var rings = sm.length + 2, idx = [];
+              for (var rk = 0; rk < rings - 1; rk++) {
+                for (var rj = 0; rj < ringN; rj++) {
+                  var a0 = rk * ringN + rj, a1 = rk * ringN + (rj + 1) % ringN;
+                  idx.push(a0, a0 + ringN, a1, a1, a0 + ringN, a1 + ringN);
+                }
+              }
+              var og = new THREE.BufferGeometry();
+              og.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+              og.setIndex(idx);
+              og.computeVertexNormals();
               occluder = new THREE.Mesh(og, MATS.casing.clone());
+              occluder.userData.innerShell = true;
               occluder.visible = false;
               group.add(occluder);
             }
@@ -1134,7 +1262,7 @@
         var gf = (timeline - GLOW_FROM) / (GLOW_TO - GLOW_FROM) * callouts.length;
         glowIdx = Math.min(callouts.length - 1, Math.floor(gf));
         var gu = gf - glowIdx;
-        glowAmt = smoothstep(clamp01(gu / 0.22)) * smoothstep(clamp01((1 - gu) / 0.22));
+        glowAmt = smoothstep(clamp01(gu / 0.34)) * smoothstep(clamp01((1 - gu) / 0.34));
       }
       for (var gi = 0; gi < callouts.length; gi++) {
         callouts[gi].emph = glowIdx < 0 ? null : (gi === glowIdx ? 0.45 + 0.55 * glowAmt : 0.45);
@@ -1143,7 +1271,7 @@
         post.glowOn = glowIdx >= 0 && glowAmt > 0.01;
         if (post.glowOn) {
           post.glow.selectedObjects = callouts[glowIdx].meshes;
-          post.glow.edgeStrength = 3.2 * glowAmt;
+          post.glow.edgeStrength = 1.1 * glowAmt;
         }
       }
 
