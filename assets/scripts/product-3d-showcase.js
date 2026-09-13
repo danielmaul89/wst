@@ -155,6 +155,12 @@
     steel:   std(0x8d949e, 0.96, 0.30),
     neutral: std(0x4a505c, 0.55, 0.48)
   };
+  /* The CAD export delivers parts of the enclosure as open, single-sided
+     skins (no back face, no wall thickness). Rendered one-sided they vanish
+     when seen from behind and read as holes in the casing, so the enclosure
+     materials draw both sides. */
+  MATS.casing.side = THREE.DoubleSide;
+  MATS.lid.side = THREE.DoubleSide;
 
   var MAT_RULES = [
     { test: 'lid', mat: 'lid' },
@@ -510,7 +516,9 @@
             ).normalize(),
             spinAmp: 0.05 + (index % 7) * 0.006,
             each: 1,
-            dist: dist
+            dist: dist,
+            anchor: !!(tier && tier.anchor),
+            clearT: 0
           });
 
           /* Track the biggest mesh per callout keyword. */
@@ -526,6 +534,28 @@
           }
           index++;
         });
+
+        /* Parts that sit inside the casing must travel straight up until
+           they clear its rim. The outward bow peaks at ~5.6 raw units on
+           c4e, while the whole gap from the cell holders to the casing's
+           outer face, wall included, is ~3.2 — so bowing inside the casing
+           drives parts through the wall. clearT is the point on a part's
+           own travel where its underside passes the rim. */
+        var anchorBox = new THREE.Box3();
+        for (var ai = 0; ai < parts.length; ai++) if (parts[ai].anchor) anchorBox.expandByObject(parts[ai].mesh);
+        if (!anchorBox.isEmpty()) {
+          var eps = Math.max(anchorBox.max.x - anchorBox.min.x, anchorBox.max.z - anchorBox.min.z) * 0.01;
+          for (var pi2 = 0; pi2 < parts.length; pi2++) {
+            var pp = parts[pi2];
+            if (pp.anchor || pp.dist <= 0) continue;
+            var pb = new THREE.Box3().setFromObject(pp.mesh);
+            var insideXZ = pb.min.x >= anchorBox.min.x - eps && pb.max.x <= anchorBox.max.x + eps &&
+                           pb.min.z >= anchorBox.min.z - eps && pb.max.z <= anchorBox.max.z + eps;
+            if (insideXZ && pb.min.y < anchorBox.max.y) {
+              pp.clearT = clamp01((anchorBox.max.y - pb.min.y) / pp.dist);
+            }
+          }
+        }
 
         var maxReach = radius;
         for (var i = 0; i < parts.length; i++) maxReach = Math.max(maxReach, radius + parts[i].dist);
@@ -658,7 +688,10 @@
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
       var t = p.each;
-      var arc = Math.sin(t * Math.PI);
+      /* The casing never bows or tilts (parts are seated in it), and a part
+         inside the casing only starts to once it is clear of the rim. */
+      var free = p.anchor ? 0 : (p.clearT > 0 ? smoothstep(clamp01((t - p.clearT) / 0.12)) : 1);
+      var arc = Math.sin(t * Math.PI) * free;
       p.mesh.position.copy(p.basePos)
         .addScaledVector(p.deltaUp, t)
         .addScaledVector(p.deltaArc, arc);
