@@ -524,7 +524,7 @@
               Math.sin(index * 1.7), Math.cos(index * 0.9) * 0.4, Math.cos(index * 2.3)
             ).normalize(),
             spinAmp: 0.05 + (index % 7) * 0.006,
-            each: 1,
+            each: 0, // seated: the pack is closed from the first frame
             dist: dist,
             anchor: !!(tier && tier.anchor),
             clearT: 0
@@ -851,9 +851,9 @@
 
         applyLayout();
         modelReady = true;
-        /* Replay the opening assembly for the incoming model. The existing
-           hand-off cancels it immediately if the reader is already scrolled
-           into the teardown, so it only actually plays from the top. */
+        /* Replay the opening camera move for the incoming model. The pack
+           stays closed during it; the hand-off cancels the move immediately
+           if the reader is already scrolled into the teardown. */
         introMix = 1;
         introDone = false;
         introStart = (window.performance || Date).now();
@@ -909,12 +909,6 @@
     if (p < ACT_ASSEMBLE) return 1;
     var b = (p - ACT_ASSEMBLE) / (1 - ACT_ASSEMBLE);
     return 1 - easeInOutCubic(staggered(b, 1 - seq));
-  }
-
-  /* The opening auto-play: the same assembly motion, resolving exactly
-     into the act-1 pose so handing over to scroll is seamless. */
-  function introSeparation(mix, seq) {
-    return 1 - easeInOutCubic(staggered(1 - mix, 1 - seq));
   }
 
   /* Each part carries its own `t` along the timeline (set per frame), so
@@ -1104,9 +1098,9 @@
       var reach = 0;
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
-        p.each = introDone || introMix === 0
-          ? partSeparation(timeline, p.seq)
-          : introSeparation(introMix, p.seq);
+        /* The pack opens only on scroll. The intro is a camera move around
+           the closed pack, never a fold-out. */
+        p.each = partSeparation(timeline, p.seq);
         avg += p.each;
         /* How far the furthest-travelled part currently is, as a fraction
            of the full spread. The staggering means this is not the same
