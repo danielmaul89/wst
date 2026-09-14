@@ -10,28 +10,26 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-.bms-card-head{ display:flex; align-items:baseline; justify-content:space-between; gap:var(--sp-2); margin-bottom:10px; }
-.bms-card-head h3{ margin:0; }
-.bms-specs{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  margin:var(--sp-2) 0 0;
-  padding-top:var(--sp-2);
-  border-top:1px solid var(--line-2);
-  list-style:none;
-}
-.bms-specs li{
-  color:var(--ink-faint);
-  font-family:var(--font-mono);
-  font-size:12.5px;
-  letter-spacing:.01em;
-}
-</style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css">
 <link rel="stylesheet" href="assets/styles/wst-components.css">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<style>
+/* Platform cards. Loaded after the shared sheets so these refinements win
+   ties with the base card. Flex column so the spec blocks line up along the
+   bottom of each row, whatever the description length. */
+.bms-platform{ position:relative; display:flex; flex-direction:column; padding:var(--sp-4); overflow:hidden; background:var(--paper); box-shadow:var(--shadow-sm); }
+.bms-platform::before{ content:""; position:absolute; inset:0 0 auto; height:2px; background:linear-gradient(90deg,var(--brass),var(--brass-soft) 45%,transparent 80%); }
+.bms-card-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--sp-1) var(--sp-2); padding-bottom:var(--sp-2); margin-bottom:var(--sp-2); border-bottom:1px solid var(--line-2); }
+.bms-card-head h3{ margin:0; font-size:24px; line-height:1.2; }
+.bms-type{ padding:6px 12px; border:1px solid var(--brass-soft); border-radius:999px; color:var(--brass-text); font-family:var(--font-mono); font-size:14px; line-height:1; letter-spacing:.02em; white-space:nowrap; }
+.bms-platform > p{ max-width:60ch; color:var(--ink-soft); font-size:16px; line-height:1.65; }
+.bms-specs{ margin:auto 0 0; padding:var(--sp-3) 0 0; list-style:none; }
+.bms-specs li{ display:grid; grid-template-columns:16px 1fr; align-items:baseline; padding:12px 0; border-top:1px solid var(--line-2); color:var(--ink); font-size:14px; line-height:1.5; }
+.bms-specs li:last-child{ border-bottom:1px solid var(--line-2); }
+.bms-specs li::before{ content:""; width:8px; height:1px; background:var(--brass); transform:translateY(-4px); }
+.bms-specs strong{ font-weight:600; font-variant-numeric:tabular-nums; }
+@media(max-width:560px){ .bms-platform{ padding:var(--sp-3); } .bms-type{ white-space:normal; } }
+</style>
 </head>
 <body data-wst-page="bms">
 
@@ -77,55 +75,55 @@
     </div>
     <div class="wst-grid wst-grid--2 wst-grid--wide-gap">
 
-      <div class="wst-card" id="i-bms">
+      <div class="wst-card bms-platform" id="i-bms">
         <div class="bms-card-head">
           <h3>i-BMS</h3>
-          <span class="wst-tag">Integrated · low voltage</span>
+          <span class="bms-type">Integrated · Low voltage</span>
         </div>
         <p>A compact, fully integrated management unit for low-voltage packs, with pre-charge, current shunt and pack disconnect built onto the same board. Suited to light electric vehicles and other compact systems where board space is tight.</p>
         <ul class="bms-specs">
-          <li>Up to 15 voltage channels</li>
-          <li>17–60V pack range</li>
-          <li>Integrated pre-charge &amp; disconnect</li>
+          <li><span>Up to <strong>15</strong> voltage channels</span></li>
+          <li><span><strong>17–60V</strong> pack range</span></li>
+          <li><span>Integrated pre-charge &amp; disconnect</span></li>
         </ul>
       </div>
 
-      <div class="wst-card" id="n-bms">
+      <div class="wst-card bms-platform" id="n-bms">
         <div class="bms-card-head">
           <h3>n-BMS</h3>
-          <span class="wst-tag">Distributed · scalable monitoring</span>
+          <span class="bms-type">Distributed · Scalable monitoring</span>
         </div>
         <p>A distributed architecture that scales across large series strings, with slave modules placed close to the cells and dual CAN channels back to the host. Built for systems that need extensive voltage and temperature coverage as the pack grows.</p>
         <ul class="bms-specs">
-          <li>Up to 384 cells in series</li>
-          <li>12 voltage &amp; up to 12 temperature channels per module</li>
-          <li>Dual CAN</li>
+          <li><span>Up to <strong>384</strong> cells in series</span></li>
+          <li><span><strong>12</strong> voltage &amp; up to <strong>12</strong> temperature channels per module</span></li>
+          <li><span><strong>Dual CAN</strong></span></li>
         </ul>
       </div>
 
-      <div class="wst-card" id="n3-bms">
+      <div class="wst-card bms-platform" id="n3-bms">
         <div class="bms-card-head">
           <h3>n3-BMS</h3>
-          <span class="wst-tag">Distributed · safety-certified</span>
+          <span class="bms-type">Distributed · Safety-certified</span>
         </div>
         <p>The distributed platform for high-voltage, safety-critical systems, engineered to ISO 26262 ASIL C and rated well beyond typical pack demands. Chosen where a functional safety case is part of the deliverable, not an afterthought.</p>
         <ul class="bms-specs">
-          <li>Up to 360 cells in series</li>
-          <li>ISO 26262 ASIL C</li>
-          <li>Up to 1000V / 2000A</li>
+          <li><span>Up to <strong>360</strong> cells in series</span></li>
+          <li><span><strong>ISO 26262 ASIL C</strong></span></li>
+          <li><span>Up to <strong>1000V / 2000A</strong></span></li>
         </ul>
       </div>
 
-      <div class="wst-card" id="c-bms24x">
+      <div class="wst-card bms-platform" id="c-bms24x">
         <div class="bms-card-head">
           <h3>c-BMS24x</h3>
-          <span class="wst-tag">Integrated · smart pack management</span>
+          <span class="bms-type">Integrated · Smart pack management</span>
         </div>
         <p>An integrated unit for mid-voltage packs that need more than monitoring: advanced state-of-charge estimation, parallel-pack operation and battery-swap support come built in, so pack-level intelligence does not need a separate controller.</p>
         <ul class="bms-specs">
-          <li>Up to 24 voltage channels</li>
-          <li>12–100V, up to 2000A</li>
-          <li>Parallel pack &amp; battery swap support</li>
+          <li><span>Up to <strong>24</strong> voltage channels</span></li>
+          <li><span><strong>12–100V</strong>, up to <strong>2000A</strong></span></li>
+          <li><span>Parallel pack &amp; battery swap support</span></li>
         </ul>
       </div>
 
