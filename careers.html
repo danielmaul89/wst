@@ -24,6 +24,20 @@ body{ background:var(--paper); }
 .role::before{ content:"0" counter(roles); color:var(--brass-text); font-family:var(--font-mono); font-size:14px; }
 .role h3{ font-size:22px; }
 .role p{ color:var(--ink-soft); line-height:1.6; font-size:15px; }
+/* Row hover: a paper wash that bleeds just past the column, a brass rule
+   drawing across the top edge, the index darkening to ink and the title
+   easing forward. */
+.role{ position:relative; }
+.role::after{ content:""; position:absolute; inset:-1px 0 0; z-index:-1; background:linear-gradient(var(--brass),var(--brass)) top left / 0 1px no-repeat,var(--paper-2); opacity:0; transition:opacity var(--motion-fast) var(--motion-ease),background-size var(--motion-base) var(--motion-ease); }
+.role-list{ position:relative; z-index:0; }
+.role::before,.role h3{ transition:color var(--motion-fast) var(--motion-ease),transform var(--motion-fast) var(--motion-ease); }
+@media (hover:hover){
+  .role:hover::after{ opacity:1; background-size:100% 1px,auto; }
+  .role:hover::before{ color:var(--ink); }
+  .role:hover h3{ transform:translateX(8px); }
+}
+@media (hover:hover) and (min-width:801px){ .role::after{ inset-inline:-24px; } }
+@media (prefers-reduced-motion:reduce){ .role::after,.role::before,.role h3{ transition:none; } .role:hover h3{ transform:none; } }
 .career-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
 .career-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
 .career-cta h2{ max-width:13ch; margin-bottom:22px; color:var(--paper); font-size:48px; }
