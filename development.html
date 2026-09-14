@@ -251,14 +251,21 @@
   filter:blur(40px);
   pointer-events:none;
 }
+/* The render carries its own ground shadow, so no CSS drop-shadow on top.
+   The mask keeps the pack at full strength and fades that shadow out well
+   before the image edges, so no rectangle shows against the page. */
 .dev-depth-img{
   position:relative;
   z-index:1;
-  width:min(86%,520px);
+  width:min(100%,580px);
+  height:auto;
   transform-style:preserve-3d;
   transform:perspective(1400px) rotateY(0deg) rotateX(0deg);
   will-change:transform;
-  filter:drop-shadow(0 44px 70px rgba(6,8,26,.28));
+  -webkit-mask-image:linear-gradient(#000 76%,transparent 86%),radial-gradient(ellipse 48% 20% at 50% 82%,#000 35%,transparent 100%);
+          mask-image:linear-gradient(#000 76%,transparent 86%),radial-gradient(ellipse 48% 20% at 50% 82%,#000 35%,transparent 100%);
+  -webkit-mask-repeat:no-repeat;
+          mask-repeat:no-repeat;
 }
 
 /* ----------------------------------------------------------------
@@ -407,7 +414,7 @@
       <p>Cell selection, BMS, thermal strategy and enclosure are developed as one architecture, not assembled from separate off-the-shelf parts.</p>
     </div>
     <div class="dev-depth-stage">
-      <img class="dev-depth-img" src="assets/products/renders/xwd_egholm_exploded_transparent_print.png" alt="Exploded view of a custom WS Technicals battery pack showing the BMS module, cell block and enclosure layers">
+      <img class="dev-depth-img" src="assets/products/xwd_egholm_exploded_transparent_print2.png" width="1170" height="1378" alt="Exploded view of a custom WS Technicals battery pack showing the BMS module, cell block and enclosure layers">
     </div>
   </div>
 </section>
