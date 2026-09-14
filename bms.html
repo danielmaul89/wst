@@ -17,8 +17,7 @@
 /* Platform cards. Loaded after the shared sheets so these refinements win
    ties with the base card. Flex column so the spec blocks line up along the
    bottom of each row, whatever the description length. */
-.bms-platform{ position:relative; display:flex; flex-direction:column; padding:var(--sp-4); overflow:hidden; background:var(--paper); box-shadow:var(--shadow-sm); }
-.bms-platform::before{ content:""; position:absolute; inset:0 0 auto; height:2px; background:linear-gradient(90deg,var(--brass),var(--brass-soft) 45%,transparent 80%); }
+.bms-platform{ display:flex; flex-direction:column; padding:var(--sp-4); background:var(--paper); box-shadow:var(--shadow-sm); }
 .bms-card-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--sp-1) var(--sp-2); padding-bottom:var(--sp-2); margin-bottom:var(--sp-2); border-bottom:1px solid var(--line-2); }
 .bms-card-head h3{ margin:0; font-size:24px; line-height:1.2; }
 .bms-type{ padding:6px 12px; border:1px solid var(--brass-soft); border-radius:999px; color:var(--brass-text); font-family:var(--font-mono); font-size:14px; line-height:1; letter-spacing:.02em; white-space:nowrap; }
