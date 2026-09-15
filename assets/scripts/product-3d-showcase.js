@@ -55,9 +55,12 @@
   var CAM_KEYS = [
     { at: 0.00, az: -0.55, pol: 1.24, zoom: 0.06, fov: 30 },
     { at: 0.13, az: -0.34, pol: 1.20, zoom: 0.14, fov: 30 },
-    { at: 0.46, az:  0.30, pol: 1.06, zoom: 1.00, fov: 32 },
-    { at: 0.59, az:  0.86, pol: 1.32, zoom: 0.93, fov: 32 },
-    { at: 0.72, az:  1.24, pol: 1.12, zoom: 0.97, fov: 32 },
+    /* While the pack is open the camera only drifts: height held nearly
+       level and a ~25 degree turn, so each scroll step reads as a glide
+       rather than a bob and swing. */
+    { at: 0.46, az:  0.30, pol: 1.10, zoom: 1.00, fov: 32 },
+    { at: 0.59, az:  0.52, pol: 1.12, zoom: 0.99, fov: 32 },
+    { at: 0.72, az:  0.74, pol: 1.13, zoom: 0.98, fov: 32 },
     /* Lands about 90 degrees around from the opening shot — far enough to
        feel like a new view, without swinging round to the casing's open
        end, which reads as an unfinished product. */
@@ -459,7 +462,9 @@
         var size = new THREE.Vector3();
         box.getSize(size);
         var scale = 2.6 / (Math.max(size.x, size.y, size.z) || 1);
-        object.scale.setScalar(scale);
+        /* Multiply rather than overwrite: an exporter may carry its unit
+           scale on the root node, and the box above was measured with it. */
+        object.scale.multiplyScalar(scale);
         object.updateMatrixWorld(true);
 
         var sBox = new THREE.Box3().setFromObject(object);
@@ -1066,6 +1071,7 @@
 
   var hintHidden = false;
   var lastFrameAt = 0;
+  var camProgress = 0;
 
   function frame() {
     requestAnimationFrame(frame);
@@ -1082,6 +1088,9 @@
        runs twice as fast on a 120Hz screen. 5.66/s equals the previous
        0.09-per-frame weight at 60fps. */
     progress += (raw - progress) * (reduceMotion ? 1 : 1 - Math.exp(-5.66 * dt));
+    /* The camera follows on a softer spring than the parts, so a mouse-wheel
+       step turns into one continuous glide instead of a jump and settle. */
+    camProgress += (raw - camProgress) * (reduceMotion ? 1 : 1 - Math.exp(-2.6 * dt));
 
     if (modelReady && !introDone) {
       var elapsed = (window.performance || Date).now() - introStart;
@@ -1113,7 +1122,7 @@
       reach = stackRise > 0 ? clamp01(reach / stackRise) : 0;
       applyLayout();
 
-      var cam = sampleCamera(timeline);
+      var cam = sampleCamera(camProgress);
       /* The intro resolves into the act-1 pose by easing these back to 0. */
       var az = cam.az - introMix * 0.95;
       /* Never let the keyframed zoom sit tighter than the spread actually
