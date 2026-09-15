@@ -145,7 +145,10 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
   left:0; top:0;
   height:1px;
   transform-origin:0 50%;
-  background:linear-gradient(to right, rgba(226,205,174,.9), rgba(226,205,174,.3));
+  background:linear-gradient(to right, rgba(226,205,174,.95), rgba(226,205,174,.45));
+  /* A tight dark edge so the line and dot still read where they cross the
+     light silver cells and holders; invisible against the dark stage. */
+  filter:drop-shadow(0 0 1px rgba(3,5,11,.9)) drop-shadow(0 1px 3px rgba(3,5,11,.45));
   opacity:0;
   will-change:transform, opacity, width;
 }
@@ -153,11 +156,14 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
 .sc-leader::before{
   content:"";
   position:absolute;
-  left:-3.5px; top:-3.5px;
-  width:7px; height:7px;
+  left:-4px; top:-4px;
+  width:8px; height:8px;
   border-radius:50%;
   background:var(--brass-on-dark);
-  box-shadow:0 0 0 4px rgba(226,205,174,.15);
+  box-shadow:
+    0 0 0 1.5px rgba(8,10,20,.8),
+    0 0 0 5px rgba(226,205,174,.2),
+    0 2px 8px rgba(3,5,11,.6);
 }
 .sc-leader.is-on{ opacity:1; }
 .sc-callout{
