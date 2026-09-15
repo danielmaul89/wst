@@ -148,22 +148,23 @@ body{ position:relative; background:var(--paper); overflow-x:hidden; }
   background:linear-gradient(to right, rgba(226,205,174,.95), rgba(226,205,174,.45));
   /* A tight dark edge so the line and dot still read where they cross the
      light silver cells and holders; invisible against the dark stage. */
-  filter:drop-shadow(0 0 1px rgba(3,5,11,.9)) drop-shadow(0 1px 3px rgba(3,5,11,.45));
+  filter:drop-shadow(0 0 1px rgba(3,5,11,.4));
   opacity:0;
   will-change:transform, opacity, width;
 }
-/* Rotation-invariant, so it can ride on the rotated leader. */
+/* Rotation-invariant, so it can ride on the rotated leader. The soft,
+   centred glow lifts the dot off light parts without reading as a ring. */
 .sc-leader::before{
   content:"";
   position:absolute;
-  left:-4px; top:-4px;
-  width:8px; height:8px;
+  left:-3.5px; top:-3.5px;
+  width:7px; height:7px;
   border-radius:50%;
   background:var(--brass-on-dark);
   box-shadow:
-    0 0 0 1.5px rgba(8,10,20,.8),
-    0 0 0 5px rgba(226,205,174,.2),
-    0 2px 8px rgba(3,5,11,.6);
+    0 0 0 1px rgba(8,10,20,.28),
+    0 0 0 4px rgba(226,205,174,.14),
+    0 0 10px 2px rgba(3,5,11,.18);
 }
 .sc-leader.is-on{ opacity:1; }
 .sc-callout{
