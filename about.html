@@ -423,7 +423,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   .about-gallery-item img{ transition:none !important; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 </head>
 <body data-wst-page="about">
@@ -543,40 +543,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish3"></script>
-
-<script>
-(function(){
-  var body = document.body;
-  var toggle = document.getElementById('navToggle');
-  toggle.addEventListener('click', function(){
-    var open = body.classList.toggle('menu-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  var nav = document.querySelector('.nav');
-  function onScroll(){ nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
-  onScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-  document.querySelectorAll('.nav-item').forEach(function(item){
-    var link = item.querySelector('.nav-link');
-    link.addEventListener('click', function(e){
-      if (window.innerWidth <= 980) {
-        e.preventDefault();
-        var isOpen = item.classList.contains('open');
-        document.querySelectorAll('.nav-item.open').forEach(function(o){ o.classList.remove('open'); });
-        if (!isOpen) item.classList.add('open');
-      }
-    });
-  });
-  document.querySelectorAll('.dropdown a, .nav-cta a').forEach(function(a){
-    a.addEventListener('click', function(){
-      body.classList.remove('menu-open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-})();
-</script>
+<script src="assets/scripts/wst-shell.js?v=publish4"></script>
 
 <div class="blueprint-grid" aria-hidden="true"></div>
 
