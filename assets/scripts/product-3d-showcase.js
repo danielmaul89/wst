@@ -839,8 +839,16 @@
             el: el,
             leader: leader,
             mesh: candidates[k].mesh,
+            /* The dot sits on the middle of the part's own geometry. The
+               mesh origin is often nowhere near the part in these CAD
+               exports, so the in-flight tilt swung the dot around. */
+            anchorLocal: (function (g) {
+              if (!g.boundingBox) g.computeBoundingBox();
+              return g.boundingBox.getCenter(new THREE.Vector3());
+            })(candidates[k].mesh.geometry),
             on: false,
             ly: 0,
+            eased: false,
             draw: 0
           });
         }
@@ -989,14 +997,19 @@
     var reveal = clamp01((p - (ACT_INSPECT - 0.06)) / 0.16);
     var fade = 1 - clamp01((p - (ACT_ASSEMBLE - 0.04)) / 0.07);
 
-    /* Pass 1 — project each anchor and decide visibility. */
+    /* Pass 1 — project each anchor and decide visibility. The camera's
+       matrices are otherwise only refreshed inside renderer.render, after
+       this runs, so projecting without this lags the model by a frame and
+       the dots step whenever the camera moves. */
+    camera.updateMatrixWorld();
     var live = [];
     for (var i = 0; i < callouts.length; i++) {
       var c = callouts[i];
       var slot = i / Math.max(1, callouts.length);
       var on = reveal > slot * 0.75 && fade > 0.5;
       if (on) {
-        c.mesh.getWorldPosition(_v);
+        c.mesh.updateWorldMatrix(true, false);
+        _v.copy(c.anchorLocal).applyMatrix4(c.mesh.matrixWorld);
         _v.project(camera);
         if (_v.z > 1) on = false;
       }
@@ -1005,6 +1018,7 @@
         c.el.classList.toggle('is-on', on);
         c.leader.classList.toggle('is-on', on);
         if (!on) {
+          c.eased = false;
           c.draw = 0;
           c.leader.style.opacity = '';
           c.leader.style.width = '0px';
@@ -1023,19 +1037,29 @@
     /* Pass 2 — labels share one alignment column, so push them apart
        vertically where two parts project to nearly the same height, then
        shift the whole set back inside the frame. */
-    live.sort(function (a, b) { return a.ay - b.ay; });
+    /* Labels keep their declared order (top of the stack downward) rather
+       than being re-sorted by projected height every frame — re-sorting
+       swapped neighbours whenever two parts crossed, and the labels jumped
+       a full gap at a time. Targets are then eased, so any push from the
+       gap rule or the frame edges glides instead of snapping. */
     var GAP = 42;
     var top = 96, bottom = h - 78;
     for (var j = 0; j < live.length; j++) {
       var want = live[j].ay;
-      if (j > 0 && want < live[j - 1].ly + GAP) want = live[j - 1].ly + GAP;
-      live[j].ly = want;
+      if (j > 0 && want < live[j - 1].ty + GAP) want = live[j - 1].ty + GAP;
+      live[j].ty = want;
     }
-    var overflow = live[live.length - 1].ly - bottom;
-    if (overflow > 0) for (var m = 0; m < live.length; m++) live[m].ly -= overflow;
-    if (live[0].ly < top) {
-      var lift = top - live[0].ly;
-      for (var n = 0; n < live.length; n++) live[n].ly = Math.min(bottom, live[n].ly + lift);
+    var overflow = live[live.length - 1].ty - bottom;
+    if (overflow > 0) for (var m = 0; m < live.length; m++) live[m].ty -= overflow;
+    if (live[0].ty < top) {
+      var lift = top - live[0].ty;
+      for (var n = 0; n < live.length; n++) live[n].ty = Math.min(bottom, live[n].ty + lift);
+    }
+    var follow = reduceMotion ? 1 : 1 - Math.exp(-14 * (dt || 1 / 60));
+    for (var e = 0; e < live.length; e++) {
+      var le = live[e];
+      if (!le.eased) { le.ly = le.ty; le.eased = true; }
+      else le.ly += (le.ty - le.ly) * follow;
     }
 
     /* Pass 3 — place. The leader stretches and rotates from the part to
