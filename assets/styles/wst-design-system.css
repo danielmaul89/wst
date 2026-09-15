@@ -1060,11 +1060,17 @@ body.wst-modal-open {
   font-size: var(--fs-small);
 }
 
+/* The footer is rendered by wst-shell.js on every page, but only some pages
+   carry a base element reset. Without these, browser defaults add list
+   indents and margins, and those footers came out 25px taller with links
+   pushed 40px right. */
 .footer-address {
+  margin: 0;
   line-height: 1.7;
 }
 
 .footer-col h4 {
+  margin-top: 0;
   margin-bottom: var(--sp-2);
   color: rgba(199, 204, 222, .74);
   font-family: var(--font-body);
@@ -1072,6 +1078,12 @@ body.wst-modal-open {
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
+}
+
+.footer-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .footer-col li {
@@ -1141,18 +1153,23 @@ body.wst-modal-open {
     --sp-7: 72px;
   }
 
+  /* Mobile menu matches the homepage: a full-height paper panel below the
+     header, full-width rows, and dropdowns that open as tinted panels. */
   .nav-menu {
     position: fixed;
-    inset: var(--nav-height) 0 auto;
+    inset: var(--nav-height) 0 0 0;
+    z-index: 99;
     display: none;
-    max-height: calc(100vh - var(--nav-height));
-    padding: var(--sp-2) var(--page-gutter) var(--sp-4);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--sp-3);
     overflow-y: auto;
-    background: rgba(251, 249, 245, .98);
+    background: var(--paper);
   }
 
   .menu-open .nav-menu {
-    display: block;
+    display: flex;
   }
 
   .nav-item {
@@ -1161,16 +1178,18 @@ body.wst-modal-open {
 
   .nav-link {
     justify-content: space-between;
-    padding: 16px 0;
+    width: 100%;
+    padding: 16px 8px;
   }
 
   .dropdown {
     position: static;
     display: none;
     min-width: 0;
-    padding: 0 0 var(--sp-2);
+    margin-bottom: 8px;
+    padding: var(--sp-1);
     border: 0;
-    background: transparent;
+    background: var(--paper-2);
     box-shadow: none;
     backdrop-filter: none;
     opacity: 1;

@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 <style>
 
@@ -369,24 +369,7 @@
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish3"></script>
-<script>
-(function () {
-  var toggle = document.getElementById('navToggle');
-  if (toggle) {
-    toggle.addEventListener('click', function () {
-      var open = document.body.classList.toggle('menu-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
-  var nav = document.querySelector('.nav');
-  if (nav) {
-    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-})();
-</script>
+<script src="assets/scripts/wst-shell.js?v=publish4"></script>
 
 <script>
 (function(){

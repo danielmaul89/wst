@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 <style>
 
@@ -31,7 +31,8 @@
    ---------------------------------------------------------------- */
 .ov-hero{
   position:relative;
-  padding:64px 0 64px;
+  /* Clears the fixed site header. */
+  padding:calc(var(--nav-height) + 64px) 0 64px;
   overflow:hidden;
 }
 .ov-hero-inner{ position:relative; z-index:1; }
@@ -180,11 +181,13 @@
 }
 @media (max-width:720px){
   .ov-grid{ grid-template-columns:1fr; }
-  .ov-hero{ padding:72px 0 40px; }
+  .ov-hero{ padding:calc(var(--nav-height) + 40px) 0 40px; }
 }
 </style>
 </head>
 <body data-wst-page="overview">
+
+<div data-wst-header></div>
 
 <div class="ambient" aria-hidden="true"></div>
 
@@ -331,5 +334,8 @@
 
 </main>
 
+<div data-wst-footer></div>
+
+<script src="assets/scripts/wst-shell.js?v=publish4"></script>
 </body>
 </html>

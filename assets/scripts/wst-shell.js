@@ -67,6 +67,47 @@
     ].join("\n");
   }
 
+  /* Header behaviour, shared by every page so none can drift from the
+     homepage: the frosted state once the page scrolls, the mobile menu
+     toggle, tap-to-expand dropdowns on narrow screens, and closing the menu
+     once a destination is picked. Scoped to the rendered header, because a
+     few older pages still carry a hidden legacy copy of the markup. */
+  var navEl = document.querySelector("header.nav:not(.legacy-nav)");
+  var navToggle = navEl && navEl.querySelector(".nav-toggle");
+  if (navEl && navToggle && !navEl.hasAttribute("data-wst-nav-bound")) {
+    navEl.setAttribute("data-wst-nav-bound", "");
+
+    navToggle.addEventListener("click", function () {
+      var open = document.body.classList.toggle("menu-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    var onNavScroll = function () {
+      navEl.classList.toggle("nav--scrolled", window.scrollY > 8);
+    };
+    onNavScroll();
+    window.addEventListener("scroll", onNavScroll, { passive: true });
+
+    navEl.querySelectorAll(".nav-item").forEach(function (item) {
+      var link = item.querySelector(".nav-link");
+      if (!link || !item.querySelector(".dropdown")) return;
+      link.addEventListener("click", function (event) {
+        if (window.innerWidth > 980) return;
+        event.preventDefault();
+        var isOpen = item.classList.contains("open");
+        navEl.querySelectorAll(".nav-item.open").forEach(function (other) { other.classList.remove("open"); });
+        if (!isOpen) item.classList.add("open");
+      });
+    });
+
+    navEl.querySelectorAll(".dropdown a, .nav-cta a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        document.body.classList.remove("menu-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
   if (footerTarget) {
     footerTarget.outerHTML = [
       '<footer class="footer">',

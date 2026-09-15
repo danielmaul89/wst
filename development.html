@@ -308,7 +308,7 @@
   .dev-depth-img{ transform:none !important; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=type1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
 </head>
 <body data-wst-page="development">
@@ -433,22 +433,10 @@
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish3"></script>
+<script src="assets/scripts/wst-shell.js?v=publish4"></script>
 <script>
 (function () {
-  var toggle = document.getElementById('navToggle');
-  if (toggle) {
-    toggle.addEventListener('click', function () {
-      var open = document.body.classList.toggle('menu-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
-  var nav = document.querySelector('.nav');
-  if (nav) {
-    function onScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 8); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  // Header scroll state and mobile menu are handled by wst-shell.js.
 
   // Process split — the right-hand media panel stays pinned and
   // cross-fades to the next stage's photo as its matching step in the
