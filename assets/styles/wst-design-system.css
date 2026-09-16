@@ -162,14 +162,14 @@
   --nav-height-scrolled: 64px;
   /* Header logo, two variants under review. A is the default; B is the
      larger option, switched on with ?logo=b (see wst-shell.js). Both shrink
-     once the page scrolls. */
+     once the page scrolls. The logo is never taller than 42px. */
   --logo-height: 36px;
   --logo-height-scrolled: 30px;
   --grid-size: 96px;
 }
 
 :root[data-wst-logo="b"] {
-  --logo-height: 44px;
+  --logo-height: 42px;
   --logo-height-scrolled: 32px;
 }
 
