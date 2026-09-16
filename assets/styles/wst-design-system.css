@@ -143,7 +143,11 @@
   --sp-7: 96px;
   --sp-8: 140px;
 
-  --container: 1240px;
+  --container: 1440px;
+  /* Readable line length for body text, however wide the container grows.
+     `ch` is the width of a zero, wider than an average character in these
+     faces: 65ch lands at roughly 75 characters per line. */
+  --measure: 65ch;
   --page-gutter: 32px;
   --section-space: clamp(96px, 10vw, 140px);
 
@@ -155,7 +159,18 @@
   --shadow-md: 0 12px 32px -12px rgba(6, 8, 26, .14);
   --shadow-lg: 0 24px 60px -20px rgba(6, 8, 26, .22);
   --nav-height: 76px;
+  --nav-height-scrolled: 64px;
+  /* Header logo, two variants under review. A is the default; B is the
+     larger option, switched on with ?logo=b (see wst-shell.js). Both shrink
+     once the page scrolls. */
+  --logo-height: 36px;
+  --logo-height-scrolled: 30px;
   --grid-size: 96px;
+}
+
+:root[data-wst-logo="b"] {
+  --logo-height: 44px;
+  --logo-height-scrolled: 32px;
 }
 
 /* 2. Foundation
@@ -342,6 +357,13 @@ h4,
   padding-inline: var(--page-gutter);
 }
 
+/* Body text keeps a readable measure while containers and images use the full
+   width. Zero specificity, so any component or page rule that sets its own
+   narrower measure still wins. */
+:where(main) :where(p, li, dd, blockquote, figcaption) {
+  max-width: var(--measure);
+}
+
 /* Ambient light field — shared base; enterprise-polish.css adds the motion. */
 .ambient {
   position: absolute;
@@ -475,6 +497,12 @@ h4,
   align-items: center;
   justify-content: space-between;
   height: var(--nav-height);
+  transition: height var(--dur) var(--ease);
+}
+
+/* The header tightens once the page scrolls: a shorter bar and a smaller logo. */
+.nav--scrolled .nav-inner {
+  height: var(--nav-height-scrolled);
 }
 
 .brand,
@@ -485,6 +513,15 @@ h4,
 .brand-logo {
   width: auto;
   height: 30px;
+}
+
+.nav .brand-logo {
+  height: var(--logo-height);
+  transition: height var(--dur) var(--ease);
+}
+
+.nav--scrolled .brand-logo {
+  height: var(--logo-height-scrolled);
 }
 
 .brand-logo--on-dark {
@@ -1170,6 +1207,11 @@ body.wst-modal-open {
 
   .menu-open .nav-menu {
     display: flex;
+  }
+
+  /* Follow the header down to its shrunk height once scrolled. */
+  body.menu-open .nav--scrolled .nav-menu {
+    inset: var(--nav-height-scrolled) 0 0 0;
   }
 
   .nav-item {

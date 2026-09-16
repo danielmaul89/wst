@@ -7,8 +7,9 @@
 <title>Careers | WS Technicals</title>
 <meta name="description" content="Explore engineering careers and future opportunities at WS Technicals in Aarhus, Denmark.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ background:var(--paper); }
 .career-hero{ min-height:44svh; display:flex; align-items:center; overflow:hidden; padding:140px 0 80px; background:radial-gradient(circle at 8% 8%,rgba(203,176,138,.32),transparent 34%),radial-gradient(circle at 92% 24%,rgba(126,136,172,.24),transparent 40%),var(--paper); }
@@ -50,11 +51,16 @@ body{ background:var(--paper); }
 <body data-wst-page="about">
 <div data-wst-header></div>
 <main>
-  <section class="career-hero">
-    <div class="container career-hero-inner">
-      <span class="eyebrow">Careers at WS Technicals</span>
-      <h1>Engineer systems that have to work in the real world.</h1>
-      <p class="lead">We build complete battery systems — mechanics, electronics, software and production working together around a specific machine and its operating environment.</p>
+  <section class="wst-page-hero">
+    <div class="container wst-page-hero-grid">
+      <div class="wst-page-hero-copy">
+        <span class="eyebrow">Careers at WS Technicals</span>
+        <h1 class="t-display">Engineer systems that have to work in the real world.</h1>
+        <p class="wst-page-hero-intro">We build complete battery systems — mechanics, electronics, software and production working together around a specific machine and its operating environment.</p>
+      </div>
+      <figure class="wst-page-hero-media">
+        <img src="assets/general/_MG_1505.webp" alt="Engineer measuring a battery management board at a workbench">
+      </figure>
     </div>
   </section>
 
@@ -78,7 +84,7 @@ body{ background:var(--paper); }
   </section>
 </main>
 <div data-wst-footer></div>
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>

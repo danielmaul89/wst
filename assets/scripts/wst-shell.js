@@ -2,6 +2,16 @@
   "use strict";
 
   var page = document.body.getAttribute("data-wst-page") || "";
+
+  /* Header logo size, two variants under review. ?logo=b switches to the
+     larger one, ?logo=a back; the choice holds while browsing the site. */
+  var logoVariant = "a";
+  try {
+    var logoParam = new URLSearchParams(window.location.search).get("logo");
+    if (logoParam === "a" || logoParam === "b") window.sessionStorage.setItem("wst-logo", logoParam);
+    logoVariant = window.sessionStorage.getItem("wst-logo") || "a";
+  } catch (e) { /* storage blocked: default size */ }
+  document.documentElement.setAttribute("data-wst-logo", logoVariant);
   var headerTarget = document.querySelector("[data-wst-header]");
   var footerTarget = document.querySelector("[data-wst-footer]");
 

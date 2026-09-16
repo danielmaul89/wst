@@ -7,8 +7,9 @@
 <title>Anticimex Fights Rodents Intelligently, Poison-Free | WS Technicals</title>
 <meta name="description" content="WS Technicals supplies the lithium batteries powering the Anticimex Smart Box, an electronic, poison-free rodent trap.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ position:relative; background:var(--paper); }
 
@@ -59,7 +60,7 @@ body{ position:relative; background:var(--paper); }
 .article-body{ position:relative; z-index:1; padding-bottom:140px; }
 .article-body-inner{ max-width:720px; margin:0 auto; }
 .article-body h2{ margin:48px 0 16px; font-family:var(--font-display); font-size:26px; letter-spacing:-.01em; color:var(--ink); }
-.article-body p{ margin:0 0 20px; max-width:64ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
+.article-body p{ margin:0 0 20px; max-width:56ch; color:var(--ink-soft); font-size:17px; line-height:1.75; }
 .article-body p:first-of-type{ margin-top:0; }
 
 .article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
@@ -90,8 +91,9 @@ body{ position:relative; background:var(--paper); }
 
 <div data-wst-header></div>
 <main>
-  <section class="article-hero">
-    <div class="container article-hero-inner">
+  <section class="article-hero wst-page-hero wst-page-hero--media-first">
+    <div class="container wst-page-hero-grid">
+      <div class="article-hero-inner wst-page-hero-copy">
       <h1>Anticimex fights rodents intelligently and poison-free</h1>
       <p class="lead">At WS Technicals, we are glad to support Anticimex in their work with intelligent and more sustainable pest control solutions.</p>
       <div class="article-meta">
@@ -99,13 +101,11 @@ body{ position:relative; background:var(--paper); }
         <span>Anticimex</span>
       </div>
     </div>
+      <figure class="wst-page-hero-media">
+        <img src="assets/news/anticimex/hero.avif" alt="Anticimex Smart Box electronic rodent trap">
+      </figure>
+    </div>
   </section>
-
-  <div class="container">
-    <figure class="article-media">
-      <img src="assets/news/anticimex/hero.avif" alt="Anticimex Smart Box electronic rodent trap">
-    </figure>
-  </div>
 
   <section class="article-body">
     <div class="article-body-inner">
@@ -135,7 +135,7 @@ body{ position:relative; background:var(--paper); }
 
 <div class="blueprint-grid" aria-hidden="true"></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
 </body>
 </html>

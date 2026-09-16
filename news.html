@@ -7,8 +7,9 @@
 <title>News | WS Technicals</title>
 <meta name="description" content="Explore our latest customer success stories, employee interviews and industry insights from WS Technicals.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ position:relative; background:var(--paper); }
 
@@ -61,6 +62,8 @@ body{ position:relative; background:var(--paper); }
   grid-template-columns:repeat(3,1fr);
   gap:32px 28px;
 }
+.news-intro{ padding:0 0 var(--sp-5); }
+.news-intro p{ max-width:55ch; margin:0; color:var(--ink-soft); font-size:clamp(var(--fs-body),1.6vw,var(--fs-24)); line-height:1.65; }
 .news-card{ display:block; }
 .news-card-media{
   position:relative;
@@ -127,11 +130,22 @@ body{ position:relative; background:var(--paper); }
 
 <div data-wst-header></div>
 <main>
-  <section class="news-hero">
-    <div class="container news-hero-inner">
-      <span class="eyebrow">News</span>
-      <h1>Engineering perspectives from inside the work.</h1>
-      <p class="lead">Explore our latest customer success stories, employee interviews and industry insights. We are dedicated to sharing our knowledge and experience from the battery industry, while keeping you updated on relevant trends, developments and technologies.</p>
+  <section class="wst-page-hero">
+    <div class="container wst-page-hero-grid">
+      <div class="wst-page-hero-copy">
+        <span class="eyebrow">News</span>
+        <h1 class="t-display">Engineering perspectives from inside the work.</h1>
+        <p class="wst-page-hero-intro">Customer success stories, employee interviews and industry insights.</p>
+      </div>
+      <figure class="wst-page-hero-media">
+        <img src="assets/general/_MG_1590.webp" alt="Engineer inspecting the wiring inside a battery pack">
+      </figure>
+    </div>
+  </section>
+
+  <section class="news-intro">
+    <div class="container">
+      <p>We are dedicated to sharing our knowledge and experience from the battery industry, while keeping you updated on relevant trends, developments and technologies.</p>
     </div>
   </section>
 
@@ -258,7 +272,7 @@ body{ position:relative; background:var(--paper); }
 
 <div class="blueprint-grid" aria-hidden="true"></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
 </body>
 </html>

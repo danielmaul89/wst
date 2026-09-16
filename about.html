@@ -130,9 +130,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .facility-preview-image img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 61%; transition:transform 1.2s var(--ease); }
 @media (hover:hover){ .facility-preview-image:hover img{ transform:scale(1.018); } }
 
-.cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:center; }
-.cta-band h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin:0 auto var(--sp-2); }
-.cta-band p{ color:var(--ink-soft-on-dark); max-width:44ch; margin:0 auto var(--sp-4); font-size:16px; }
+.cta-band{ background:var(--blue-deep); color:var(--paper); padding:var(--sp-6) 0; text-align:left; }
+.cta-band h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin:0 0 var(--sp-2); }
+.cta-band p{ color:var(--ink-soft-on-dark); max-width:44ch; margin:0 0 var(--sp-4); font-size:16px; }
 
 /* ============================================================
    ABOUT HERO — editorial leadership story blended into the
@@ -197,6 +197,8 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   line-height:1.76;
 }
 .about-hero-lead:first-of-type{ color:var(--ink-soft); font-size:20px; font-weight:400; }
+.about-intro{ position:relative; z-index:1; padding:0 0 var(--sp-6); }
+.about-intro p{ max-width:55ch; margin:0 0 var(--sp-3); color:var(--ink-soft); font-size:clamp(var(--fs-body),1.6vw,var(--fs-24)); line-height:1.65; }
 .leadership-signature{
   display:block;
   width:clamp(140px,16vw,190px);
@@ -423,8 +425,9 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   .about-gallery-item img{ transition:none !important; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 </head>
 <body data-wst-page="about">
 
@@ -443,20 +446,24 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 
 <main id="top">
 
-<section class="about-hero" id="company">
-  <figure class="about-hero-visual">
-    <img src="assets/people/_MG_8195_Expanded background.jpg" alt="Editorial portrait of WS Technicals leadership">
-  </figure>
-
-  <div class="container about-hero-grid">
-    <div class="about-hero-copy">
-      <h1>Built through partnership.</h1>
-      <p class="about-hero-lead">At WS Technicals, we believe that the best solutions are created through strong partnerships, shared knowledge, and a genuine willingness to move forward together. Since our establishment in 2015, we have been part of the lithium battery industry from the early stages of its rapid development.</p>
-      <p class="about-hero-lead">The pace of technological progress in our field is intense, and for us, the most natural mindset is one of collaboration: we are all navigating the same transition, and the more we share what we learn, the better solutions we can create - for our customers, for the industry, and for the wider electrification journey.</p>
-      <p class="about-hero-lead">Our role is to make electrification more accessible. We want to make it easier for companies to take part in the transition by offering a complete battery solution built around their specific application. From the custom design of the battery pack to the selection and implementation of the Battery Management System and the move into mass production, we support our customers throughout the entire process.</p>
-      <p class="about-hero-lead">For us, electrification is not just about technology. It is about building the right partnerships and creating solutions that help more people and more industries move forward.</p>
-      <img class="leadership-signature" src="assets/people/LBD-signature.png" alt="Signed, Louis B. Danielsen">
+<section class="wst-page-hero" id="company">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow">About us</span>
+      <h1 class="t-display">Built through partnership.</h1>
+      <p class="wst-page-hero-intro">Complete battery solutions since 2015, built through strong partnerships and shared knowledge.</p>
     </div>
+    <figure class="wst-page-hero-media">
+      <img src="assets/people/_MG_8195_Expanded background.jpg" alt="Editorial portrait of WS Technicals leadership">
+    </figure>
+  </div>
+</section>
+
+<section class="about-intro">
+  <div class="container">
+    <p>At WS Technicals, we believe that the best solutions are created through strong partnerships, shared knowledge, and a genuine willingness to move forward together. Since our establishment in 2015, we have been part of the lithium battery industry from the early stages of its rapid development. The pace of technological progress in our field is intense, and for us, the most natural mindset is one of collaboration: we are all navigating the same transition, and the more we share what we learn, the better solutions we can create - for our customers, for the industry, and for the wider electrification journey.</p>
+    <p>Our role is to make electrification more accessible. We want to make it easier for companies to take part in the transition by offering a complete battery solution built around their specific application. From the custom design of the battery pack to the selection and implementation of the Battery Management System and the move into mass production, we support our customers throughout the entire process. For us, electrification is not just about technology. It is about building the right partnerships and creating solutions that help more people and more industries move forward.</p>
+    <img class="leadership-signature" src="assets/people/LBD-signature.png" alt="Signed, Louis B. Danielsen">
   </div>
 </section>
 
@@ -543,7 +550,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 
 <div class="blueprint-grid" aria-hidden="true"></div>
 

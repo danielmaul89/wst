@@ -140,6 +140,8 @@
   color:var(--ink);
 }
 
+.dev-intro{ padding:0 0 var(--sp-6); }
+.dev-intro p{ max-width:55ch; margin:0; color:var(--ink-soft); font-size:clamp(var(--fs-body),1.6vw,var(--fs-24)); line-height:1.65; }
 .dev-steps{ display:flex; align-items:flex-start; }
 
 .dev-steps-media{
@@ -308,8 +310,9 @@
   .dev-depth-img{ transform:none !important; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=footer3">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 </head>
 <body data-wst-page="development">
 
@@ -323,12 +326,23 @@
 
 <main>
 
-<section class="dev-hero">
-  <div class="container dev-hero-inner">
-    <span class="dev-hero-eyebrow">Development process</span>
-    <h1>From idea to mass production.</h1>
+<section class="wst-page-hero">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow">Development process</span>
+      <h1 class="t-display">From idea to mass production.</h1>
+      <p class="wst-page-hero-intro">Custom lithium battery packs, designed to your specification from the first drawing to series production.</p>
+      <a href="contact-v2.html" class="btn btn-primary">Discuss your project</a>
+    </div>
+    <figure class="wst-page-hero-media">
+      <img src="assets/general/_MG_8322.webp" alt="Engineer reviewing test data at a workstation surrounded by battery test equipment">
+    </figure>
+  </div>
+</section>
+
+<section class="dev-intro">
+  <div class="container">
     <p>We are a full-service custom battery manufacturer, designing lithium battery packs to your specification with design, engineering and manufacturing competences under one roof. Every project starts with a drawing and a specification, worked through in 3D CAD, so there is always a shared reference for the work at hand.</p>
-    <a href="contact-v2.html" class="btn btn-primary">Discuss your project</a>
   </div>
 </section>
 
@@ -433,7 +447,7 @@
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 <script>
 (function () {
   // Header scroll state and mobile menu are handled by wst-shell.js.

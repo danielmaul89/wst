@@ -10,9 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/wst-components.css">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 /* Platform cards. Loaded after the shared sheets so these refinements win
    ties with the base card. Flex column so the spec blocks line up along the
@@ -36,17 +36,17 @@
 
 <main>
 
-<section class="wst-hero">
-  <div class="wst-ambient wst-ambient--hero" aria-hidden="true">
-    <span class="wst-ambient-blob wst-ambient-blob--brass"></span>
-    <span class="wst-ambient-blob wst-ambient-blob--grey"></span>
-    <span class="wst-ambient-blob wst-ambient-blob--blue"></span>
-  </div>
-  <div class="container wst-hero-inner">
-    <span class="eyebrow">Battery Management Systems</span>
-    <h1 class="t-display">Every cell, monitored and protected.</h1>
-    <p class="wst-hero-lead">Our BMS platforms span integrated and distributed architectures, designed and firmware-tuned in-house rather than bought off a shelf. From a compact low-voltage unit to a safety-certified system spanning hundreds of cells, the hardware and the software are engineered together, for your pack.</p>
-    <a href="contact-v2.html" class="btn btn-primary">Talk to our BMS engineers</a>
+<section class="wst-page-hero">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow">Battery Management Systems</span>
+      <h1 class="t-display">Every cell, monitored and protected.</h1>
+      <p class="wst-page-hero-intro">Integrated and distributed BMS platforms, designed and firmware-tuned in-house.</p>
+      <a href="contact-v2.html" class="btn btn-primary">Talk to our BMS engineers</a>
+    </div>
+    <figure class="wst-page-hero-media">
+      <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board">
+    </figure>
   </div>
 </section>
 
@@ -56,11 +56,11 @@
       <div class="wst-split-copy">
         <span class="wst-tag">Overview</span>
         <h2>Hardware and firmware, engineered together.</h2>
-        <p>A BMS is only as good as its fit to the pack it protects. We design the board, write the firmware and set the safety strategy around your cell chemistry, topology and communication protocol, rather than adapting a generic platform after the fact.</p>
-        <p>The result is a management system that reports exactly what your application needs to know, on the interface it already speaks.</p>
+        <p>Our BMS platforms span integrated and distributed architectures, designed and firmware-tuned in-house rather than bought off a shelf. From a compact low-voltage unit to a safety-certified system spanning hundreds of cells, the hardware and the software are engineered together, for your pack.</p>
+        <p>A BMS is only as good as its fit to the pack it protects. We design the board, write the firmware and set the safety strategy around your cell chemistry, topology and communication protocol, rather than adapting a generic platform after the fact. The result is a management system that reports exactly what your application needs to know, on the interface it already speaks.</p>
       </div>
       <div class="wst-split-media">
-        <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
+        <img src="assets/general/_MG_8255_VN09GRAIN.webp" alt="Open battery pack with its BMS board mounted above the cell stack">
       </div>
     </div>
   </div>
@@ -159,7 +159,7 @@
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
 </body>
 </html>

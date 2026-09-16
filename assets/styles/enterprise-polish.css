@@ -13,7 +13,6 @@ body {
 }
 
 /* Keep the primary brand mark equally authoritative in navigation and footer. */
-.nav .brand-logo,
 .footer .brand-logo{
   height:30px !important;
   width:auto;

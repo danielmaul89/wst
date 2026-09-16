@@ -127,7 +127,11 @@ lower inside its line box than the paragraph's. Expected markup:
 
 ### Layout
 
-- Maximum content width: `1240px`.
+- Maximum content width: `1440px` (`--container`). Images and grids use the full width.
+- Body text measure: `75ch` (`--measure`), applied to paragraphs and list items inside `<main>` with zero specificity.
+- Text is left-aligned everywhere. Centred text was retired site-wide in client feedback round 1.
+- Inner pages open with `.wst-page-hero`: a large H1 and optional one-line intro on the left, a large photograph on the right.
+- Header logo: `--logo-height` / `--logo-height-scrolled`, two variants under review (`?logo=a`, `?logo=b`); the header shrinks on scroll.
 - Desktop horizontal gutter: `32px`.
 - Mobile horizontal gutter: `16px`.
 - Major section spacing: `96–140px`.

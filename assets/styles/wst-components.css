@@ -103,10 +103,12 @@
   color: var(--ink-soft-on-dark);
 }
 
+/* Stacked head. Kept for existing markup; text is left-aligned like every
+   other block (centred text was retired site-wide). */
 .wst-section-head--center {
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .wst-section-head--center h2,
@@ -152,17 +154,15 @@
   overflow: hidden;
   isolation: isolate;
   padding: calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-6);
-  text-align: center;
+  text-align: left;
 }
 
 .wst-hero-inner {
   position: relative;
   z-index: 1;
-  max-width: 900px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--sp-3);
 }
 
@@ -176,6 +176,97 @@
   color: var(--ink-soft);
   font-size: clamp(var(--fs-body), 1.6vw, var(--fs-24));
   line-height: 1.65;
+}
+
+
+/* ============================================================================
+   1C. PAGE HERO
+   The opening block of an inner page: a clear page header on the left
+   (eyebrow, one H1, an optional one-line intro, one action) and a large
+   photograph on the right, so every inner page shows a visual above the
+   fold. Longer introductory copy belongs in the first section below, not
+   here. Use `.wst-hero` only where a page has no photograph to lead with.
+
+   Markup:
+     <section class="wst-page-hero">
+       <div class="container wst-page-hero-grid">
+         <div class="wst-page-hero-copy">
+           <span class="eyebrow">…</span>
+           <h1 class="t-display">…</h1>
+           <p class="wst-page-hero-intro">…</p>
+           <a href="…" class="btn btn-primary">…</a>
+         </div>
+         <figure class="wst-page-hero-media">
+           <img src="…" alt="…">
+         </figure>
+       </div>
+     </section>
+
+   `--page-hero-media-ratio` sets the photograph's proportion; the image is
+   cropped to it. `--dark` is for pages set on the deep-blue surface.
+   ========================================================================== */
+
+.wst-page-hero {
+  --page-hero-media-ratio: 4 / 3;
+  position: relative;
+  padding: calc(var(--nav-height) + var(--sp-5)) 0 var(--sp-6);
+}
+
+.wst-page-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(var(--sp-5), 5vw, var(--sp-7));
+  align-items: center;
+}
+
+.wst-page-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  text-align: left;
+}
+
+.wst-page-hero-copy .t-display {
+  max-width: 16ch;
+  margin: 0;
+}
+
+.wst-page-hero-intro {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(var(--fs-body), 1.4vw, var(--fs-24));
+  line-height: 1.6;
+}
+
+.wst-page-hero-media {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: var(--page-hero-media-ratio);
+  max-height: calc(100svh - var(--nav-height) - var(--sp-7));
+  border-radius: var(--r-lg);
+  background: var(--paper-2);
+}
+
+.wst-page-hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wst-page-hero--dark {
+  color: var(--paper);
+}
+
+.wst-page-hero--dark .wst-page-hero-intro {
+  color: var(--ink-soft-on-dark);
+}
+
+.wst-page-hero--dark .wst-page-hero-media {
+  background: rgba(251, 249, 245, .06);
 }
 
 
@@ -1057,11 +1148,11 @@
   padding: var(--sp-6) 0;
   background: var(--blue-deep);
   color: var(--paper);
-  text-align: center;
+  text-align: left;
 }
 
 .wst-cta-band h2 {
-  margin: 0 auto var(--sp-2);
+  margin: 0 0 var(--sp-2);
   max-width: 20ch;
   font-size: var(--h2-section);
   letter-spacing: var(--h2-ls);
@@ -1070,7 +1161,7 @@
 
 .wst-cta-band p {
   max-width: 44ch;
-  margin: 0 auto var(--sp-4);
+  margin: 0 0 var(--sp-4);
   color: var(--ink-soft-on-dark);
   font-size: var(--fs-body);
   line-height: 1.65;
@@ -1079,7 +1170,7 @@
 .wst-cta-band-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--sp-2);
   flex-wrap: wrap;
 }
@@ -1171,6 +1262,30 @@
   }
 }
 
+
+/* Page hero: copy first, photograph below it, still near the top of the
+   screen on phones and tablets. */
+@media (max-width: 980px) {
+  .wst-page-hero {
+    --page-hero-media-ratio: 16 / 10;
+    padding-bottom: var(--sp-5);
+  }
+
+  .wst-page-hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+
+  .wst-page-hero-media {
+    max-height: none;
+  }
+
+  /* Media-first: for headers whose copy runs long (article leads), the
+     photograph leads on narrow screens so it stays above the fold. */
+  .wst-page-hero--media-first .wst-page-hero-media {
+    order: -1;
+  }
+}
 
 /* ============================================================================
    13. REDUCED MOTION

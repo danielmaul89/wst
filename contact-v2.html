@@ -205,8 +205,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .channel-value{ white-space:normal; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=shell4">
-<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=publish1">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 /* Contact page: one continuous dark blueprint surface from navigation to form. */
 body[data-wst-page="contact"]{
@@ -246,6 +247,7 @@ body[data-wst-page="contact"] .page-hero{
 body[data-wst-page="contact"] .page-hero h1{
   color:var(--paper);
 }
+.contact-hero-media img{ object-position:50% 22%; }
 body[data-wst-page="contact"] .page-hero p{
   color:rgba(251,249,245,.72);
 }
@@ -397,10 +399,16 @@ body[data-wst-page="contact"] .page-hero p{
 
 <main id="top">
 
-<section class="page-hero">
-  <div class="container page-hero-inner">
-    <h1>Let's talk about your application.</h1>
-    <p>Tell us whether you need a sales conversation, help with a purchase or an answer to a general question. The right person will get back to you.</p>
+<section class="page-hero wst-page-hero wst-page-hero--dark">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow">Contact</span>
+      <h1 class="t-display">Let's talk about your application.</h1>
+      <p class="wst-page-hero-intro">Tell us whether you need a sales conversation, help with a purchase or an answer to a general question. The right person will get back to you.</p>
+    </div>
+    <figure class="wst-page-hero-media contact-hero-media">
+      <img src="assets/people/_MG_8173.jpg" alt="Portrait of WS Technicals leadership against a dark blue backdrop">
+    </figure>
   </div>
 </section>
 
@@ -565,7 +573,7 @@ body[data-wst-page="contact"] .page-hero p{
   </div>
 </footer>
 
-<script src="assets/scripts/wst-shell.js?v=publish4"></script>
+<script src="assets/scripts/wst-shell.js?v=p1"></script>
 <script>
 (function(){
   var body = document.body;
