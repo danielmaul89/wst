@@ -301,6 +301,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* ============================================================
    FIELD CASE — room for a concise, credible customer narrative.
    ============================================================ */
+/* Product image slots, placeholders until the pack photos arrive. */
+.product-photos{ position:relative; z-index:1; padding:var(--sp-7) 0 0; background:var(--paper); }
+.product-photos-title{ margin:0 0 var(--sp-4); font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
+.product-photos-grid{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:var(--sp-3); }
+@media (max-width:900px){ .product-photos-grid{ grid-template-columns:1fr; } }
 .field-case{ padding:var(--sp-8) 0; background:var(--paper); }
 .field-case-grid{
   display:grid;
@@ -969,6 +974,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2c">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 </head>
 <body data-wst-page="solutions">
@@ -1093,6 +1099,26 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <span class="battery-callout one">Application-matched cell architecture</span>
       <span class="battery-callout two">Integrated BMS and communication</span>
       <span class="battery-callout three">Custom enclosure and interfaces</span>
+    </div>
+  </div>
+</section>
+
+<section class="product-photos" id="product-photos">
+  <div class="container">
+    <h2 class="product-photos-title">The pack, up close.</h2>
+    <div class="product-photos-grid">
+      <div class="wst-media-placeholder" role="img" aria-label="Battery pack front view, placeholder">
+        <span class="wst-media-placeholder-label">Battery pack, front view</span>
+        <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+      </div>
+      <div class="wst-media-placeholder" role="img" aria-label="Battery pack installed in the drone, placeholder">
+        <span class="wst-media-placeholder-label">Installed in the drone</span>
+        <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+      </div>
+      <div class="wst-media-placeholder" role="img" aria-label="Connector and BMS detail, placeholder">
+        <span class="wst-media-placeholder-label">Connector and BMS detail</span>
+        <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+      </div>
     </div>
   </div>
 </section>

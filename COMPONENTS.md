@@ -91,6 +91,8 @@ different content:
 | A figure inside a layout | `.wst-stat-card` |
 | Headline figures across the page width | `.wst-stat-band` |
 | Copy beside a render or photograph | `.wst-split` |
+| The opening header of an inner page (H1, one-line intro, large photo) | `.wst-page-hero` (`--wide-media` for 16:9, `--media-first` to lead with the photo on phones, `--dark` on deep blue) |
+| An image, product photo or document that has not arrived yet | `.wst-media-placeholder` (`--wide`, `--square`, `--compact`) |
 
 ### 3. Add a variant
 

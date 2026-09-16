@@ -8,7 +8,7 @@
 <meta name="description" content="Explore our latest customer success stories, employee interviews and industry insights from WS Technicals.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2c">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ position:relative; background:var(--paper); }
@@ -56,7 +56,10 @@ body{ position:relative; background:var(--paper); }
 .news-hero h1{ max-width:14ch; margin:18px 0 24px; font-size:clamp(40px,6vw,64px); }
 .news-hero .lead{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
 
-.news-grid-section{ position:relative; z-index:1; padding:0 0 140px; }
+/* Thumbnail proportion for every news card, in one place. Wider than the old
+   fixed 280px crop so partner logos in the photos are not cut off.
+   Final value to be confirmed by the client. */
+.news-grid-section{ --news-thumb-ratio:16 / 9; position:relative; z-index:1; padding:0 0 140px; }
 .news-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -67,7 +70,7 @@ body{ position:relative; background:var(--paper); }
 .news-card{ display:block; }
 .news-card-media{
   position:relative;
-  height:280px;
+  aspect-ratio:var(--news-thumb-ratio);
   margin-bottom:20px;
   overflow:hidden;
   border-radius:var(--r-lg);
@@ -114,7 +117,6 @@ body{ position:relative; background:var(--paper); }
 @media(max-width:560px){
   .news-hero{ padding-top:112px; }
   .news-grid{ grid-template-columns:1fr; }
-  .news-card-media{ height:240px; }
   .news-cta h2{ font-size:40px; }
 }
 

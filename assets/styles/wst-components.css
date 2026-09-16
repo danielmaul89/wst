@@ -269,6 +269,11 @@
   background: rgba(251, 249, 245, .06);
 }
 
+/* Wide media: a landscape 16:9 photograph instead of the default 4:3. */
+.wst-page-hero--wide-media {
+  --page-hero-media-ratio: 16 / 9;
+}
+
 
 /* ============================================================================
    2. AMBIENT WASH
@@ -475,6 +480,76 @@
   height: 6px;
   border-radius: 50%;
   background: var(--brass);
+}
+
+
+/* ============================================================================
+   4B. MEDIA PLACEHOLDER
+   Stands in for a photograph, product image or document that has not arrived
+   yet. It keeps the final proportions, so the layout does not shift when the
+   real asset replaces it. Replace the whole element with the asset; do not
+   restyle it into a permanent design element.
+
+   Markup:
+     <div class="wst-media-placeholder wst-media-placeholder--wide" role="img"
+          aria-label="… placeholder">
+       <span class="wst-media-placeholder-label">…</span>
+       <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+     </div>
+
+   Proportion: default 4:3, `--wide` 16:9, `--square` 1:1. Inside a framed
+   media slot (page hero, split media) it fills the slot instead.
+   ========================================================================== */
+
+.wst-media-placeholder {
+  --placeholder-ratio: 4 / 3;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 4px;
+  width: 100%;
+  aspect-ratio: var(--placeholder-ratio);
+  padding: var(--sp-2);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  background:
+    repeating-linear-gradient(135deg, rgba(6, 8, 26, .025) 0 12px, transparent 12px 24px),
+    var(--paper-2);
+}
+
+.wst-media-placeholder--wide {
+  --placeholder-ratio: 16 / 9;
+}
+
+.wst-media-placeholder--square {
+  --placeholder-ratio: 1 / 1;
+}
+
+/* Compact: a small thumbnail slot inside a card or row. */
+.wst-media-placeholder--compact {
+  padding: 10px;
+  border-radius: var(--r);
+}
+
+.wst-media-placeholder-label {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.wst-media-placeholder-note {
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+}
+
+.wst-page-hero-media > .wst-media-placeholder,
+.wst-split-media > .wst-media-placeholder {
+  height: 100%;
+  border-radius: inherit;
 }
 
 

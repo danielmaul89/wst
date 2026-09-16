@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2c">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 /* Platform cards. Loaded after the shared sheets so these refinements win
@@ -27,6 +27,15 @@
 .bms-specs li:last-child{ border-bottom:1px solid var(--line-2); }
 .bms-specs li::before{ content:""; width:8px; height:1px; background:var(--brass); transform:translateY(-4px); }
 .bms-specs strong{ font-weight:600; font-variant-numeric:tabular-nums; }
+/* Product image slot, datasheet slot and the BMS partner link. Image and
+   datasheet are placeholders until the assets arrive. */
+.bms-product-image{ margin-bottom:var(--sp-3); }
+.bms-datasheet{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); margin:var(--sp-3) 0 0; padding:12px 16px; border:1px dashed var(--line); border-radius:var(--r); font-size:14px; color:var(--ink-soft); }
+.bms-datasheet-label{ font-weight:600; color:var(--ink); }
+.bms-datasheet-status{ font-family:var(--font-mono); font-size:14px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); }
+.bms-partner{ display:inline-flex; align-items:center; gap:var(--sp-2); margin:0 0 var(--sp-5); color:var(--ink-soft); font-size:14px; text-decoration:none; }
+.bms-partner img{ display:block; width:auto; height:28px; }
+.bms-partner:hover .bms-partner-label{ color:var(--ink); }
 @media(max-width:560px){ .bms-platform{ padding:var(--sp-3); } .bms-type{ white-space:normal; } }
 </style>
 </head>
@@ -72,9 +81,17 @@
       <h2>Four platforms, one design philosophy.</h2>
       <p>Pick by pack voltage, cell count and safety requirement. Each platform is a starting point we tailor to the application.</p>
     </div>
+    <a class="bms-partner" href="https://lithiumbalance.com/" target="_blank" rel="noopener noreferrer" aria-label="BMS platforms by Lithium Balance (opens in a new tab)">
+      <span class="bms-partner-label">BMS platforms by</span>
+      <img src="assets/partners/lithium-balance.svg" alt="">
+    </a>
     <div class="wst-grid wst-grid--2 wst-grid--wide-gap">
 
       <div class="wst-card bms-platform" id="i-bms">
+        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="i-BMS product image, placeholder">
+          <span class="wst-media-placeholder-label">i-BMS product image</span>
+          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        </div>
         <div class="bms-card-head">
           <h3>i-BMS</h3>
           <span class="bms-type">Integrated · Low voltage</span>
@@ -85,9 +102,14 @@
           <li><span><strong>17–60V</strong> pack range</span></li>
           <li><span>Integrated pre-charge &amp; disconnect</span></li>
         </ul>
+        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
       </div>
 
       <div class="wst-card bms-platform" id="n-bms">
+        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="n-BMS product image, placeholder">
+          <span class="wst-media-placeholder-label">n-BMS product image</span>
+          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        </div>
         <div class="bms-card-head">
           <h3>n-BMS</h3>
           <span class="bms-type">Distributed · Scalable monitoring</span>
@@ -98,9 +120,14 @@
           <li><span><strong>12</strong> voltage &amp; up to <strong>12</strong> temperature channels per module</span></li>
           <li><span><strong>Dual CAN</strong></span></li>
         </ul>
+        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
       </div>
 
       <div class="wst-card bms-platform" id="n3-bms">
+        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="n3-BMS product image, placeholder">
+          <span class="wst-media-placeholder-label">n3-BMS product image</span>
+          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        </div>
         <div class="bms-card-head">
           <h3>n3-BMS</h3>
           <span class="bms-type">Distributed · Safety-certified</span>
@@ -111,9 +138,14 @@
           <li><span><strong>ISO 26262 ASIL C</strong></span></li>
           <li><span>Up to <strong>1000V / 2000A</strong></span></li>
         </ul>
+        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
       </div>
 
       <div class="wst-card bms-platform" id="c-bms24x">
+        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="c-BMS24x product image, placeholder">
+          <span class="wst-media-placeholder-label">c-BMS24x product image</span>
+          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        </div>
         <div class="bms-card-head">
           <h3>c-BMS24x</h3>
           <span class="bms-type">Integrated · Smart pack management</span>
@@ -124,6 +156,7 @@
           <li><span><strong>12–100V</strong>, up to <strong>2000A</strong></span></li>
           <li><span>Parallel pack &amp; battery swap support</span></li>
         </ul>
+        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
       </div>
 
     </div>

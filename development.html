@@ -215,6 +215,18 @@
   background:var(--brass-hi);
 }
 .dev-step-media{ display:none; }
+/* Phase timeline: a Lucide line icon per phase (1.5 stroke, matched to the
+   body text weight) in a ring beside the number, joined by a thin rail that
+   fades out at both ends. The active phase warms its ring to brass. */
+.dev-steps-list{ position:relative; }
+.dev-steps-list::before{ content:""; position:absolute; top:0; bottom:0; left:calc(clamp(32px,6vw,88px) + 24px); width:1px; background:var(--line); -webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent); }
+.dev-step-marker{ position:relative; z-index:1; display:flex; align-items:center; gap:var(--sp-3); margin-bottom:28px; }
+.dev-step-marker .dev-step-index{ margin-bottom:0; }
+.dev-step-icon{ display:flex; align-items:center; justify-content:center; flex:none; width:48px; height:48px; border:1px solid var(--line); border-radius:50%; background:var(--paper); color:var(--brass-text); transition:border-color .5s var(--ease), color .5s var(--ease); }
+.dev-step.is-active .dev-step-icon{ border-color:var(--brass-hi); color:var(--ink); }
+.dev-step-icon svg{ display:block; width:24px; height:24px; }
+@media (max-width:980px){ .dev-steps-list::before{ left:calc(clamp(24px,6vw,40px) + 24px); } }
+@media (prefers-reduced-motion:reduce){ .dev-step-icon{ transition:none; } }
 
 /* ----------------------------------------------------------------
    Depth — 3D battery, subtle scroll-driven rotation
@@ -311,7 +323,7 @@
 }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p1b">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2c">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 </head>
 <body data-wst-page="development">
@@ -364,7 +376,10 @@
 
     <div class="dev-steps-list">
       <div class="dev-step" id="stage-design">
-        <span class="dev-step-index">01</span>
+        <div class="dev-step-marker">
+          <span class="dev-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12.99 6.74 1.93 3.44"/><path d="M19.136 12a10 10 0 0 1-14.271 0"/><path d="m21 21-2.16-3.84"/><path d="m3 21 8.02-14.26"/><circle cx="12" cy="5" r="2"/></svg></span>
+          <span class="dev-step-index">01</span>
+        </div>
         <h3>Design phase &amp; feasibility study.</h3>
         <p>Every project starts with your operating profile and physical constraints. We assess feasibility, define the architecture and produce the first drawings and specification in 3D CAD.</p>
         <ul class="dev-step-tags">
@@ -375,7 +390,10 @@
       </div>
 
       <div class="dev-step" id="stage-prototype">
-        <span class="dev-step-index">02</span>
+        <div class="dev-step-marker">
+          <span class="dev-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/></svg></span>
+          <span class="dev-step-index">02</span>
+        </div>
         <h3>Prototype &amp; testing.</h3>
         <p>A representative pack is built and tested electrically, thermally and mechanically against the agreed profile, before anything moves toward production tooling.</p>
         <ul class="dev-step-tags">
@@ -386,7 +404,10 @@
       </div>
 
       <div class="dev-step" id="stage-industrialization">
-        <span class="dev-step-index">03</span>
+        <div class="dev-step-marker">
+          <span class="dev-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16h.01"/><path d="M16 16h.01"/><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"/><path d="M8 16h.01"/></svg></span>
+          <span class="dev-step-index">03</span>
+        </div>
         <h3>Industrialization &amp; quality management.</h3>
         <p>The validated design is translated into a repeatable manufacturing definition: approved components, controlled work instructions and end-of-line testing for every unit.</p>
         <ul class="dev-step-tags">
@@ -397,7 +418,10 @@
       </div>
 
       <div class="dev-step" id="stage-compliance">
-        <span class="dev-step-index">04</span>
+        <div class="dev-step-marker">
+          <span class="dev-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m16 9-5.5 5.5L8 12"/></svg></span>
+          <span class="dev-step-index">04</span>
+        </div>
         <h3>Market compliance.</h3>
         <p>Every system is verified against the certification requirements of its target market, covering safety, EMC and transport regulations before it ships anywhere.</p>
         <ul class="dev-step-tags">
@@ -408,7 +432,10 @@
       </div>
 
       <div class="dev-step" id="stage-production">
-        <span class="dev-step-index">05</span>
+        <div class="dev-step-marker">
+          <span class="dev-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="m16 17 2 2 4-4"/><path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753"/><path d="M3.29 7 12 12l8.71-5"/><path d="m7.5 4.27 8.997 5.148"/></svg></span>
+          <span class="dev-step-index">05</span>
+        </div>
         <h3>Mass production &amp; SOP.</h3>
         <p>Once released, the design moves into standard operating procedure: consistent, traceable output at the volume your project needs.</p>
         <ul class="dev-step-tags">
