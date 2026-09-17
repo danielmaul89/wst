@@ -555,11 +555,18 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* Live 3D pack (assets/scripts/home-hero-3d.js). The render above stays as
    the poster until the model has loaded, then the exploded model fades in
    over it and assembles. The box keeps the poster's size, so nothing shifts. */
-.hero-visual.is-3d{ position:relative; }
+/* The 3D stage is wider and taller than the still render it replaces, so the
+   exploded pack can use the width of the screen. */
+.hero-visual.is-3d{
+  position:relative;
+  max-width:min(1560px, 94vw);
+  padding:0;
+  height:clamp(320px, 46vh, 560px);
+}
 .hero-visual-canvas{
   position:absolute;
-  top:0; bottom:0; left:var(--sp-4); right:var(--sp-4);
-  width:calc(100% - 2 * var(--sp-4));
+  inset:0;
+  width:100%;
   height:100%;
   opacity:0;
   transition:opacity .9s var(--ease);
@@ -3170,7 +3177,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/vendor/FBXLoader.js" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=3" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=9" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>

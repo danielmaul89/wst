@@ -77,6 +77,12 @@
   var ASSEMBLE_DELAY_MS = 500;
   var ASSEMBLE_MS = 3600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
+  /* Breathing room around the pack, as a share of the stage. */
+  var FIT_MARGIN = 1.06;
+  /* The stage is far wider than it is tall, so the pieces are thrown much
+     further sideways than up, and the spread fills the width rather than
+     stacking into a column the camera has to pull back from. */
+  var SPREAD = new THREE.Vector3(2.6, 0.5, 1.15);
 
   function tierFor(name) {
     var lower = (name || '').toLowerCase();
@@ -209,14 +215,72 @@
     var ready = false;
     var readyAt = 0;
     var center = new THREE.Vector3();
-    var distExploded = 1, distCombined = 1;
+    var fitTarget = new THREE.Vector3();
+    var camDist = 0;
+    var wantDist = 0;
+    var fitTick = 0;
+    var lastFrame = 0;
     var shadowMesh = null, shadowBaseScale = 1;
     var _q = new THREE.Quaternion();
 
-    function fitDistance(radius, margin) {
-      var vFov = camera.fov * Math.PI / 180;
-      var hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
-      return (radius / Math.sin(Math.min(vFov, hFov) / 2)) * margin;
+    /* Frame the pack from the pieces themselves, every frame. Their corners
+       are measured in the camera's own basis, the camera aims at the middle
+       of that box and stands back far enough to hold it. The spread is far
+       wider than it is tall, so fitting a bounding sphere instead would size
+       the view by its diagonal and leave the width of the stage empty. */
+    var RIGHT = new THREE.Vector3(VIEW_DIR.z, 0, -VIEW_DIR.x).normalize();
+    var UP = new THREE.Vector3().crossVectors(VIEW_DIR, RIGHT).normalize();
+    var _c = new THREE.Vector3();
+    var corners = null;
+    function fitDistance(margin) {
+      if (!parts.length) return camDist || 1;
+      if (!corners) corners = new Float32Array(parts.length * 24);
+      var minR = Infinity, maxR = -Infinity;
+      var minU = Infinity, maxU = -Infinity;
+      var minF = Infinity, maxF = -Infinity;
+      var n = 0, i, c;
+      for (i = 0; i < parts.length; i++) {
+        var mesh = parts[i].mesh;
+        var geo = mesh.geometry;
+        if (!geo.boundingBox) geo.computeBoundingBox();
+        var b = geo.boundingBox;
+        for (c = 0; c < 8; c++) {
+          _c.set(c & 1 ? b.max.x : b.min.x, c & 2 ? b.max.y : b.min.y, c & 4 ? b.max.z : b.min.z)
+            .applyMatrix4(mesh.matrixWorld);
+          var r = _c.dot(RIGHT), u = _c.dot(UP), f = _c.dot(VIEW_DIR);
+          corners[n++] = r; corners[n++] = u; corners[n++] = f;
+          if (r < minR) minR = r;
+          if (r > maxR) maxR = r;
+          if (u < minU) minU = u;
+          if (u > maxU) maxU = u;
+          if (f < minF) minF = f;
+          if (f > maxF) maxF = f;
+        }
+      }
+      var cR = (minR + maxR) / 2, cU = (minU + maxU) / 2, cF = (minF + maxF) / 2;
+      fitTarget.set(0, 0, 0)
+        .addScaledVector(RIGHT, cR)
+        .addScaledVector(UP, cU)
+        .addScaledVector(VIEW_DIR, cF);
+
+      /* Exactly how far back the camera has to stand: for every corner, the
+         distance at which it sits on the edge of the frame, allowing for how
+         near to the camera that particular corner is. The widest piece is
+         rarely the nearest one, so measuring per corner keeps the pack large
+         instead of leaving a margin the size of the pack's depth. */
+      var tanV = Math.tan(camera.fov * Math.PI / 360);
+      var tanH = tanV * camera.aspect;
+      var need = 0;
+      for (i = 0; i < n; i += 3) {
+        var dr = Math.abs(corners[i] - cR) * margin;
+        var du = Math.abs(corners[i + 1] - cU) * margin;
+        var df = corners[i + 2] - cF;
+        var wide = dr / tanH + df;
+        var tall = du / tanV + df;
+        if (wide > need) need = wide;
+        if (tall > need) need = tall;
+      }
+      return need;
     }
 
     /* A soft gradient disc standing in for a contact shadow: firm where the
@@ -240,6 +304,12 @@
       mesh.renderOrder = -1;
       group.add(mesh);
       return mesh;
+    }
+
+    /* Where a piece floats while the pack is apart: out along `dir`, then
+       stretched across the view. */
+    function spreadOffset(dir, dist) {
+      return new THREE.Vector3(dir.x * dist, dir.y * dist, dir.z * dist).multiply(SPREAD);
     }
 
     /* `t` is how far apart the pack is, 1 exploded to 0 together. Each piece
@@ -309,7 +379,7 @@
           /* Outward from the centre, weighted sideways so the view opens to
              the left and right. Pieces on the axis get a deterministic push
              so they do not stay hidden in the middle. */
-          dir.set((wp.x - hub.x) * 2.6, (wp.y - hub.y) * 0.8, (wp.z - hub.z) * 1.2);
+          dir.set((wp.x - hub.x) * 7.5, (wp.y - hub.y) * 0.3, (wp.z - hub.z) * 0.95);
           if (dir.lengthSq() < 1e-8) dir.set(index % 2 ? 1 : -1, 0.14, 0);
           dir.normalize();
 
@@ -317,7 +387,7 @@
             mesh: child,
             basePos: child.position.clone(),
             baseQuat: child.quaternion.clone(),
-            delta: worldToLocalDelta(child, wp, dir.clone().multiplyScalar(dist)),
+            delta: worldToLocalDelta(child, wp, spreadOffset(dir, dist)),
             /* A small sideways drift and a slow turn while the piece is out,
                both resolving to zero as it seats. */
             drift: worldToLocalDelta(child, wp, new THREE.Vector3(-dir.z, 0.35, dir.x).normalize().multiplyScalar(sphere.radius * 0.05)),
@@ -332,14 +402,14 @@
           index++;
         });
 
-        var reach = sphere.radius;
-        for (var i = 0; i < parts.length; i++) reach = Math.max(reach, sphere.radius + parts[i].dist);
         resize();
-        center.copy(sphere.center);
-        distExploded = fitDistance(reach, 1.02);
-        distCombined = fitDistance(sphere.radius, 1.02);
-        camera.near = Math.max(0.01, distCombined / 100);
-        camera.far = distExploded * 20;
+        applyLayout(1, 0);
+        object.updateMatrixWorld(true);
+        var reach = fitDistance(FIT_MARGIN);
+        center.copy(fitTarget);
+        camDist = wantDist = reach;
+        camera.near = Math.max(0.01, reach / 500);
+        camera.far = reach * 20;
         camera.updateProjectionMatrix();
 
         shadowMesh = makeContactShadow(sphere.radius, minY);
@@ -394,9 +464,23 @@
         shadowMesh.scale.set(s, s, 1);
       }
 
-      var dist = distCombined + (distExploded - distCombined) * explode;
-      camera.position.copy(center).addScaledVector(VIEW_DIR, dist);
+      /* Re-fit every frame: the pack fills the stage both while it floats
+         apart and once it is together. Damped, so the pieces' own drift does
+         not make the view breathe. */
+      group.updateMatrixWorld(true);
+      /* The fit walks every corner, so it runs on every third frame; the
+         damping below carries the camera between those samples. */
+      if ((fitTick++ % 3) === 0) wantDist = fitDistance(FIT_MARGIN);
+      var dt = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
+      lastFrame = now;
+      /* Pull back quickly but close in gently: the view never lags behind a
+         piece swinging outwards, so nothing is cut off at the edge. */
+      var k = 1 - Math.exp((wantDist > camDist ? -14 : -3.5) * dt);
+      camDist += (wantDist - camDist) * k;
+      center.lerp(fitTarget, 1 - Math.exp(-3.5 * dt));
+      camera.position.copy(center).addScaledVector(VIEW_DIR, camDist);
       camera.lookAt(center);
+
       renderer.render(scene, camera);
     }
     requestAnimationFrame(frame);
