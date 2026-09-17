@@ -2,13 +2,14 @@
 
    The static render in `.hero-visual` stays in place as the poster. Once the
    page has loaded and the browser is idle, a real production model is loaded
-   into a canvas over it. The pack starts exploded into its layers and
-   connects either on a timer or as the reader scrolls, whichever comes
-   first, then settles into a slow drift.
+   into a canvas over it. The pack starts as a full exploded view and gathers
+   into the centre, either on a timer or as the reader scrolls, whichever
+   comes first, then settles into a slow drift.
 
-   Parts rise straight up in functional layers (lid, harness and boards,
-   busbars, cells and holders) with the casing as the fixed anchor, so no
-   part passes through the casing on the way in. Layer rules and the
+   Parts fly outward from the pack's centre, weighted sideways so the view
+   opens to the left and right rather than stacking upward. They come back in
+   order: the internals seat first, the casing and lid close last, so nothing
+   passes through the casing on the way in. Layer rules and the
    world-to-local offset handling follow product-3d-viewer.js.
 
    Skipped (the poster simply stays) when: no WebGL, reduced motion, data
@@ -137,10 +138,15 @@
       return (radius / Math.sin(fov / 2)) * margin;
     }
 
+    /* `t` is how far apart the pack is, 1 exploded to 0 together. Each part
+       has its own delay on the way in, so the internals seat before the
+       casing and lid close over them. */
     function applyExplode(t) {
+      var assembled = 1 - t;
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
-        p.mesh.position.copy(p.basePos).addScaledVector(p.delta, t);
+        var own = clamp01((assembled - p.delay) / (1 - p.delay));
+        p.mesh.position.copy(p.basePos).addScaledVector(p.delta, 1 - own);
       }
     }
 
@@ -162,21 +168,44 @@
         var sphere = box2.getBoundingSphere(new THREE.Sphere());
         var minY = box2.min.y;
         var height = Math.max(box2.max.y - minY, 1e-4);
-        var UP = new THREE.Vector3(0, 1, 0);
+        var hub = sphere.center;
+        var dir = new THREE.Vector3();
+        var index = 0;
 
         object.traverse(function (child) {
           if (!child.isMesh) return;
           var wp = new THREE.Vector3();
           child.getWorldPosition(wp);
           var tier = tierFor(child.name);
+
+          /* How far out: the casing opens only a little, named layers travel
+             by their type, and unmatched hardware by where it sits. */
           var dist;
-          if (tier && tier.anchor) dist = sphere.radius * 0.15;
-          else if (tier) dist = sphere.radius * tier.y;
-          else dist = sphere.radius * (0.25 + clamp01((wp.y - minY) / height) * 3.6);
+          if (tier && tier.anchor) dist = sphere.radius * 0.4;
+          else if (tier) dist = sphere.radius * (0.8 + tier.y * 0.3);
+          else dist = sphere.radius * (0.75 + clamp01((wp.y - minY) / height) * 0.9);
+
+          /* The pack closes in order: internals first, casing and lid last. */
+          var delay;
+          if (tier && tier.anchor) delay = 0.3;
+          else if (tier && tier.y >= 3.9) delay = 0.26;
+          else if (tier && tier.y >= 3) delay = 0.16;
+          else if (tier && tier.y >= 2) delay = 0.08;
+          else delay = 0;
+
+          /* Outward from the centre, weighted sideways so the view opens to
+             the left and right. Parts sitting on the axis get a deterministic
+             push so they do not stay hidden in the middle. */
+          dir.set((wp.x - hub.x) * 2.4, (wp.y - hub.y) * 0.8, (wp.z - hub.z) * 1.1);
+          if (dir.lengthSq() < 1e-8) dir.set(index % 2 ? 1 : -1, 0.14, 0);
+          dir.normalize();
+          index++;
+
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
-            delta: worldToLocalDelta(child, wp, UP.clone().multiplyScalar(dist)),
+            delta: worldToLocalDelta(child, wp, dir.clone().multiplyScalar(dist)),
+            delay: delay,
             dist: dist
           });
         });
@@ -185,9 +214,9 @@
         for (var i = 0; i < parts.length; i++) reach = Math.max(reach, sphere.radius + parts[i].dist);
         resize();
         center.copy(sphere.center);
-        /* The exploded stack rises upward from the casing, so frame its
-           midpoint rather than the assembled pack's centre. */
-        distExploded = fitDistance((reach + sphere.radius) / 2 + sphere.radius * 0.35, 1.08);
+        /* The exploded view spreads evenly around the centre, so frame the
+           full spread from there. */
+        distExploded = fitDistance(reach, 1.04);
         distCombined = fitDistance(sphere.radius, 1.02);
         camera.near = Math.max(0.01, distCombined / 100);
         camera.far = distExploded * 20;
@@ -221,7 +250,6 @@
     }
 
     var explode = 1;
-    var riseCenter = new THREE.Vector3();
     function frame(now) {
       requestAnimationFrame(frame);
       if (!visible || !ready) return;
@@ -239,13 +267,10 @@
       group.rotation.y = -0.55 + 0.7 * (1 - explode) + Math.sin(t * 0.22) * 0.08 * (1 - explode);
       group.rotation.x = -0.08;
 
-      /* Look at the middle of the rising stack while it is apart, and at
-         the pack itself once it has connected. */
-      riseCenter.copy(center);
-      riseCenter.y += explode * (distExploded - distCombined) * 0.12;
+      /* Pull back for the spread, in close once the pack is together. */
       var dist = distCombined + (distExploded - distCombined) * explode;
-      camera.position.copy(riseCenter).addScaledVector(VIEW_DIR, dist);
-      camera.lookAt(riseCenter);
+      camera.position.copy(center).addScaledVector(VIEW_DIR, dist);
+      camera.lookAt(center);
       renderer.render(scene, camera);
     }
     requestAnimationFrame(frame);
