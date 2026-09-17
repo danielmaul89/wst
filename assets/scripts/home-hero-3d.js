@@ -75,14 +75,29 @@
   ];
 
   var ASSEMBLE_DELAY_MS = 500;
-  var ASSEMBLE_MS = 3600;
+  var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
+  /* How far the pack is turned while it is apart (see the frame loop). The
+     pieces' offsets are built in the pack's own space, so depth has to be
+     measured along the view as the turned pack sees it. */
+  var SPREAD_SPIN = -0.5;
+  var SPREAD_VIEW = VIEW_DIR.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), -SPREAD_SPIN);
   /* Breathing room around the pack, as a share of the stage. */
   var FIT_MARGIN = 1.06;
-  /* The stage is far wider than it is tall, so the pieces are thrown much
-     further sideways than up, and the spread fills the width rather than
-     stacking into a column the camera has to pull back from. */
-  var SPREAD = new THREE.Vector3(2.6, 0.5, 1.15);
+  /* The pieces are thrown wide across the view and deep through it, barely
+     up: they start spread out in front of and behind where they belong and
+     settle forward or back into the finished pack. */
+  var SPREAD = new THREE.Vector3(1.85, 0.24, 1.3);
+  /* How much further out than the pack's own size the pieces begin. */
+  var SPREAD_SCALE = 1;
+  /* The camera never backs off more than this much beyond the framing of
+     the finished pack. Pieces that swing wider than that pass out of frame
+     on their way in, rather than shrinking the whole view to hold them. */
+  var MAX_PULLBACK = 1.35;
+  /* How far through the view a piece may start, as a share of the pack's
+     own size: a short reach towards the camera, a long one away from it. */
+  var FORWARD_REACH = 1.1;
+  var BACKWARD_REACH = 4;
 
   function tierFor(name) {
     var lower = (name || '').toLowerCase();
@@ -218,6 +233,7 @@
     var fitTarget = new THREE.Vector3();
     var camDist = 0;
     var wantDist = 0;
+    var seatedDist = 0;
     var fitTick = 0;
     var lastFrame = 0;
     var shadowMesh = null, shadowBaseScale = 1;
@@ -308,8 +324,16 @@
 
     /* Where a piece floats while the pack is apart: out along `dir`, then
        stretched across the view. */
-    function spreadOffset(dir, dist) {
-      return new THREE.Vector3(dir.x * dist, dir.y * dist, dir.z * dist).multiply(SPREAD);
+    function spreadOffset(dir, dist, radius) {
+      var d = dist * SPREAD_SCALE;
+      var off = new THREE.Vector3(dir.x * d, dir.y * d, dir.z * d).multiply(SPREAD);
+      /* Depth is capped, tightly towards the camera and loosely away from it:
+         a piece drifting back simply reads as further off, while one drifting
+         forward would sweep past the lens and blot out the view. */
+      var depth = off.dot(SPREAD_VIEW);
+      var limit = depth > 0 ? radius * FORWARD_REACH : -radius * BACKWARD_REACH;
+      if (Math.abs(depth) > Math.abs(limit)) off.addScaledVector(SPREAD_VIEW, limit - depth);
+      return off;
     }
 
     /* `t` is how far apart the pack is, 1 exploded to 0 together. Each piece
@@ -376,18 +400,24 @@
           else if (tier && tier.y >= 2) delay = 0.08;
           else delay = 0;
 
-          /* Outward from the centre, weighted sideways so the view opens to
-             the left and right. Pieces on the axis get a deterministic push
-             so they do not stay hidden in the middle. */
-          dir.set((wp.x - hub.x) * 7.5, (wp.y - hub.y) * 0.3, (wp.z - hub.z) * 0.95);
-          if (dir.lengthSq() < 1e-8) dir.set(index % 2 ? 1 : -1, 0.14, 0);
+          /* Outward from the centre, weighted sideways and through the view:
+             every other piece is pushed towards the camera and the rest away
+             from it, so they arrive from in front of and behind the pack
+             rather than all in one plane. Pieces sitting on the axis get a
+             deterministic push so they do not stay hidden in the middle. */
+          dir.set(
+            (wp.x - hub.x) * 6,
+            (wp.y - hub.y) * 0.3,
+            (wp.z - hub.z) * 1.2 + (index % 2 ? 1 : -1) * sphere.radius * 0.55
+          );
+          if (dir.lengthSq() < 1e-8) dir.set(index % 2 ? 1 : -1, 0.14, 0.5);
           dir.normalize();
 
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
             baseQuat: child.quaternion.clone(),
-            delta: worldToLocalDelta(child, wp, spreadOffset(dir, dist)),
+            delta: worldToLocalDelta(child, wp, spreadOffset(dir, dist, sphere.radius)),
             /* A small sideways drift and a slow turn while the piece is out,
                both resolving to zero as it seats. */
             drift: worldToLocalDelta(child, wp, new THREE.Vector3(-dir.z, 0.35, dir.x).normalize().multiplyScalar(sphere.radius * 0.05)),
@@ -403,12 +433,18 @@
         });
 
         resize();
+
+        /* Frame the finished pack first: that framing is what the whole move
+           settles into, and it caps how far the camera may pull back. */
+        applyLayout(0, 0);
+        object.updateMatrixWorld(true);
+        seatedDist = fitDistance(FIT_MARGIN);
         applyLayout(1, 0);
         object.updateMatrixWorld(true);
-        var reach = fitDistance(FIT_MARGIN);
+        var reach = Math.min(fitDistance(FIT_MARGIN), seatedDist * MAX_PULLBACK);
         center.copy(fitTarget);
         camDist = wantDist = reach;
-        camera.near = Math.max(0.01, reach / 500);
+        camera.near = Math.max(0.01, seatedDist / 500);
         camera.far = reach * 20;
         camera.updateProjectionMatrix();
 
@@ -454,7 +490,7 @@
       if (target < explode) explode = target;
       applyLayout(explode, now);
 
-      group.rotation.y = -0.5 + 0.62 * (1 - explode) + Math.sin(now / 1000 * 0.2) * 0.07 * (1 - explode);
+      group.rotation.y = SPREAD_SPIN + 0.62 * (1 - explode) + Math.sin(now / 1000 * 0.2) * 0.07 * (1 - explode);
       group.rotation.x = -0.08;
 
       if (shadowMesh) {
@@ -470,7 +506,9 @@
       group.updateMatrixWorld(true);
       /* The fit walks every corner, so it runs on every third frame; the
          damping below carries the camera between those samples. */
-      if ((fitTick++ % 3) === 0) wantDist = fitDistance(FIT_MARGIN);
+      if ((fitTick++ % 3) === 0) {
+        wantDist = Math.min(fitDistance(FIT_MARGIN), seatedDist * MAX_PULLBACK);
+      }
       var dt = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
       lastFrame = now;
       /* Pull back quickly but close in gently: the view never lags behind a
