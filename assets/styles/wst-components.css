@@ -274,6 +274,12 @@
   --page-hero-media-ratio: 16 / 9;
 }
 
+/* Text only: no photograph beside the header, so the copy takes the row
+   rather than leaving an empty column. Its own measures still hold. */
+.wst-page-hero--text-only .wst-page-hero-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 
 /* ============================================================================
    2. AMBIENT WASH
