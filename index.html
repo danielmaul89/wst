@@ -516,13 +516,17 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   min-height:90vh;
   min-height:90svh;
   padding:calc(var(--nav-height) + var(--sp-7)) 0 0;
-  text-align:left;
+  /* The hero is the one centred block on the site, by request; every other
+     page and section is left-aligned. */
+  text-align:center;
   overflow:hidden;
 }
 .hero-inner{
+  max-width:1120px;
+  margin-inline:auto;
   display:flex;
   flex-direction:column;
-  align-items:flex-start;
+  align-items:center;
   gap:var(--sp-3);
 }
 .hero h1{
