@@ -2,15 +2,17 @@
 
    The static render in `.hero-visual` stays in place as the poster. Once the
    page has loaded and the browser is idle, a real production model is loaded
-   into a canvas over it. The pack starts as a full exploded view and gathers
-   into the centre, either on a timer or as the reader scrolls, whichever
-   comes first, then settles into a slow drift.
+   into a canvas over it: the pack starts as a wide exploded view, its pieces
+   floating far out to the left and right, then drifts together into the
+   finished product — on a timer, or sooner if the reader scrolls.
 
-   Parts fly outward from the pack's centre, weighted sideways so the view
-   opens to the left and right rather than stacking upward. They come back in
-   order: the internals seat first, the casing and lid close last, so nothing
-   passes through the casing on the way in. Layer rules and the
-   world-to-local offset handling follow product-3d-viewer.js.
+   Look and lighting follow product-3d-showcase.js: a prefiltered studio
+   environment (lights alone leave PBR surfaces dead), ACES tone mapping, the
+   same material palette assigned by part name, and a soft contact shadow
+   that opens up while the pack is apart.
+
+   Pieces come back in order — internals seat first, casing and lid close
+   last — so nothing passes through the casing on the way in.
 
    Skipped (the poster simply stays) when: no WebGL, reduced motion, data
    saver, a narrow screen (the model is a large download), or the loader is
@@ -31,6 +33,8 @@
 
   var url = host.getAttribute('data-hero-3d');
 
+  /* How far each layer travels, as a multiple of the pack's own radius.
+     Matched by keyword against the CAD mesh name; most specific first. */
   var LAYER_TIERS = [
     { test: 'lid', y: 4.0 }, { test: 'cover', y: 4.0 },
     { test: 'harness', y: 3.15 }, { test: 'cable', y: 3.15 }, { test: 'wire', y: 3.15 },
@@ -50,9 +54,29 @@
     { test: 'shell', anchor: true }, { test: 'case', anchor: true }
   ];
 
-  var ASSEMBLE_DELAY_MS = 450;
-  var ASSEMBLE_MS = 2600;
-  var VIEW_DIR = new THREE.Vector3(0.22, 0.3, 0.93).normalize();
+  var MAT_RULES = [
+    { test: 'lid', mat: 'lid' }, { test: 'cover', mat: 'lid' },
+    { test: 'harness', mat: 'cable' }, { test: 'cable', mat: 'cable' }, { test: 'wire', mat: 'cable' },
+    { test: 'solder', mat: 'steel' }, { test: 'ntc', mat: 'cable' },
+    { test: 'busbar', mat: 'busbar' }, { test: 'terminal', mat: 'busbar' },
+    { test: 'board', mat: 'board' }, { test: 'pcb', mat: 'board' }, { test: 'fr4', mat: 'board' },
+    { test: 'dzlr', mat: 'board' }, { test: 'bms', mat: 'board' },
+    { test: 'cell', mat: 'cell' }, { test: 'highstar', mat: 'cell' }, { test: 'inr2', mat: 'cell' },
+    { test: 'eve_c', mat: 'cell' },
+    { test: 'heatpad', mat: 'soft' }, { test: 'holder', mat: 'polymer' }, { test: 'tray', mat: 'polymer' },
+    { test: 'divider', mat: 'polymer' }, { test: 'spacer', mat: 'polymer' },
+    { test: 'tape', mat: 'soft' }, { test: 'eva', mat: 'soft' }, { test: 'foam', mat: 'soft' },
+    { test: 'rubber', mat: 'soft' }, { test: 'epdm', mat: 'soft' }, { test: 'seal', mat: 'soft' },
+    { test: 'screw', mat: 'steel' }, { test: 'bolt', mat: 'steel' }, { test: 'nut', mat: 'steel' },
+    { test: 'washer', mat: 'steel' }, { test: 'bn_', mat: 'steel' }, { test: 'iso_', mat: 'steel' },
+    { test: 'gb_', mat: 'steel' },
+    { test: 'casing', mat: 'casing' }, { test: 'enclosure', mat: 'casing' },
+    { test: 'housing', mat: 'casing' }, { test: 'case', mat: 'casing' }
+  ];
+
+  var ASSEMBLE_DELAY_MS = 500;
+  var ASSEMBLE_MS = 3600;
+  var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
 
   function tierFor(name) {
     var lower = (name || '').toLowerCase();
@@ -87,28 +111,84 @@
     } catch (e) {
       return; // no WebGL: keep the poster
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.06;
     renderer.setClearColor(0x000000, 0);
 
     host.classList.add('is-3d');
     host.appendChild(canvas);
 
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 5000);
+    var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 6000);
     var group = new THREE.Group();
     scene.add(group);
 
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x38445c, 0.95));
-    var key = new THREE.DirectionalLight(0xffffff, 1.15);
-    key.position.set(6, 9, 7);
+    /* Studio environment, built as geometry and prefiltered into an env map:
+       this is what puts real highlights on the metal parts. */
+    function buildEnvScene() {
+      var env = new THREE.Scene();
+      var geo = new THREE.PlaneGeometry(1, 1);
+      function panel(hex, intensity, pos, rot, sx, sy) {
+        var mat = new THREE.MeshBasicMaterial({ color: hex, side: THREE.DoubleSide });
+        mat.color.multiplyScalar(intensity);
+        var m = new THREE.Mesh(geo, mat);
+        m.position.set(pos[0], pos[1], pos[2]);
+        m.rotation.set(rot[0], rot[1], rot[2]);
+        m.scale.set(sx, sy, 1);
+        env.add(m);
+      }
+      panel(0x11151f, 1.0, [0, 0, -14], [0, 0, 0], 40, 40);
+      panel(0xffffff, 4.2, [0, 9, 0.5], [-Math.PI / 2, 0, 0], 15, 15);
+      panel(0xffd9ab, 2.1, [0, 2.6, -9.5], [0, 0, 0], 15, 9);
+      panel(0x9dc0ff, 1.35, [-8.5, 2.2, 2], [0, Math.PI / 2, 0], 13, 9);
+      panel(0xffffff, 0.85, [8.5, 2.2, 2], [0, -Math.PI / 2, 0], 13, 9);
+      return env;
+    }
+
+    var pmrem = new THREE.PMREMGenerator(renderer);
+    var envTarget = pmrem.fromScene(buildEnvScene(), 0.04);
+    scene.environment = envTarget.texture;
+    pmrem.dispose();
+
+    var key = new THREE.DirectionalLight(0xfff2e0, 1.9);
+    key.position.set(5.5, 8.5, 6);
     scene.add(key);
-    var fill = new THREE.DirectionalLight(0xbfd0ff, 0.45);
-    fill.position.set(-7, 2, -5);
-    scene.add(fill);
-    var rim = new THREE.DirectionalLight(0xffe3b8, 0.35);
-    rim.position.set(0, 4, -8);
+    var rim = new THREE.DirectionalLight(0xbcd4ff, 1.45);
+    rim.position.set(-6, 3.5, -7.5);
     scene.add(rim);
+    var fill = new THREE.DirectionalLight(0xffffff, 0.35);
+    fill.position.set(-4, 1.5, 6);
+    scene.add(fill);
+
+    function std(color, metalness, roughness) {
+      return new THREE.MeshStandardMaterial({ color: color, metalness: metalness, roughness: roughness });
+    }
+    var MATS = {
+      casing: std(0x171b23, 0.62, 0.44),
+      lid: std(0x272d38, 0.70, 0.34),
+      polymer: std(0x2b303b, 0.10, 0.82),
+      cell: std(0xb9c0ca, 0.92, 0.26),
+      busbar: std(0xc08842, 0.94, 0.24),
+      board: std(0x16402f, 0.32, 0.58),
+      cable: std(0x0c0e14, 0.24, 0.74),
+      soft: std(0x23262f, 0.06, 0.92),
+      steel: std(0x8d949e, 0.96, 0.30),
+      neutral: std(0x4a505c, 0.55, 0.48)
+    };
+    /* The enclosure exports as open, single-sided skins, so it draws both
+       sides — otherwise it reads as holes in the casing. */
+    MATS.casing.side = THREE.DoubleSide;
+    MATS.lid.side = THREE.DoubleSide;
+
+    function materialFor(name) {
+      var lower = (name || '').toLowerCase();
+      for (var i = 0; i < MAT_RULES.length; i++) {
+        if (lower.indexOf(MAT_RULES[i].test) !== -1) return MATS[MAT_RULES[i].mat];
+      }
+      return MATS.neutral;
+    }
 
     var lastW = 0, lastH = 0;
     function resize() {
@@ -130,23 +210,52 @@
     var readyAt = 0;
     var center = new THREE.Vector3();
     var distExploded = 1, distCombined = 1;
+    var shadowMesh = null, shadowBaseScale = 1;
+    var _q = new THREE.Quaternion();
 
     function fitDistance(radius, margin) {
       var vFov = camera.fov * Math.PI / 180;
       var hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
-      var fov = Math.min(vFov, hFov);
-      return (radius / Math.sin(fov / 2)) * margin;
+      return (radius / Math.sin(Math.min(vFov, hFov) / 2)) * margin;
     }
 
-    /* `t` is how far apart the pack is, 1 exploded to 0 together. Each part
+    /* A soft gradient disc standing in for a contact shadow: firm where the
+       pack meets the floor, with a long penumbra. */
+    function makeContactShadow(radius, floorY) {
+      var size = 512;
+      var c = document.createElement('canvas');
+      c.width = c.height = size;
+      var ctx = c.getContext('2d');
+      var g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      [[0, 0.9], [0.12, 0.82], [0.26, 0.6], [0.4, 0.36], [0.55, 0.18], [0.7, 0.08], [0.85, 0.025], [1, 0]]
+        .forEach(function (s) { g.addColorStop(s[0], 'rgba(0,0,0,' + s[1] + ')'); });
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, size, size);
+      var mat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false, opacity: 0.55 });
+      var mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.position.set(center.x, floorY - radius * 0.015, center.z);
+      shadowBaseScale = radius * 3.1;
+      mesh.scale.set(shadowBaseScale, shadowBaseScale, 1);
+      mesh.renderOrder = -1;
+      group.add(mesh);
+      return mesh;
+    }
+
+    /* `t` is how far apart the pack is, 1 exploded to 0 together. Each piece
        has its own delay on the way in, so the internals seat before the
-       casing and lid close over them. */
-    function applyExplode(t) {
-      var assembled = 1 - t;
+       casing and lid close over them, and drifts gently while it is out. */
+    function applyLayout(t, now) {
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
-        var own = clamp01((assembled - p.delay) / (1 - p.delay));
-        p.mesh.position.copy(p.basePos).addScaledVector(p.delta, 1 - own);
+        var own = clamp01(((1 - t) - p.delay) / (1 - p.delay));
+        var apart = 1 - own;
+        var float = reduceMotion ? 0 : Math.sin(now / 1000 * 0.6 + p.phase) * apart;
+        p.mesh.position.copy(p.basePos)
+          .addScaledVector(p.delta, apart)
+          .addScaledVector(p.drift, float);
+        _q.setFromAxisAngle(p.spinAxis, apart * p.spinAmp);
+        p.mesh.quaternion.copy(p.baseQuat).multiply(_q);
       }
     }
 
@@ -174,16 +283,20 @@
 
         object.traverse(function (child) {
           if (!child.isMesh) return;
+          child.material = materialFor(child.name);
+          child.castShadow = false;
+          child.receiveShadow = false;
+
           var wp = new THREE.Vector3();
           child.getWorldPosition(wp);
           var tier = tierFor(child.name);
 
-          /* How far out: the casing opens only a little, named layers travel
-             by their type, and unmatched hardware by where it sits. */
+          /* Far out to begin with: the pieces start well clear of where they
+             belong, so the hero opens on a genuine exploded view. */
           var dist;
-          if (tier && tier.anchor) dist = sphere.radius * 0.4;
-          else if (tier) dist = sphere.radius * (0.8 + tier.y * 0.3);
-          else dist = sphere.radius * (0.75 + clamp01((wp.y - minY) / height) * 0.9);
+          if (tier && tier.anchor) dist = sphere.radius * 0.9;
+          else if (tier) dist = sphere.radius * (1.6 + tier.y * 0.55);
+          else dist = sphere.radius * (1.5 + clamp01((wp.y - minY) / height) * 1.2);
 
           /* The pack closes in order: internals first, casing and lid last. */
           var delay;
@@ -194,35 +307,43 @@
           else delay = 0;
 
           /* Outward from the centre, weighted sideways so the view opens to
-             the left and right. Parts sitting on the axis get a deterministic
-             push so they do not stay hidden in the middle. */
-          dir.set((wp.x - hub.x) * 2.4, (wp.y - hub.y) * 0.8, (wp.z - hub.z) * 1.1);
+             the left and right. Pieces on the axis get a deterministic push
+             so they do not stay hidden in the middle. */
+          dir.set((wp.x - hub.x) * 2.6, (wp.y - hub.y) * 0.8, (wp.z - hub.z) * 1.2);
           if (dir.lengthSq() < 1e-8) dir.set(index % 2 ? 1 : -1, 0.14, 0);
           dir.normalize();
-          index++;
 
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
+            baseQuat: child.quaternion.clone(),
             delta: worldToLocalDelta(child, wp, dir.clone().multiplyScalar(dist)),
+            /* A small sideways drift and a slow turn while the piece is out,
+               both resolving to zero as it seats. */
+            drift: worldToLocalDelta(child, wp, new THREE.Vector3(-dir.z, 0.35, dir.x).normalize().multiplyScalar(sphere.radius * 0.05)),
+            spinAxis: new THREE.Vector3(
+              Math.sin(index * 1.7), Math.cos(index * 0.9) * 0.4, Math.cos(index * 2.3)
+            ).normalize(),
+            spinAmp: 0.12 + (index % 7) * 0.012,
+            phase: index * 0.7,
             delay: delay,
             dist: dist
           });
+          index++;
         });
 
         var reach = sphere.radius;
         for (var i = 0; i < parts.length; i++) reach = Math.max(reach, sphere.radius + parts[i].dist);
         resize();
         center.copy(sphere.center);
-        /* The exploded view spreads evenly around the centre, so frame the
-           full spread from there. */
-        distExploded = fitDistance(reach, 1.04);
+        distExploded = fitDistance(reach, 1.02);
         distCombined = fitDistance(sphere.radius, 1.02);
         camera.near = Math.max(0.01, distCombined / 100);
         camera.far = distExploded * 20;
         camera.updateProjectionMatrix();
 
-        applyExplode(1);
+        shadowMesh = makeContactShadow(sphere.radius, minY);
+        applyLayout(1, performance.now());
         ready = true;
         readyAt = performance.now();
         host.classList.add('is-3d-ready');
@@ -256,18 +377,23 @@
       resize();
 
       /* Connect on the timer or on scroll, whichever is further along; once
-         assembled the pack stays together. */
+         together the pack stays together. */
       var timeT = easeInOutCubic(clamp01((now - readyAt - ASSEMBLE_DELAY_MS) / ASSEMBLE_MS));
       var scrollT = easeInOutCubic(scrollAssembled());
       var target = 1 - Math.max(timeT, scrollT);
       if (target < explode) explode = target;
-      applyExplode(explode);
+      applyLayout(explode, now);
 
-      var t = now / 1000;
-      group.rotation.y = -0.55 + 0.7 * (1 - explode) + Math.sin(t * 0.22) * 0.08 * (1 - explode);
+      group.rotation.y = -0.5 + 0.62 * (1 - explode) + Math.sin(now / 1000 * 0.2) * 0.07 * (1 - explode);
       group.rotation.x = -0.08;
 
-      /* Pull back for the spread, in close once the pack is together. */
+      if (shadowMesh) {
+        /* The shadow spreads and thins while the pack is apart. */
+        shadowMesh.material.opacity = 0.55 * (1 - explode * 0.75);
+        var s = shadowBaseScale * (1 + explode * 0.5);
+        shadowMesh.scale.set(s, s, 1);
+      }
+
       var dist = distCombined + (distExploded - distCombined) * explode;
       camera.position.copy(center).addScaledVector(VIEW_DIR, dist);
       camera.lookAt(center);
