@@ -62,10 +62,10 @@
   /* Breathing room around the pack, as a share of the stage. */
   var FIT_MARGIN = 1.28;
   /* The pack opens upwards in layers, the way the showcase page takes this
-     same model apart: each piece rises by its layer's share of the pack's
-     size, with a small outward lean so pieces in a layer clear each other. */
+     same model apart: each piece rises straight up by its layer's share of
+     the pack's size, so the layers stack in one column on the pack's own
+     axis and each layer stays the assembly it is. */
   var LAYER_LIFT = 0.82;
-  var LAYER_LEAN = 0.1;
   /* The camera never backs off more than this much beyond the framing of
      the finished pack. Pieces that swing wider than that pass out of frame
      on their way in, rather than shrinking the whole view to hold them. */
@@ -330,10 +330,10 @@
       return mesh;
     }
 
-    /* Where a piece floats while the pack is apart: lifted clear of the
-       pack by its layer, leaning slightly outwards from the axis. */
-    function spreadOffset(lift, lateral) {
-      return new THREE.Vector3(lateral.x, lift, lateral.z);
+    /* Where a piece floats while the pack is apart: straight up, clear of
+       the pack by its layer's share of the pack's size. */
+    function spreadOffset(lift) {
+      return new THREE.Vector3(0, lift, 0);
     }
 
     /* `t` is how far apart the pack is, 1 exploded to 0 together. Each piece
@@ -403,24 +403,25 @@
           else if (tier && tier.y >= 2) delay = 0.08;
           else delay = 0;
 
-          /* A slight lean away from the axis, so pieces sharing a layer do
-             not rise as one flat slab. */
+          /* Which way is outwards from the pack's axis, kept for the drift
+             below. The lift itself is straight up, so the layers stay in
+             line with each other. */
           dir.set(wp.x - hub.x, 0, wp.z - hub.z);
           if (dir.lengthSq() < 1e-8) dir.set(Math.cos(index * 2.4), 0, Math.sin(index * 2.4));
-          dir.normalize().multiplyScalar(sphere.radius * LAYER_LEAN);
+          dir.normalize();
 
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
             baseQuat: child.quaternion.clone(),
-            delta: worldToLocalDelta(child, wp, spreadOffset(lift, dir)),
-            /* A small sideways drift and a slow turn while the piece is out,
-               both resolving to zero as it seats. */
-            drift: worldToLocalDelta(child, wp, new THREE.Vector3(-dir.z, 0.2, dir.x).normalize().multiplyScalar(sphere.radius * 0.04)),
+            delta: worldToLocalDelta(child, wp, spreadOffset(lift)),
+            /* A slow rise and fall while the piece is out, resolving to zero
+               as it seats. Vertical, so the column stays a column. */
+            drift: worldToLocalDelta(child, wp, new THREE.Vector3(0, 1, 0).multiplyScalar(sphere.radius * 0.03)),
             spinAxis: new THREE.Vector3(
               Math.sin(index * 1.7), Math.cos(index * 0.9) * 0.4, Math.cos(index * 2.3)
             ).normalize(),
-            spinAmp: 0.12 + (index % 7) * 0.012,
+            spinAmp: 0.02 + (index % 7) * 0.003,
             phase: index * 0.7,
             delay: delay,
             dist: lift
