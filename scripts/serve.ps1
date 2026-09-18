@@ -18,6 +18,25 @@ $mime = @{
   ".otf" = "font/otf"
 }
 
+# Read the request head one byte at a time, up to the blank line. A buffered
+# reader would swallow the start of a POST body along with the headers.
+function Read-Head($stream) {
+  $bytes = New-Object System.Collections.Generic.List[byte]
+  $state = 0
+  while ($true) {
+    $b = $stream.ReadByte()
+    if ($b -lt 0) { return $null }
+    $bytes.Add([byte]$b)
+    if ($b -eq 13) { if ($state -eq 2) { $state = 3 } else { $state = 1 } }
+    elseif ($b -eq 10) {
+      if ($state -eq 1) { $state = 2 } elseif ($state -eq 3) { break } else { $state = 0 }
+    }
+    else { $state = 0 }
+    if ($bytes.Count -gt 32768) { return $null }
+  }
+  return [System.Text.Encoding]::ASCII.GetString($bytes.ToArray())
+}
+
 while ($true) {
   $client = $listener.AcceptTcpClient()
 
@@ -25,37 +44,74 @@ while ($true) {
   # This server accepts one connection at a time, so without a read timeout a
   # single silent connection blocks the accept loop forever and the whole
   # server stops responding - it keeps listening, but every request times out.
-  $client.ReceiveTimeout = 2000
-  $client.SendTimeout = 10000
+  $client.ReceiveTimeout = 30000
+  $client.SendTimeout = 30000
 
   $stream = $null
-  $reader = $null
   try {
     $stream = $client.GetStream()
-    $stream.ReadTimeout = 2000
-    $reader = [System.IO.StreamReader]::new($stream, [System.Text.Encoding]::ASCII, $false, 1024, $true)
-    $requestLine = $reader.ReadLine()
-    if (-not $requestLine) { continue }
+    $stream.ReadTimeout = 30000
+    $head = Read-Head $stream
+    if (-not $head) { continue }
 
-    while (($line = $reader.ReadLine()) -ne "" -and $null -ne $line) {}
-    $parts = $requestLine.Split(" ")
+    $lines = $head -split "`r`n"
+    $parts = $lines[0].Split(" ")
     $method = $parts[0]
-    $path = [System.Uri]::UnescapeDataString(($parts[1] -split "\?")[0])
+    $target = $parts[1]
+    $path = [System.Uri]::UnescapeDataString(($target -split "\?")[0])
+    $query = if ($target -match "\?") { ($target -split "\?", 2)[1] } else { "" }
     if ($path -eq "/") { $path = "/index.html" }
 
-    $relativePath = $path.TrimStart("/").Replace("/", [System.IO.Path]::DirectorySeparatorChar)
-    $filePath = [System.IO.Path]::GetFullPath((Join-Path $root $relativePath))
-    $allowed = $filePath.StartsWith($root, [System.StringComparison]::OrdinalIgnoreCase)
+    $contentLength = 0
+    foreach ($line in $lines) {
+      if ($line -match "^(?i)Content-Length:\s*(\d+)") { $contentLength = [int]$Matches[1] }
+    }
 
-    if ($allowed -and (Test-Path -LiteralPath $filePath -PathType Leaf)) {
-      $body = [System.IO.File]::ReadAllBytes($filePath)
-      $ext = [System.IO.Path]::GetExtension($filePath).ToLowerInvariant()
-      $contentType = if ($mime.ContainsKey($ext)) { $mime[$ext] } else { "application/octet-stream" }
-      $status = "200 OK"
-    } else {
-      $body = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
-      $contentType = "text/plain; charset=utf-8"
-      $status = "404 Not Found"
+    $status = "404 Not Found"
+    $contentType = "text/plain; charset=utf-8"
+    $body = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
+
+    # Development only: lets a page in the browser hand a generated file back
+    # to disk, so model conversion can run where the 3D loaders already are.
+    # Loopback only, inside the repo only, and only formats we generate.
+    if ($method -eq "POST" -and $path -eq "/__save") {
+      $savePath = $null
+      foreach ($pair in ($query -split "&")) {
+        $kv = $pair -split "=", 2
+        if ($kv.Length -eq 2 -and $kv[0] -eq "path") { $savePath = [System.Uri]::UnescapeDataString($kv[1]) }
+      }
+      $payload = New-Object byte[] $contentLength
+      $read = 0
+      while ($read -lt $contentLength) {
+        $n = $stream.Read($payload, $read, $contentLength - $read)
+        if ($n -le 0) { break }
+        $read += $n
+      }
+      $target = if ($savePath) { [System.IO.Path]::GetFullPath((Join-Path $root $savePath)) } else { $null }
+      $ok = $target -and $target.StartsWith($root, [System.StringComparison]::OrdinalIgnoreCase) -and
+            ([System.IO.Path]::GetExtension($target).ToLowerInvariant() -in @(".wstm", ".bin", ".json")) -and
+            ($read -eq $contentLength)
+      if ($ok) {
+        [System.IO.File]::WriteAllBytes($target, $payload)
+        Write-Host "Saved $savePath ($read bytes)"
+        $body = [System.Text.Encoding]::UTF8.GetBytes("{""saved"":""$savePath"",""bytes"":$read}")
+        $contentType = "application/json; charset=utf-8"
+        $status = "200 OK"
+      } else {
+        $body = [System.Text.Encoding]::UTF8.GetBytes("refused")
+        $status = "400 Bad Request"
+      }
+    }
+    elseif ($method -eq "GET" -or $method -eq "HEAD") {
+      $relativePath = $path.TrimStart("/").Replace("/", [System.IO.Path]::DirectorySeparatorChar)
+      $filePath = [System.IO.Path]::GetFullPath((Join-Path $root $relativePath))
+      $allowed = $filePath.StartsWith($root, [System.StringComparison]::OrdinalIgnoreCase)
+      if ($allowed -and (Test-Path -LiteralPath $filePath -PathType Leaf)) {
+        $body = [System.IO.File]::ReadAllBytes($filePath)
+        $ext = [System.IO.Path]::GetExtension($filePath).ToLowerInvariant()
+        $contentType = if ($mime.ContainsKey($ext)) { $mime[$ext] } else { "application/octet-stream" }
+        $status = "200 OK"
+      }
     }
 
     $header = "HTTP/1.1 $status`r`nContent-Type: $contentType`r`nContent-Length: $($body.Length)`r`nConnection: close`r`n`r`n"
@@ -68,7 +124,6 @@ while ($true) {
   } catch {
     Write-Host "Request error: $_"
   } finally {
-    if ($reader) { $reader.Dispose() }
     if ($stream) { $stream.Dispose() }
     $client.Dispose()
   }

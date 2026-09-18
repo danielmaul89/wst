@@ -24,7 +24,7 @@
   if (!host) return;
 
   var THREE = window.THREE;
-  if (!THREE || !THREE.FBXLoader) return;
+  if (!THREE) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var saveData = navigator.connection && navigator.connection.saveData;
@@ -177,6 +177,8 @@
     var converted = {};
     function keepColour(source) {
       if (!source) return null;
+      /* .wstm already carries standard materials, colour and all. */
+      if (source.isMeshStandardMaterial) return source;
       if (converted[source.uuid]) return converted[source.uuid];
       var shininess = typeof source.shininess === 'number' ? source.shininess : 30;
       var specular = source.specular
@@ -491,13 +493,15 @@
     /* The page starts fetching the model in its <head>, long before these
        scripts have run, so parse whatever that fetch brought back and only
        go to the network here if it is missing or failed. */
-    var loader = new THREE.FBXLoader();
+    var trimmed = url.toLowerCase().indexOf('.wstm') !== -1;
+    var loader = trimmed ? window.WSTMLoader : (THREE.FBXLoader ? new THREE.FBXLoader() : null);
+    if (!loader) return fail();
     var prefetched = window.__wstHeroModel;
     if (prefetched && typeof prefetched.then === 'function') {
       prefetched.then(function (buffer) {
         if (!buffer) return loader.load(url, build, undefined, fail);
         try {
-          build(loader.parse(buffer, ''));
+          build(trimmed ? loader.parse(buffer) : loader.parse(buffer, ''));
         } catch (e) {
           fail();
         }
