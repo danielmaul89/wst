@@ -540,25 +540,16 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   color:var(--ink-soft);
   line-height:1.65;
 }
-.hero-visual{
-  max-width:840px;
-  margin:var(--sp-6) auto 0;
-  padding:0 var(--sp-4);
-}
-.hero-visual img{
-  width:100%;
-  height:auto;
-  max-height:52vh;
-  object-fit:contain;
-  filter:drop-shadow(0 40px 60px rgba(6,8,26,.16));
-}
-/* Live 3D pack (assets/scripts/home-hero-3d.js). The render above stays as
-   the poster until the model has loaded, then the exploded model fades in
-   over it and assembles. The box keeps the poster's size, so nothing shifts. */
+/* The stage takes up no room until the live pack is running: where the 3D
+   is skipped - phones, reduced motion, no WebGL - the hero is text alone. */
+.hero-visual{ margin:0 auto; }
+/* Live 3D pack (assets/scripts/home-hero-3d.js), faded in once the model is
+   ready. */
 /* The 3D stage is wider and taller than the still render it replaces, so the
    exploded pack can use the width of the screen. */
 .hero-visual.is-3d{
   position:relative;
+  margin-top:var(--sp-6);
   max-width:min(1560px, 94vw);
   padding:0;
   height:clamp(320px, 46vh, 560px);
@@ -572,7 +563,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   transition:opacity .9s var(--ease);
 }
 .hero-visual.is-3d-ready .hero-visual-canvas{ opacity:1; }
-.hero-visual.is-3d-ready img{ opacity:0; transition:opacity .6s var(--ease); }
 
 /* ============================================================
    4. PRODUCT CATEGORIES — hero section of the page
@@ -2354,7 +2344,24 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2d">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<!-- The hero's 3D pack is a big download, so it starts here rather than after
+     the scripts at the end of the body. The guards match the ones in
+     assets/scripts/home-hero-3d.js, so phones, data savers and readers who
+     ask for reduced motion never fetch it. -->
+<script>
+  (function () {
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia('(max-width: 767px)').matches) return;
+      if (navigator.connection && navigator.connection.saveData) return;
+      window.__wstHeroModel = fetch('assets/models/c4e.fbx')
+        .then(function (r) { return r.ok ? r.arrayBuffer() : null; })
+        .catch(function () { return null; });
+    } catch (e) { /* the hero script falls back to fetching it itself */ }
+  })();
+</script>
 </head>
+
 <body data-wst-page="home">
 
 <!-- Ambient gradient wash behind nav + hero — faded brand-colour blobs, low opacity -->
@@ -2380,9 +2387,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <p>WS Technicals is specialized in lithium battery solutions. We design, certify and mass produce batteries for applications in all sectors.</p>
     <a href="#contact" class="btn btn-primary">Get in touch</a>
   </div>
-  <div class="hero-visual" data-hero-3d="assets/models/c4e.fbx">
-    <img src="assets/products/renders/crop/xug_transparant_print.png" alt="WS Technicals custom lithium battery module with visible cell stack and CANBUS connectors">
-  </div>
+  <div class="hero-visual" data-hero-3d="assets/models/c4e.fbx"></div>
 </section>
 
 <!-- ============================================================
@@ -3177,7 +3182,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/vendor/FBXLoader.js" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=13" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=bench1" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>

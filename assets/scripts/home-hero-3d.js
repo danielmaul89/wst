@@ -74,7 +74,7 @@
     { test: 'housing', mat: 'casing' }, { test: 'case', mat: 'casing' }
   ];
 
-  var ASSEMBLE_DELAY_MS = 500;
+  var ASSEMBLE_DELAY_MS = 2000;
   var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
   /* How far the pack is turned while it is apart (see the frame loop). The
@@ -130,7 +130,7 @@
     try {
       renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
     } catch (e) {
-      return; // no WebGL: keep the poster
+      return; // no WebGL: the hero stays as text alone
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -353,7 +353,7 @@
       }
     }
 
-    new THREE.FBXLoader().load(url, function (object) {
+    function build(object) {
       try {
         var box = new THREE.Box3().setFromObject(object);
         var size = new THREE.Vector3();
@@ -454,13 +454,32 @@
         readyAt = performance.now();
         host.classList.add('is-3d-ready');
       } catch (e) {
-        host.classList.remove('is-3d');
-        canvas.remove();
+        fail();
       }
-    }, undefined, function () {
+    }
+
+    function fail() {
       host.classList.remove('is-3d');
       canvas.remove();
-    });
+    }
+
+    /* The page starts fetching the model in its <head>, long before these
+       scripts have run, so parse whatever that fetch brought back and only
+       go to the network here if it is missing or failed. */
+    var loader = new THREE.FBXLoader();
+    var prefetched = window.__wstHeroModel;
+    if (prefetched && typeof prefetched.then === 'function') {
+      prefetched.then(function (buffer) {
+        if (!buffer) return loader.load(url, build, undefined, fail);
+        try {
+          build(loader.parse(buffer, ''));
+        } catch (e) {
+          fail();
+        }
+      }, function () { loader.load(url, build, undefined, fail); });
+    } else {
+      loader.load(url, build, undefined, fail);
+    }
 
     /* How far the reader has scrolled the hero out of view, 0 to 1. */
     function scrollAssembled() {
@@ -524,11 +543,12 @@
     requestAnimationFrame(frame);
   }
 
-  function whenIdle(fn) {
-    if ('requestIdleCallback' in window) window.requestIdleCallback(fn, { timeout: 1500 });
-    else setTimeout(fn, 300);
+  /* Straight in: this script is deferred, so the document is parsed, and the
+     model is already on its way from the <head> fetch. Waiting for the load
+     event and an idle slot used to cost a second or more. */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  } else {
+    start();
   }
-
-  if (document.readyState === 'complete') whenIdle(start);
-  else window.addEventListener('load', function () { whenIdle(start); }, { once: true });
 })();
