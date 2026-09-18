@@ -63,7 +63,7 @@
   var SPREAD_SPIN = -0.5;
   var SPREAD_VIEW = VIEW_DIR.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), -SPREAD_SPIN);
   /* Breathing room around the pack, as a share of the stage. */
-  var FIT_MARGIN = 1.06;
+  var FIT_MARGIN = 1.28;
   /* The pieces are thrown wide across the view and deep through it, barely
      up: they start spread out in front of and behind where they belong and
      settle forward or back into the finished pack. */
@@ -74,6 +74,12 @@
      the finished pack. Pieces that swing wider than that pass out of frame
      on their way in, rather than shrinking the whole view to hold them. */
   var MAX_PULLBACK = 12;
+  /* Turns like a globe: a slow drift the reader can grab and spin, which
+     carries its own momentum and eases back to the drift when let go. */
+  var SPIN_RATE = 0.22;
+  var DRAG_SENSITIVITY = 0.0075;
+  var SPIN_FRICTION = 2.4;
+  var TILT_LIMIT = 0.42;
   /* How far through the view a piece may start, as a share of the pack's
      own size: a short reach towards the camera, a long one away from it. */
   var FORWARD_REACH = 1.1;
@@ -189,6 +195,23 @@
       return std;
     }
 
+    /* The distance that holds the finished pack whichever way it is turned:
+       its widest reach from its own axis, rather than the width it happens
+       to show from one angle. Used once it is together and free to spin. */
+    function restingDistance(margin) {
+      var box = new THREE.Box3();
+      for (var i = 0; i < parts.length; i++) box.expandByObject(parts[i].mesh);
+      var mid = new THREE.Vector3();
+      var size = new THREE.Vector3();
+      box.getCenter(mid);
+      box.getSize(size);
+      restTarget.copy(mid);
+      var reach = Math.sqrt(size.x * size.x + size.z * size.z) / 2;
+      var tanV = Math.tan(camera.fov * Math.PI / 360);
+      var tanH = tanV * camera.aspect;
+      return Math.max(reach / tanH, (size.y / 2) / tanV) * margin + reach;
+    }
+
     function ownMaterial(mesh) {
       if (Array.isArray(mesh.material)) return mesh.material.map(keepColour);
       return keepColour(mesh.material);
@@ -199,11 +222,12 @@
       var r = canvas.getBoundingClientRect();
       var w = Math.max(1, Math.round(r.width));
       var h = Math.max(1, Math.round(r.height));
-      if (w === lastW && h === lastH) return;
+      if (w === lastW && h === lastH) return false;
       lastW = w; lastH = h;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+      return true;
     }
     resize();
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(host);
@@ -213,6 +237,11 @@
     var ready = false;
     var readyAt = 0;
     var center = new THREE.Vector3();
+    var yaw = 0, pitch = 0;
+    var restDist = 0;
+    var restTarget = new THREE.Vector3();
+    var spinVelocity = 0, tiltVelocity = 0;
+    var dragging = false, dragPointer = null, dragX = 0, dragY = 0, dragMoved = false, lastPointerAt = 0;
     var fitTarget = new THREE.Vector3();
     var camDist = 0;
     var wantDist = 0;
@@ -425,6 +454,7 @@
         applyLayout(0, 0);
         object.updateMatrixWorld(true);
         seatedDist = fitDistance(FIT_MARGIN);
+        restDist = restingDistance(FIT_MARGIN);
         var seatedBox = new THREE.Box3().setFromObject(object);
         var seatedSize = new THREE.Vector3();
         var seatedMid = new THREE.Vector3();
@@ -476,6 +506,52 @@
       loader.load(url, build, undefined, fail);
     }
 
+    /* Grab and spin. A vertical drag tilts within a limit and settles back;
+       the page keeps its own vertical scrolling (see touch-action in the
+       page styles), so dragging down the page still scrolls it. */
+    canvas.addEventListener('pointerdown', function (e) {
+      if (!ready || dragging) return;
+      dragging = true;
+      dragPointer = e.pointerId;
+      dragX = e.clientX;
+      dragY = e.clientY;
+      dragMoved = false;
+      spinVelocity = 0;
+      tiltVelocity = 0;
+      lastPointerAt = e.timeStamp;
+      canvas.setPointerCapture(e.pointerId);
+      canvas.classList.add('is-grabbing');
+    });
+
+    canvas.addEventListener('pointermove', function (e) {
+      if (!dragging || e.pointerId !== dragPointer) return;
+      var dx = e.clientX - dragX;
+      var dy = e.clientY - dragY;
+      dragX = e.clientX;
+      dragY = e.clientY;
+      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) dragMoved = true;
+      yaw += dx * DRAG_SENSITIVITY;
+      pitch = Math.max(-TILT_LIMIT, Math.min(TILT_LIMIT, pitch + dy * DRAG_SENSITIVITY * 0.6));
+      /* Where the pointer was heading when it stopped becomes the spin it
+         leaves behind. */
+      var seconds = Math.max((e.timeStamp - lastPointerAt) / 1000, 0.008);
+      lastPointerAt = e.timeStamp;
+      spinVelocity = Math.max(-6, Math.min(6, dx * DRAG_SENSITIVITY / seconds));
+      tiltVelocity = Math.max(-4, Math.min(4, dy * DRAG_SENSITIVITY * 0.6 / seconds));
+    });
+
+    function endDrag(e) {
+      if (!dragging || (e && e.pointerId !== dragPointer)) return;
+      dragging = false;
+      dragPointer = null;
+      canvas.classList.remove('is-grabbing');
+      /* A flick carries on; a slow drag simply stops. */
+      if (!dragMoved) { spinVelocity = 0; tiltVelocity = 0; }
+    }
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('lostpointercapture', endDrag);
+
     /* How far the reader has scrolled the hero out of view, 0 to 1. */
     function scrollAssembled() {
       var hero = host.closest('.hero') || host;
@@ -494,18 +570,32 @@
     function frame(now) {
       requestAnimationFrame(frame);
       if (!visible || !ready) return;
-      resize();
+      if (resize() && restDist) restDist = restingDistance(FIT_MARGIN);
 
       /* Connect on the timer or on scroll, whichever is further along; once
          together the pack stays together. */
+      var dt = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
+      lastFrame = now;
+
       var timeT = easeInOutCubic(clamp01((now - readyAt - ASSEMBLE_DELAY_MS) / ASSEMBLE_MS));
       var scrollT = easeInOutCubic(scrollAssembled());
       var target = 1 - Math.max(timeT, scrollT);
       if (target < explode) explode = target;
       applyLayout(explode, now);
 
-      group.rotation.y = SPREAD_SPIN + 0.62 * (1 - explode) + Math.sin(now / 1000 * 0.2) * 0.07 * (1 - explode);
-      group.rotation.x = -0.08;
+      /* The pack keeps turning on its own; a drag adds to that turn and
+         leaves momentum behind, which friction takes back out. */
+      if (!dragging) {
+        yaw += (SPIN_RATE + spinVelocity) * dt;
+        var decay = Math.exp(-SPIN_FRICTION * dt);
+        spinVelocity *= decay;
+        tiltVelocity *= decay;
+        pitch += tiltVelocity * dt;
+        pitch += (0 - pitch) * (1 - Math.exp(-1.2 * dt));
+      }
+      pitch = Math.max(-TILT_LIMIT, Math.min(TILT_LIMIT, pitch));
+      group.rotation.y = SPREAD_SPIN + 0.62 * (1 - explode) + yaw;
+      group.rotation.x = -0.08 + pitch;
 
       if (shadowMesh) {
         /* The shadow spreads and thins while the pack is apart. */
@@ -520,11 +610,14 @@
       group.updateMatrixWorld(true);
       /* The fit walks every corner, so it runs on every third frame; the
          damping below carries the camera between those samples. */
-      if ((fitTick++ % 3) === 0) {
+      if (explode <= 0 && restDist) {
+        /* Settled: hold a distance measured right round the turn, so spinning
+           the pack does not make the view breathe in and out. */
+        wantDist = restDist;
+        center.copy(restTarget);
+      } else if ((fitTick++ % 3) === 0) {
         wantDist = Math.min(fitDistance(FIT_MARGIN), seatedDist * MAX_PULLBACK);
       }
-      var dt = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
-      lastFrame = now;
       /* Pull back quickly but close in gently: the view never lags behind a
          piece swinging outwards, so nothing is cut off at the edge. */
       var k = 1 - Math.exp((wantDist > camDist ? -14 : -6) * dt);

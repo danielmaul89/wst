@@ -566,7 +566,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   height:124%;
   opacity:0;
   transition:opacity .9s var(--ease);
+  /* Grab and spin it; the page keeps vertical scrolling on touch. */
+  cursor:grab;
+  touch-action:pan-y;
 }
+.hero-visual-canvas.is-grabbing{ cursor:grabbing; }
 .hero-visual.is-3d-ready .hero-visual-canvas{ opacity:1; }
 
 /* ============================================================
@@ -3190,7 +3194,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/vendor/FBXLoader.js" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=22" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=23" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>
