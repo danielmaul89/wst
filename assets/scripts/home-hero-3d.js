@@ -66,6 +66,9 @@
      the pack's size, so the layers stack in one column on the pack's own
      axis and each layer stays the assembly it is. */
   var LAYER_LIFT = 0.82;
+  /* How much further the layers drift apart while they hang at the top,
+     before they start down. */
+  var HOVER_RISE = 0.12;
   /* The camera never backs off more than this much beyond the framing of
      the finished pack. Pieces that swing wider than that pass out of frame
      on their way in, rather than shrinking the whole view to hold them. */
@@ -339,14 +342,19 @@
     /* `t` is how far apart the pack is, 1 exploded to 0 together. Each piece
        has its own delay on the way in, so the internals seat before the
        casing and lid close over them, and drifts gently while it is out. */
-    function applyLayout(t, now) {
+    function applyLayout(t, now, hover) {
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
-        var own = clamp01(((1 - t) - p.delay) / (1 - p.delay));
+        /* Eased per piece, not only across the move as a whole, so each one
+           leaves and arrives softly instead of starting at full speed. */
+        var own = easeInOutCubic(clamp01(((1 - t) - p.delay) / (1 - p.delay)));
         var apart = 1 - own;
-        var float = reduceMotion ? 0 : Math.sin(now / 1000 * 0.6 + p.phase) * apart;
+        var float = reduceMotion ? 0 : Math.sin(now / 1000 * 0.5 + p.phase) * apart;
+        /* While the pack hangs at the top the layers drift a little further
+           apart, so the descent starts out of a slow rise. */
+        var lifted = apart * (1 + HOVER_RISE * (hover || 0) * apart);
         p.mesh.position.copy(p.basePos)
-          .addScaledVector(p.delta, apart)
+          .addScaledVector(p.delta, lifted)
           .addScaledVector(p.drift, float);
         _q.setFromAxisAngle(p.spinAxis, apart * p.spinAmp);
         p.mesh.quaternion.copy(p.baseQuat).multiply(_q);
@@ -565,7 +573,8 @@
       var scrollT = easeInOutCubic(scrollAssembled());
       var target = 1 - Math.max(timeT, scrollT);
       if (target < explode) explode = target;
-      applyLayout(explode, now);
+      var hover = clamp01((now - readyAt) / ASSEMBLE_DELAY_MS);
+      applyLayout(explode, now, hover);
 
       /* The pack keeps turning on its own; a drag adds to that turn and
          leaves momentum behind, which friction takes back out. */
@@ -594,14 +603,17 @@
       group.updateMatrixWorld(true);
       /* The fit walks every corner, so it runs on every third frame; the
          damping below carries the camera between those samples. */
-      if (explode <= 0 && restDist) {
-        /* Settled: hold a distance measured right round the turn, so spinning
-           the pack does not make the view breathe in and out. */
-        wantDist = restDist;
-        center.copy(restTarget);
-      } else if ((fitTick++ % 3) === 0) {
-        wantDist = Math.min(fitDistance(FIT_MARGIN), seatedDist * MAX_PULLBACK);
+      if ((fitTick++ % 3) === 0) {
+        /* Never closer than the framing that holds the finished pack right
+           round its turn: the view closes in to that distance and stops,
+           rather than reaching past it and pulling back out again. */
+        wantDist = Math.max(
+          Math.min(fitDistance(FIT_MARGIN), seatedDist * MAX_PULLBACK),
+          restDist
+        );
       }
+      /* Once together, aim at the pack itself rather than at the spread. */
+      if (explode <= 0 && restDist) fitTarget.copy(restTarget);
       /* Pull back quickly but close in gently: the view never lags behind a
          piece swinging outwards, so nothing is cut off at the edge. */
       var k = 1 - Math.exp((wantDist > camDist ? -14 : -6) * dt);
