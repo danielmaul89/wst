@@ -57,19 +57,15 @@
   var ASSEMBLE_DELAY_MS = 2000;
   var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
-  /* How far the pack is turned while it is apart (see the frame loop). The
-     pieces' offsets are built in the pack's own space, so depth has to be
-     measured along the view as the turned pack sees it. */
+  /* How far the pack is turned while it is apart (see the frame loop). */
   var SPREAD_SPIN = -0.5;
-  var SPREAD_VIEW = VIEW_DIR.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), -SPREAD_SPIN);
   /* Breathing room around the pack, as a share of the stage. */
   var FIT_MARGIN = 1.28;
-  /* The pieces are thrown wide across the view and deep through it, barely
-     up: they start spread out in front of and behind where they belong and
-     settle forward or back into the finished pack. */
-  var SPREAD = new THREE.Vector3(1.5, 0.22, 1.1);
-  /* How much further out than the pack's own size the pieces begin. */
-  var SPREAD_SCALE = 1;
+  /* The pack opens upwards in layers, the way the showcase page takes this
+     same model apart: each piece rises by its layer's share of the pack's
+     size, with a small outward lean so pieces in a layer clear each other. */
+  var LAYER_LIFT = 0.82;
+  var LAYER_LEAN = 0.1;
   /* The camera never backs off more than this much beyond the framing of
      the finished pack. Pieces that swing wider than that pass out of frame
      on their way in, rather than shrinking the whole view to hold them. */
@@ -80,11 +76,6 @@
   var DRAG_SENSITIVITY = 0.0075;
   var SPIN_FRICTION = 2.4;
   var TILT_LIMIT = 0.42;
-  /* How far through the view a piece may start, as a share of the pack's
-     own size: a short reach towards the camera, a long one away from it. */
-  var FORWARD_REACH = 1.1;
-  var BACKWARD_REACH = 4;
-
   function tierFor(name) {
     var lower = (name || '').toLowerCase();
     for (var i = 0; i < LAYER_TIERS.length; i++) {
@@ -339,18 +330,10 @@
       return mesh;
     }
 
-    /* Where a piece floats while the pack is apart: out along `dir`, then
-       stretched across the view. */
-    function spreadOffset(dir, dist, radius) {
-      var d = dist * SPREAD_SCALE;
-      var off = new THREE.Vector3(dir.x * d, dir.y * d, dir.z * d).multiply(SPREAD);
-      /* Depth is capped, tightly towards the camera and loosely away from it:
-         a piece drifting back simply reads as further off, while one drifting
-         forward would sweep past the lens and blot out the view. */
-      var depth = off.dot(SPREAD_VIEW);
-      var limit = depth > 0 ? radius * FORWARD_REACH : -radius * BACKWARD_REACH;
-      if (Math.abs(depth) > Math.abs(limit)) off.addScaledVector(SPREAD_VIEW, limit - depth);
-      return off;
+    /* Where a piece floats while the pack is apart: lifted clear of the
+       pack by its layer, leaning slightly outwards from the axis. */
+    function spreadOffset(lift, lateral) {
+      return new THREE.Vector3(lateral.x, lift, lateral.z);
     }
 
     /* `t` is how far apart the pack is, 1 exploded to 0 together. Each piece
@@ -402,12 +385,15 @@
           child.getWorldPosition(wp);
           var tier = tierFor(child.name);
 
-          /* Far out to begin with: the pieces start well clear of where they
-             belong, so the hero opens on a genuine exploded view. */
-          var dist;
-          if (tier && tier.anchor) dist = sphere.radius * 0.9;
-          else if (tier) dist = sphere.radius * (1.6 + tier.y * 0.55);
-          else dist = sphere.radius * (1.5 + clamp01((wp.y - minY) / height) * 1.2);
+          /* How far this layer rises. The casing stays where it is and the
+             pack opens above it; anything the layer list does not name is
+             placed by how high it already sits inside the pack. */
+          var yFrac = clamp01((wp.y - minY) / height);
+          var tierY;
+          if (tier && tier.anchor) tierY = 0.12;
+          else if (tier) tierY = tier.y;
+          else tierY = 0.25 + yFrac * 3.4;
+          var lift = sphere.radius * tierY * LAYER_LIFT;
 
           /* The pack closes in order: internals first, casing and lid last. */
           var delay;
@@ -417,34 +403,27 @@
           else if (tier && tier.y >= 2) delay = 0.08;
           else delay = 0;
 
-          /* Outward from the centre, weighted sideways and through the view:
-             every other piece is pushed towards the camera and the rest away
-             from it, so they arrive from in front of and behind the pack
-             rather than all in one plane. Pieces sitting on the axis get a
-             deterministic push so they do not stay hidden in the middle. */
-          dir.set(
-            (wp.x - hub.x) * 6,
-            (wp.y - hub.y) * 0.3,
-            (wp.z - hub.z) * 1.2 + (index % 2 ? 1 : -1) * sphere.radius * 0.55
-          );
-          if (dir.lengthSq() < 1e-8) dir.set(index % 2 ? 1 : -1, 0.14, 0.5);
-          dir.normalize();
+          /* A slight lean away from the axis, so pieces sharing a layer do
+             not rise as one flat slab. */
+          dir.set(wp.x - hub.x, 0, wp.z - hub.z);
+          if (dir.lengthSq() < 1e-8) dir.set(Math.cos(index * 2.4), 0, Math.sin(index * 2.4));
+          dir.normalize().multiplyScalar(sphere.radius * LAYER_LEAN);
 
           parts.push({
             mesh: child,
             basePos: child.position.clone(),
             baseQuat: child.quaternion.clone(),
-            delta: worldToLocalDelta(child, wp, spreadOffset(dir, dist, sphere.radius)),
+            delta: worldToLocalDelta(child, wp, spreadOffset(lift, dir)),
             /* A small sideways drift and a slow turn while the piece is out,
                both resolving to zero as it seats. */
-            drift: worldToLocalDelta(child, wp, new THREE.Vector3(-dir.z, 0.35, dir.x).normalize().multiplyScalar(sphere.radius * 0.05)),
+            drift: worldToLocalDelta(child, wp, new THREE.Vector3(-dir.z, 0.2, dir.x).normalize().multiplyScalar(sphere.radius * 0.04)),
             spinAxis: new THREE.Vector3(
               Math.sin(index * 1.7), Math.cos(index * 0.9) * 0.4, Math.cos(index * 2.3)
             ).normalize(),
             spinAmp: 0.12 + (index % 7) * 0.012,
             phase: index * 0.7,
             delay: delay,
-            dist: dist
+            dist: lift
           });
           index++;
         });
