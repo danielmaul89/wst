@@ -54,26 +54,6 @@
     { test: 'shell', anchor: true }, { test: 'case', anchor: true }
   ];
 
-  var MAT_RULES = [
-    { test: 'lid', mat: 'lid' }, { test: 'cover', mat: 'lid' },
-    { test: 'harness', mat: 'cable' }, { test: 'cable', mat: 'cable' }, { test: 'wire', mat: 'cable' },
-    { test: 'solder', mat: 'steel' }, { test: 'ntc', mat: 'cable' },
-    { test: 'busbar', mat: 'busbar' }, { test: 'terminal', mat: 'busbar' },
-    { test: 'board', mat: 'board' }, { test: 'pcb', mat: 'board' }, { test: 'fr4', mat: 'board' },
-    { test: 'dzlr', mat: 'board' }, { test: 'bms', mat: 'board' },
-    { test: 'cell', mat: 'cell' }, { test: 'highstar', mat: 'cell' }, { test: 'inr2', mat: 'cell' },
-    { test: 'eve_c', mat: 'cell' },
-    { test: 'heatpad', mat: 'soft' }, { test: 'holder', mat: 'polymer' }, { test: 'tray', mat: 'polymer' },
-    { test: 'divider', mat: 'polymer' }, { test: 'spacer', mat: 'polymer' },
-    { test: 'tape', mat: 'soft' }, { test: 'eva', mat: 'soft' }, { test: 'foam', mat: 'soft' },
-    { test: 'rubber', mat: 'soft' }, { test: 'epdm', mat: 'soft' }, { test: 'seal', mat: 'soft' },
-    { test: 'screw', mat: 'steel' }, { test: 'bolt', mat: 'steel' }, { test: 'nut', mat: 'steel' },
-    { test: 'washer', mat: 'steel' }, { test: 'bn_', mat: 'steel' }, { test: 'iso_', mat: 'steel' },
-    { test: 'gb_', mat: 'steel' },
-    { test: 'casing', mat: 'casing' }, { test: 'enclosure', mat: 'casing' },
-    { test: 'housing', mat: 'casing' }, { test: 'case', mat: 'casing' }
-  ];
-
   var ASSEMBLE_DELAY_MS = 2000;
   var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
@@ -183,32 +163,35 @@
     fill.position.set(-4, 1.5, 6);
     scene.add(fill);
 
-    function std(color, metalness, roughness) {
-      return new THREE.MeshStandardMaterial({ color: color, metalness: metalness, roughness: roughness });
+    /* The pack keeps the colours it was exported with. FBX brings Phong
+       materials, which the studio environment cannot light properly, so each
+       is rebuilt as a standard material carrying its own colour across, with
+       shininess and specular becoming roughness and metalness. Materials are
+       shared between meshes, so each one is converted only once. */
+    var converted = {};
+    function keepColour(source) {
+      if (!source) return null;
+      if (converted[source.uuid]) return converted[source.uuid];
+      var shininess = typeof source.shininess === 'number' ? source.shininess : 30;
+      var specular = source.specular
+        ? (source.specular.r + source.specular.g + source.specular.b) / 3
+        : 0.2;
+      var std = new THREE.MeshStandardMaterial({
+        color: source.color ? source.color.clone() : new THREE.Color(0xb6bcc6),
+        map: source.map || null,
+        roughness: clamp01(1 - shininess / 120),
+        metalness: clamp01(specular * 1.2),
+        /* CAD exports the panels as open, single-sided skins; drawn from one
+           side only they read as holes in the enclosure. */
+        side: THREE.DoubleSide
+      });
+      converted[source.uuid] = std;
+      return std;
     }
-    var MATS = {
-      casing: std(0x171b23, 0.62, 0.44),
-      lid: std(0x272d38, 0.70, 0.34),
-      polymer: std(0x2b303b, 0.10, 0.82),
-      cell: std(0xb9c0ca, 0.92, 0.26),
-      busbar: std(0xc08842, 0.94, 0.24),
-      board: std(0x16402f, 0.32, 0.58),
-      cable: std(0x0c0e14, 0.24, 0.74),
-      soft: std(0x23262f, 0.06, 0.92),
-      steel: std(0x8d949e, 0.96, 0.30),
-      neutral: std(0x4a505c, 0.55, 0.48)
-    };
-    /* The enclosure exports as open, single-sided skins, so it draws both
-       sides — otherwise it reads as holes in the casing. */
-    MATS.casing.side = THREE.DoubleSide;
-    MATS.lid.side = THREE.DoubleSide;
 
-    function materialFor(name) {
-      var lower = (name || '').toLowerCase();
-      for (var i = 0; i < MAT_RULES.length; i++) {
-        if (lower.indexOf(MAT_RULES[i].test) !== -1) return MATS[MAT_RULES[i].mat];
-      }
-      return MATS.neutral;
+    function ownMaterial(mesh) {
+      if (Array.isArray(mesh.material)) return mesh.material.map(keepColour);
+      return keepColour(mesh.material);
     }
 
     var lastW = 0, lastH = 0;
@@ -236,7 +219,7 @@
     var seatedDist = 0;
     var fitTick = 0;
     var lastFrame = 0;
-    var shadowMesh = null, shadowBaseScale = 1;
+    var shadowMesh = null, shadowScaleX = 1, shadowScaleZ = 1;
     var _q = new THREE.Quaternion();
 
     /* Frame the pack from the pieces themselves, every frame. Their corners
@@ -301,7 +284,7 @@
 
     /* A soft gradient disc standing in for a contact shadow: firm where the
        pack meets the floor, with a long penumbra. */
-    function makeContactShadow(radius, floorY) {
+    function makeContactShadow(footprint) {
       var size = 512;
       var c = document.createElement('canvas');
       c.width = c.height = size;
@@ -314,9 +297,12 @@
       var mat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false, opacity: 0.55 });
       var mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
       mesh.rotation.x = -Math.PI / 2;
-      mesh.position.set(center.x, floorY - radius * 0.015, center.z);
-      shadowBaseScale = radius * 3.1;
-      mesh.scale.set(shadowBaseScale, shadowBaseScale, 1);
+      /* Under the finished pack and shaped like its footprint: a disc sized
+         off the bounding sphere sits beside a long unit rather than under it. */
+      mesh.position.set(footprint.x, footprint.y - footprint.depth * 0.01, footprint.z);
+      shadowScaleX = footprint.width * 1.9;
+      shadowScaleZ = footprint.depth * 1.9;
+      mesh.scale.set(shadowScaleX, shadowScaleZ, 1);
       mesh.renderOrder = -1;
       group.add(mesh);
       return mesh;
@@ -377,7 +363,7 @@
 
         object.traverse(function (child) {
           if (!child.isMesh) return;
-          child.material = materialFor(child.name);
+          child.material = ownMaterial(child) || child.material;
           child.castShadow = false;
           child.receiveShadow = false;
 
@@ -439,6 +425,15 @@
         applyLayout(0, 0);
         object.updateMatrixWorld(true);
         seatedDist = fitDistance(FIT_MARGIN);
+        var seatedBox = new THREE.Box3().setFromObject(object);
+        var seatedSize = new THREE.Vector3();
+        var seatedMid = new THREE.Vector3();
+        seatedBox.getSize(seatedSize);
+        seatedBox.getCenter(seatedMid);
+        var footprint = {
+          x: seatedMid.x, z: seatedMid.z, y: seatedBox.min.y,
+          width: seatedSize.x, depth: seatedSize.z
+        };
         applyLayout(1, 0);
         object.updateMatrixWorld(true);
         var reach = Math.min(fitDistance(FIT_MARGIN), seatedDist * MAX_PULLBACK);
@@ -448,7 +443,7 @@
         camera.far = reach * 20;
         camera.updateProjectionMatrix();
 
-        shadowMesh = makeContactShadow(sphere.radius, minY);
+        shadowMesh = makeContactShadow(footprint);
         applyLayout(1, performance.now());
         ready = true;
         readyAt = performance.now();
@@ -515,8 +510,8 @@
       if (shadowMesh) {
         /* The shadow spreads and thins while the pack is apart. */
         shadowMesh.material.opacity = 0.55 * (1 - explode * 0.75);
-        var s = shadowBaseScale * (1 + explode * 0.5);
-        shadowMesh.scale.set(s, s, 1);
+        var spread = 1 + explode * 0.5;
+        shadowMesh.scale.set(shadowScaleX * spread, shadowScaleZ * spread, 1);
       }
 
       /* Re-fit every frame: the pack fills the stage both while it floats
