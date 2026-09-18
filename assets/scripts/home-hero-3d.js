@@ -67,13 +67,13 @@
   /* The pieces are thrown wide across the view and deep through it, barely
      up: they start spread out in front of and behind where they belong and
      settle forward or back into the finished pack. */
-  var SPREAD = new THREE.Vector3(1.85, 0.24, 1.3);
+  var SPREAD = new THREE.Vector3(1.5, 0.22, 1.1);
   /* How much further out than the pack's own size the pieces begin. */
   var SPREAD_SCALE = 1;
   /* The camera never backs off more than this much beyond the framing of
      the finished pack. Pieces that swing wider than that pass out of frame
      on their way in, rather than shrinking the whole view to hold them. */
-  var MAX_PULLBACK = 1.35;
+  var MAX_PULLBACK = 12;
   /* How far through the view a piece may start, as a share of the pack's
      own size: a short reach towards the camera, a long one away from it. */
   var FORWARD_REACH = 1.1;
@@ -300,8 +300,8 @@
       /* Under the finished pack and shaped like its footprint: a disc sized
          off the bounding sphere sits beside a long unit rather than under it. */
       mesh.position.set(footprint.x, footprint.y - footprint.depth * 0.01, footprint.z);
-      shadowScaleX = footprint.width * 1.9;
-      shadowScaleZ = footprint.depth * 1.9;
+      shadowScaleX = footprint.width * 1.5;
+      shadowScaleZ = footprint.depth * 1.5;
       mesh.scale.set(shadowScaleX, shadowScaleZ, 1);
       mesh.renderOrder = -1;
       group.add(mesh);
@@ -527,7 +527,7 @@
       lastFrame = now;
       /* Pull back quickly but close in gently: the view never lags behind a
          piece swinging outwards, so nothing is cut off at the edge. */
-      var k = 1 - Math.exp((wantDist > camDist ? -14 : -3.5) * dt);
+      var k = 1 - Math.exp((wantDist > camDist ? -14 : -6) * dt);
       camDist += (wantDist - camDist) * k;
       center.lerp(fitTarget, 1 - Math.exp(-3.5 * dt));
       camera.position.copy(center).addScaledVector(VIEW_DIR, camDist);

@@ -551,13 +551,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   position:relative;
   width:100%;
   padding:0;
-  height:clamp(360px, 54vh, 620px);
+  height:clamp(420px, 66vh, 760px);
 }
+/* The canvas reaches past its column into the page gutter. Kept to the
+   column, the pack's shadow and the pieces thrown widest were cut off at
+   the edges, which read as a box drawn around the product. */
 .hero-visual-canvas{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  top:-12%;
+  left:-10%;
+  /* A canvas is a replaced element: with width:auto it falls back to its
+     intrinsic 300x150, so the size is given explicitly. */
+  width:126%;
+  height:124%;
   opacity:0;
   transition:opacity .9s var(--ease);
 }
@@ -3184,7 +3190,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/vendor/FBXLoader.js" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=17" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=22" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>
