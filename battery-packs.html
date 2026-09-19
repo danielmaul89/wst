@@ -8,18 +8,17 @@
 <meta name="description" content="Production battery platforms built by WS Technicals, from a compact 21700 pack to heavy machinery and UPS installations.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2d">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2g">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2h">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ background:var(--paper); }
-/* A mosaic rather than a even grid: the packs are different shapes, so the
-   boxes are too, and each one carries the proportion that suits its
-   subject. Twelve columns, the same rhythm the applications page uses. */
+/* A mosaic rather than an even grid: twelve columns with the tiles
+   alternating wide and narrow, the same rhythm the applications page uses. */
 .packs{ padding:var(--sp-7) 0 var(--sp-8); }
 .pack-grid{ grid-template-columns:repeat(12,1fr); }
 .pack-grid > *{ grid-column:span 4; }
-.pack-wide{ grid-column:span 7; --product-tile-ratio:16/9; }
-.pack-narrow{ grid-column:span 5; --product-tile-ratio:4/3; }
+.pack-wide{ grid-column:span 7; min-height:360px; }
+.pack-narrow{ grid-column:span 5; min-height:360px; }
 
 /* The closing panel sits in the mosaic rather than after it, taking the
    space the sixth pack would have. */
@@ -52,9 +51,6 @@ body{ background:var(--paper); }
   .pack-narrow,
   .pack-cta{ grid-column:span 12; }
 }
-.pack-spec{ display:flex; flex-wrap:wrap; gap:4px 18px; margin-top:10px; color:var(--ink-soft); font-family:var(--font-mono); font-size:13px; }
-.pack-spec span{ white-space:nowrap; }
-.pack-note{ margin-top:8px; color:var(--ink-soft); font-size:15px; line-height:1.6; }
 </style>
 </head>
 <body data-wst-page="solutions">
@@ -79,68 +75,53 @@ body{ background:var(--paper); }
   <div class="container">
     <div class="wst-section-head">
       <h2>Production platforms.</h2>
-      <p>Five builds, drawn and assembled in house. Part counts are taken from the production CAD.</p>
+      <p>Five builds, drawn and assembled in house, each shown from the CAD it is manufactured from.</p>
     </div>
 
     <div class="wst-grid pack-grid">
 
-      <article class="wst-product-tile pack-narrow">
+      <article class="wst-product-tile wst-product-tile--labelled pack-narrow">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/compact-platform.png" alt="Compact battery platform, a sealed rectangular pack" loading="lazy" decoding="async">
         </div>
         <div class="wst-product-tile-body">
-          <span class="wst-tag">Compact platform</span>
           <h3>Compact battery platform</h3>
-          <p class="pack-note">Cylindrical cells in moulded holders under a sealed casing, with the BMS and harness carried inside the lid.</p>
-          <p class="pack-spec"><span>21700 cylindrical</span><span>284 parts</span></p>
         </div>
       </article>
 
-      <article class="wst-product-tile pack-wide">
+      <article class="wst-product-tile wst-product-tile--labelled pack-wide">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform in a perforated sheet metal enclosure" loading="lazy" decoding="async">
         </div>
         <div class="wst-product-tile-body">
-          <span class="wst-tag">Heavy machinery</span>
           <h3>Heavy machinery platform</h3>
-          <p class="pack-note">Prismatic cells in a vented steel enclosure, built for machines that work through vibration and dust all day.</p>
-          <p class="pack-spec"><span>EVE C40 prismatic</span><span>247 parts</span></p>
         </div>
       </article>
 
-      <article class="wst-product-tile pack-wide">
+      <article class="wst-product-tile wst-product-tile--labelled pack-wide">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
         </div>
         <div class="wst-product-tile-body">
-          <span class="wst-tag">UPS</span>
           <h3>UPS platform</h3>
-          <p class="pack-note">A rack-mounted power module for standby installations, sized to the cabinet it slides into.</p>
-          <p class="pack-spec"><span>577 x 88 x 482 mm</span><span>312 parts</span></p>
         </div>
       </article>
 
-      <article class="wst-product-tile pack-narrow">
+      <article class="wst-product-tile wst-product-tile--labelled pack-narrow">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
         </div>
         <div class="wst-product-tile-body">
-          <span class="wst-tag">AGV</span>
           <h3>AGV platform</h3>
-          <p class="pack-note">A long, low pack for automated guided vehicles, with the connector and service points reachable from one end.</p>
-          <p class="pack-spec"><span>166 x 190 x 517 mm</span><span>127 parts</span></p>
         </div>
       </article>
 
-      <article class="wst-product-tile pack-narrow">
+      <article class="wst-product-tile wst-product-tile--labelled pack-narrow">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/heavy-machinery-chassis.png" alt="Structural bend-plate battery chassis for heavy machinery" loading="lazy" decoding="async">
         </div>
         <div class="wst-product-tile-body">
-          <span class="wst-tag">Heavy machinery</span>
           <h3>Heavy machinery chassis</h3>
-          <p class="pack-note">A structural bend-plate frame that carries the pack as part of the machine rather than as a box bolted into it.</p>
-          <p class="pack-spec"><span>719 x 783 x 698 mm</span><span>778 parts</span></p>
         </div>
       </article>
 
