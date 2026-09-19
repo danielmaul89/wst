@@ -89,7 +89,7 @@ while ($true) {
       }
       $target = if ($savePath) { [System.IO.Path]::GetFullPath((Join-Path $root $savePath)) } else { $null }
       $ok = $target -and $target.StartsWith($root, [System.StringComparison]::OrdinalIgnoreCase) -and
-            ([System.IO.Path]::GetExtension($target).ToLowerInvariant() -in @(".wstm", ".bin", ".json")) -and
+            ([System.IO.Path]::GetExtension($target).ToLowerInvariant() -in @(".wstm", ".bin", ".json", ".png")) -and
             ($read -eq $contentLength)
       if ($ok) {
         [System.IO.File]::WriteAllBytes($target, $payload)
