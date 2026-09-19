@@ -8,16 +8,50 @@
 <meta name="description" content="Production battery platforms built by WS Technicals, from a compact 21700 pack to heavy machinery and UPS installations.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2d">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2f">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2g">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ background:var(--paper); }
-/* Three to a row, so five packs read as 3 + 2 rather than leaving one
-   stranded at the end of a row of four. */
+/* A mosaic rather than a even grid: the packs are different shapes, so the
+   boxes are too, and each one carries the proportion that suits its
+   subject. Twelve columns, the same rhythm the applications page uses. */
 .packs{ padding:var(--sp-7) 0 var(--sp-8); }
-.pack-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); }
-@media (max-width:1000px){ .pack-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media (max-width:620px){ .pack-grid{ grid-template-columns:minmax(0,1fr); } }
+.pack-grid{ grid-template-columns:repeat(12,1fr); }
+.pack-grid > *{ grid-column:span 4; }
+.pack-wide{ grid-column:span 7; --product-tile-ratio:16/9; }
+.pack-narrow{ grid-column:span 5; --product-tile-ratio:4/3; }
+
+/* The closing panel sits in the mosaic rather than after it, taking the
+   space the sixth pack would have. */
+.pack-cta{
+  grid-column:span 7;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:var(--sp-5);
+  border-radius:var(--r-lg);
+  background:linear-gradient(155deg,#101c3a 0%,var(--blue-deep) 72%);
+  color:var(--paper);
+}
+/* Not .eyebrow: that colour is pinned for light backgrounds, and this
+   panel is dark. */
+.pack-cta-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
+.pack-cta h2{ margin:14px 0 10px; max-width:16ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); }
+.pack-cta p{ max-width:40ch; margin:0 0 var(--sp-3); color:var(--ink-soft-on-dark); line-height:1.65; }
+
+@media (max-width:1000px){
+  .pack-grid > *,
+  .pack-wide,
+  .pack-narrow,
+  .pack-cta{ grid-column:span 6; }
+}
+@media (max-width:620px){
+  .pack-grid > *,
+  .pack-wide,
+  .pack-narrow,
+  .pack-cta{ grid-column:span 12; }
+}
 .pack-spec{ display:flex; flex-wrap:wrap; gap:4px 18px; margin-top:10px; color:var(--ink-soft); font-family:var(--font-mono); font-size:13px; }
 .pack-spec span{ white-space:nowrap; }
 .pack-note{ margin-top:8px; color:var(--ink-soft); font-size:15px; line-height:1.6; }
@@ -50,7 +84,7 @@ body{ background:var(--paper); }
 
     <div class="wst-grid pack-grid">
 
-      <article class="wst-product-tile">
+      <article class="wst-product-tile pack-narrow">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/compact-platform.png" alt="Compact battery platform, a sealed rectangular pack" loading="lazy" decoding="async">
         </div>
@@ -62,7 +96,7 @@ body{ background:var(--paper); }
         </div>
       </article>
 
-      <article class="wst-product-tile">
+      <article class="wst-product-tile pack-wide">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform in a perforated sheet metal enclosure" loading="lazy" decoding="async">
         </div>
@@ -74,7 +108,7 @@ body{ background:var(--paper); }
         </div>
       </article>
 
-      <article class="wst-product-tile">
+      <article class="wst-product-tile pack-wide">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
         </div>
@@ -86,7 +120,7 @@ body{ background:var(--paper); }
         </div>
       </article>
 
-      <article class="wst-product-tile">
+      <article class="wst-product-tile pack-narrow">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
         </div>
@@ -98,7 +132,7 @@ body{ background:var(--paper); }
         </div>
       </article>
 
-      <article class="wst-product-tile">
+      <article class="wst-product-tile pack-narrow">
         <div class="wst-product-tile-img">
           <img src="assets/products/packs/heavy-machinery-chassis.png" alt="Structural bend-plate battery chassis for heavy machinery" loading="lazy" decoding="async">
         </div>
@@ -110,16 +144,13 @@ body{ background:var(--paper); }
         </div>
       </article>
 
-    </div>
-  </div>
-</section>
+      <aside class="pack-cta">
+        <span class="pack-cta-eyebrow">Engineering showcase</span>
+        <h2>See a pack taken apart.</h2>
+        <p>The compact platform and the heavy machinery platform are both on the showcase, stripped to the last fastener and put back together.</p>
+        <a href="product-3d-showcase.html" class="btn btn-on-dark">Open the showcase</a>
+      </aside>
 
-<section class="wst-cta-band">
-  <div class="container">
-    <h2>See a pack taken apart.</h2>
-    <p>The compact platform and the heavy machinery platform are both on the engineering showcase, stripped to the last fastener and put back together.</p>
-    <div class="wst-cta-band-actions">
-      <a href="product-3d-showcase.html" class="btn btn-on-dark">Open the showcase</a>
     </div>
   </div>
 </section>

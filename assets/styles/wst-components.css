@@ -840,6 +840,9 @@
 /* 6e. Product tile — square product image over a tinted plinth, with a tag
    and a compact title. The unit of every product listing. */
 .wst-product-tile {
+  /* The proportion of the image area. A listing of one kind of product
+     keeps the default square; a mosaic of mixed shapes sets its own. */
+  --product-tile-ratio: 1 / 1;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -854,7 +857,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: var(--product-tile-ratio);
   overflow: hidden;
   background: linear-gradient(155deg, var(--paper-2) 0%, var(--brass-soft) 100%);
 }
