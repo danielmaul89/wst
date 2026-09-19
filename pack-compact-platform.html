@@ -5,94 +5,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>Compact battery platform | WS Technicals</title>
-<meta name="description" content="The compact battery platform: 21700 cylindrical cells in moulded holders under a sealed casing, built and assembled by WS Technicals.">
+<meta name="description" content="The compact battery platform: 21700 cylindrical cells in moulded holders under a sealed casing, shown as the live production CAD.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2d">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2i">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2g">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2k">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<!-- The pack is a large download, so it starts here rather than after the
+     scripts at the end of the body. The guards match the ones in
+     assets/scripts/home-hero-3d.js. -->
+<script>
+  (function () {
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia('(max-width: 767px)').matches) return;
+      if (navigator.connection && navigator.connection.saveData) return;
+      window.__wstHeroModel = fetch('assets/models/c4e.wstm')
+        .then(function (r) { return r.ok ? r.arrayBuffer() : null; })
+        .catch(function () { return null; });
+    } catch (e) { /* the model script falls back to fetching it itself */ }
+  })();
+</script>
 <style>
-body{ background:var(--paper); }
-.pack-body{ padding:var(--sp-7) 0 var(--sp-6); }
-.pack-layers{ grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
-.pack-layer h3{ font-size:20px; }
-.pack-layer p{ margin-top:6px; color:var(--ink-soft); font-size:15px; line-height:1.6; }
+/* A product page served on deep blue, the way the contact page is, with the
+   blueprint grid drawn over it. */
+.pack-page{ position:relative; overflow:hidden; padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-7); }
+.pack-page-grid{ --grid-size:96px; }
 
-/* The facts strip, the same four the showcase prints above its stage. */
-.pack-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-3); margin-top:var(--sp-5); padding-top:var(--sp-4); border-top:1px solid var(--line); }
-.pack-facts dt{ color:var(--ink-soft); font-family:var(--font-mono); font-size:13px; text-transform:uppercase; letter-spacing:.06em; }
+.pack-stage-grid{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:var(--sp-5); align-items:center; }
+.pack-intro{ display:flex; flex-direction:column; align-items:flex-start; gap:var(--sp-3); }
+.pack-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
+.pack-intro h1{ font-size:var(--h1-display); letter-spacing:var(--h1-ls); line-height:var(--h1-lh); }
+.pack-lead{ max-width:46ch; color:var(--ink-soft-on-dark); font-size:clamp(16px,1.4vw,18px); line-height:1.65; }
+
+/* The live model. It fills its column and reaches a little past it, so the
+   pack has room to come apart. */
+.pack-stage{ position:relative; width:100%; height:clamp(380px,56vh,620px); --model-bleed-top:-8%; --model-bleed-left:-6%; --model-width:114%; --model-height:116%; }
+.pack-stage-note{ margin-top:var(--sp-2); color:var(--ink-soft-on-dark); font-family:var(--font-mono); font-size:13px; }
+/* One line that holds true while the pack loads and once it is running. */
+/* Phones, reduced motion and machines without WebGL never run the model:
+   the column takes up no room, and the line about dragging goes with it. */
+.pack-stage:not(.is-3d){ height:0; }
+.pack-stage:not(.is-3d) + .pack-stage-note{ display:none; }
+
+.pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
+.pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
+.pack-columns{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+.pack-column h3{ font-size:19px; margin-bottom:10px; }
+.pack-column p{ color:var(--ink-soft-on-dark); font-size:15.5px; line-height:1.7; }
+
+.pack-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-3); margin-top:var(--sp-6); padding-top:var(--sp-4); border-top:1px solid rgba(251,249,245,.12); }
+.pack-facts dt{ color:var(--ink-soft-on-dark); font-family:var(--font-mono); font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; }
 .pack-facts dd{ margin:6px 0 0; font-size:17px; font-weight:600; }
+.pack-actions{ display:flex; flex-wrap:wrap; gap:var(--sp-2); margin-top:var(--sp-5); }
 
-/* The way into the live model: a dark panel carrying the invitation, next to
-   a still of the pack it opens. */
-.pack-3d{ padding:0 0 var(--sp-8); }
-.pack-3d-inner{ display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:var(--sp-3); align-items:stretch; }
-.pack-3d-panel{ display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:var(--sp-5); border-radius:var(--r-lg); background:linear-gradient(155deg,#101c3a 0%,var(--blue-deep) 72%); color:var(--paper); }
-.pack-3d-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
-.pack-3d-panel h2{ margin:14px 0 10px; max-width:18ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); }
-.pack-3d-panel p{ max-width:44ch; margin:0 0 var(--sp-3); color:var(--ink-soft-on-dark); line-height:1.65; }
-.pack-3d-still{ display:flex; align-items:center; justify-content:center; padding:var(--sp-4); border-radius:var(--r-lg); background:linear-gradient(155deg,var(--paper-2) 0%,var(--brass-soft) 100%); }
-.pack-3d-still img{ width:100%; height:auto; max-height:320px; object-fit:contain; filter:drop-shadow(0 18px 24px rgba(6,8,26,.16)); }
-
-@media (max-width:900px){
+@media (max-width:980px){
+  .pack-stage-grid{ grid-template-columns:minmax(0,1fr); gap:var(--sp-4); }
+  .pack-stage{ height:clamp(300px,44vh,460px); }
+  .pack-columns{ grid-template-columns:minmax(0,1fr); gap:var(--sp-3); }
   .pack-facts{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .pack-3d-inner{ grid-template-columns:minmax(0,1fr); }
 }
 </style>
 </head>
-<body data-wst-page="solutions">
+<body data-wst-page="solutions" data-wst-theme="dark">
 <div data-wst-header></div>
-<main>
+<main class="on-dark">
 
-<section class="wst-page-hero wst-page-hero--cutout">
-  <div class="container wst-page-hero-grid">
-    <div class="wst-page-hero-copy">
-      <span class="eyebrow"><a href="battery-packs.html">Battery packs</a></span>
-      <h1 class="t-display">Compact battery platform.</h1>
-      <p class="wst-page-hero-intro">Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid. One of our production platforms, taken apart and put back together on the engineering showcase.</p>
-      <a href="product-3d-showcase.html" class="btn btn-primary">See it in 3D</a>
+<section class="pack-page">
+  <div class="wst-blueprint-grid pack-page-grid" aria-hidden="true"></div>
+  <div class="container pack-stage-grid">
+    <div class="pack-intro">
+      <span class="pack-eyebrow"><a href="battery-packs.html">Battery packs</a></span>
+      <h1>Compact battery platform.</h1>
+      <p class="pack-lead">Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid. This is the production CAD, running in your browser.</p>
+      <div class="pack-actions">
+        <a href="product-3d-showcase.html" class="btn btn-on-dark">Take it apart</a>
+        <a href="contact-v2.html" class="btn btn-ghost">Discuss your pack</a>
+      </div>
     </div>
-    <figure class="wst-page-hero-media">
-      <img src="assets/products/packs/compact-platform.png" alt="Compact battery platform, a sealed rectangular pack" decoding="async">
-    </figure>
+    <div>
+      <div class="pack-stage" data-hero-3d="assets/models/c4e.wstm"></div>
+      <p class="pack-stage-note">The pack opens into its layers, then closes. Drag to turn it.</p>
+    </div>
   </div>
 </section>
 
-<section class="pack-body">
+<section class="pack-detail">
   <div class="container">
-    <div class="wst-section-head">
-      <h2>What is inside.</h2>
-      <p>The layers the pack comes apart into, from the lid down to the casing it all sits in.</p>
-    </div>
+    <h2>How the pack is put together.</h2>
 
-    <div class="wst-grid pack-layers">
-      <article class="wst-card pack-layer">
-        <h3>Casing lid</h3>
-        <p>Sealed top cover.</p>
-      </article>
-      <article class="wst-card pack-layer">
-        <h3>Cable harness</h3>
-        <p>Sense and power.</p>
-      </article>
-      <article class="wst-card pack-layer">
-        <h3>BMS board</h3>
-        <p>Protection and balancing.</p>
-      </article>
-      <article class="wst-card pack-layer">
-        <h3>Busbars</h3>
-        <p>Cell interconnect.</p>
-      </article>
-      <article class="wst-card pack-layer">
-        <h3>Cell holders</h3>
-        <p>Retention and spacing.</p>
-      </article>
-      <article class="wst-card pack-layer">
-        <h3>21700 cells</h3>
-        <p>Cylindrical array.</p>
-      </article>
-      <article class="wst-card pack-layer">
-        <h3>Main casing</h3>
-        <p>Structural enclosure.</p>
-      </article>
+    <div class="pack-columns">
+      <div class="pack-column">
+        <h3>Cells, held rather than packed</h3>
+        <p>21700 cylindrical cells sit in moulded holders that space them apart and carry them through shock and vibration. The holders set the gaps the design needs between cells, so nothing depends on how tightly the pack was assembled on the day.</p>
+      </div>
+      <div class="pack-column">
+        <h3>Current through busbars</h3>
+        <p>Busbars tie the cells into their series and parallel groups and carry the pack current out to the terminals. Sense and power lines run back to the board on one harness, so the wiring is a single part to fit and a single part to check.</p>
+      </div>
+      <div class="pack-column">
+        <h3>A board that watches every cell</h3>
+        <p>The BMS board handles protection and cell balancing, and rides inside the lid where it is reachable without disturbing the cell stack. The main casing takes the structural load, and the lid seals the whole assembly.</p>
+      </div>
     </div>
 
     <dl class="pack-facts">
@@ -104,23 +117,13 @@ body{ background:var(--paper); }
   </div>
 </section>
 
-<section class="pack-3d">
-  <div class="container pack-3d-inner">
-    <div class="pack-3d-panel">
-      <span class="pack-3d-eyebrow">Engineering showcase</span>
-      <h2>Take it apart yourself.</h2>
-      <p>The showcase runs this pack's own production CAD in the browser: scroll to lift the layers clear, and every part is named as it comes out.</p>
-      <a href="product-3d-showcase.html" class="btn btn-on-dark">Open the 3D model</a>
-    </div>
-    <figure class="pack-3d-still">
-      <img src="assets/products/packs/compact-platform.png" alt="The compact battery platform as it appears in the 3D showcase" loading="lazy" decoding="async">
-    </figure>
-  </div>
-</section>
-
 </main>
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav3"></script>
+<script src="assets/vendor/three.r128.min.js" defer></script>
+<script src="assets/vendor/fflate.min.js" defer></script>
+<script src="assets/scripts/wstm-loader.js?v=1" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=28" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>

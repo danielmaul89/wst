@@ -1285,3 +1285,76 @@ body.wst-modal-open {
     transition-duration: .01ms !important;
   }
 }
+
+/* ============================================================================
+   DARK PAGE THEME
+   A page served on deep blue rather than paper: set data-wst-theme="dark" on
+   <body> and the fixed navigation, its menus and the logo follow. The contact
+   page carries its own copy of this from before the shared layer existed.
+   ========================================================================= */
+body[data-wst-theme="dark"] {
+  background: var(--blue-deep);
+  color: var(--paper);
+}
+body[data-wst-theme="dark"] .nav-link {
+  color: var(--ink-soft-on-dark);
+}
+body[data-wst-theme="dark"] .nav-item:hover > .nav-link,
+body[data-wst-theme="dark"] .nav-link:focus-visible,
+body[data-wst-theme="dark"] .nav-item.current > .nav-link {
+  color: var(--paper);
+  background: rgba(251, 249, 245, .08);
+}
+body[data-wst-theme="dark"] .dropdown {
+  background: var(--blue);
+  border-color: rgba(251, 249, 245, .14);
+}
+body[data-wst-theme="dark"] .dropdown a {
+  color: var(--ink-soft-on-dark);
+}
+body[data-wst-theme="dark"] .dropdown a:hover,
+body[data-wst-theme="dark"] .dropdown a:focus-visible {
+  color: var(--paper);
+  background: rgba(251, 249, 245, .08);
+}
+body[data-wst-theme="dark"] .nav--scrolled {
+  background: rgba(3, 11, 33, .72);
+}
+body[data-wst-theme="dark"] .nav-toggle:hover {
+  background: rgba(251, 249, 245, .08);
+}
+body[data-wst-theme="dark"] .nav-toggle span,
+body[data-wst-theme="dark"] .nav-toggle span::before,
+body[data-wst-theme="dark"] .nav-toggle span::after {
+  background: var(--paper);
+}
+body[data-wst-theme="dark"].menu-open .nav-menu {
+  background: var(--blue-deep);
+}
+body[data-wst-theme="dark"] .btn-ghost {
+  color: var(--paper);
+  border-color: rgba(251, 249, 245, .28);
+}
+body[data-wst-theme="dark"] .btn-ghost:hover {
+  background: rgba(251, 249, 245, .08);
+  border-color: rgba(251, 249, 245, .45);
+}
+
+/* LIVE MODEL CANVAS
+   The canvas assets/scripts/home-hero-3d.js drops into any element carrying
+   data-hero-3d. It fills that element by default; a page that wants the model
+   to reach past its box sets the four properties rather than restyling this. */
+.wst-model-canvas {
+  position: absolute;
+  top: var(--model-bleed-top, 0);
+  left: var(--model-bleed-left, 0);
+  width: var(--model-width, 100%);
+  height: var(--model-height, 100%);
+  opacity: 0;
+  transition: opacity .9s var(--ease);
+  /* Grab and spin it; the page keeps vertical scrolling on touch. */
+  cursor: grab;
+  touch-action: pan-y;
+}
+.wst-model-canvas.is-grabbing { cursor: grabbing; }
+.is-3d-ready .wst-model-canvas { opacity: 1; }

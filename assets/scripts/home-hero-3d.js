@@ -20,7 +20,7 @@
 (function () {
   'use strict';
 
-  var host = document.querySelector('.hero-visual[data-hero-3d]');
+  var host = document.querySelector('[data-hero-3d]');
   if (!host) return;
 
   var THREE = window.THREE;
@@ -103,7 +103,7 @@
 
   function start() {
     var canvas = document.createElement('canvas');
-    canvas.className = 'hero-visual-canvas';
+    canvas.className = 'wst-model-canvas';
     canvas.setAttribute('aria-hidden', 'true');
 
     var renderer;

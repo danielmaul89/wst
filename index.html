@@ -556,22 +556,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* The canvas reaches past its column into the page gutter. Kept to the
    column, the pack's shadow and the pieces thrown widest were cut off at
    the edges, which read as a box drawn around the product. */
-.hero-visual-canvas{
-  position:absolute;
-  top:-12%;
-  left:-10%;
-  /* A canvas is a replaced element: with width:auto it falls back to its
-     intrinsic 300x150, so the size is given explicitly. */
-  width:126%;
-  height:124%;
-  opacity:0;
-  transition:opacity .9s var(--ease);
-  /* Grab and spin it; the page keeps vertical scrolling on touch. */
-  cursor:grab;
-  touch-action:pan-y;
+.hero-visual.is-3d{
+  --model-bleed-top:-12%;
+  --model-bleed-left:-10%;
+  --model-width:126%;
+  --model-height:124%;
 }
-.hero-visual-canvas.is-grabbing{ cursor:grabbing; }
-.hero-visual.is-3d-ready .hero-visual-canvas{ opacity:1; }
 
 /* ============================================================
    4. PRODUCT CATEGORIES — hero section of the page
@@ -2352,7 +2342,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .partner-cross{ opacity:.34; transform:none; transition:none; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2d">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2g">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <!-- The hero's 3D pack is a big download, so it starts here rather than after
      the scripts at the end of the body. The guards match the ones in
@@ -3194,7 +3184,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=1" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=27" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=28" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>

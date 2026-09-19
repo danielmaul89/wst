@@ -24,7 +24,7 @@
       '<header class="nav">',
       '  <div class="container nav-inner">',
       '    <a href="index.html" class="brand" aria-label="WS Technicals home">',
-      '      <img class="brand-logo' + (page === "contact" ? ' brand-logo--on-dark' : '') + '" src="assets/logo/full.svg" alt="WS Technicals">',
+      '      <img class="brand-logo' + (page === "contact" || document.body.getAttribute("data-wst-theme") === "dark" ? " brand-logo--on-dark" : "") + '" src="assets/logo/full.svg" alt="WS Technicals">',
       "    </a>",
       '    <nav class="nav-menu" aria-label="Primary navigation">',
       '      <div class="nav-item">',
