@@ -274,6 +274,21 @@
   --page-hero-media-ratio: 16 / 9;
 }
 
+/* A product cut out of its background stands on the page instead of sitting
+   in a frame: no panel behind it, nothing cropped, and free to take the
+   height the subject needs rather than a photograph's proportion. */
+.wst-page-hero--cutout .wst-page-hero-media {
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: none;
+  overflow: visible;
+}
+.wst-page-hero--cutout .wst-page-hero-media img {
+  height: auto;
+  max-height: calc(100svh - var(--nav-height) - var(--sp-7));
+  object-fit: contain;
+}
+
 /* Text only: no photograph beside the header, so the copy takes the row
    rather than leaving an empty column. Its own measures still hold. */
 .wst-page-hero--text-only .wst-page-hero-grid {
