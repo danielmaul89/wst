@@ -884,6 +884,17 @@
   inset: 0;
   aspect-ratio: auto;
 }
+/* The product sits small and low in the box, leaving the top corner clear
+   for the name rather than running into it. */
+.wst-product-tile--labelled .wst-product-tile-img {
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 clamp(18px, 5%, 44px) clamp(16px, 6%, 38px);
+}
+.wst-product-tile--labelled .wst-product-tile-img img {
+  width: 58%;
+  height: 58%;
+}
 .wst-product-tile--labelled::before {
   content: "";
   position: absolute;
