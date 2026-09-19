@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Compact battery platform | WS Technicals</title>
+<meta name="description" content="The compact battery platform: 21700 cylindrical cells in moulded holders under a sealed casing, built and assembled by WS Technicals.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2d">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2i">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<style>
+body{ background:var(--paper); }
+.pack-body{ padding:var(--sp-7) 0 var(--sp-6); }
+.pack-layers{ grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+.pack-layer h3{ font-size:20px; }
+.pack-layer p{ margin-top:6px; color:var(--ink-soft); font-size:15px; line-height:1.6; }
+
+/* The facts strip, the same four the showcase prints above its stage. */
+.pack-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-3); margin-top:var(--sp-5); padding-top:var(--sp-4); border-top:1px solid var(--line); }
+.pack-facts dt{ color:var(--ink-soft); font-family:var(--font-mono); font-size:13px; text-transform:uppercase; letter-spacing:.06em; }
+.pack-facts dd{ margin:6px 0 0; font-size:17px; font-weight:600; }
+
+/* The way into the live model: a dark panel carrying the invitation, next to
+   a still of the pack it opens. */
+.pack-3d{ padding:0 0 var(--sp-8); }
+.pack-3d-inner{ display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:var(--sp-3); align-items:stretch; }
+.pack-3d-panel{ display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:var(--sp-5); border-radius:var(--r-lg); background:linear-gradient(155deg,#101c3a 0%,var(--blue-deep) 72%); color:var(--paper); }
+.pack-3d-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
+.pack-3d-panel h2{ margin:14px 0 10px; max-width:18ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); }
+.pack-3d-panel p{ max-width:44ch; margin:0 0 var(--sp-3); color:var(--ink-soft-on-dark); line-height:1.65; }
+.pack-3d-still{ display:flex; align-items:center; justify-content:center; padding:var(--sp-4); border-radius:var(--r-lg); background:linear-gradient(155deg,var(--paper-2) 0%,var(--brass-soft) 100%); }
+.pack-3d-still img{ width:100%; height:auto; max-height:320px; object-fit:contain; filter:drop-shadow(0 18px 24px rgba(6,8,26,.16)); }
+
+@media (max-width:900px){
+  .pack-facts{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .pack-3d-inner{ grid-template-columns:minmax(0,1fr); }
+}
+</style>
+</head>
+<body data-wst-page="solutions">
+<div data-wst-header></div>
+<main>
+
+<section class="wst-page-hero wst-page-hero--cutout">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow"><a href="battery-packs.html">Battery packs</a></span>
+      <h1 class="t-display">Compact battery platform.</h1>
+      <p class="wst-page-hero-intro">Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid. One of our production platforms, taken apart and put back together on the engineering showcase.</p>
+      <a href="product-3d-showcase.html" class="btn btn-primary">See it in 3D</a>
+    </div>
+    <figure class="wst-page-hero-media">
+      <img src="assets/products/packs/compact-platform.png" alt="Compact battery platform, a sealed rectangular pack" decoding="async">
+    </figure>
+  </div>
+</section>
+
+<section class="pack-body">
+  <div class="container">
+    <div class="wst-section-head">
+      <h2>What is inside.</h2>
+      <p>The layers the pack comes apart into, from the lid down to the casing it all sits in.</p>
+    </div>
+
+    <div class="wst-grid pack-layers">
+      <article class="wst-card pack-layer">
+        <h3>Casing lid</h3>
+        <p>Sealed top cover.</p>
+      </article>
+      <article class="wst-card pack-layer">
+        <h3>Cable harness</h3>
+        <p>Sense and power.</p>
+      </article>
+      <article class="wst-card pack-layer">
+        <h3>BMS board</h3>
+        <p>Protection and balancing.</p>
+      </article>
+      <article class="wst-card pack-layer">
+        <h3>Busbars</h3>
+        <p>Cell interconnect.</p>
+      </article>
+      <article class="wst-card pack-layer">
+        <h3>Cell holders</h3>
+        <p>Retention and spacing.</p>
+      </article>
+      <article class="wst-card pack-layer">
+        <h3>21700 cells</h3>
+        <p>Cylindrical array.</p>
+      </article>
+      <article class="wst-card pack-layer">
+        <h3>Main casing</h3>
+        <p>Structural enclosure.</p>
+      </article>
+    </div>
+
+    <dl class="pack-facts">
+      <div><dt>Platform</dt><dd>Compact battery platform</dd></div>
+      <div><dt>Cell format</dt><dd>21700 cylindrical</dd></div>
+      <div><dt>Source</dt><dd>Production CAD</dd></div>
+      <div><dt>Components</dt><dd>284 parts</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="pack-3d">
+  <div class="container pack-3d-inner">
+    <div class="pack-3d-panel">
+      <span class="pack-3d-eyebrow">Engineering showcase</span>
+      <h2>Take it apart yourself.</h2>
+      <p>The showcase runs this pack's own production CAD in the browser: scroll to lift the layers clear, and every part is named as it comes out.</p>
+      <a href="product-3d-showcase.html" class="btn btn-on-dark">Open the 3D model</a>
+    </div>
+    <figure class="pack-3d-still">
+      <img src="assets/products/packs/compact-platform.png" alt="The compact battery platform as it appears in the 3D showcase" loading="lazy" decoding="async">
+    </figure>
+  </div>
+</section>
+
+</main>
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=nav3"></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>
