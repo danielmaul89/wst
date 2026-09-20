@@ -38,6 +38,12 @@
   var askedMargin = parseFloat(host.getAttribute('data-model-margin'));
   if (askedMargin > 0) FIT_MARGIN = askedMargin;
 
+  /* Some packs are exported in near-black plastics, which read as a hole on
+     a dark page. data-model-tone="light" lifts every material into the light
+     range and takes the colour out of it, keeping what little difference
+     there is between parts. */
+  var lightTone = host.getAttribute('data-model-tone') === 'light';
+
   /* How far each layer travels, as a multiple of the pack's own radius.
      Matched by keyword against the CAD mesh name; most specific first. */
   var LAYER_TIERS = [
@@ -174,17 +180,32 @@
        shininess and specular becoming roughness and metalness. Materials are
        shared between meshes, so each one is converted only once. */
     var converted = {};
+    var _hsl = {};
+    function lift(colour) {
+      colour.getHSL(_hsl);
+      colour.setHSL(_hsl.h, Math.min(_hsl.s, 0.14), 0.4 + _hsl.l * 0.32);
+      return colour;
+    }
+
     function keepColour(source) {
       if (!source) return null;
       /* .wstm already carries standard materials, colour and all. */
-      if (source.isMeshStandardMaterial) return source;
+      if (source.isMeshStandardMaterial) {
+        if (lightTone && !source.userData.lifted) {
+          lift(source.color);
+          source.userData.lifted = true;
+        }
+        return source;
+      }
       if (converted[source.uuid]) return converted[source.uuid];
       var shininess = typeof source.shininess === 'number' ? source.shininess : 30;
       var specular = source.specular
         ? (source.specular.r + source.specular.g + source.specular.b) / 3
         : 0.2;
+      var base = source.color ? source.color.clone() : new THREE.Color(0xb6bcc6);
+      if (lightTone) lift(base);
       var std = new THREE.MeshStandardMaterial({
-        color: source.color ? source.color.clone() : new THREE.Color(0xb6bcc6),
+        color: base,
         map: source.map || null,
         roughness: clamp01(1 - shininess / 120),
         metalness: clamp01(specular * 1.2),

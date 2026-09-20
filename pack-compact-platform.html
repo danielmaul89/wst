@@ -41,11 +41,9 @@
 .pack-fact{ display:flex; flex-direction:column; gap:5px; }
 .pack-fact dt{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft-on-dark); }
 .pack-fact dd{ margin:0; font-size:var(--fs-body); font-weight:600; }
-.pack-actions{ display:flex; flex-wrap:wrap; gap:var(--sp-2); margin-top:var(--sp-4); }
 
 /* The pack itself, directly below the text and across the page. */
 .pack-stage-wrap{ position:relative; margin-top:var(--sp-5); }
-.pack-drag-note{ margin-bottom:var(--sp-2); color:var(--ink-soft-on-dark); font-family:var(--font-mono); font-size:13px; }
 .pack-stage{ position:relative; width:100%; height:clamp(420px,68vh,760px); }
 
 /* The cue the showcase carries at the foot of its stage. */
@@ -57,8 +55,7 @@
 /* Phones, reduced motion and machines without WebGL never run the model:
    the stage takes up no room, and the cue goes with it. */
 .pack-stage:not(.is-3d){ height:0; }
-.pack-stage:not(.is-3d) ~ .pack-hint,
-.pack-stage-wrap:not(:has(.is-3d)) .pack-drag-note{ display:none; }
+.pack-stage:not(.is-3d) ~ .pack-hint{ display:none; }
 
 .pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
 .pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
@@ -93,15 +90,10 @@
         <div class="pack-fact"><dt>Source</dt><dd>Production CAD</dd></div>
         <div class="pack-fact"><dt>Components</dt><dd>284 parts</dd></div>
       </dl>
-      <div class="pack-actions">
-        <a href="product-3d-showcase.html" class="btn btn-on-dark">Take it apart</a>
-        <a href="contact-v2.html" class="btn btn-ghost">Discuss your pack</a>
-      </div>
     </div>
 
     <div class="pack-stage-wrap">
-      <p class="pack-drag-note">The production CAD, running in your browser. It opens into its layers, closes again, and you can drag it round.</p>
-      <div class="pack-stage" data-hero-3d="assets/models/c4e.wstm" data-model-margin="1.06"></div>
+      <div class="pack-stage" data-hero-3d="assets/models/c4e.wstm" data-model-margin="1.06" data-model-tone="light"></div>
       <div class="pack-hint" aria-hidden="true">
         <span>Scroll</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -137,7 +129,7 @@
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=1" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=29" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=31" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
