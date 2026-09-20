@@ -1297,7 +1297,7 @@ body[data-wst-theme="dark"] {
   color: var(--paper);
 }
 body[data-wst-theme="dark"] .nav-link {
-  color: var(--ink-soft-on-dark);
+  color: var(--paper);
 }
 body[data-wst-theme="dark"] .nav-item:hover > .nav-link,
 body[data-wst-theme="dark"] .nav-link:focus-visible,
@@ -1317,8 +1317,11 @@ body[data-wst-theme="dark"] .dropdown a:focus-visible {
   color: var(--paper);
   background: rgba(251, 249, 245, .08);
 }
-body[data-wst-theme="dark"] .nav--scrolled {
-  background: rgba(3, 11, 33, .72);
+body[data-wst-theme="dark"] .nav.nav--scrolled {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 body[data-wst-theme="dark"] .nav-toggle:hover {
   background: rgba(251, 249, 245, .08);

@@ -2,6 +2,10 @@
   "use strict";
 
   var page = document.body.getAttribute("data-wst-page") || "";
+  /* Pages served on deep blue take the on-dark logo. The contact page has
+     carried that since before the shared dark theme existed. */
+  var darkTheme = document.body.getAttribute("data-wst-theme") === "dark";
+  var dark = page === "contact" || darkTheme;
 
   /* Header logo size, two variants under review. ?logo=b switches to the
      larger one, ?logo=a back; the choice holds while browsing the site. */
@@ -24,7 +28,7 @@
       '<header class="nav">',
       '  <div class="container nav-inner">',
       '    <a href="index.html" class="brand" aria-label="WS Technicals home">',
-      '      <img class="brand-logo' + (page === "contact" || document.body.getAttribute("data-wst-theme") === "dark" ? " brand-logo--on-dark" : "") + '" src="assets/logo/full.svg" alt="WS Technicals">',
+      '      <img class="brand-logo' + (dark ? " brand-logo--on-dark" : "") + '" src="assets/logo/full.svg" alt="WS Technicals">',
       "    </a>",
       '    <nav class="nav-menu" aria-label="Primary navigation">',
       '      <div class="nav-item">',
@@ -62,7 +66,7 @@
       "      </div>",
       "    </nav>",
       '    <div class="nav-cta">',
-      '      <a href="contact-v2.html" class="btn btn-primary" data-wst-contact-open aria-haspopup="dialog">Get in touch</a>',
+      '      <a href="contact-v2.html" class="btn ' + (darkTheme ? "btn-on-dark" : "btn-primary") + '" data-wst-contact-open aria-haspopup="dialog">Get in touch</a>',
       '      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle"><span></span></button>',
       "    </div>",
       "  </div>",
