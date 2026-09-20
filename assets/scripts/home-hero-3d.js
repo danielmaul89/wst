@@ -87,6 +87,11 @@
   /* Turns like a globe: a slow drift the reader can grab and spin, which
      carries its own momentum and eases back to the drift when let go. */
   var SPIN_RATE = 0.22;
+  /* Where the pack is facing as the last piece seats: the three-quarter view
+     with the vented end towards the reader. The turn starts far enough back
+     that it arrives here exactly on that beat, rather than wherever the
+     clock happens to leave it. */
+  var SETTLE_YAW = -0.62;
   var DRAG_SENSITIVITY = 0.0075;
   var SPIN_FRICTION = 2.4;
   var TILT_LIMIT = 0.42;
@@ -491,6 +496,9 @@
 
         shadowMesh = makeContactShadow(footprint);
         applyLayout(1, performance.now());
+        /* Wind the turn back by as much as it will cover while the pack comes
+           together, so it lands facing SETTLE_YAW when it closes. */
+        yaw = SETTLE_YAW - SPIN_RATE * ((ASSEMBLE_DELAY_MS + ASSEMBLE_MS) / 1000);
         ready = true;
         readyAt = performance.now();
         host.classList.add('is-3d-ready');
