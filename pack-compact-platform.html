@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2g">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2k">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
-<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=1">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=2">
 <style>
 /* A product page served on deep blue, the way the contact page is, with the
    blueprint grid drawn over it. */
@@ -62,26 +62,18 @@
 </section>
 
 <!-- The stage the engineering showcase runs, driven by the same script and
-     styled from the same sheet. There is one pack on this page, so the
-     platform switcher is left out; the script treats it as optional. -->
-<section class="sc-theatre" id="scTheatre">
+     styled from the same sheet, but open: no panel, no backdrop of its own
+     and no loading screen, so the pack is drawn straight onto the page. The
+     switcher and the loader are both optional to the script. -->
+<section class="sc-theatre sc-theatre--open" id="scTheatre">
   <div class="sc-stage">
    <div class="sc-screen" id="scScreen">
-    <div class="sc-backdrop" aria-hidden="true"></div>
     <canvas class="sc-canvas" id="scCanvas"></canvas>
-    <div class="sc-vignette" aria-hidden="true"></div>
-
     <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
 
     <div class="sc-hint" id="scHint">
       <span>Scroll</span>
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-
-    <div class="sc-loader" id="scLoader">
-      <span class="sc-loader-label">Loading production model</span>
-      <span class="sc-loader-pct" id="scLoaderPct">0%</span>
-      <span class="sc-loader-bar"><span id="scLoaderBar"></span></span>
     </div>
    </div>
   </div>

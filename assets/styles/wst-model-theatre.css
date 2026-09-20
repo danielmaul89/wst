@@ -237,3 +237,18 @@
 @media(prefers-reduced-motion:reduce){
   .sc-hint svg{ animation:none; }
 }
+
+/* Open stage: the pack is drawn straight onto the page instead of into a
+   panel. The screen keeps its job - it is still what the canvas fills and
+   what the callouts are positioned against - but it carries no frame, no
+   backdrop of its own and no shadow, so the page behind shows through.
+   The renderer already clears to transparent. */
+.sc-theatre--open .sc-stage{ padding:var(--nav-height) 0 0; }
+.sc-theatre--open .sc-screen{
+  border-radius:0;
+  background:none;
+  box-shadow:none;
+  overflow:visible;
+}
+.sc-theatre--open .sc-backdrop,
+.sc-theatre--open .sc-vignette{ display:none; }
