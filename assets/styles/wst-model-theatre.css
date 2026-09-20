@@ -243,7 +243,13 @@
    what the callouts are positioned against - but it carries no frame, no
    backdrop of its own and no shadow, so the page behind shows through.
    The renderer already clears to transparent. */
-.sc-theatre--open .sc-stage{ padding:var(--nav-height) 0 0; }
+.sc-theatre--open .sc-stage{ padding:0; }
+/* The stage is a viewport tall and the pack sits in the middle of it, so
+   left where it falls the pack starts a screen below the text above it. It
+   is pulled up into that space; the canvas is transparent and takes no
+   pointer events, so the text it now overlaps stays readable and clickable. */
+.sc-theatre--open{ margin-top:-6vh; }
+.sc-theatre--open .sc-canvas{ pointer-events:none; }
 .sc-theatre--open .sc-screen{
   border-radius:0;
   background:none;

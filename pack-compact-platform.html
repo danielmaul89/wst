@@ -10,14 +10,14 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2g">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2k">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
-<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=2">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
 <style>
 /* A product page served on deep blue, the way the contact page is, with the
    blueprint grid behind all of it: the grid is laid over main rather than
    over the opening section, and sits under everything the page draws, the
    model included. */
 main{ position:relative; }
-.pack-page{ position:relative; padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-6); }
+.pack-page{ position:relative; z-index:1; padding:calc(var(--nav-height) + var(--sp-6)) 0 0; }
 .pack-page-grid{ --grid-size:96px; z-index:0; }
 
 /* The opening reads the way the showcase's does: eyebrow, headline, one
