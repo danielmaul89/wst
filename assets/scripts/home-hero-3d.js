@@ -33,6 +33,11 @@
 
   var url = host.getAttribute('data-hero-3d');
 
+  /* How much room to leave around the pack. A page whose stage is mostly
+     given over to the model asks for less than the hero does. */
+  var askedMargin = parseFloat(host.getAttribute('data-model-margin'));
+  if (askedMargin > 0) FIT_MARGIN = askedMargin;
+
   /* How far each layer travels, as a multiple of the pack's own radius.
      Matched by keyword against the CAD mesh name; most specific first. */
   var LAYER_TIERS = [
