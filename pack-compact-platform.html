@@ -5,26 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>Compact battery platform | WS Technicals</title>
-<meta name="description" content="The compact battery platform: 21700 cylindrical cells in moulded holders under a sealed casing, shown as the live production CAD.">
+<meta name="description" content="The compact battery platform: 21700 cylindrical cells in moulded holders under a sealed casing, taken apart on screen from the production CAD.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2g">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2k">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
-<!-- The pack is a large download, so it starts here rather than after the
-     scripts at the end of the body. The guards match the ones in
-     assets/scripts/home-hero-3d.js. -->
-<script>
-  (function () {
-    try {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      if (window.matchMedia('(max-width: 767px)').matches) return;
-      if (navigator.connection && navigator.connection.saveData) return;
-      window.__wstHeroModel = fetch('assets/models/c4e.wstm')
-        .then(function (r) { return r.ok ? r.arrayBuffer() : null; })
-        .catch(function () { return null; });
-    } catch (e) { /* the model script falls back to fetching it itself */ }
-  })();
-</script>
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=1">
 <style>
 /* A product page served on deep blue, the way the contact page is, with the
    blueprint grid drawn over it. */
@@ -42,21 +28,6 @@
 .pack-fact dt{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft-on-dark); }
 .pack-fact dd{ margin:0; font-size:var(--fs-body); font-weight:600; }
 
-/* The pack itself, directly below the text and across the page. */
-.pack-stage-wrap{ position:relative; margin-top:var(--sp-5); }
-.pack-stage{ position:relative; width:100%; height:clamp(420px,68vh,760px); }
-
-/* The cue the showcase carries at the foot of its stage. */
-.pack-hint{ position:absolute; left:0; right:0; bottom:6px; display:flex; flex-direction:column; align-items:center; gap:9px; pointer-events:none; }
-.pack-hint span{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(199,204,222,.55); }
-.pack-hint svg{ animation:pack-bob 2s var(--ease) infinite; }
-@keyframes pack-bob{ 0%,100%{ transform:translateY(0); opacity:.75; } 50%{ transform:translateY(7px); opacity:1; } }
-
-/* Phones, reduced motion and machines without WebGL never run the model:
-   the stage takes up no room, and the cue goes with it. */
-.pack-stage:not(.is-3d){ height:0; }
-.pack-stage:not(.is-3d) ~ .pack-hint{ display:none; }
-
 .pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
 .pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .pack-columns{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
@@ -64,12 +35,8 @@
 .pack-column p{ color:var(--ink-soft-on-dark); font-size:15.5px; line-height:1.7; }
 
 @media (max-width:980px){
-  .pack-stage{ height:clamp(320px,48vh,520px); }
   .pack-columns{ grid-template-columns:minmax(0,1fr); gap:var(--sp-3); }
   .pack-facts{ gap:24px; }
-}
-@media (prefers-reduced-motion: reduce){
-  .pack-hint svg{ animation:none; }
 }
 </style>
 </head>
@@ -85,20 +52,38 @@
       <h1>Compact battery platform.</h1>
       <p class="pack-lead">Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid. One of our production platforms, drawn and assembled in house.</p>
       <dl class="pack-facts">
-        <div class="pack-fact"><dt>Platform</dt><dd>Compact battery platform</dd></div>
-        <div class="pack-fact"><dt>Cell format</dt><dd>21700 cylindrical</dd></div>
+        <div class="pack-fact"><dt>Platform</dt><dd id="scPlatform">Compact battery platform</dd></div>
+        <div class="pack-fact"><dt>Cell format</dt><dd id="scCellFormat">21700 cylindrical</dd></div>
         <div class="pack-fact"><dt>Source</dt><dd>Production CAD</dd></div>
-        <div class="pack-fact"><dt>Components</dt><dd>284 parts</dd></div>
+        <div class="pack-fact"><dt>Components</dt><dd id="scPartCount">284 parts</dd></div>
       </dl>
     </div>
+  </div>
+</section>
 
-    <div class="pack-stage-wrap">
-      <div class="pack-stage" data-hero-3d="assets/models/c4e.wstm" data-model-margin="1.06" data-model-tone="light"></div>
-      <div class="pack-hint" aria-hidden="true">
-        <span>Scroll</span>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+<!-- The stage the engineering showcase runs, driven by the same script and
+     styled from the same sheet. There is one pack on this page, so the
+     platform switcher is left out; the script treats it as optional. -->
+<section class="sc-theatre" id="scTheatre">
+  <div class="sc-stage">
+   <div class="sc-screen" id="scScreen">
+    <div class="sc-backdrop" aria-hidden="true"></div>
+    <canvas class="sc-canvas" id="scCanvas"></canvas>
+    <div class="sc-vignette" aria-hidden="true"></div>
+
+    <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
+
+    <div class="sc-hint" id="scHint">
+      <span>Scroll</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
+
+    <div class="sc-loader" id="scLoader">
+      <span class="sc-loader-label">Loading production model</span>
+      <span class="sc-loader-pct" id="scLoaderPct">0%</span>
+      <span class="sc-loader-bar"><span id="scLoaderBar"></span></span>
+    </div>
+   </div>
   </div>
 </section>
 
@@ -128,8 +113,8 @@
 <script src="assets/scripts/wst-shell.js?v=nav3"></script>
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
-<script src="assets/scripts/wstm-loader.js?v=1" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=31" defer></script>
+<script src="assets/vendor/FBXLoader.js" defer></script>
+<script src="assets/scripts/product-3d-showcase.js?v=16" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
