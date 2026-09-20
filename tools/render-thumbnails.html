@@ -29,14 +29,12 @@
 <script>
 (function () {
   'use strict';
-  /* `palette` is for models exported unpainted - they arrive black, so they
-     take the same colours by part name that the showcase page uses. */
   var MODELS = [
-    { file: 'assets/models/c4e.fbx',  out: 'assets/products/packs/compact-platform.png', palette: true },
+    { file: 'assets/models/c4e.fbx',  out: 'assets/products/packs/compact-platform.png' },
     { file: 'assets/models/HDR.wstm', out: 'assets/products/packs/heavy-machinery-platform.png' },
     { file: 'assets/models/wl03.fbx', out: 'assets/products/packs/ups-platform.png' },
     { file: 'assets/models/sl02.fbx', out: 'assets/products/packs/agv-platform.png' },
-    { file: 'assets/models/B7W.fbx',  out: 'assets/products/packs/heavy-machinery-chassis.png', palette: true }
+    { file: 'assets/models/B7W.fbx',  out: 'assets/products/packs/heavy-machinery-chassis.png' }
   ];
 
   var MAT_RULES = [

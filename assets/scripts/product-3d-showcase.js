@@ -146,6 +146,38 @@
   function std(color, metalness, roughness) {
     return new THREE.MeshStandardMaterial({ color: color, metalness: metalness, roughness: roughness });
   }
+
+  /* The pack wears the colours it was drawn in. CAD exports arrive as Phong
+     materials, which the studio environment cannot light properly, so each
+     one is rebuilt as a standard material carrying its own colour across;
+     shininess and specular become roughness and metalness. Materials are
+     shared between parts, so each is converted once. */
+  var converted = {};
+  function ownMaterial(source) {
+    if (!source) return MATS.neutral;
+    if (source.isMeshStandardMaterial) return source;
+    if (converted[source.uuid]) return converted[source.uuid];
+    var shininess = typeof source.shininess === 'number' ? source.shininess : 30;
+    var specular = source.specular
+      ? (source.specular.r + source.specular.g + source.specular.b) / 3
+      : 0.2;
+    var mat = new THREE.MeshStandardMaterial({
+      color: source.color ? source.color.clone() : new THREE.Color(0xb6bcc6),
+      map: source.map || null,
+      roughness: clamp01(1 - shininess / 120),
+      metalness: clamp01(specular * 1.2),
+      /* CAD exports the panels as open, single-sided skins; drawn from one
+         side only they read as holes in the enclosure. */
+      side: THREE.DoubleSide
+    });
+    converted[source.uuid] = mat;
+    return mat;
+  }
+
+  function materialsFor(mesh) {
+    if (Array.isArray(mesh.material)) return mesh.material.map(ownMaterial);
+    return ownMaterial(mesh.material);
+  }
   var MATS = {
     casing:  std(0x171b23, 0.62, 0.44),
     lid:     std(0x272d38, 0.70, 0.34),
@@ -488,7 +520,7 @@
         object.traverse(function (child) {
           if (!child.isMesh) return;
 
-          child.material = materialFor(child.name);
+          child.material = materialsFor(child);
           child.castShadow = false;
           child.receiveShadow = false;
 
