@@ -13,9 +13,12 @@
 <link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=2">
 <style>
 /* A product page served on deep blue, the way the contact page is, with the
-   blueprint grid drawn over it. */
-.pack-page{ position:relative; overflow:hidden; padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-6); }
-.pack-page-grid{ --grid-size:96px; }
+   blueprint grid behind all of it: the grid is laid over main rather than
+   over the opening section, and sits under everything the page draws, the
+   model included. */
+main{ position:relative; }
+.pack-page{ position:relative; padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-6); }
+.pack-page-grid{ --grid-size:96px; z-index:0; }
 
 /* The opening reads the way the showcase's does: eyebrow, headline, one
    paragraph, then the four facts under a rule. */
@@ -43,9 +46,9 @@
 <body data-wst-page="solutions" data-wst-theme="dark">
 <div data-wst-header></div>
 <main class="on-dark">
+<div class="wst-blueprint-grid pack-page-grid" aria-hidden="true"></div>
 
 <section class="pack-page">
-  <div class="wst-blueprint-grid pack-page-grid" aria-hidden="true"></div>
   <div class="container">
     <div class="pack-intro">
       <span class="pack-eyebrow"><a href="battery-packs.html">Battery packs</a></span>
