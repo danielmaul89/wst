@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Heavy machinery chassis | WS Technicals</title>
+<meta name="description" content="The heavy machinery chassis: a structural bend-plate battery for heavy machinery, taken apart on screen from the production CAD.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2h">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2l">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
+<style>
+/* A product page served on deep blue, the way the contact page is, with the
+   blueprint grid behind all of it: the grid is laid over main rather than
+   over the opening section, and sits under everything the page draws, the
+   model included. */
+main{ position:relative; }
+.pack-page{ position:relative; z-index:1; padding:calc(var(--nav-height) + var(--sp-6)) 0 0; }
+.pack-page-grid{ --grid-size:96px; z-index:0; }
+
+/* The opening reads the way the showcase's does: eyebrow, headline, one
+   paragraph, then the four facts under a rule. */
+.pack-intro{ max-width:820px; }
+.pack-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
+.pack-intro h1{ max-width:15ch; margin:18px 0 24px; font-size:var(--h1-display); letter-spacing:var(--h1-ls); line-height:var(--h1-lh); }
+.pack-lead{ max-width:56ch; color:var(--ink-soft-on-dark); font-size:18px; line-height:1.7; }
+.pack-facts{ display:flex; flex-wrap:wrap; gap:36px; margin-top:44px; padding-top:26px; border-top:1px solid rgba(251,249,245,.14); }
+.pack-fact{ display:flex; flex-direction:column; gap:5px; }
+.pack-fact dt{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft-on-dark); }
+.pack-fact dd{ margin:0; font-size:var(--fs-body); font-weight:600; }
+
+.pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
+.pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
+.pack-columns{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+.pack-column h3{ font-size:19px; margin-bottom:10px; }
+.pack-column p{ color:var(--ink-soft-on-dark); font-size:15.5px; line-height:1.7; }
+
+@media (max-width:980px){
+  .pack-columns{ grid-template-columns:minmax(0,1fr); gap:var(--sp-3); }
+  .pack-facts{ gap:24px; }
+}
+</style>
+</head>
+<body data-wst-page="solutions" data-wst-theme="dark">
+<div data-wst-header></div>
+<main class="on-dark">
+<div class="wst-blueprint-grid pack-page-grid" aria-hidden="true"></div>
+
+<section class="pack-page">
+  <div class="container">
+    <div class="pack-intro">
+      <span class="pack-eyebrow"><a href="battery-packs.html">Battery packs</a></span>
+      <h1>Heavy machinery chassis.</h1>
+      <p class="pack-lead">A battery that is part of the machine's structure: modules stacked inside a folded plate chassis, with the service disconnect, the relays and the BMS master carried on their own layer above them.</p>
+      <dl class="pack-facts">
+        <div class="pack-fact"><dt>Platform</dt><dd id="scPlatform">Heavy machinery chassis</dd></div>
+        <div class="pack-fact"><dt>Build</dt><dd id="scCellFormat">Module string</dd></div>
+        <div class="pack-fact"><dt>Source</dt><dd>Production CAD</dd></div>
+        <div class="pack-fact"><dt>Components</dt><dd id="scPartCount">356 parts</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- The stage the engineering showcase runs, driven by the same script and
+     styled from the same sheet, but open: no panel, no backdrop of its own
+     and no loading screen, so the pack is drawn straight onto the page. The
+     switcher and the loader are both optional to the script. -->
+<section class="sc-theatre sc-theatre--open" id="scTheatre" data-model="chassis">
+  <div class="sc-stage">
+   <div class="sc-screen" id="scScreen">
+    <canvas class="sc-canvas" id="scCanvas"></canvas>
+    <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
+
+    <div class="sc-hint" id="scHint">
+      <span>Scroll</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+   </div>
+  </div>
+</section>
+
+<section class="pack-detail">
+  <div class="container">
+    <h2>How the pack is put together.</h2>
+
+    <div class="pack-columns">
+      <div class="pack-column">
+        <h3>Structure, not a box</h3>
+        <p>The chassis is folded from plate and bolted through mounting flanges into the machine, so the battery carries load instead of hanging off a bracket. Inner plate holders locate each module against that structure.</p>
+      </div>
+      <div class="pack-column">
+        <h3>A layer for the electrics</h3>
+        <p>Contactors, shunt, fuses and the busbars that link them sit on a component layer above the modules, reachable through the lids without disturbing a single module.</p>
+      </div>
+      <div class="pack-column">
+        <h3>Isolated before anyone reaches in</h3>
+        <p>A manual service disconnect breaks the string before the pack is opened, and the BMS master with its cell monitoring units watches the modules underneath continuously while the machine is at work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=nav4"></script>
+<script src="assets/vendor/three.r128.min.js" defer></script>
+<script src="assets/vendor/fflate.min.js" defer></script>
+<script src="assets/vendor/FBXLoader.js" defer></script>
+<script src="assets/scripts/wstm-loader.js?v=2" defer></script>
+<script src="assets/scripts/wst-cad-colour.js?v=1" defer></script>
+<script src="assets/scripts/product-3d-showcase.js?v=20" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>

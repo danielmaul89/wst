@@ -20,6 +20,7 @@
    does not come back identical keeps its original triangles.</p>
 <div class="row"><label>source <input id="src" value="assets/models/HDR.fbx"></label></div>
 <div class="row"><label>output <input id="out" value="assets/models/HDR.wstm"></label></div>
+<div class="row"><label>skip parts matching <input id="skip" value="" placeholder="regex, e.g. ^(ISO_|din_|GB_)"></label></div>
 <div class="row"><button id="go">Optimise</button></div>
 <div id="log">ready.</div>
 
@@ -103,7 +104,20 @@
 
     var meshes = [];
     root.updateMatrixWorld(true);
-    root.traverse(function (n) { if (n.isMesh) meshes.push(n); });
+    /* Fastener hardware - screws, washers, press nuts - is a third of the
+       triangles in a machine assembly and none of what a teardown is about.
+       A model too heavy to ship whole names that hardware here and it is
+       left out of the written file entirely. */
+    var skipText = document.getElementById('skip').value.trim();
+    var skip = skipText ? new RegExp(skipText, 'i') : null;
+    var dropped = 0;
+    root.traverse(function (n) {
+      if (!n.isMesh) return;
+      if (skip && skip.test(n.name || '')) { dropped++; return; }
+      meshes.push(n);
+    });
+    if (skip) log('skipped ' + dropped + ' parts matching ' + skipText);
+
 
     var geometryIndex = new Map();
     var geometries = [];

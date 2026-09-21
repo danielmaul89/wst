@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Model inspector (dev tool)</title>
+<style>
+  body{ font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; margin:24px; max-width:1100px; color:#111; }
+  #log{ white-space:pre-wrap; background:#f5f5f7; padding:16px; border-radius:6px; }
+  input{ font:inherit; width:420px; padding:4px 6px; }
+  button{ font:inherit; padding:6px 14px; }
+</style>
+</head>
+<body>
+<h1>Model inspector</h1>
+<p>Lists what a CAD export actually contains - mesh count, bounding box and the
+   part names grouped by their leading token - so callouts and layer rules can
+   be written against real names. Development tool: the site never loads it.</p>
+<div><label>source <input id="src" value="assets/models/sl02.fbx"></label>
+     <button id="go">Inspect</button></div>
+<div id="log">ready.</div>
+
+<script src="../assets/vendor/three.r128.min.js"></script>
+<script src="../assets/vendor/fflate.min.js"></script>
+<script src="../assets/vendor/FBXLoader.js"></script>
+<script src="../assets/scripts/wstm-loader.js"></script>
+<script src="../assets/scripts/wst-cad-colour.js"></script>
+<script>
+(function () {
+  'use strict';
+  var logEl = document.getElementById('log');
+  var lines = [];
+  function log(t) { lines.push(t); logEl.textContent = lines.join('\n'); }
+
+  document.getElementById('go').addEventListener('click', async function () {
+    lines = [];
+    var src = document.getElementById('src').value.trim();
+    log('loading ' + src + ' ...');
+    var started = performance.now();
+    var root = await new Promise(function (res, rej) {
+      if (/\.wstm$/i.test(src)) WSTMLoader.load('../' + src, res, undefined, rej);
+      else new THREE.FBXLoader().load('../' + src, res, undefined, rej);
+    });
+    log('parsed in ' + Math.round(performance.now() - started) + 'ms');
+
+    var meshes = [];
+    root.updateMatrixWorld(true);
+    root.traverse(function (n) { if (n.isMesh) meshes.push(n); });
+    var tris = 0;
+    meshes.forEach(function (m) {
+      var g = m.geometry;
+      tris += g.index ? g.index.count / 3 : g.attributes.position.count / 3;
+    });
+    var box = new THREE.Box3().setFromObject(root);
+    var size = new THREE.Vector3(); box.getSize(size);
+    log('meshes: ' + meshes.length + ', triangles: ' + Math.round(tris));
+    log('size: ' + size.x.toFixed(1) + ' x ' + size.y.toFixed(1) + ' x ' + size.z.toFixed(1));
+
+    /* Grouped by the name up to the first digit run, which is how these
+       exports distinguish instances of the same part. */
+    var groups = {};
+    meshes.forEach(function (m) {
+      var key = (m.name || '(unnamed)').replace(/[0-9]+/g, '#');
+      if (!groups[key]) groups[key] = { n: 0, sample: m.name, mat: '' };
+      groups[key].n++;
+      var mat = Array.isArray(m.material) ? m.material[0] : m.material;
+      if (mat && !groups[key].mat) groups[key].mat = mat.name || '(no name)';
+    });
+    var keys = Object.keys(groups).sort(function (a, b) { return groups[b].n - groups[a].n; });
+    log('\ndistinct names: ' + keys.length);
+    keys.forEach(function (k) {
+      log('  ' + String(groups[k].n).padStart(4) + '  ' + k + '   [' + groups[k].mat + ']');
+    });
+  });
+})();
+</script>
+</body>
+</html>

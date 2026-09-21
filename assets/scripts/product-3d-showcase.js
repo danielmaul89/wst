@@ -297,9 +297,22 @@
   ];
   var TIER_MAX = 4.05;
 
+  /* A platform may name its own layers. The generic list above reads the
+     vocabulary of a cell pack - lid, busbar, cell holder - and a machine
+     assembly does not use it: the UPS rack's structure is called
+     `QKW4_BP_side_metal` and nothing in it says "casing". Without an anchor
+     the enclosure would fly apart with everything else, so those models
+     declare the few names that matter and the generic list handles the rest.
+     */
+  var modelTiers = [];
+
   function tierFor(name) {
     var lower = (name || '').toLowerCase();
-    for (var i = 0; i < LAYER_TIERS.length; i++) {
+    var i;
+    for (i = 0; i < modelTiers.length; i++) {
+      if (lower.indexOf(modelTiers[i].test) !== -1) return modelTiers[i];
+    }
+    for (i = 0; i < LAYER_TIERS.length; i++) {
       if (lower.indexOf(LAYER_TIERS[i].test) !== -1) return LAYER_TIERS[i];
     }
     return null;
@@ -316,7 +329,8 @@
      line lands on the body of the part and not an incidental fastener. */
   var MODELS = [
     {
-      url: 'assets/models/c4e.fbx',
+      key: 'compact',
+      url: 'assets/models/c4e.wstm',
       name: 'Compact battery platform',
       cells: '21700 cylindrical',
       callouts: [
@@ -330,7 +344,8 @@
       ]
     },
     {
-      url: 'assets/models/HDR.fbx',
+      key: 'heavy-machinery',
+      url: 'assets/models/HDR.wstm',
       name: 'Heavy machinery platform',
       cells: 'EVE C40 prismatic',
       callouts: [
@@ -341,6 +356,91 @@
         { test: 'busbarseries', title: 'Series busbars', sub: 'Cell interconnect' },
         { test: 'eve_c40', title: 'EVE C40 cells', sub: 'Prismatic array' },
         { test: 'enclosure_case', title: 'Enclosure', sub: 'Structural housing' }
+      ]
+    },
+    {
+      key: 'ups',
+      url: 'assets/models/wl03.wstm',
+      name: 'UPS platform',
+      cells: 'GridPower modules',
+      /* A 19-inch rack unit: the structure is sheet metal panels and rack
+         brackets, none of which the generic vocabulary recognises. */
+      tiers: [
+        { test: 'bp_fr4_top', y: 3.70 },
+        { test: 'fans_bracket', y: 3.05 },
+        { test: 'fan', y: 3.05 },
+        { test: 'ens', y: 2.62 },
+        { test: 'gridpower', y: 1.16 },
+        { test: 'bp_fr4_bottom', y: 0.60 },
+        { test: 'rack_bracket', anchor: true },
+        { test: 'side_metal', anchor: true },
+        { test: 'rear_metal', anchor: true },
+        { test: 'front_metal', anchor: true },
+        { test: 'plastic_front', anchor: true },
+        { test: 'cube', anchor: true }
+      ],
+      callouts: [
+        { test: 'bp_fr4_top', title: 'Top insulator', sub: 'FR4 cover sheet' },
+        { test: 'fan', title: 'Cooling fans', sub: 'Forced airflow' },
+        { test: 'ens', title: 'Indicator board', sub: 'Status LEDs' },
+        { test: 'gridpower', title: 'GridPower modules', sub: 'Series string' },
+        { test: 'rack_bracket', title: 'Rack brackets', sub: '19-inch mounting' },
+        { test: 'side_metal', title: 'Sheet metal shell', sub: 'Structural housing' }
+      ]
+    },
+    {
+      key: 'agv',
+      url: 'assets/models/sl02.wstm',
+      name: 'AGV platform',
+      cells: 'Sealed enclosure',
+      tiers: [
+        { test: 'service_lid', y: 4.05 },
+        { test: 'if-fm', y: 2.05 },
+        { test: 'molex', y: 2.62 },
+        { test: 'case_rev', anchor: true }
+      ],
+      callouts: [
+        { test: 'service_lid', title: 'Service lid', sub: 'Access hatch' },
+        { test: '_lid_rev', title: 'Casing lid', sub: 'Sealed top cover' },
+        { test: 'harness', title: 'Cable harness', sub: 'Comms + sense' },
+        { test: 'if-fm', title: 'Terminal plates', sub: 'Pack interconnect' },
+        { test: 'eva', title: 'EVA padding', sub: 'Shock isolation' },
+        { test: 'divider', title: 'Divider', sub: 'Internal partition' },
+        { test: 'case_rev', title: 'Case', sub: 'Structural enclosure' }
+      ]
+    },
+    {
+      key: 'chassis',
+      url: 'assets/models/B7W.wstm',
+      name: 'Heavy machinery chassis',
+      cells: 'Module string',
+      tiers: [
+        { test: 'lid_', y: 4.05 },
+        { test: 'small_lid', y: 4.05 },
+        { test: 'msd', y: 3.40 },
+        { test: 'rsd', y: 3.40 },
+        { test: 'cmu', y: 2.62 },
+        { test: 'busbar', y: 2.05 },
+        { test: 'component_layer', y: 1.60 },
+        { test: 'm31s', y: 1.16 },
+        { test: 'layer_rubber', y: 0.80 },
+        { test: 'support_plate', y: 0.60 },
+        { test: 'inner_plate_holder', y: 0.60 },
+        { test: 'bend_plate', anchor: true },
+        { test: 'straight_plate', anchor: true },
+        { test: 'reinforcementplate', anchor: true },
+        { test: 'mounting_flange', anchor: true },
+        { test: 'corner_flange', anchor: true },
+        { test: 'locking_plate', anchor: true },
+        { test: 'bottom_stop-plate', anchor: true }
+      ],
+      callouts: [
+        { test: 'lid_', title: 'Lids', sub: 'Sealed covers' },
+        { test: 'msd', title: 'Service disconnect', sub: 'Manual isolation' },
+        { test: 'cmu', title: 'BMS master + CMU', sub: 'Cell monitoring' },
+        { test: 'busbar', title: 'Busbars', sub: 'Shunt to relay' },
+        { test: 'm31s', title: 'Modules', sub: 'Series string' },
+        { test: 'bend_plate', title: 'Bend plates', sub: 'Structural chassis' }
       ]
     }
   ];
@@ -386,7 +486,17 @@
   var shadowMesh = null, shadowBaseScale = 1;
   var occluder = null;
   var currentObject = null;
+  /* Which platform this page shows. The showcase names none and starts on
+     the first, with the switcher walking the rest; a product page names its
+     own and carries no switcher. */
   var currentModel = 0;
+  var wanted = track.getAttribute('data-model');
+  if (wanted) {
+    for (var mi = 0; mi < MODELS.length; mi++) {
+      if (MODELS[mi].key === wanted) { currentModel = mi; break; }
+    }
+  }
+
   var loadToken = 0;
 
   var progress = 0;      // damped
@@ -467,7 +577,16 @@
       if (loaderBar) loaderBar.style.width = '0%';
     }
 
-  new THREE.FBXLoader().load(
+    modelTiers = spec.tiers || [];
+
+  /* .wstm is the same geometry written for a browser rather than for a CAD
+     package - typed arrays it can hand straight to the GPU. The FBX path
+     stays for anything not converted yet. */
+  var reader = /\.wstm$/i.test(spec.url) && window.WSTMLoader
+    ? window.WSTMLoader
+    : new THREE.FBXLoader();
+
+  reader.load(
     spec.url,
     function (object) {
       if (token !== loadToken) return; // a newer switch already started

@@ -83,11 +83,32 @@
     return group;
   }
 
+  /* Reads the body in chunks so a caller can show progress, in the shape
+     THREE's loaders report it - so the two are interchangeable at the call
+     site. */
   function load(url, onLoad, onProgress, onError) {
     fetch(url)
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.arrayBuffer();
+        var total = parseInt(r.headers.get('content-length') || '0', 10);
+        if (!onProgress || !r.body || !r.body.getReader) return r.arrayBuffer();
+        var reader = r.body.getReader();
+        var chunks = [];
+        var loaded = 0;
+        return (function pump() {
+          return reader.read().then(function (step) {
+            if (step.done) {
+              var out = new Uint8Array(loaded);
+              var at = 0;
+              chunks.forEach(function (c) { out.set(c, at); at += c.length; });
+              return out.buffer;
+            }
+            chunks.push(step.value);
+            loaded += step.value.length;
+            onProgress({ lengthComputable: total > 0, loaded: loaded, total: total });
+            return pump();
+          });
+        })();
       })
       .then(function (buffer) { onLoad(parse(buffer)); })
       .catch(function (err) { if (onError) onError(err); });
