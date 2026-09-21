@@ -166,18 +166,15 @@
   --shadow-md: 0 12px 32px -12px rgba(6, 8, 26, .14);
   --shadow-lg: 0 24px 60px -20px rgba(6, 8, 26, .22);
   --nav-height: 76px;
-  --nav-height-scrolled: 64px;
   /* Header logo, two variants under review. A is the default; B is the
-     larger option, switched on with ?logo=b (see wst-shell.js). Both shrink
-     once the page scrolls. The logo is never taller than 42px. */
+     larger option, switched on with ?logo=b (see wst-shell.js). The logo is
+     never taller than 42px. */
   --logo-height: 36px;
-  --logo-height-scrolled: 30px;
   --grid-size: 96px;
 }
 
 :root[data-wst-logo="b"] {
   --logo-height: 42px;
-  --logo-height-scrolled: 32px;
 }
 
 /* 2. Foundation
@@ -507,11 +504,9 @@ h4,
   transition: height var(--dur) var(--ease);
 }
 
-/* The header tightens once the page scrolls: a shorter bar and a smaller logo. */
-.nav--scrolled .nav-inner {
-  height: var(--nav-height-scrolled);
-}
-
+/* The header keeps its height and its logo at every scroll position: only the
+   surface behind it changes, from transparent to glass. A bar that resizes
+   under the reader moves the links they were aiming at. */
 .brand,
 .brand-logo {
   display: block;
@@ -524,11 +519,6 @@ h4,
 
 .nav .brand-logo {
   height: var(--logo-height);
-  transition: height var(--dur) var(--ease);
-}
-
-.nav--scrolled .brand-logo {
-  height: var(--logo-height-scrolled);
 }
 
 .brand-logo--on-dark {
@@ -1214,11 +1204,6 @@ body.wst-modal-open {
 
   .menu-open .nav-menu {
     display: flex;
-  }
-
-  /* Follow the header down to its shrunk height once scrolled. */
-  body.menu-open .nav--scrolled .nav-menu {
-    inset: var(--nav-height-scrolled) 0 0 0;
   }
 
   .nav-item {
