@@ -419,6 +419,14 @@
   background-size: var(--grid-size) var(--grid-size);
 }
 
+/* Held to the viewport instead of to the page. On a long page the squares
+   otherwise stream past as you scroll, which reads as movement behind the
+   product rather than as drawing paper under it. Fixed, the grid stands
+   still and the content moves over it. */
+.wst-blueprint-grid--fixed {
+  position: fixed;
+}
+
 
 /* ============================================================================
    4. INLINE PRIMITIVES
