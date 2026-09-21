@@ -82,17 +82,27 @@
   justify-content: space-between;
   gap: var(--sp-3);
   flex-wrap: wrap;
-  margin-bottom: var(--sp-5);
+  margin-bottom: var(--sp-4);
 }
 
+/* Both sides start at the same line. The browser's own heading and
+   paragraph margins - 0.83em on the h2, 1em on the p - put the aside 24px
+   above the headline it belongs to, and hung another 40px of air under the
+   headline before the block below. */
 .wst-section-head h2 {
+  margin: 0;
   font-size: var(--h2-section);
   letter-spacing: var(--h2-ls);
   line-height: var(--h2-lh);
   max-width: 600px;
 }
 
+/* Five pixels down, so the aside's capital letters sit on the same line as
+   the headline's. Boxes aligned at the top are not letters aligned at the
+   top: 48px type carries 14.9px from its line box to the cap, 16px type
+   carries 10.2px. */
 .wst-section-head p {
+  margin: 5px 0 0;
   max-width: 420px;
   color: var(--ink-soft);
   font-size: var(--fs-body);
