@@ -1349,7 +1349,10 @@
 .wst-more-news-title {
   margin: 0 0 var(--sp-4);
   font-family: var(--font-mono);
-  font-size: 11px;
+  /* 14px, the smallest size on the scale and the one the page eyebrows
+     use. Mono, uppercase and brass keep it a label: it names the row
+     without competing with the story headlines under it. */
+  font-size: var(--fs-small);
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--brass-text);
