@@ -362,7 +362,7 @@
       key: 'ups',
       url: 'assets/models/wl03.wstm',
       name: 'UPS platform',
-      cells: 'GridPower modules',
+      cells: 'Rack enclosure',
       /* A 19-inch rack unit: the structure is sheet metal panels and rack
          brackets, none of which the generic vocabulary recognises. */
       tiers: [
@@ -370,7 +370,7 @@
         { test: 'fans_bracket', y: 3.05 },
         { test: 'fan', y: 3.05 },
         { test: 'ens', y: 2.62 },
-        { test: 'gridpower', y: 1.16 },
+        { test: 'connector_metal', y: 2.05 },
         { test: 'bp_fr4_bottom', y: 0.60 },
         { test: 'rack_bracket', anchor: true },
         { test: 'side_metal', anchor: true },
@@ -383,7 +383,7 @@
         { test: 'bp_fr4_top', title: 'Top insulator', sub: 'FR4 cover sheet' },
         { test: 'fan', title: 'Cooling fans', sub: 'Forced airflow' },
         { test: 'ens', title: 'Indicator board', sub: 'Status LEDs' },
-        { test: 'gridpower', title: 'GridPower modules', sub: 'Series string' },
+        { test: 'connector_metal', title: 'Connector panel', sub: 'Pack interface' },
         { test: 'rack_bracket', title: 'Rack brackets', sub: '19-inch mounting' },
         { test: 'side_metal', title: 'Sheet metal shell', sub: 'Structural housing' }
       ]
@@ -403,7 +403,7 @@
         { test: 'service_lid', title: 'Service lid', sub: 'Access hatch' },
         { test: '_lid_rev', title: 'Casing lid', sub: 'Sealed top cover' },
         { test: 'harness', title: 'Cable harness', sub: 'Comms + sense' },
-        { test: 'if-fm', title: 'Terminal plates', sub: 'Pack interconnect' },
+        { test: 'if-fm', title: 'Pack terminals', sub: 'Positive + negative' },
         { test: 'eva', title: 'EVA padding', sub: 'Shock isolation' },
         { test: 'divider', title: 'Divider', sub: 'Internal partition' },
         { test: 'case_rev', title: 'Case', sub: 'Structural enclosure' }
@@ -413,7 +413,7 @@
       key: 'chassis',
       url: 'assets/models/B7W.wstm',
       name: 'Heavy machinery chassis',
-      cells: 'Module string',
+      cells: 'Bend-plate chassis',
       tiers: [
         { test: 'lid_', y: 4.05 },
         { test: 'small_lid', y: 4.05 },
@@ -422,7 +422,6 @@
         { test: 'cmu', y: 2.62 },
         { test: 'busbar', y: 2.05 },
         { test: 'component_layer', y: 1.60 },
-        { test: 'm31s', y: 1.16 },
         { test: 'layer_rubber', y: 0.80 },
         { test: 'support_plate', y: 0.60 },
         { test: 'inner_plate_holder', y: 0.60 },
@@ -439,7 +438,7 @@
         { test: 'msd', title: 'Service disconnect', sub: 'Manual isolation' },
         { test: 'cmu', title: 'BMS master + CMU', sub: 'Cell monitoring' },
         { test: 'busbar', title: 'Busbars', sub: 'Shunt to relay' },
-        { test: 'm31s', title: 'Modules', sub: 'Series string' },
+        { test: 'component_layer', title: 'Component layer', sub: 'Contactors + shunt' },
         { test: 'bend_plate', title: 'Bend plates', sub: 'Structural chassis' }
       ]
     }
