@@ -1324,7 +1324,116 @@
 
 
 /* ============================================================================
-   12. RESPONSIVE
+   12. MORE NEWS
+   The row an article closes on: the newest other stories, each an image with
+   its headline set small underneath, plus - where the story is about a
+   partner - that partner's mark above the row. Deliberately quieter than a
+   news card: no eyebrow, no summary and no read-more link, because this sits
+   after a finished article and must not compete with the CTA band below it.
+   ========================================================================== */
+
+.wst-more-news {
+  padding: var(--sp-6) 0;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.wst-more-news-title {
+  margin: 0 0 var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--brass-text);
+}
+
+.wst-more-news-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+
+.wst-more-news-item {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.wst-more-news-media {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-md);
+  background: var(--blue-deep);
+}
+
+.wst-more-news-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.82) brightness(0.86) contrast(1.06);
+  transition: transform 0.6s var(--ease), filter 0.6s var(--ease);
+}
+
+.wst-more-news-item:hover .wst-more-news-media img,
+.wst-more-news-item:focus-visible .wst-more-news-media img {
+  transform: scale(1.03);
+  filter: saturate(0.92) brightness(0.92) contrast(1.03);
+}
+
+.wst-more-news-item h3 {
+  margin: 14px 0 0;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+  transition: color 0.3s var(--ease);
+}
+
+.wst-more-news-item:hover h3,
+.wst-more-news-item:focus-visible h3 {
+  color: var(--blue);
+}
+
+/* The partner a story is about, credited on their own mark. Greyscale at rest
+   so a brand colour cannot pull the eye off the article, full colour on
+   hover. */
+.wst-article-partner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: 0 0 var(--sp-5);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.wst-article-partner-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.wst-article-partner img {
+  display: block;
+  width: auto;
+  max-width: 190px;
+  max-height: 44px;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter 0.4s var(--ease), opacity 0.4s var(--ease);
+}
+
+.wst-article-partner a:hover img,
+.wst-article-partner a:focus-visible img {
+  filter: none;
+  opacity: 1;
+}
+
+
+/* ============================================================================
+   13. RESPONSIVE
    One place for every component's collapse, so a new block inherits the
    page's breakpoints instead of inventing its own.
    ========================================================================== */
@@ -1434,8 +1543,18 @@
   }
 }
 
+@media (max-width: 1080px) {
+  .wst-more-news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .wst-more-news-grid { gap: var(--sp-2); }
+  .wst-article-partner { flex-wrap: wrap; gap: var(--sp-2); }
+}
+
+
 /* ============================================================================
-   13. REDUCED MOTION
+   14. REDUCED MOTION
    Movement is removed; state is still communicated through shadow and colour,
    never through opacity alone.
    ========================================================================== */
@@ -1450,7 +1569,9 @@
   .wst-row::before,
   .wst-link-arrow svg,
   .wst-feature-card-media img,
-  .wst-product-tile-img img {
+  .wst-product-tile-img img,
+  .wst-more-news-media img,
+  .wst-article-partner img {
     transition-duration: 1ms;
   }
 
@@ -1465,6 +1586,7 @@
   .wst-feature-card:hover .wst-feature-card-media img,
   .wst-feature-card:focus-within .wst-feature-card-media img,
   .wst-product-tile--photo:hover .wst-product-tile-img img,
+  .wst-more-news-item:hover .wst-more-news-media img,
   .wst-link-arrow:hover svg {
     transform: none;
   }
