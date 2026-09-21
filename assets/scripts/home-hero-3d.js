@@ -207,7 +207,9 @@
       var specular = source.specular
         ? (source.specular.r + source.specular.g + source.specular.b) / 3
         : 0.2;
-      var base = source.color ? source.color.clone() : new THREE.Color(0xb6bcc6);
+      var base = window.WSTCadColour
+        ? window.WSTCadColour.fromMaterial(source, THREE)
+        : (source.color ? source.color.clone() : new THREE.Color(0xb6bcc6));
       if (lightTone) lift(base);
       var std = new THREE.MeshStandardMaterial({
         color: base,

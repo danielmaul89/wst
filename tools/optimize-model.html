@@ -26,6 +26,7 @@
 <script src="../assets/vendor/three.r128.min.js"></script>
 <script src="../assets/vendor/fflate.min.js"></script>
 <script src="../assets/vendor/FBXLoader.js"></script>
+<script src="../assets/scripts/wst-cad-colour.js"></script>
 <script src="optimize-model.js"></script>
 <script>
 (function () {
@@ -135,7 +136,7 @@
         await nextFrame();
       }
       var material = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
-      var colour = material && material.color ? material.color : new THREE.Color(0xb6bcc6);
+      var colour = WSTCadColour.fromMaterial(material, THREE);
       var shininess = material && typeof material.shininess === 'number' ? material.shininess : 30;
       var specular = material && material.specular
         ? (material.specular.r + material.specular.g + material.specular.b) / 3 : 0.2;

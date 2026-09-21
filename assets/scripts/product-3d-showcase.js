@@ -162,7 +162,9 @@
       ? (source.specular.r + source.specular.g + source.specular.b) / 3
       : 0.2;
     var mat = new THREE.MeshStandardMaterial({
-      color: source.color ? source.color.clone() : new THREE.Color(0xb6bcc6),
+      color: window.WSTCadColour
+        ? window.WSTCadColour.fromMaterial(source, THREE)
+        : (source.color ? source.color.clone() : new THREE.Color(0xb6bcc6)),
       map: source.map || null,
       roughness: clamp01(1 - shininess / 120),
       metalness: clamp01(specular * 1.2),

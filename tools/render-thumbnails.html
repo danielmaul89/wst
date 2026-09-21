@@ -26,6 +26,7 @@
 <script src="../assets/vendor/fflate.min.js"></script>
 <script src="../assets/vendor/FBXLoader.js"></script>
 <script src="../assets/scripts/wstm-loader.js"></script>
+<script src="../assets/scripts/wst-cad-colour.js"></script>
 <script>
 (function () {
   'use strict';
@@ -120,7 +121,7 @@
         var shininess = typeof source.shininess === 'number' ? source.shininess : 30;
         var specular = source.specular ? (source.specular.r + source.specular.g + source.specular.b) / 3 : 0.2;
         converted[source.uuid] = new THREE.MeshStandardMaterial({
-          color: source.color ? source.color.clone() : new THREE.Color(0xb6bcc6),
+          color: WSTCadColour.fromMaterial(source, THREE),
           roughness: Math.max(0, Math.min(1, 1 - shininess / 120)),
           metalness: Math.max(0, Math.min(1, specular * 1.2)),
           side: THREE.DoubleSide
