@@ -290,8 +290,14 @@
 /* ----------------------------------------------------------------
    Close band
    ---------------------------------------------------------------- */
-.dev-close{ padding:96px 0; background:var(--blue-deep); }
-.dev-close-grid{ display:grid; grid-template-columns:1fr auto; gap:48px; align-items:center; }
+/* The closing band. The button used to sit on its own at the far right of
+   the window, a screen's width from the sentence asking for the work; it now
+   follows the paragraph directly. The right column carries the ways to reach
+   us, so the band ends the page rather than leaving half of it empty. */
+.dev-close{ position:relative; padding:88px 0; background:var(--blue-deep); }
+.dev-close::before{ content:""; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(251,249,245,.2) 18%,rgba(251,249,245,.2) 82%,transparent); }
+.dev-close-grid{ display:grid; grid-template-columns:1fr .8fr; gap:72px; align-items:start; }
+.dev-close-eyebrow{ display:block; margin-bottom:16px; color:var(--brass-hi); font-family:var(--font-mono); font-size:14px; letter-spacing:.07em; text-transform:uppercase; }
 .dev-close h2{
   font-family:var(--font-display);
   font-size:var(--h2-section);
@@ -299,9 +305,16 @@
   letter-spacing:var(--h2-ls);
   color:var(--paper);
   max-width:20ch;
-  margin:0 0 12px;
+  margin:0 0 16px;
 }
-.dev-close p{ max-width:50ch; color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; margin:0; }
+.dev-close p{ max-width:50ch; color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; margin:0 0 28px; }
+.dev-close-details{ display:grid; margin:0; }
+.dev-close-details > div{ display:flex; gap:var(--sp-2); padding:14px 0; border-top:1px solid rgba(251,249,245,.14); }
+.dev-close-details > div:last-child{ border-bottom:1px solid rgba(251,249,245,.14); }
+.dev-close-details dt{ width:84px; flex:none; color:var(--ink-soft-on-dark); font-family:var(--font-mono); font-size:14px; letter-spacing:.04em; text-transform:uppercase; }
+.dev-close-details dd{ margin:0; color:var(--paper); font-size:16px; font-weight:500; }
+.dev-close-details a{ color:inherit; }
+.dev-close-details a:hover{ color:var(--brass-hi); }
 
 /* ----------------------------------------------------------------
    Responsive
@@ -315,7 +328,7 @@
   .dev-step-media{ display:block; width:100%; aspect-ratio:16/10; margin-bottom:24px; border-radius:var(--r-lg); overflow:hidden; }
   .dev-step-media img{ width:100%; height:100%; object-fit:cover; }
   .dev-depth-grid{ grid-template-columns:1fr; }
-  .dev-close-grid{ grid-template-columns:1fr; gap:28px; }
+  .dev-close-grid{ grid-template-columns:1fr; gap:40px; }
 }
 @media (max-width:640px){
   .dev-hero{ min-height:auto; }
@@ -467,10 +480,16 @@
 <section class="dev-close">
   <div class="container dev-close-grid">
     <div>
+      <span class="dev-close-eyebrow">Get in touch</span>
       <h2>Have a project in mind?</h2>
       <p>Bring us the operating profile, physical constraints and integration requirements. We will help scope the right development path for your application.</p>
+      <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
     </div>
-    <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+    <dl class="dev-close-details">
+      <div><dt>Email</dt><dd><a href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></dd></div>
+      <div><dt>Phone</dt><dd><a href="tel:+4588618388">+45 88 61 83 88</a></dd></div>
+      <div><dt>Address</dt><dd>Gjellerupvej 89A, 8230 Aarhus</dd></div>
+    </dl>
   </div>
 </section>
 
