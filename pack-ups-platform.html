@@ -34,6 +34,8 @@ main{ position:relative; }
 .pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
 .pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .pack-columns{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+.pack-column-icon{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; margin-bottom:20px; border:1px solid rgba(251,249,245,.18); border-radius:50%; color:var(--brass-hi); }
+.pack-column-icon svg{ display:block; }
 .pack-column h3{ font-size:19px; margin-bottom:10px; }
 .pack-column p{ color:var(--ink-soft-on-dark); font-size:15.5px; line-height:1.7; }
 
@@ -88,14 +90,17 @@ main{ position:relative; }
 
     <div class="pack-columns">
       <div class="pack-column">
+        <span class="pack-column-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <rect width="20" height="8" x="2" y="2" rx="2" ry="2" /> <rect width="20" height="8" x="2" y="14" rx="2" ry="2" /> <line x1="6" x2="6.01" y1="6" y2="6" /> <line x1="6" x2="6.01" y1="18" y2="18" /> </svg></span>
         <h3>Built for the rack, not the shelf</h3>
         <p>FR4 sheets insulate the build from the sheet metal above and below it, and rack brackets carry the whole weight on the cabinet frame rather than on the shell. The model here is the production enclosure: structure, airflow, front panel and wiring.</p>
       </div>
       <div class="pack-column">
+        <span class="pack-column-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M10.827 16.379a6.082 6.082 0 0 1-8.618-7.002l5.412 1.45a6.082 6.082 0 0 1 7.002-8.618l-1.45 5.412a6.082 6.082 0 0 1 8.618 7.002l-5.412-1.45a6.082 6.082 0 0 1-7.002 8.618l1.45-5.412Z" /> <path d="M12 12v.01" /> </svg></span>
         <h3>Air moved where it is needed</h3>
         <p>Fans on their own bracket pull air through the unit and out of the rear panel, so it holds its rating in a closed cabinet with equipment above and below it.</p>
       </div>
       <div class="pack-column">
+        <span class="pack-column-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /> </svg></span>
         <h3>Read from the front</h3>
         <p>The indicator board sits behind the front panel and reports state of charge and fault status at eye height in the rack. Service happens from the front too: the panel and top sheet come off without pulling the unit out of the cabinet.</p>
       </div>

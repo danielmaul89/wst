@@ -34,6 +34,8 @@ main{ position:relative; }
 .pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
 .pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .pack-columns{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+.pack-column-icon{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; margin-bottom:20px; border:1px solid rgba(251,249,245,.18); border-radius:50%; color:var(--brass-hi); }
+.pack-column-icon svg{ display:block; }
 .pack-column h3{ font-size:19px; margin-bottom:10px; }
 .pack-column p{ color:var(--ink-soft-on-dark); font-size:15.5px; line-height:1.7; }
 
@@ -88,14 +90,17 @@ main{ position:relative; }
 
     <div class="pack-columns">
       <div class="pack-column">
+        <span class="pack-column-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M 22 14 L 22 10" /> <rect x="2" y="6" width="16" height="12" rx="2" /> </svg></span>
         <h3>Cells, held rather than packed</h3>
         <p>21700 cylindrical cells sit in moulded holders that space them apart and carry them through shock and vibration. The holders set the gaps the design needs between cells, so nothing depends on how tightly the pack was assembled on the day.</p>
       </div>
       <div class="pack-column">
+        <span class="pack-column-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" /> </svg></span>
         <h3>Current through busbars</h3>
         <p>Busbars tie the cells into their series and parallel groups and carry the pack current out to the terminals. Sense and power lines run back to the board on one harness, so the wiring is a single part to fit and a single part to check.</p>
       </div>
       <div class="pack-column">
+        <span class="pack-column-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 20v2" /> <path d="M12 2v2" /> <path d="M17 20v2" /> <path d="M17 2v2" /> <path d="M2 12h2" /> <path d="M2 17h2" /> <path d="M2 7h2" /> <path d="M20 12h2" /> <path d="M20 17h2" /> <path d="M20 7h2" /> <path d="M7 20v2" /> <path d="M7 2v2" /> <rect x="4" y="4" width="16" height="16" rx="2" /> <rect x="8" y="8" width="8" height="8" rx="1" /> </svg></span>
         <h3>A board that watches every cell</h3>
         <p>The BMS board handles protection and cell balancing, and rides inside the lid where it is reachable without disturbing the cell stack. The main casing takes the structural load, and the lid seals the whole assembly.</p>
       </div>
