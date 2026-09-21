@@ -141,8 +141,6 @@
 .show-rows{ display:flex; flex-direction:column; gap:16px; }
 /* Battery pack photo slot in each application row (placeholder until the
    product photos arrive). */
-.show-row-product{ width:120px; margin:0 0 16px; }
-.show-row-product img{ display:block; width:100%; aspect-ratio:4 / 3; object-fit:cover; border-radius:var(--r); }
 
 .show-row{
   position:relative;
@@ -513,7 +511,6 @@
           '<span class="show-row-eyebrow">' + cat.eyebrow + '</span>' +
           '<h3 class="show-row-title"></h3>' +
           '<p class="show-row-desc"></p>' +
-          '<div class="show-row-product"></div>' +
           '<ul class="show-row-specs"></ul>' +
           '<button type="button" class="show-row-cta" hidden>View full specs' +
             '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
@@ -532,7 +529,6 @@
     var textEl = row.querySelector('.show-row-text');
     var titleEl = row.querySelector('.show-row-title');
     var descEl = row.querySelector('.show-row-desc');
-    var productEl = row.querySelector('.show-row-product');
     var specsEl = row.querySelector('.show-row-specs');
     var ctaEl = row.querySelector('.show-row-cta');
     var counterEl = row.querySelector('.show-row-counter-current');
@@ -545,11 +541,6 @@
     function renderText(item){
       titleEl.textContent = item.key;
       descEl.textContent = item.desc;
-      // Product image slot: add `productImg` to an item to show its battery
-      // pack photo; until then a placeholder holds the space.
-      productEl.innerHTML = item.productImg
-        ? '<img src="' + item.productImg + '" alt="' + item.key + ' battery pack">'
-        : '<div class="wst-media-placeholder wst-media-placeholder--compact" role="img" aria-label="' + item.key + ' battery pack photo, placeholder"><span class="wst-media-placeholder-label">Pack photo</span></div>';
       specsEl.innerHTML = item.specs.map(function(pair){
         return '<li><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + '</span></li>';
       }).join('');
