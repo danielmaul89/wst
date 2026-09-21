@@ -103,16 +103,23 @@ body{ position:relative; background:var(--paper); }
 .news-card-link svg{ transition:transform .3s var(--ease); }
 .news-card-link:hover svg{ transform:translateX(3px); }
 
-.news-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
-.news-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+.news-cta{ position:relative; padding:104px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.news-cta::before{ content:""; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(251,249,245,.2) 18%,rgba(251,249,245,.2) 82%,transparent); }
+.news-cta-inner{ display:grid; grid-template-columns:1fr .8fr; gap:72px; align-items:start; }
+.news-cta-eyebrow{ display:block; margin-bottom:16px; color:var(--brass-hi); font-family:var(--font-mono); font-size:14px; letter-spacing:.07em; text-transform:uppercase; }
 .news-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:48px; }
 .news-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
-.news-cta-action{ justify-self:end; }
+.news-cta-side{ display:flex; flex-direction:column; align-items:flex-start; gap:34px; }
+.news-cta-details{ display:grid; margin:0; width:100%; }
+.news-cta-details > div{ display:flex; gap:var(--sp-2); padding:14px 0; border-top:1px solid rgba(251,249,245,.14); }
+.news-cta-details > div:last-child{ border-bottom:1px solid rgba(251,249,245,.14); }
+.news-cta-details dt{ width:84px; flex:none; color:var(--ink-soft-on-dark); font-family:var(--font-mono); font-size:14px; letter-spacing:.04em; text-transform:uppercase; }
+.news-cta-details dd{ margin:0; font-size:16px; font-weight:500; }
+.news-cta-details a:hover{ color:var(--brass-hi); }
 
 @media(max-width:900px){
   .news-grid{ grid-template-columns:1fr 1fr; }
-  .news-cta-inner{ grid-template-columns:1fr; gap:36px; }
-  .news-cta-action{ justify-self:start; }
+  .news-cta-inner{ grid-template-columns:1fr; gap:40px; }
 }
 @media(max-width:560px){
   .news-hero{ padding-top:112px; }
@@ -265,8 +272,19 @@ body{ position:relative; background:var(--paper); }
 
   <section class="news-cta on-dark">
     <div class="container news-cta-inner">
-      <div><h2>Have a project in mind?</h2><p>Tell us about the application and the constraints it has to work within. We'll tell you what a dependable battery system for it actually looks like.</p></div>
-      <a class="btn btn-on-dark news-cta-action" href="contact-v2.html">Start the conversation</a>
+      <div>
+        <span class="news-cta-eyebrow">Get in touch</span>
+        <h2>Have a project in mind?</h2>
+        <p>Tell us about the application and the constraints it has to work within. We'll tell you what a dependable battery system for it actually looks like.</p>
+      </div>
+      <div class="news-cta-side">
+        <dl class="news-cta-details">
+          <div><dt>Email</dt><dd><a href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></dd></div>
+          <div><dt>Phone</dt><dd><a href="tel:+4588618388">+45 88 61 83 88</a></dd></div>
+          <div><dt>Address</dt><dd>Gjellerupvej 89A, 8230 Aarhus</dd></div>
+        </dl>
+        <a class="btn btn-on-dark" href="contact-v2.html">Start the conversation</a>
+      </div>
     </div>
   </section>
 </main>
