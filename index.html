@@ -2994,9 +2994,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       clearTimeout(workflowAutoTimer);
       workflow.classList.remove('is-paused');
       if (workflowReducedMotion || !workflowInView || workflow.getAttribute('data-layout') !== 'executive') return;
+      /* Long enough to read the gate's paragraph before it moves on. */
       workflowAutoTimer = setTimeout(function(){
         setWorkflowStep((workflowCurrentIndex + 1) % workflowSteps.length, false, true);
-      }, 5800);
+      }, 9000);
     }
 
     function setWorkflowStep(index, moveFocus, fromAutoplay) {
@@ -3166,7 +3167,11 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   var autoTimer = null;
   function startAuto(){
     if (reduceMotion) return;
-    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 10000);
+    /* Clear first: a stray mouseleave without its mouseenter would otherwise
+       leave a second interval running and the carousel would step twice as
+       often as it should. */
+    window.clearInterval(autoTimer);
+    autoTimer = window.setInterval(function(){ goTo(index + 1); }, 14000);
   }
   function stopAuto(){
     window.clearInterval(autoTimer);
