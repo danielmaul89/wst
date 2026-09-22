@@ -1727,9 +1727,9 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   box-shadow:0 1px 2px rgba(6,8,26,.05), inset 0 1px 0 rgba(255,255,255,.7);
   transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
-.work-icon svg{ stroke:var(--blue); transition:stroke var(--dur) var(--ease); }
+.work-icon .work-icon-glyph{ font-size:22px; color:var(--blue); transition:color var(--dur) var(--ease); }
 .work-row:hover .work-icon{ border-color:var(--brass); box-shadow:0 10px 22px -10px rgba(185,154,114,.55), inset 0 1px 0 rgba(255,255,255,.7); transform:translateY(-3px); }
-.work-row:hover .work-icon svg{ stroke:var(--brass); }
+.work-row:hover .work-icon .work-icon-glyph{ color:var(--brass); }
 .work-body h3{ font-size:var(--h4-card); margin-bottom:6px; letter-spacing:var(--h4-ls); line-height:var(--h4-lh); }
 .work-body p{ font-size:14px; color:var(--ink-soft); max-width:56ch; line-height:1.6; }
 
@@ -1980,7 +1980,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   background:var(--paper-2);
   display:flex; align-items:center; justify-content:center;
 }
-.tile-icon svg{ stroke:var(--blue); }
+.tile-icon .tile-icon-glyph{ font-size:22px; color:var(--blue); }
 .tile h3{ font-size:var(--h5-card-sm); margin:var(--sp-2) 0 6px; letter-spacing:var(--h5-ls); line-height:var(--h5-lh); }
 .tile p{ font-size:14px; color:var(--ink-soft); line-height:1.5; }
 
@@ -2351,7 +2351,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   .partner-cross{ opacity:.34; transform:none; transition:none; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2k">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,-25&amp;display=block" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <!-- The hero's 3D pack is a big download, so it starts here rather than after
      the scripts at the end of the body. The guards match the ones in
@@ -2613,7 +2614,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <div class="work-list">
       <div class="work-row">
         <span class="work-num">01</span>
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2a5 5 0 0 0-3 9v2h6v-2a5 5 0 0 0-3-9Z"/><path d="M8 16h4M8.5 18h3"/><path d="M8.5 9.5 10 11l2.5-3"/></svg></div>
+        <div class="work-icon"><span class="wst-icon work-icon-glyph" aria-hidden="true">lightbulb</span></div>
         <div class="work-body">
           <h3>Turn-Key Solutions</h3>
           <p>We deliver complete lithium battery solutions from concept through certified production.</p>
@@ -2621,7 +2622,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </div>
       <div class="work-row">
         <span class="work-num">02</span>
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 17V11M10 17V8M16 17v-6"/><path d="m3.5 8 .9-2.6L6 6.2 6.7 4l1.4 1.9L9.5 4"/></svg></div>
+        <div class="work-icon"><span class="wst-icon work-icon-glyph" aria-hidden="true">trending_up</span></div>
         <div class="work-body">
           <h3>Competitive Solution</h3>
           <p>We combine speed, innovation and efficiency to deliver competitive results.</p>
@@ -2629,7 +2630,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </div>
       <div class="work-row">
         <span class="work-num">03</span>
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 8 7 3h6l3 5-6 9-6-9Z"/><path d="M4 8h12M8.5 3 7 8l3 9M11.5 3 13 8l-3 9"/></svg></div>
+        <div class="work-icon"><span class="wst-icon work-icon-glyph" aria-hidden="true">precision_manufacturing</span></div>
         <div class="work-body">
           <h3>State of the Art Technology</h3>
           <p>We apply advanced manufacturing technologies to ensure precision, reliability and performance.</p>
@@ -2637,7 +2638,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </div>
       <div class="work-row">
         <span class="work-num">04</span>
-        <div class="work-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2 4 4.5V9c0 4.5 2.8 7.5 6 9 3.2-1.5 6-4.5 6-9V4.5L10 2Z"/><path d="M7.5 10 9 11.5 12.5 8"/></svg></div>
+        <div class="work-icon"><span class="wst-icon work-icon-glyph" aria-hidden="true">verified_user</span></div>
         <div class="work-body">
           <h3>End-of-Line Testing</h3>
           <p>Automated testing ensures every battery pack meets agreed specifications and quality standards.</p>
@@ -2703,7 +2704,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
     <div class="tile-grid">
       <div class="tile">
         <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M8 8v9"/></svg>
+          <span class="wst-icon tile-icon-glyph" aria-hidden="true">factory</span>
         </div>
         <div>
           <h3>Production Facility</h3>
@@ -2712,7 +2713,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </div>
       <div class="tile">
         <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M4 10l4 4 8-8"/></svg>
+          <span class="wst-icon tile-icon-glyph" aria-hidden="true">fact_check</span>
         </div>
         <div>
           <h3>Quality Assurance</h3>
@@ -2721,7 +2722,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </div>
       <div class="tile">
         <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><path d="M10 2v4M10 14v4M2 10h4M14 10h4"/><circle cx="10" cy="10" r="4"/></svg>
+          <span class="wst-icon tile-icon-glyph" aria-hidden="true">troubleshoot</span>
         </div>
         <div>
           <h3>Testing</h3>
@@ -2730,7 +2731,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       </div>
       <div class="tile">
         <div class="tile-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="14" cy="6" r="2.5"/><circle cx="10" cy="15" r="2.5"/><path d="M8 7.5 9 13M12 7.5 11 13"/></svg>
+          <span class="wst-icon tile-icon-glyph" aria-hidden="true">inventory_2</span>
         </div>
         <div>
           <h3>Supply Chain</h3>

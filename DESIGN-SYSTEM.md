@@ -162,14 +162,38 @@ lower inside its line box than the paragraph's. Expected markup:
 - Honour `prefers-reduced-motion`.
 - Form controls require labels.
 
+### Icons
+
+Pictorial icons come from Google's Material Symbols Outlined variable font,
+not from hand-drawn SVG. A page that uses one loads the font from
+fonts.googleapis.com and writes the icon as its ligature name:
+
+```html
+<span class="wst-icon pack-column-glyph" aria-hidden="true">shield</span>
+```
+
+`.wst-icon` lives in `wst-design-system.css` and fixes the font, the
+`FILL 0 / wght 300 / GRAD -25` axis settings and the text resets a ligature
+needs (no `text-transform`, no `letter-spacing`). It deliberately does not
+set `color`, so the icon inherits whatever contains it.
+
+Size and colour are the page's business. Because the shared sheet loads
+after a page's own `<style>` block, a page-local rule needs two classes to
+beat `.wst-icon`'s own `font-size` — hence the companion class on every
+icon (`.pack-column-icon .pack-column-glyph { font-size: 22px; }`).
+
+A glyph is text, so it takes `color`, never `stroke`. Directional chrome —
+carousel arrows, `.link-arrow`, the nav chevron, the scroll hint — is still
+inline SVG, because those animate per-path.
+
 ## Additional system areas worth maintaining
+
 
 - Breakpoint tokens and responsive patterns.
 - Z-index layers for navigation, overlays, labels and ambient graphics.
 - Image treatments: object positioning, background blending and safe cropping.
 - Animation duration/easing tokens.
 - Form states: default, hover, focus, error, disabled and success.
-- Icon sizing and stroke standards.
 - Content width rules for readable paragraphs.
 - Accessibility and browser QA checklist.
 - Version number and short change log for the shared system.

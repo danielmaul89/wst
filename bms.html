@@ -10,7 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2k">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,-25&amp;display=block" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
@@ -38,8 +39,8 @@
 .bms-datasheet:hover{ border-color:var(--brass-soft); background:var(--paper-2); }
 .bms-datasheet-label{ font-weight:600; color:var(--ink); }
 .bms-datasheet-action{ display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--brass-text); }
-.bms-datasheet-action svg{ transition:transform .2s var(--ease); }
-.bms-datasheet:hover .bms-datasheet-action svg{ transform:translateY(2px); }
+.bms-datasheet-action .bms-datasheet-glyph{ font-size:16px; transition:transform .2s var(--ease); }
+.bms-datasheet:hover .bms-datasheet-action .bms-datasheet-glyph{ transform:translateY(2px); }
 .bms-partner{ display:inline-flex; align-items:center; gap:var(--sp-2); margin:0 0 var(--sp-5); color:var(--ink-soft); font-size:14px; text-decoration:none; }
 .bms-partner img{ display:block; width:auto; height:28px; }
 .bms-partner:hover .bms-partner-label{ color:var(--ink); }
@@ -108,7 +109,7 @@
           <li><span><strong>17–60V</strong> pack range</span></li>
           <li><span>Integrated pre-charge &amp; disconnect</span></li>
         </ul>
-        <a class="bms-datasheet" href="assets/documents/bms/i-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="bms-datasheet" href="assets/documents/bms/i-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<span class="wst-icon bms-datasheet-glyph" aria-hidden="true">download</span></span></a>
       </div>
 
       <div class="wst-card bms-platform" id="n-bms">
@@ -125,7 +126,7 @@
           <li><span><strong>12</strong> voltage &amp; up to <strong>12</strong> temperature channels per module</span></li>
           <li><span><strong>Dual CAN</strong></span></li>
         </ul>
-        <a class="bms-datasheet" href="assets/documents/bms/n-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="bms-datasheet" href="assets/documents/bms/n-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<span class="wst-icon bms-datasheet-glyph" aria-hidden="true">download</span></span></a>
       </div>
 
       <div class="wst-card bms-platform" id="n3-bms">
@@ -142,7 +143,7 @@
           <li><span><strong>ISO 26262 ASIL C</strong></span></li>
           <li><span>Up to <strong>1000V / 2000A</strong></span></li>
         </ul>
-        <a class="bms-datasheet" href="assets/documents/bms/n3-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="bms-datasheet" href="assets/documents/bms/n3-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<span class="wst-icon bms-datasheet-glyph" aria-hidden="true">download</span></span></a>
       </div>
 
       <div class="wst-card bms-platform" id="c-bms24x">
@@ -159,7 +160,7 @@
           <li><span><strong>12–100V</strong>, up to <strong>2000A</strong></span></li>
           <li><span>Parallel pack &amp; battery swap support</span></li>
         </ul>
-        <a class="bms-datasheet" href="assets/documents/bms/c-bms24x-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="bms-datasheet" href="assets/documents/bms/c-bms24x-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<span class="wst-icon bms-datasheet-glyph" aria-hidden="true">download</span></span></a>
       </div>
 
     </div>
