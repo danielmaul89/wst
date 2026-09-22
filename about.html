@@ -12,6 +12,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 
+/* The wide portrait crops to 16:9; a plain centre crop clips the top of
+   his head, so the frame is held to the top of the source instead - full
+   headroom kept, the crop falling below the crossed arms. */
+.about-hero-portrait{ object-position:center 8%; }
+
 @font-face{ font-family:'Geogrotesque'; src:url('assets/fonts/geogrotesque/Geogtq-Sb.otf') format('opentype'); font-weight:600 800; font-style:normal; font-display:swap; }
 @font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-regular.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
 @font-face{ font-family:'Arbeit'; src:url('assets/fonts/arbeit/arbeit-medium.woff2') format('woff2'), url('assets/fonts/arbeit/arbeit-medium.woff') format('woff'); font-weight:500; font-style:normal; font-display:swap; }
@@ -454,10 +459,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
       <p class="wst-page-hero-intro">Complete battery solutions since 2015, built through strong partnerships and shared knowledge.</p>
     </div>
     <figure class="wst-page-hero-media">
-      <div class="wst-media-placeholder wst-media-placeholder--wide" role="img" aria-label="Wide-format portrait of Louis B. Danielsen, placeholder">
-        <span class="wst-media-placeholder-label">Louis B. Danielsen, wide portrait</span>
-        <span class="wst-media-placeholder-note">Placeholder, new photo to follow</span>
-      </div>
+      <img class="about-hero-portrait" src="assets/people/louis-wide-portrait.jpg" alt="Louis B. Danielsen, founder of WS Technicals, arms crossed in a doorway">
     </figure>
   </div>
 </section>
