@@ -300,8 +300,10 @@
 /* ----------------------------------------------------------------
    Close band
    ---------------------------------------------------------------- */
-.app-close{ padding:96px 0; background:var(--blue-deep); }
-.app-close-grid{ display:grid; grid-template-columns:1fr auto; gap:48px; align-items:center; }
+/* The closing band carries the blueprint grid, as the dark bands on the
+   production and development pages do. */
+.app-close{ position:relative; overflow:hidden; padding:96px 0; background:var(--blue-deep); }
+.app-close-grid{ position:relative; z-index:1; display:grid; grid-template-columns:1fr auto; gap:48px; align-items:center; }
 .app-close h2{
   font-family:var(--font-display);
   font-size:var(--h2-section);
@@ -383,6 +385,7 @@
 </section>
 
 <section class="app-close">
+  <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
   <div class="container app-close-grid">
     <div>
       <h2>Your application may not fit a category. That is the point.</h2>
