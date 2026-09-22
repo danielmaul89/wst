@@ -55,9 +55,25 @@
       return geometry;
     });
 
+    /* Films, tapes and seals are drawn flush with the body they lie on. The
+       PET liner in this heavy machinery pack sits one micron off the
+       enclosure wall - on a 265mm pack that is four parts in a million, far
+       below what a depth buffer can separate, so the two surfaces trade the
+       plane between them frame by frame and the wall flickers white. Any
+       part whose thinnest side is under a hundredth of its longest is one of
+       those films, and it is slid its own thickness towards the middle of
+       the model: invisible at any size the pack is shown, and a hundred
+       times the gap the exporter left. */
+    var filmy = header.geometries.map(function (g) {
+      var ext = g.ext.slice().sort(function (a, b) { return a - b; });
+      return ext[2] > 0 && ext[0] / ext[2] < 0.01;
+    });
+    var films = [];
+
     var group = new THREE.Group();
     var materials = {};
     header.nodes.forEach(function (node) {
+      var film = !!filmy[node.g];
       var key = node.c.join(',') + '|' + node.ro + '|' + node.me;
       var material = materials[key];
       if (!material) {
@@ -72,6 +88,7 @@
         materials[key] = material;
       }
       var mesh = new THREE.Mesh(geometries[node.g], material);
+      if (film) films.push(mesh);
       mesh.name = node.n;
       /* The part's place in the pack was baked in when the file was written. */
       mesh.matrixAutoUpdate = false;
@@ -80,6 +97,29 @@
       mesh.matrixAutoUpdate = true;
       group.add(mesh);
     });
+
+    if (films.length) {
+      group.updateMatrixWorld(true);
+      var whole = new THREE.Box3().setFromObject(group);
+      var middle = whole.getCenter(new THREE.Vector3());
+      var span = whole.getSize(new THREE.Vector3()).length();
+      films.forEach(function (mesh) {
+        var box = new THREE.Box3().setFromObject(mesh);
+        var size = box.getSize(new THREE.Vector3());
+        var axis = size.x <= size.y && size.x <= size.z ? 'x'
+                 : size.y <= size.z ? 'y' : 'z';
+        var centre = box.getCenter(new THREE.Vector3());
+        var towards = middle[axis] - centre[axis];
+        if (!towards) return;
+        var step = Math.max(size[axis], span * 0.0004) * (towards > 0 ? 1 : -1);
+        var local = mesh.parent.worldToLocal(centre.clone());
+        var shifted = centre.clone();
+        shifted[axis] += step;
+        mesh.position.add(mesh.parent.worldToLocal(shifted).sub(local));
+      });
+      group.updateMatrixWorld(true);
+    }
+
     return group;
   }
 
