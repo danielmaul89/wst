@@ -204,6 +204,12 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 .about-hero-lead:first-of-type{ color:var(--ink-soft); font-size:20px; font-weight:400; }
 .about-intro{ position:relative; z-index:1; padding:0 0 var(--sp-6); }
 .about-intro p{ max-width:55ch; margin:0 0 var(--sp-3); color:var(--ink-soft); font-size:clamp(var(--fs-body),1.6vw,var(--fs-24)); line-height:1.65; }
+/* Two columns: one tall stack of long paragraphs left the right half of the
+   page empty, and the measure ran past a comfortable line length. Each
+   column now sets its own measure, so the cap above does not bite. */
+.about-intro-columns{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-5); }
+.about-intro-columns p{ max-width:none; }
+@media(max-width:760px){ .about-intro-columns{ grid-template-columns:minmax(0,1fr); gap:0; } }
 .leadership-signature{
   display:block;
   width:clamp(140px,16vw,190px);
@@ -451,7 +457,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 
 <main id="top">
 
-<section class="wst-page-hero wst-page-hero--wide-media about-page-hero" id="company">
+<section class="wst-page-hero about-page-hero" id="company">
   <div class="container wst-page-hero-grid">
     <div class="wst-page-hero-copy">
       <span class="eyebrow">About us</span>
@@ -466,8 +472,10 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 
 <section class="about-intro">
   <div class="container">
-    <p>At WS Technicals, we believe that the best solutions are created through strong partnerships, shared knowledge, and a genuine willingness to move forward together. Since our establishment in 2015, we have been part of the lithium battery industry from the early stages of its rapid development. The pace of technological progress in our field is intense, and for us, the most natural mindset is one of collaboration: we are all navigating the same transition, and the more we share what we learn, the better solutions we can create - for our customers, for the industry, and for the wider electrification journey.</p>
-    <p>Our role is to make electrification more accessible. We want to make it easier for companies to take part in the transition by offering a complete battery solution built around their specific application. From the custom design of the battery pack to the selection and implementation of the Battery Management System and the move into mass production, we support our customers throughout the entire process. For us, electrification is not just about technology. It is about building the right partnerships and creating solutions that help more people and more industries move forward.</p>
+    <div class="about-intro-columns">
+      <p>At WS Technicals, we believe that the best solutions are created through strong partnerships, shared knowledge, and a genuine willingness to move forward together. Since our establishment in 2015, we have been part of the lithium battery industry from the early stages of its rapid development. The pace of technological progress in our field is intense, and for us, the most natural mindset is one of collaboration: we are all navigating the same transition, and the more we share what we learn, the better solutions we can create - for our customers, for the industry, and for the wider electrification journey.</p>
+      <p>Our role is to make electrification more accessible. We want to make it easier for companies to take part in the transition by offering a complete battery solution built around their specific application. From the custom design of the battery pack to the selection and implementation of the Battery Management System and the move into mass production, we support our customers throughout the entire process. For us, electrification is not just about technology. It is about building the right partnerships and creating solutions that help more people and more industries move forward.</p>
+    </div>
     <img class="leadership-signature" src="assets/people/LBD-signature.png" alt="Signed, Louis B. Danielsen">
   </div>
 </section>
