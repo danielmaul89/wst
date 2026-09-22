@@ -312,13 +312,9 @@
   margin:0 0 16px;
 }
 .dev-close p{ max-width:50ch; color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; margin:0 0 28px; }
-.dev-close-details{ display:grid; margin:0; }
-.dev-close-details > div{ display:flex; gap:var(--sp-2); padding:14px 0; border-top:1px solid rgba(251,249,245,.14); }
-.dev-close-details > div:last-child{ border-bottom:1px solid rgba(251,249,245,.14); }
-.dev-close-details dt{ width:84px; flex:none; color:var(--ink-soft-on-dark); font-family:var(--font-mono); font-size:14px; letter-spacing:.04em; text-transform:uppercase; }
-.dev-close-details dd{ margin:0; color:var(--paper); font-size:16px; font-weight:500; }
-.dev-close-details a{ color:inherit; }
-.dev-close-details a:hover{ color:var(--brass-hi); }
+.dev-close-grid{ position:relative; z-index:1; }
+.dev-close-media{ margin:0; overflow:hidden; border-radius:var(--r-lg); aspect-ratio:3 / 2; box-shadow:0 18px 48px -24px rgba(0,0,0,.6); }
+.dev-close-media img{ display:block; width:100%; height:100%; object-fit:cover; }
 
 /* ----------------------------------------------------------------
    Responsive
@@ -345,7 +341,7 @@
 }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2j">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2r">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2s">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 </head>
 <body data-wst-page="development">
@@ -482,6 +478,7 @@
 </section>
 
 <section class="dev-close">
+  <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
   <div class="container dev-close-grid">
     <div>
       <span class="dev-close-eyebrow">Get in touch</span>
@@ -489,11 +486,9 @@
       <p>Bring us the operating profile, physical constraints and integration requirements. We will help scope the right development path for your application.</p>
       <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
     </div>
-    <dl class="dev-close-details">
-      <div><dt>Email</dt><dd><a href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></dd></div>
-      <div><dt>Phone</dt><dd><a href="tel:+4588618388">+45 88 61 83 88</a></dd></div>
-      <div><dt>Address</dt><dd>Gjellerupvej 89A, 8230 Aarhus</dd></div>
-    </dl>
+    <figure class="dev-close-media">
+      <img src="assets/general/_MG_1337.webp" alt="Technician wiring a battery pack on the assembly bench" loading="lazy" decoding="async">
+    </figure>
   </div>
 </section>
 

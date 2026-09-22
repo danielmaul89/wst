@@ -1310,11 +1310,28 @@
    The closing block. One per page, last before the footer.
    ========================================================================== */
 
+/* A band may carry the blueprint grid behind it, the way the dark product
+   pages do: drop a .wst-blueprint-grid in as the band's first child. */
 .wst-cta-band {
+  position: relative;
+  overflow: hidden;
   padding: var(--sp-6) 0;
   background: var(--blue-deep);
   color: var(--paper);
   text-align: left;
+}
+
+/* Behind the content rather than over it. The default sits above, which is
+   right when the grid is drawn across a whole page and wrong when a single
+   band carries it over a photograph. */
+.wst-blueprint-grid--behind,
+.wst-cta-band > .wst-blueprint-grid {
+  z-index: 0;
+}
+
+.wst-cta-band > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .wst-cta-band h2 {
