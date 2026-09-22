@@ -636,13 +636,19 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   z-index:0;
   display:block;
 }
+/* Every one of these is photographed with the machine to the right of a
+   long empty studio sweep - from a third of the way in to within a few
+   percent of the right edge. The frame is 16:10 and the photographs run to
+   2.4:1, so a centred crop cuts a sixth off each side and takes the subject
+   with it. Held to the right edge instead, each machine comes inside the
+   frame whole, and the ones that already ran to the edge stay there. */
 .cat-carousel-slide img{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center center;
+  object-position:right center;
 }
 /* Incoming image starts transparent and fades over the outgoing one -
    a true crossfade with no gap where both are hidden at once. */
