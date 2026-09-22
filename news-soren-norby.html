@@ -8,7 +8,7 @@
 <meta name="description" content="Senior Project Engineer Søren Nørby on industrial design, intuition, and why the hardest problems in battery engineering are often the most practical ones.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2j">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2s">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ position:relative; background:var(--paper); }
@@ -70,15 +70,11 @@ body{ position:relative; background:var(--paper); }
 .article-inline-media figcaption{ margin-top:10px; color:var(--ink-faint); font-size:13px; }
 
 .article-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
-.article-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
-.article-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:44px; }
-.article-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
-.article-cta-action{ justify-self:end; }
+.article-cta-inner{ display:flex; flex-direction:column; align-items:center; gap:32px; text-align:center; }
+.article-cta h2{ max-width:14ch; margin:0 auto 22px; color:var(--paper); font-size:44px; }
+.article-cta p{ max-width:52ch; margin:0 auto; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
 
-@media(max-width:900px){
-  .article-cta-inner{ grid-template-columns:1fr; gap:36px; }
-  .article-cta-action{ justify-self:start; }
-}
+
 @media(max-width:560px){
   .article-hero{ padding-top:112px; }
   .article-media img,
@@ -189,7 +185,7 @@ body{ position:relative; background:var(--paper); }
   <section class="article-cta on-dark">
     <div class="container article-cta-inner">
       <div><h2>Read more from WS Technicals.</h2><p>More stories, engineering perspectives and company news from WS Technicals.</p></div>
-      <a class="btn btn-on-dark article-cta-action" href="news.html">Back to news</a>
+      <a class="btn btn-on-dark" href="news.html">Back to news</a>
     </div>
   </section>
 </main>

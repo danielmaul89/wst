@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2j">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2s">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 
@@ -303,7 +303,7 @@
 /* The closing band carries the blueprint grid, as the dark bands on the
    production and development pages do. */
 .app-close{ position:relative; overflow:hidden; padding:96px 0; background:var(--blue-deep); }
-.app-close-grid{ position:relative; z-index:1; display:grid; grid-template-columns:1fr auto; gap:48px; align-items:center; }
+.app-close-grid{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:32px; text-align:center; }
 .app-close h2{
   font-family:var(--font-display);
   font-size:var(--h2-section);
@@ -311,9 +311,11 @@
   letter-spacing:var(--h2-ls);
   color:var(--paper);
   max-width:22ch;
+  margin-left:auto;
+  margin-right:auto;
   margin:0 0 12px;
 }
-.app-close p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
+.app-close p{ max-width:52ch; margin:0 auto; color:var(--ink-soft-on-dark); font-size:16px; line-height:1.65; }
 
 /* ----------------------------------------------------------------
    Responsive

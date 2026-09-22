@@ -718,6 +718,17 @@
   box-shadow: var(--shadow-md);
 }
 
+/* A set that is a statement rather than a choice: nothing happens when you
+   click it, so nothing answers the pointer either. */
+.wst-step-card--static {
+  transition: none;
+}
+
+.wst-step-card--static:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 .wst-step-card .wst-index {
   margin-bottom: var(--sp-2);
   font-family: var(--font-display);
@@ -1312,13 +1323,18 @@
 
 /* A band may carry the blueprint grid behind it, the way the dark product
    pages do: drop a .wst-blueprint-grid in as the band's first child. */
+/* A band of nothing but words and a button is centred: with no picture
+   beside it there is no second column for the words to be aligned against,
+   and a line of type set left in a full-width dark field reads as though
+   something is missing from the right. Bands that do carry a picture keep
+   their two columns. */
 .wst-cta-band {
   position: relative;
   overflow: hidden;
   padding: var(--sp-6) 0;
   background: var(--blue-deep);
   color: var(--paper);
-  text-align: left;
+  text-align: center;
 }
 
 /* Behind the content rather than over it. The default sits above, which is
@@ -1335,7 +1351,7 @@
 }
 
 .wst-cta-band h2 {
-  margin: 0 0 var(--sp-2);
+  margin: 0 auto var(--sp-2);
   max-width: 20ch;
   font-size: var(--h2-section);
   letter-spacing: var(--h2-ls);
@@ -1344,7 +1360,7 @@
 
 .wst-cta-band p {
   max-width: 44ch;
-  margin: 0 0 var(--sp-4);
+  margin: 0 auto var(--sp-4);
   color: var(--ink-soft-on-dark);
   font-size: var(--fs-body);
   line-height: 1.65;
@@ -1353,7 +1369,7 @@
 .wst-cta-band-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: var(--sp-2);
   flex-wrap: wrap;
 }
