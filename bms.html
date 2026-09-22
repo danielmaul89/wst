@@ -27,9 +27,11 @@
 .bms-specs li:last-child{ border-bottom:1px solid var(--line-2); }
 .bms-specs li::before{ content:""; width:8px; height:1px; background:var(--brass); transform:translateY(-4px); }
 .bms-specs strong{ font-weight:600; font-variant-numeric:tabular-nums; }
-/* Product image slot, datasheet slot and the BMS partner link. Image and
-   datasheet are placeholders until the assets arrive. */
-.bms-product-image{ margin-bottom:var(--sp-3); }
+/* Product image slot, held to the same 16:9 the placeholder used so the
+   card size stays consistent whatever proportions the client photo
+   arrives in, and the datasheet download row. */
+.bms-product-image{ position:relative; overflow:hidden; aspect-ratio:16 / 9; margin-bottom:var(--sp-3); border-radius:var(--r-lg); background:var(--paper-2); }
+.bms-product-image img{ display:block; width:100%; height:100%; object-fit:cover; object-position:center; }
 /* A real download now the datasheets exist: solid border, an icon that
    nudges down on hover, same shape the dashed placeholder held. */
 .bms-datasheet{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); margin:var(--sp-3) 0 0; padding:12px 16px; border:1px solid var(--line); border-radius:var(--r); font-size:14px; color:var(--ink); text-decoration:none; transition:border-color .2s var(--ease), background .2s var(--ease); }
