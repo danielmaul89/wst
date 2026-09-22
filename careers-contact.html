@@ -4,71 +4,189 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Talk to us about a role | WS Technicals</title>
-<meta name="description" content="Interested in one of our engineering disciplines? Reach out directly and tell us where your experience could strengthen the team.">
+<title>Open position: Electronics Engineer | WS Technicals</title>
+<meta name="description" content="Electronics Engineer, battery systems. Full-time position at WS Technicals in Aarhus, Denmark — BMS, power electronics and validation for machines in the field.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2k">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
+/* A job posting reads like a reference document, not a marketing page:
+   the same one-column body, measure and heading rhythm as the terms
+   page, with a fact strip under the hero and the contact card at the
+   end, where an applicant actually needs it. */
 body{ background:var(--paper); }
 
-.hire-hero{ padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-6); }
-.hire-hero-inner{ max-width:640px; }
-.hire-hero p{ max-width:56ch; margin-top:var(--sp-2); color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.job-intro p{ max-width:70ch; color:var(--ink-soft); font-size:var(--fs-body); line-height:1.65; }
 
-.hire-section{ padding:0 0 var(--sp-8); }
-.hire-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:start; }
+.job-facts{ padding:var(--sp-3) 0 var(--sp-5); }
+.job-facts-inner{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:var(--sp-3);
+  max-width:760px;
+  padding-top:var(--sp-4);
+  border-top:1px solid var(--line);
+}
+.job-facts dt{
+  margin-bottom:6px;
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.job-facts dd{ margin:0; color:var(--ink); font-size:var(--fs-body); font-weight:500; }
 
-.hire-note p{ margin:0 0 16px; max-width:52ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
-.hire-note p:last-child{ margin-bottom:0; }
+.job-body{ padding:0 0 var(--sp-8); }
+.job-body-inner{ max-width:760px; }
+.job-body h2{
+  margin:var(--sp-6) 0 var(--sp-2);
+  font-family:var(--font-display);
+  font-size:22px;
+  letter-spacing:-.01em;
+  color:var(--ink);
+}
+.job-body section:first-of-type h2{ margin-top:0; }
+.job-body p{ margin:0 0 18px; max-width:66ch; color:var(--ink-soft); font-size:16px; line-height:1.75; }
+.job-body ul{ margin:0 0 18px; padding-left:0; list-style:none; max-width:66ch; }
+.job-body ul li{
+  position:relative;
+  margin:0 0 10px;
+  padding-left:20px;
+  color:var(--ink-soft);
+  font-size:16px;
+  line-height:1.65;
+}
+.job-body ul li::before{
+  content:"";
+  position:absolute;
+  left:0; top:10px;
+  width:6px; height:1px;
+  background:var(--brass);
+}
 
-.hire-card{ padding:var(--sp-4); border:1px solid var(--line-2); border-radius:var(--r-lg); background:var(--card); box-shadow:var(--shadow-sm); }
-.hire-card-eyebrow{ display:block; margin-bottom:var(--sp-2); font-family:var(--font-mono); font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--brass-text); }
-.hire-card h2{ margin:0 0 var(--sp-3); font-size:24px; letter-spacing:-.01em; }
-.hire-details{ margin:0; }
-.hire-details > div{ display:flex; gap:var(--sp-2); padding:14px 0; border-top:1px solid var(--line-2); }
-.hire-details > div:last-child{ border-bottom:1px solid var(--line-2); }
-.hire-details dt{ width:96px; flex:none; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
-.hire-details dd{ margin:0; color:var(--ink); font-size:16px; font-weight:500; }
-.hire-details a{ color:var(--ink); }
-.hire-details a:hover{ color:var(--blue); }
+.apply-card{
+  margin-top:var(--sp-3);
+  padding:var(--sp-4);
+  border:1px solid var(--line-2);
+  border-radius:var(--r-lg);
+  background:var(--card);
+  box-shadow:var(--shadow-sm);
+}
+.apply-card h3{ margin:0 0 var(--sp-2); font-family:var(--font-display); font-size:var(--fs-24); letter-spacing:-.01em; }
+.apply-card > p{ margin:0 0 var(--sp-3); max-width:60ch; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.apply-details{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-3); margin:0; padding-top:var(--sp-3); border-top:1px solid var(--line-2); }
+.apply-details dt{ margin-bottom:6px; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
+.apply-details dd{ margin:0; color:var(--ink); font-size:16px; font-weight:500; }
+.apply-details a{ color:var(--ink); text-decoration:none; }
+.apply-details a:hover{ color:var(--blue); }
 
-@media (max-width:860px){
-  .hire-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+@media (max-width:760px){
+  .job-facts-inner{ grid-template-columns:repeat(2,1fr); gap:var(--sp-3) var(--sp-4); }
+  .apply-details{ grid-template-columns:1fr; gap:var(--sp-3); }
 }
 </style>
 </head>
 <body data-wst-page="about">
+
 <div data-wst-header></div>
 
 <main>
-  <section class="hire-hero">
-    <div class="container hire-hero-inner">
-      <span class="eyebrow">Careers</span>
-      <h1 class="t-display">Talk to us about a role.</h1>
-      <p>We don't run a formal application process for these disciplines yet. Reach out directly, tell us which one fits your background, and we'll take it from there.</p>
-    </div>
-  </section>
 
-  <section class="hire-section">
-    <div class="container hire-grid">
-      <div class="hire-note">
-        <p>WS Technicals is a small, senior engineering team. There's rarely a job posting open at any given moment, but we're always glad to hear from engineers who want to work on battery systems that go into real machines rather than spec sheets.</p>
-        <p>Send a short note about your background and which discipline interests you — Project Engineering, Electronics, Software or Development — and we'll get back to you directly.</p>
-      </div>
-
-      <div class="hire-card">
-        <span class="hire-card-eyebrow">Get in touch</span>
-        <h2>WS Technicals</h2>
-        <dl class="hire-details">
-          <div><dt>Email</dt><dd><a href="mailto:wstech@wstech.dk">wstech@wstech.dk</a></dd></div>
-          <div><dt>Phone</dt><dd><a href="tel:+4588618388">+45 88 61 83 88</a></dd></div>
-          <div><dt>Address</dt><dd>Gjellerupvej 89A, 8230 Aarhus</dd></div>
-        </dl>
+<section class="wst-page-hero wst-page-hero--text-only">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow">Careers &middot; Open position</span>
+      <h1 class="t-display">Electronics Engineer, battery systems.</h1>
+      <div class="job-intro">
+        <p>You will develop the electronics that make a battery system safe and predictable in the machine it is built for — battery management, power distribution, interfaces and the test setups that prove they work.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<section class="job-facts">
+  <div class="container">
+    <dl class="job-facts-inner">
+      <div><dt>Location</dt><dd>Aarhus, Denmark</dd></div>
+      <div><dt>Type</dt><dd>Full-time</dd></div>
+      <div><dt>Team</dt><dd>Electronics</dd></div>
+      <div><dt>Start</dt><dd>By agreement</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="wst-section job-body">
+  <div class="container">
+    <div class="job-body-inner">
+
+      <section id="the-role">
+        <h2>The role</h2>
+        <p>WS Technicals designs and builds complete lithium battery systems for machines that have to keep working — agricultural robots, lifting equipment, industrial vehicles and stationary storage. Every system is developed around one specific application, so the electronics are never picked off a shelf and dropped in.</p>
+        <p>As Electronics Engineer you own that part of the system. You size and configure the battery management, design or specify the power path and the interfaces to the machine, and build the test setups that show the design behaves as intended before it reaches a customer. You work alongside mechanics, software and production in the same building, which means decisions are made together and quickly rather than handed over.</p>
+      </section>
+
+      <section id="responsibilities">
+        <h2>What you will be doing</h2>
+        <ul>
+          <li>Specify and configure BMS platforms for new packs, from cell monitoring and balancing to protection limits and fault handling.</li>
+          <li>Design and review the power path: contactors, pre-charge, fusing, current measurement, charging and service disconnect.</li>
+          <li>Define the electrical interface to the machine — CAN communication, wake-up and charging signals, connectors and harnesses.</li>
+          <li>Build and run test setups for characterisation, validation and end-of-line testing, and document what they show.</li>
+          <li>Support the safety and compliance work: risk assessment, the relevant standards and the documentation that goes with them.</li>
+          <li>Follow the design into production, so the boards, harnesses and test steps are realistic to assemble at volume.</li>
+        </ul>
+      </section>
+
+      <section id="profile">
+        <h2>What we are looking for</h2>
+        <ul>
+          <li>A degree in electrical or electronic engineering, or equivalent experience.</li>
+          <li>A few years of practical work with electronics in a product context — battery systems, power electronics, automotive or industrial equipment.</li>
+          <li>Comfort with schematics, measurement equipment and a bench: you would rather verify something than assume it.</li>
+          <li>Working knowledge of CAN and embedded interfaces, and enough software fluency to talk properly with the people writing it.</li>
+          <li>Danish or English, written and spoken. Our working language is Danish, but the team and our customers work in both.</li>
+        </ul>
+      </section>
+
+      <section id="nice-to-have">
+        <h2>Useful, but not required</h2>
+        <ul>
+          <li>Hands-on experience with lithium cells, pack safety, or transport and certification requirements.</li>
+          <li>Familiarity with functional safety work, or with EMC testing and how to survive it.</li>
+          <li>PCB design, or experience steering an external design partner through one.</li>
+        </ul>
+      </section>
+
+      <section id="what-we-offer">
+        <h2>What we offer</h2>
+        <p>A small, senior team where your work goes into machines you can point at. Projects run from first concept to series production, so you follow your own decisions all the way through instead of handing them to another department.</p>
+        <p>Terms are agreed individually and reflect your experience. We are based in Aarhus, with the workshop, test bench and production in the same building as the desks.</p>
+      </section>
+
+      <section id="apply">
+        <h2>How to apply</h2>
+        <p>Send a short note about your background together with your CV. We review applications as they arrive and fill the position when the right person turns up, so there is no fixed deadline.</p>
+
+        <div class="apply-card">
+          <h3>Send your application</h3>
+          <p>Write to us directly — a few paragraphs about what you have worked on is more useful to us than a formal cover letter. We are also glad to hear from Project, Software and Development Engineers even when no position is posted for those disciplines.</p>
+          <dl class="apply-details">
+            <div><dt>Email</dt><dd><a href="mailto:wstech@wstech.dk?subject=Application%3A%20Electronics%20Engineer">wstech@wstech.dk</a></dd></div>
+            <div><dt>Phone</dt><dd><a href="tel:+4588618388">+45 88 61 83 88</a></dd></div>
+            <div><dt>Address</dt><dd>Gjellerupvej 89A, 8230 Aarhus</dd></div>
+          </dl>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</section>
+
 </main>
 
 <div data-wst-footer></div>

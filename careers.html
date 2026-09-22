@@ -24,6 +24,8 @@ body{ background:var(--paper); }
 .role:last-child{ border-bottom:1px solid var(--line); }
 .role::before{ content:"0" counter(roles); color:var(--brass-text); font-family:var(--font-mono); font-size:14px; }
 .role h3{ font-size:22px; }
+.role-title{ display:flex; flex-wrap:wrap; align-items:baseline; gap:12px; }
+.role-tag{ padding:3px 8px; border:1px solid var(--line); border-radius:999px; color:var(--brass-text); font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
 .role p{ color:var(--ink-soft); line-height:1.6; font-size:15px; }
 /* Row hover: a paper wash that bleeds just past the column, the index
    darkening to ink and the title easing forward. The wash runs 24px wider
@@ -72,7 +74,7 @@ body{ background:var(--paper); }
       <h2>Open disciplines</h2>
       <div class="role-list" aria-label="Engineering disciplines">
         <a class="role" href="careers-contact.html"><h3>Project Engineer</h3><p>Connect customer requirements, technical decisions and programme progress across the full development process.</p></a>
-        <a class="role" href="careers-contact.html"><h3>Electronics Engineer</h3><p>Develop BMS, power electronics, interfaces and test strategies around the application.</p></a>
+        <a class="role" href="careers-contact.html"><div class="role-title"><h3>Electronics Engineer</h3><span class="role-tag">Now hiring</span></div><p>Develop BMS, power electronics, interfaces and test strategies around the application.</p></a>
         <a class="role" href="careers-contact.html"><h3>Software Engineer</h3><p>Build embedded control, diagnostics and communication that integrate the battery with the machine.</p></a>
         <a class="role" href="careers-contact.html"><h3>Development Engineer</h3><p>Turn concepts into validated designs through CAD, prototyping, testing and production engineering.</p></a>
       </div>
