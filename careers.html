@@ -39,8 +39,9 @@ body{ background:var(--paper); }
 }
 @media (hover:hover) and (min-width:801px){ .role::after{ inset-inline:-24px; } }
 @media (prefers-reduced-motion:reduce){ .role::after,.role::before,.role h3{ transition:none; } .role:hover h3{ transform:none; } }
-.career-cta{ padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
-.career-cta-inner{ display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
+/* Dark closing band, with the blueprint grid the other dark bands carry. */
+.career-cta{ position:relative; overflow:hidden; padding:110px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.career-cta-inner{ position:relative; z-index:1; display:grid; grid-template-columns:1fr .7fr; gap:80px; align-items:end; }
 .career-cta h2{ max-width:13ch; margin-bottom:22px; color:var(--paper); font-size:48px; }
 .career-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
 .career-action{ justify-self:end; }
@@ -77,6 +78,7 @@ body{ background:var(--paper); }
   </section>
 
   <section class="career-cta on-dark">
+    <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
     <div class="container career-cta-inner">
       <div><h2>Start a career conversation.</h2><p>Specific vacancies will be published when available. You are also welcome to introduce yourself and tell us where your experience could strengthen the team.</p></div>
       <a class="btn btn-on-dark career-action" href="contact-v2.html">Send an open application</a>
@@ -84,7 +86,7 @@ body{ background:var(--paper); }
   </section>
 </main>
 <div data-wst-footer></div>
-<script src="assets/scripts/wst-shell.js?v=nav4"></script>
+<script src="assets/scripts/wst-shell.js?v=nav5"></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
