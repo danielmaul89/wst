@@ -51,7 +51,6 @@
       '        <a href="about.html" class="nav-link"' + current("about") + '>About us <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>',
       '        <div class="dropdown">',
       '          <a href="about.html#company">Who we are</a>',
-      '          <a href="about.html#partners">Partner Network</a>',
       '          <a href="about.html#global">Global Presence</a>',
       '          <a href="careers.html">Careers</a>',
       '          <a href="news.html">News</a>',

@@ -30,9 +30,14 @@
 /* Product image slot, datasheet slot and the BMS partner link. Image and
    datasheet are placeholders until the assets arrive. */
 .bms-product-image{ margin-bottom:var(--sp-3); }
-.bms-datasheet{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); margin:var(--sp-3) 0 0; padding:12px 16px; border:1px dashed var(--line); border-radius:var(--r); font-size:14px; color:var(--ink-soft); }
+/* A real download now the datasheets exist: solid border, an icon that
+   nudges down on hover, same shape the dashed placeholder held. */
+.bms-datasheet{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); margin:var(--sp-3) 0 0; padding:12px 16px; border:1px solid var(--line); border-radius:var(--r); font-size:14px; color:var(--ink); text-decoration:none; transition:border-color .2s var(--ease), background .2s var(--ease); }
+.bms-datasheet:hover{ border-color:var(--brass-soft); background:var(--paper-2); }
 .bms-datasheet-label{ font-weight:600; color:var(--ink); }
-.bms-datasheet-status{ font-family:var(--font-mono); font-size:14px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); }
+.bms-datasheet-action{ display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--brass-text); }
+.bms-datasheet-action svg{ transition:transform .2s var(--ease); }
+.bms-datasheet:hover .bms-datasheet-action svg{ transform:translateY(2px); }
 .bms-partner{ display:inline-flex; align-items:center; gap:var(--sp-2); margin:0 0 var(--sp-5); color:var(--ink-soft); font-size:14px; text-decoration:none; }
 .bms-partner img{ display:block; width:auto; height:28px; }
 .bms-partner:hover .bms-partner-label{ color:var(--ink); }
@@ -88,9 +93,8 @@
     <div class="wst-grid wst-grid--2 wst-grid--wide-gap">
 
       <div class="wst-card bms-platform" id="i-bms">
-        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="i-BMS product image, placeholder">
-          <span class="wst-media-placeholder-label">i-BMS product image</span>
-          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        <div class="bms-product-image">
+          <img src="assets/products/bms/i-bms.webp" alt="i-BMS integrated battery management board, with a modular battery station and light electric vehicle application" loading="lazy" decoding="async">
         </div>
         <div class="bms-card-head">
           <h3>i-BMS</h3>
@@ -102,13 +106,12 @@
           <li><span><strong>17–60V</strong> pack range</span></li>
           <li><span>Integrated pre-charge &amp; disconnect</span></li>
         </ul>
-        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
+        <a class="bms-datasheet" href="assets/documents/bms/i-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
 
       <div class="wst-card bms-platform" id="n-bms">
-        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="n-BMS product image, placeholder">
-          <span class="wst-media-placeholder-label">n-BMS product image</span>
-          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        <div class="bms-product-image">
+          <img src="assets/products/bms/n-bms.webp" alt="n-BMS distributed slave and master boards, with the state-of-charge estimation surface they run" loading="lazy" decoding="async">
         </div>
         <div class="bms-card-head">
           <h3>n-BMS</h3>
@@ -120,13 +123,12 @@
           <li><span><strong>12</strong> voltage &amp; up to <strong>12</strong> temperature channels per module</span></li>
           <li><span><strong>Dual CAN</strong></span></li>
         </ul>
-        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
+        <a class="bms-datasheet" href="assets/documents/bms/n-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
 
       <div class="wst-card bms-platform" id="n3-bms">
-        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="n3-BMS product image, placeholder">
-          <span class="wst-media-placeholder-label">n3-BMS product image</span>
-          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        <div class="bms-product-image">
+          <img src="assets/products/bms/n3-bms.webp" alt="n3-BMS boards, shown against the heavy trucks and stationary storage the safety-certified platform is built for" loading="lazy" decoding="async">
         </div>
         <div class="bms-card-head">
           <h3>n3-BMS</h3>
@@ -138,13 +140,12 @@
           <li><span><strong>ISO 26262 ASIL C</strong></span></li>
           <li><span>Up to <strong>1000V / 2000A</strong></span></li>
         </ul>
-        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
+        <a class="bms-datasheet" href="assets/documents/bms/n3-bms-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
 
       <div class="wst-card bms-platform" id="c-bms24x">
-        <div class="wst-media-placeholder wst-media-placeholder--wide bms-product-image" role="img" aria-label="c-BMS24x product image, placeholder">
-          <span class="wst-media-placeholder-label">c-BMS24x product image</span>
-          <span class="wst-media-placeholder-note">Placeholder, photo to follow</span>
+        <div class="bms-product-image">
+          <img src="assets/products/bms/c-bms24x.webp" alt="Two c-BMS24x integrated boards, linked as a parallel pack pair" loading="lazy" decoding="async">
         </div>
         <div class="bms-card-head">
           <h3>c-BMS24x</h3>
@@ -156,7 +157,7 @@
           <li><span><strong>12–100V</strong>, up to <strong>2000A</strong></span></li>
           <li><span>Parallel pack &amp; battery swap support</span></li>
         </ul>
-        <p class="bms-datasheet"><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-status">Coming soon</span></p>
+        <a class="bms-datasheet" href="assets/documents/bms/c-bms24x-datasheet.pdf" target="_blank" rel="noopener noreferrer" download><span class="bms-datasheet-label">Datasheet (PDF)</span><span class="bms-datasheet-action">Download<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v7M2.5 5.5 6 9l3.5-3.5M2 11h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
 
     </div>

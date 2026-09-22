@@ -37,7 +37,7 @@ body{ background:var(--paper); }
 }
 /* Not .eyebrow: that colour is pinned for light backgrounds, and this
    panel is dark. */
-.pack-cta > *:not(.wst-blueprint-grid){ position:relative; z-index:1; }
+.pack-cta-content{ position:relative; z-index:1; }
 .pack-cta-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
 .pack-cta h2{ margin:14px 0 10px; max-width:16ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); }
 .pack-cta p{ max-width:40ch; margin:0 0 var(--sp-3); color:var(--ink-soft-on-dark); line-height:1.65; }
@@ -127,10 +127,12 @@ body{ background:var(--paper); }
 
       <aside class="pack-cta">
         <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
-        <span class="pack-cta-eyebrow">Custom solutions</span>
-        <h2>Talk to us about your next project.</h2>
-        <p>None of these is a catalogue part. Bring us the machine, its duty cycle and the space the pack has to live in: where a platform above is close, we adapt it, and where it is not, we draw one.</p>
-        <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+        <div class="pack-cta-content">
+          <span class="pack-cta-eyebrow">Custom solutions</span>
+          <h2>Talk to us about your next project.</h2>
+          <p>None of these is a catalogue part. Bring us the machine, its duty cycle and the space the pack has to live in: where a platform above is close, we adapt it, and where it is not, we draw one.</p>
+          <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+        </div>
       </aside>
 
     </div>
