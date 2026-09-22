@@ -1159,6 +1159,12 @@ body.wst-modal-open {
 .footer-terms {
   color: var(--ink-soft-on-dark);
   font-size: var(--fs-small);
+  text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+
+.footer-terms:hover {
+  color: var(--paper);
 }
 
 .cert-chips {
