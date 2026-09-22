@@ -154,6 +154,15 @@
 .show-row-link{ position:absolute; inset:0; z-index:2; display:block; text-decoration:none; color:inherit; }
 
 .show-row-media{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+/* A letterboxed photograph has a hard left edge of its own - held to the
+   right of a 2.96:1 row, a 1.78:1 picture begins at 40% of the width - and
+   the fade used to start at 30%, so the picture arrived at that edge
+   already a fifth visible and drew a line down the row. It is worse than a
+   line: the studio sweep runs #aaa8ab to #d6d4d7 against a row of #DBDBDA
+   to #F5F5F5, so what steps in is also darker than what it steps into.
+   The fade now begins past that edge and runs to 76%, where the machine
+   itself starts, and the sweep is lifted towards the row's own tone on the
+   way. */
 .show-row-media img{
   position:absolute;
   inset:0;
@@ -161,9 +170,10 @@
   height:100%;
   object-fit:contain;
   object-position:100% center;
-  -webkit-mask-image:linear-gradient(100deg, transparent 0%, transparent 30%, black 82%), radial-gradient(ellipse 74% 80% at 66% 50%, black 44%, transparent 97%);
+  filter:brightness(1.07) saturate(.96);
+  -webkit-mask-image:linear-gradient(100deg, transparent 0%, transparent 42%, rgba(0,0,0,.3) 54%, rgba(0,0,0,.7) 65%, black 76%), radial-gradient(ellipse 78% 86% at 66% 50%, black 40%, transparent 99%);
   -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(100deg, transparent 0%, transparent 30%, black 82%), radial-gradient(ellipse 74% 80% at 66% 50%, black 44%, transparent 97%);
+  mask-image:linear-gradient(100deg, transparent 0%, transparent 42%, rgba(0,0,0,.3) 54%, rgba(0,0,0,.7) 65%, black 76%), radial-gradient(ellipse 78% 86% at 66% 50%, black 40%, transparent 99%);
   mask-composite:intersect;
 }
 .show-row-media-incoming{
