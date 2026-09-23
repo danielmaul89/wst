@@ -7,6 +7,9 @@
 <title>News | WS Technicals</title>
 <meta name="description" content="Explore our latest customer success stories, employee interviews and industry insights from WS Technicals.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
@@ -103,9 +106,9 @@ body{ position:relative; background:var(--paper); }
 .news-card-link svg{ transition:transform .3s var(--ease); }
 .news-card-link:hover svg{ transform:translateX(3px); }
 
-.news-cta{ position:relative; padding:104px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
+.news-cta{ position:relative; overflow:hidden; padding:104px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
 .news-cta::before{ content:""; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(251,249,245,.2) 18%,rgba(251,249,245,.2) 82%,transparent); }
-.news-cta-inner{ display:grid; grid-template-columns:1fr .8fr; gap:72px; align-items:start; }
+.news-cta-inner{ position:relative; z-index:1; display:grid; grid-template-columns:1fr .8fr; gap:72px; align-items:start; }
 .news-cta-eyebrow{ display:block; margin-bottom:16px; color:var(--brass-hi); font-family:var(--font-mono); font-size:14px; letter-spacing:.07em; text-transform:uppercase; }
 .news-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:48px; }
 .news-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
@@ -127,7 +130,6 @@ body{ position:relative; background:var(--paper); }
   .news-cta h2{ font-size:40px; }
 }
 
-.blueprint-grid{ position:absolute; inset:0; z-index:40; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(251,249,245,.75) 0 1px, transparent 1px 96px), repeating-linear-gradient(to bottom, rgba(251,249,245,.75) 0 1px, transparent 1px 96px); background-size:96px 96px; opacity:.06; }
 </style>
 </head>
 <body data-wst-page="about">
@@ -271,6 +273,7 @@ body{ position:relative; background:var(--paper); }
   </section>
 
   <section class="news-cta on-dark">
+    <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
     <div class="container news-cta-inner">
       <div>
         <span class="news-cta-eyebrow">Get in touch</span>
@@ -289,8 +292,6 @@ body{ position:relative; background:var(--paper); }
   </section>
 </main>
 <div data-wst-footer></div>
-
-<div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish3" defer></script>
