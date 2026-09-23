@@ -1476,6 +1476,13 @@
 .wst-article-partner img {
   display: block;
   width: auto;
+  /* A definite height, not just a max-height. Several customer marks are
+     SVGs with a viewBox but no width/height attribute, and against
+     width:auto plus only a max-* constraint Chrome has nothing concrete
+     to size the replaced element from - it collapses to 0x0 instead of
+     falling back to the intrinsic aspect ratio. A real height fixes the
+     box regardless of what the source file declares. */
+  height: 44px;
   max-width: 190px;
   max-height: 44px;
   filter: grayscale(1);
