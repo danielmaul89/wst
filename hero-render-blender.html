@@ -119,7 +119,7 @@ body{ background:var(--paper); }
 
       <div class="render-divider">
         <h2>Scroll-scrubbed &mdash; with pinpoint callouts.</h2>
-        <p>The pack theatre pattern the live pack pages use (<code>sc-theatre</code>/<code>sc-callouts</code>, same CSS, same track/stage scroll math), driven by a pre-rendered frame sequence instead of live WebGL. Scroll explodes the pack while the camera eases to a fixed angle; once there, both freeze and the seven part labels reveal one by one, reading their screen position from a JSON file <a href="assets/renders/hero-scroll/callouts.json" target="_blank" rel="noopener noreferrer">Blender wrote at render time</a> (<code>world_to_camera_view()</code>, projected through that exact frozen camera). Keep scrolling and the labels clear before the pack reassembles &mdash; their anchors are only valid for that one frozen frame.</p>
+        <p>The pack theatre pattern the live pack pages use (<code>sc-theatre</code>/<code>sc-callouts</code>, same CSS, same track/stage scroll math), driven by a pre-rendered frame sequence instead of live WebGL. Scroll explodes the pack while the camera turns; once it reaches the callout angle, both freeze and the seven part labels reveal one by one, reading their screen position from a JSON file <a href="assets/renders/hero-scroll/callouts.json" target="_blank" rel="noopener noreferrer">Blender wrote at render time</a> (<code>world_to_camera_view()</code>, projected through that exact frozen camera). Keep scrolling and the labels clear as the pack reassembles &mdash; the camera keeps turning the same direction rather than winding back, so reassembly never reads as the animation rewinding.</p>
       </div>
     </div>
   </section>
@@ -146,7 +146,7 @@ body{ background:var(--paper); }
           <div><dt>Frames</dt><dd>98 &mdash; vs. 264 for the autoplay loop above</dd></div>
           <div><dt>Why fewer</dt><dd>Camera + geometry freeze during the hold; one frame covers the whole reading dwell</dd></div>
           <div><dt>Callouts</dt><dd>7, one per LAYER_TIERS group &mdash; largest part in each group, by name match</dd></div>
-          <div><dt>Camera</dt><dd>Eases from resting angle to a fixed 150&deg; callout angle, and back</dd></div>
+          <div><dt>Camera</dt><dd>Turns one direction throughout &mdash; 0&deg;&rarr;150&deg; exploding, 150&deg;&rarr;300&deg; reassembling, never reverses</dd></div>
         </dl>
       </div>
     </div>
