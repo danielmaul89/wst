@@ -41,6 +41,22 @@ body{ background:var(--paper); }
 .render-meta dt{ color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
 .render-meta dd{ margin:0; color:var(--ink); font-size:15px; }
 @media(max-width:560px){ .render-meta dl{ grid-template-columns:1fr; gap:2px var(--sp-3); } .render-meta dt{ margin-top:10px; } }
+
+.render-divider{ max-width:720px; margin:var(--sp-6) 0 var(--sp-5); padding-top:var(--sp-5); border-top:1px solid var(--line-2); }
+.render-divider h2{ margin:0 0 var(--sp-2); font-size:28px; }
+.render-divider p{ max-width:66ch; margin:0; color:var(--ink-soft); font-size:16px; line-height:1.7; }
+
+.turntable-host{ position:relative; min-height:400px; display:flex; align-items:center; justify-content:center; }
+.turntable-host:not(.is-ready)::after{
+  content:"Rendering 72 frames…";
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+  font-size:13px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.turntable-canvas{ display:none; max-width:100%; max-height:74vh; width:auto; height:auto; }
+.turntable-host.is-ready .turntable-canvas{ display:block; }
 </style>
 </head>
 <body data-wst-page="">
@@ -69,11 +85,29 @@ body{ background:var(--paper); }
           <div><dt>Lighting</dt><dd>Warm key, cool rim, soft fill &mdash; matched to home-hero-3d.js</dd></div>
         </dl>
       </div>
+
+      <div class="render-divider">
+        <h2>Turntable animation.</h2>
+        <p>The same model, camera and lighting, now turning through a full 360&deg; &mdash; 72 frames, camera orbiting a static pack so Cycles only has to build the scene's acceleration structure once instead of every frame.</p>
+      </div>
+
+      <div class="render-frame">
+        <div class="turntable-host" data-turntable-dir="assets/renders/hero-turntable" data-turntable-count="72" data-turntable-fps="24" data-turntable-pad="4" data-turntable-ext="jpg"></div>
+      </div>
+
+      <div class="render-meta">
+        <dl>
+          <div><dt>Frames</dt><dd>72, 5&deg; per frame, full turn</dd></div>
+          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 48 samples, denoised</dd></div>
+          <div><dt>Playback</dt><dd>24fps canvas loop, pauses off-screen</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
 </main>
 
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
+<script src="assets/scripts/turntable-player.js?v=1" defer></script>
 </body>
 </html>
