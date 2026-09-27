@@ -1,0 +1,51 @@
+[
+  {
+    "label": "Enclosure lid",
+    "part": "HDR - Enclosure lid REV1.002",
+    "x": 50.14,
+    "y": 8.61,
+    "inFrame": true
+  },
+  {
+    "label": "Power cables",
+    "part": "Cable1.003",
+    "x": 56.88,
+    "y": 29.52,
+    "inFrame": true
+  },
+  {
+    "label": "CMU / control board",
+    "part": "100809_N3 CMU PCB Board.001",
+    "x": 57.62,
+    "y": 35.35,
+    "inFrame": true
+  },
+  {
+    "label": "Thermal interface",
+    "part": "HDR_FoamSpacer2.REV1.003",
+    "x": 39.65,
+    "y": 27.33,
+    "inFrame": true
+  },
+  {
+    "label": "Busbars & terminals",
+    "part": "HDR-BusBarTerminalPlus.REV2.001",
+    "x": 46.44,
+    "y": 44.65,
+    "inFrame": true
+  },
+  {
+    "label": "Cell array",
+    "part": "HDR - Cell distribution REV1.001",
+    "x": 41.08,
+    "y": 59.17,
+    "inFrame": true
+  },
+  {
+    "label": "Enclosure",
+    "part": "HDR - Enclosure case REV1.001",
+    "x": 49.91,
+    "y": 87.82,
+    "inFrame": true
+  }
+]

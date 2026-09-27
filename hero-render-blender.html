@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
 <style>
 /* Unlisted review page: not in wst-shell.js's nav, not linked from any
    live page, noindex. Built on the shared component layer like any other
@@ -52,7 +53,7 @@ body{ background:var(--paper); }
 
 .turntable-host{ position:relative; min-height:400px; display:flex; align-items:center; justify-content:center; }
 .turntable-host:not(.is-ready)::after{
-  content:"Rendering 72 frames…";
+  content:"Loading frames…";
   color:var(--ink-faint);
   font-family:var(--font-mono);
   font-size:13px;
@@ -61,6 +62,12 @@ body{ background:var(--paper); }
 }
 .turntable-canvas{ display:none; max-width:100%; max-height:74vh; width:auto; height:auto; }
 .turntable-host.is-ready .turntable-canvas{ display:block; }
+
+/* Scroll theatre: an <img> standing in for product-3d-showcase.js's
+   <canvas>, so it takes .sc-canvas's position:absolute/inset:0 sizing but
+   needs its own object-fit - a canvas draws pixel-for-pixel into its box,
+   an img would otherwise stretch. */
+#scFrame{ object-fit:contain; background:none; }
 </style>
 </head>
 <body data-wst-page="">
@@ -109,6 +116,39 @@ body{ background:var(--paper); }
           <div><dt>Playback</dt><dd>24fps canvas loop, pauses off-screen</dd></div>
         </dl>
       </div>
+
+      <div class="render-divider">
+        <h2>Scroll-scrubbed &mdash; with pinpoint callouts.</h2>
+        <p>The pack theatre pattern the live pack pages use (<code>sc-theatre</code>/<code>sc-callouts</code>, same CSS, same track/stage scroll math), driven by a pre-rendered frame sequence instead of live WebGL. Scroll explodes the pack while the camera eases to a fixed angle; once there, both freeze and the seven part labels reveal one by one, reading their screen position from a JSON file <a href="assets/renders/hero-scroll/callouts.json" target="_blank" rel="noopener noreferrer">Blender wrote at render time</a> (<code>world_to_camera_view()</code>, projected through that exact frozen camera). Keep scrolling and the labels clear before the pack reassembles &mdash; their anchors are only valid for that one frozen frame.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sc-theatre" id="scTheatre">
+    <div class="sc-stage">
+      <div class="sc-screen" id="scScreen">
+        <div class="sc-backdrop" aria-hidden="true"></div>
+        <img class="sc-canvas" id="scFrame" alt="" data-frame-dir="assets/renders/hero-scroll" data-frame-ext="png" data-frame-pad="4" data-frame-count="98" data-frame-hold="49">
+        <div class="sc-vignette" aria-hidden="true"></div>
+        <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
+        <div class="sc-hint" id="scHint">
+          <span>Scroll</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wst-section render-section">
+    <div class="container">
+      <div class="render-meta">
+        <dl>
+          <div><dt>Frames</dt><dd>98 &mdash; vs. 264 for the autoplay loop above</dd></div>
+          <div><dt>Why fewer</dt><dd>Camera + geometry freeze during the hold; one frame covers the whole reading dwell</dd></div>
+          <div><dt>Callouts</dt><dd>7, one per LAYER_TIERS group &mdash; largest part in each group, by name match</dd></div>
+          <div><dt>Camera</dt><dd>Eases from resting angle to a fixed 150&deg; callout angle, and back</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
 </main>
@@ -116,5 +156,6 @@ body{ background:var(--paper); }
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
 <script src="assets/scripts/turntable-player.js?v=1" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=1" defer></script>
 </body>
 </html>
