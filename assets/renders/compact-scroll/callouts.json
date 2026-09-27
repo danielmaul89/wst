@@ -1,0 +1,51 @@
+[
+  {
+    "label": "Casing lid",
+    "part": "P_C4E5_CasingLid_REV04_C4E5-0002.003",
+    "x": 50.0,
+    "y": 8.85,
+    "inFrame": true
+  },
+  {
+    "label": "Cable harness",
+    "part": "Cable^S_C4E5_HarnessVM_REV02_Cable^S_C4E5_HarnessVM_REV02.003",
+    "x": 55.88,
+    "y": 36.4,
+    "inFrame": true
+  },
+  {
+    "label": "BMS board",
+    "part": "3D_DZLR48_2026-04-09_C4E5-0015.165",
+    "x": 53.7,
+    "y": 42.72,
+    "inFrame": true
+  },
+  {
+    "label": "Busbars",
+    "part": "P_C4E5_BusbarTerminalNeg_REV02_C4E5-0008.001",
+    "x": 59.46,
+    "y": 44.64,
+    "inFrame": true
+  },
+  {
+    "label": "Cell holders",
+    "part": "P_C4E5_CellHolderTop_REV03_C4E5-0004.001",
+    "x": 50.08,
+    "y": 51.58,
+    "inFrame": true
+  },
+  {
+    "label": "21700 cells",
+    "part": "Highstar - INR21700-50PR_Negative.013",
+    "x": 61.93,
+    "y": 65.48,
+    "inFrame": true
+  },
+  {
+    "label": "Main casing",
+    "part": "P_C4E5_MainCasing_REV05_C4E5-0001.005",
+    "x": 49.94,
+    "y": 81.05,
+    "inFrame": true
+  }
+]
