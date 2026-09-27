@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>AGV platform — Blender scroll theatre | WS Technicals</title>
+<meta name="description" content="A Blender scroll-scrubbed render of the AGV platform pack, for internal review.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
+<style>
+body{ background:var(--paper); }
+.render-hero{ padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-5); }
+.render-hero-inner{ max-width:720px; }
+.render-hero p{ max-width:66ch; margin-top:var(--sp-2); color:var(--ink-soft); font-size:16px; line-height:1.7; }
+.render-meta{ max-width:720px; margin:var(--sp-4) auto 0; padding-top:var(--sp-3); border-top:1px solid var(--line-2); }
+.render-meta dl{ display:grid; grid-template-columns:160px 1fr; gap:10px var(--sp-3); margin:0; }
+.render-meta dt{ color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
+.render-meta dd{ margin:0; color:var(--ink); font-size:15px; }
+@media(max-width:560px){ .render-meta dl{ grid-template-columns:1fr; gap:2px var(--sp-3); } .render-meta dt{ margin-top:10px; } }
+#scFrame{ object-fit:contain; background:none; }
+</style>
+</head>
+<body data-wst-page="">
+
+<div data-wst-header></div>
+
+<main>
+  <section class="render-hero">
+    <div class="container render-hero-inner">
+      <span class="eyebrow">Render check</span>
+      <h1 class="t-display">AGV platform, in Blender.</h1>
+      <p>Same scroll-theatre treatment run against <a href="pack-agv-platform.html" target="_blank" rel="noopener noreferrer">pack-agv-platform.html</a>'s own model (<code>assets/models/sl02.fbx</code>): still &rarr; explode while the camera turns &rarr; holds exploded with seven part callouts &rarr; reassembles while the camera keeps turning the same direction &rarr; still. Callout keywords and part titles are this model's own, already-verified list straight out of <code>product-3d-showcase.js</code> (<code>MODELS['agv'].callouts</code>) &mdash; three of the seven test keywords (service_lid, _lid_rev, case_rev) didn't match this raw FBX's actual naming (it uses "Service lid REV2", "Lid REV3", "Case REV4" &mdash; spaces, not the wstm pipeline's underscores), so those three were adjusted before rendering.</p>
+    </div>
+  </section>
+
+  <section class="sc-theatre" id="scTheatre">
+    <div class="sc-stage">
+      <div class="sc-screen" id="scScreen">
+        <div class="sc-backdrop" aria-hidden="true"></div>
+        <img class="sc-canvas" id="scFrame" alt="" data-frame-dir="assets/renders/agv-scroll" data-frame-ext="png" data-frame-pad="4" data-frame-count="98" data-frame-hold="49">
+        <div class="sc-vignette" aria-hidden="true"></div>
+        <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
+        <div class="sc-hint" id="scHint">
+          <span>Scroll</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wst-section">
+    <div class="container">
+      <div class="render-meta">
+        <dl>
+          <div><dt>Source model</dt><dd>assets/models/sl02.fbx (pack-agv-platform.html)</dd></div>
+          <div><dt>Frames</dt><dd>98 &mdash; 1 still, 48 explode+turn, 1 frozen hold, 48 reassemble+turn</dd></div>
+          <div><dt>Camera</dt><dd>Turns one direction throughout &mdash; 0&deg;&rarr;150&deg; exploding, 150&deg;&rarr;300&deg; reassembling</dd></div>
+          <div><dt>Callouts</dt><dd>7, this model's own list from product-3d-showcase.js, 3 keywords adjusted for real naming</dd></div>
+          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 48 samples, denoised, GPU (OptiX)</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=nav7"></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=1" defer></script>
+</body>
+</html>
