@@ -1,0 +1,44 @@
+[
+  {
+    "label": "Top insulator",
+    "part": "QKW4_BP_FR4_top_REV01.001",
+    "x": 48.89,
+    "y": 10.68,
+    "inFrame": true
+  },
+  {
+    "label": "Cooling fans",
+    "part": "QKW4_BP_fans_bracket_REV02_\u9ed8\u8ba4.001",
+    "x": 65.34,
+    "y": 23.71,
+    "inFrame": true
+  },
+  {
+    "label": "Indicator board",
+    "part": "ENS10  \u706f\u677fpcb 20260117_\u9ed8\u8ba4.009",
+    "x": 69.93,
+    "y": 32.81,
+    "inFrame": true
+  },
+  {
+    "label": "Connector panel",
+    "part": "QKW4 - Connector metal REVD01.001",
+    "x": 47.66,
+    "y": 43.15,
+    "inFrame": true
+  },
+  {
+    "label": "Rack brackets",
+    "part": "QKW4_BP_rack_bracket_front_REV01.003",
+    "x": 64.1,
+    "y": 75.25,
+    "inFrame": true
+  },
+  {
+    "label": "Sheet metal shell",
+    "part": "QKW4_BP_side_metal_REV01.001",
+    "x": 54.03,
+    "y": 89.47,
+    "inFrame": true
+  }
+]

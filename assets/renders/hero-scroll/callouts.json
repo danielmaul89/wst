@@ -14,28 +14,28 @@
     "inFrame": true
   },
   {
-    "label": "CMU / control board",
+    "label": "CMU board",
     "part": "100809_N3 CMU PCB Board.001",
     "x": 57.62,
     "y": 35.35,
     "inFrame": true
   },
   {
-    "label": "Thermal interface",
+    "label": "Heat pads",
     "part": "HDR_FoamSpacer2.REV1.003",
     "x": 39.65,
     "y": 27.33,
     "inFrame": true
   },
   {
-    "label": "Busbars & terminals",
+    "label": "Series busbars",
     "part": "HDR-BusBarTerminalPlus.REV2.001",
     "x": 46.44,
     "y": 44.65,
     "inFrame": true
   },
   {
-    "label": "Cell array",
+    "label": "EVE C40 cells",
     "part": "HDR - Cell distribution REV1.001",
     "x": 41.08,
     "y": 59.17,
