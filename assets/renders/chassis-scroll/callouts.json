@@ -1,0 +1,44 @@
+[
+  {
+    "label": "Lids",
+    "part": "B7W.Small lid_PRT_REV1.001",
+    "x": 54.8,
+    "y": 5.23,
+    "inFrame": true
+  },
+  {
+    "label": "Service disconnect",
+    "part": "Cable^B7W.Positive connector to MSD_SA.001",
+    "x": 40.95,
+    "y": 21.5,
+    "inFrame": true
+  },
+  {
+    "label": "BMS master + CMU",
+    "part": "N-BMS-Master-CMU.003",
+    "x": 43.49,
+    "y": 41.7,
+    "inFrame": true
+  },
+  {
+    "label": "Busbars",
+    "part": "B7W.Busbar shunt to relay_PRT_REV1.001",
+    "x": 41.99,
+    "y": 56.21,
+    "inFrame": true
+  },
+  {
+    "label": "Component layer",
+    "part": "B7W.Component layer_PRT_REV2.001",
+    "x": 41.34,
+    "y": 57.88,
+    "inFrame": true
+  },
+  {
+    "label": "Bend plates",
+    "part": "B7W.Outer bend plate_2_PRT_REV1.001",
+    "x": 50.01,
+    "y": 79.51,
+    "inFrame": true
+  }
+]
