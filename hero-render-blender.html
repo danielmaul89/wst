@@ -91,18 +91,19 @@ body{ background:var(--paper); }
       </div>
 
       <div class="render-divider">
-        <h2>Turntable animation &mdash; exploded view.</h2>
-        <p>The same model and lighting, taken apart into layers the way the live site's own showcase pages do, then turned through a full 360&deg;. Each part's lift direction and height come straight from <code>home-hero-3d.js</code>'s own <code>LAYER_TIERS</code> keyword list &mdash; matched by mesh name (lid, cells, busbars, CMU board, cables, the casing itself as the anchor) &mdash; not a fresh guess at this model's construction.</p>
+        <h2>Full sequence &mdash; still, rotate, explode, reassemble.</h2>
+        <p>Still &rarr; the camera starts turning &rarr; the pack comes apart into layers, still turning &rarr; holds exploded through most of a full rotation &rarr; comes back together &rarr; settles back to still, matching the reference recording of the site's own scroll-scrubbed pack theatre. Explode direction/height per part is ported from <code>home-hero-3d.js</code>'s <code>LAYER_TIERS</code> keyword list; the camera's rotation speed eases in and out (zero at both ends) rather than starting or stopping abruptly, and completes exactly one turn so the loop point is seamless.</p>
       </div>
 
       <div class="render-frame render-frame--dark">
         <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
-        <div class="turntable-host" data-turntable-dir="assets/renders/hero-turntable-exploded" data-turntable-count="72" data-turntable-fps="24" data-turntable-pad="4" data-turntable-ext="jpg"></div>
+        <div class="turntable-host" data-turntable-dir="assets/renders/hero-sequence" data-turntable-count="264" data-turntable-fps="24" data-turntable-pad="4" data-turntable-ext="jpg"></div>
       </div>
 
       <div class="render-meta">
         <dl>
-          <div><dt>Frames</dt><dd>72, 5&deg; per frame, full turn</dd></div>
+          <div><dt>Frames</dt><dd>264 at 24fps &mdash; an 11s loop</dd></div>
+          <div><dt>Timeline</dt><dd>1s still &middot; 3s explode &middot; 4s exploded &middot; 2s reassemble &middot; 1s still</dd></div>
           <div><dt>Layout</dt><dd>Ported from home-hero-3d.js's LAYER_TIERS &mdash; per-part lift by name match</dd></div>
           <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 48 samples, denoised</dd></div>
           <div><dt>Playback</dt><dd>24fps canvas loop, pauses off-screen</dd></div>
