@@ -35,13 +35,18 @@
   var N_TOTAL = parseInt(frameHost.getAttribute('data-frame-count'), 10) || 98;
   var FRAME_HOLD = parseInt(frameHost.getAttribute('data-frame-hold'), 10) || 49;
   var FRAME_LAST = N_TOTAL - 1;
+  // Frame PNGs get overwritten in place at the same filenames when a set
+  // is re-rendered/re-packed, so a plain URL can keep serving whatever a
+  // CDN or the browser already cached under it - a version bump forces a
+  // fresh fetch the same way the script/stylesheet ?v= tags already do.
+  var VER = frameHost.getAttribute('data-frame-ver') || '';
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function frameUrl(i) {
     var s = String(i);
     while (s.length < PAD) s = '0' + s;
-    return DIR + '/frame_' + s + '.' + EXT;
+    return DIR + '/frame_' + s + '.' + EXT + (VER ? '?v=' + VER : '');
   }
 
   // <canvas> replaces the old <img id="scFrame"> in the page markup, but
@@ -63,9 +68,20 @@
     (function (idx) {
       var im = new Image();
       im.src = frameUrl(idx);
-      if (im.decode) im.decode().catch(function () {});
+      if (im.decode) im.decode().then(function () { noteAspect(im); }).catch(function () {});
+      else im.onload = function () { noteAspect(im); };
       frames[idx] = im;
     })(i);
+  }
+
+  // Every frame in a set shares the same render dimensions, so the first
+  // one to finish loading tells us the image's own aspect ratio - needed
+  // to work out where the canvas actually draws it (see getImageBox()).
+  var imgAspect = null;
+  function noteAspect(img) {
+    if (imgAspect || !img.naturalWidth) return;
+    imgAspect = img.naturalWidth / img.naturalHeight;
+    positionCallouts();
   }
 
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -101,6 +117,26 @@
     ctx.drawImage(img, dx, dy, dw, dh);
   }
 
+  // The canvas draws the (portrait) frame contain-fit inside its box, so
+  // it's letterboxed/pillarboxed whenever the stage's aspect ratio isn't
+  // the frame's own - callout anchors are percentages of the FRAME, so
+  // they need to land inside this same box, not the full stage. Mirrors
+  // drawFrame()'s dx/dy/dw/dh math, in CSS-pixel space (calloutsHost isn't
+  // scaled by dpr the way the canvas backing store is).
+  function getImageBox() {
+    var cw = canvasCssW, ch = canvasCssH;
+    if (!imgAspect || !cw || !ch) return { x: 0, y: 0, w: cw, h: ch };
+    var boxW, boxH;
+    if (cw / ch > imgAspect) {
+      boxH = ch;
+      boxW = ch * imgAspect;
+    } else {
+      boxW = cw;
+      boxH = cw / imgAspect;
+    }
+    return { x: (cw - boxW) / 2, y: (ch - boxH) / 2, w: boxW, h: boxH };
+  }
+
   var calloutEls = [];
   var MIN_LABEL_GAP = 30; // px between adjacent label centres - two anchors
                           // 2-3% of frame height apart otherwise read as
@@ -125,14 +161,14 @@
   // never changes - only ever needs computing once (plus on resize),
   // not on every scroll tick.
   function positionCallouts() {
-    var hostW = calloutsHost.clientWidth;
-    var hostH = calloutsHost.clientHeight;
-    var labelX = hostW * 0.82;
+    var box = getImageBox();
+    var originX = box.x, originY = box.y, hostW = box.w, hostH = box.h;
+    var labelX = originX + hostW * 0.82;
 
     var order = calloutEls.map(function (c, idx) { return idx; })
       .sort(function (a, b) { return calloutEls[a].data.y - calloutEls[b].data.y; });
     var labelY = {};
-    order.forEach(function (idx) { labelY[idx] = hostH * calloutEls[idx].data.y / 100; });
+    order.forEach(function (idx) { labelY[idx] = originY + hostH * calloutEls[idx].data.y / 100; });
     for (var i = 1; i < order.length; i++) {
       var prev = order[i - 1], cur = order[i];
       if (labelY[cur] - labelY[prev] < MIN_LABEL_GAP) labelY[cur] = labelY[prev] + MIN_LABEL_GAP;
@@ -143,8 +179,8 @@
     }
 
     calloutEls.forEach(function (c, idx) {
-      var ax = hostW * c.data.x / 100;
-      var ay = hostH * c.data.y / 100;
+      var ax = originX + hostW * c.data.x / 100;
+      var ay = originY + hostH * c.data.y / 100;
       var ly = labelY[idx];
       var dx = labelX - ax, dy = ly - ay;
       var dist = Math.sqrt(dx * dx + dy * dy);
