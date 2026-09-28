@@ -67,7 +67,6 @@ body{ background:var(--paper); }
    <canvas>, so it takes .sc-canvas's position:absolute/inset:0 sizing but
    needs its own object-fit - a canvas draws pixel-for-pixel into its box,
    an img would otherwise stretch. */
-#scFrame{ object-fit:contain; background:none; }
 </style>
 </head>
 <body data-wst-page="">
@@ -128,7 +127,7 @@ body{ background:var(--paper); }
     <div class="sc-stage">
       <div class="sc-screen" id="scScreen">
         <div class="sc-backdrop" aria-hidden="true"></div>
-        <img class="sc-canvas" id="scFrame" alt="" data-frame-dir="assets/renders/hero-scroll" data-frame-ext="png" data-frame-pad="4" data-frame-count="98" data-frame-hold="49">
+        <canvas class="sc-canvas" id="scFrame" data-frame-dir="assets/renders/hero-scroll" data-frame-ext="png" data-frame-pad="4" data-frame-count="98" data-frame-hold="49"></canvas>
         <div class="sc-vignette" aria-hidden="true"></div>
         <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
         <div class="sc-hint" id="scHint">
