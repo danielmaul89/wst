@@ -79,6 +79,11 @@
     canvasCssW = w; canvasCssH = h;
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
+    // Setting canvas.width/height resets ALL 2D context state, including
+    // imageSmoothingQuality - has to be reapplied every time or it quietly
+    // reverts to "low" the first time this fires (initial layout counts).
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
   }
   resizeCanvas();
   if ('ResizeObserver' in window) new ResizeObserver(resizeCanvas).observe(canvas.parentElement);
