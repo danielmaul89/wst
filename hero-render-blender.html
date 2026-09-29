@@ -111,7 +111,7 @@ body{ background:var(--paper); }
           <div><dt>Frames</dt><dd>264 at 24fps &mdash; an 11s loop</dd></div>
           <div><dt>Timeline</dt><dd>1s still &middot; 3s explode &middot; 4s exploded &middot; 2s reassemble &middot; 1s still</dd></div>
           <div><dt>Layout</dt><dd>Ported from home-hero-3d.js's LAYER_TIERS &mdash; per-part lift by name match</dd></div>
-          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 48 samples, denoised</dd></div>
+          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 48 samples, 1440&times;1920, denoised</dd></div>
           <div><dt>Playback</dt><dd>24fps canvas loop, pauses off-screen</dd></div>
         </dl>
       </div>
@@ -127,7 +127,7 @@ body{ background:var(--paper); }
     <div class="sc-stage">
       <div class="sc-screen" id="scScreen">
         <div class="sc-backdrop" aria-hidden="true"></div>
-        <canvas class="sc-canvas" id="scFrame" data-frame-dir="assets/renders/hero-scroll" data-frame-ext="webp" data-frame-widths="960" data-frame-pad="4" data-frame-count="98" data-frame-hold="49" data-frame-ver="4"></canvas>
+        <canvas class="sc-canvas" id="scFrame" data-frame-dir="assets/renders/hero-scroll" data-frame-ext="webp" data-frame-widths="960,1440" data-frame-pad="4" data-frame-count="98" data-frame-hold="49" data-frame-ver="5"></canvas>
         <div class="sc-vignette" aria-hidden="true"></div>
         <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
         <div class="sc-hint" id="scHint">
@@ -155,6 +155,6 @@ body{ background:var(--paper); }
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
 <script src="assets/scripts/turntable-player.js?v=1" defer></script>
-<script src="assets/scripts/hero-scroll-theatre.js?v=4" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=5" defer></script>
 </body>
 </html>
