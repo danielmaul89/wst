@@ -44,7 +44,7 @@ body{ background:var(--paper); }
     <div class="sc-stage">
       <div class="sc-screen" id="scScreen">
         <div class="sc-backdrop" aria-hidden="true"></div>
-        <canvas class="sc-canvas" id="scFrame" data-frame-dir="assets/renders/ups-scroll" data-frame-ext="webp" data-frame-widths="960" data-frame-pad="4" data-frame-count="98" data-frame-hold="49" data-frame-ver="4"></canvas>
+        <canvas class="sc-canvas" id="scFrame" data-frame-dir="assets/renders/ups-scroll" data-frame-ext="webp" data-frame-widths="960,1440" data-frame-pad="4" data-frame-count="98" data-frame-hold="49" data-frame-ver="5"></canvas>
         <div class="sc-vignette" aria-hidden="true"></div>
         <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
         <div class="sc-hint" id="scHint">
@@ -63,7 +63,7 @@ body{ background:var(--paper); }
           <div><dt>Frames</dt><dd>98 &mdash; 1 still, 48 explode+turn, 1 frozen hold, 48 reassemble+turn</dd></div>
           <div><dt>Camera</dt><dd>Turns one direction throughout &mdash; 0&deg;&rarr;150&deg; exploding, 150&deg;&rarr;300&deg; reassembling</dd></div>
           <div><dt>Callouts</dt><dd>6, this model's own list from product-3d-showcase.js &mdash; not re-derived</dd></div>
-          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 32 samples, denoised, GPU (OptiX)</dd></div>
+          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 32 samples, 1440&times;1920, denoised, GPU (OptiX)</dd></div>
         </dl>
       </div>
     </div>
@@ -72,6 +72,6 @@ body{ background:var(--paper); }
 
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
-<script src="assets/scripts/hero-scroll-theatre.js?v=4" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=5" defer></script>
 </body>
 </html>
