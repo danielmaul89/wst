@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Battery packs, floating | WS Technicals</title>
+<meta name="description" content="An alternative Battery packs page: the production models, live, floating down the page.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<style>
+body{ background:var(--paper); }
+
+/* One fixed layer holds the canvas every pack is drawn on, with a soft
+   shadow under each. It sits under the page's words and over its
+   background, and the closing band and footer sit over it in turn. */
+.float-stage{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+.float-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.float-shadow{
+  position:absolute; left:0; top:0; opacity:0; border-radius:50%;
+  background:radial-gradient(closest-side, rgba(10,20,50,.5), rgba(10,20,50,.18) 55%, rgba(10,20,50,0) 100%);
+  will-change:transform,opacity;
+}
+
+.float-hero,
+.float-flow{ position:relative; z-index:2; }
+.float-after,
+[data-wst-footer]{ position:relative; z-index:3; }
+
+.float-flow{ padding:0 0 var(--sp-6); }
+
+/* Each row is a stage-height slot for one pack, with its name opposite. The
+   pack itself is drawn on the canvas above; the still inside the slot is
+   what shows until it has loaded, and for anyone who cannot run it. */
+.float-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:var(--sp-5);
+  min-height:clamp(560px, 86vh, 860px);
+}
+.float-row--model-right .float-slot{ order:2; }
+.float-slot{ position:relative; width:100%; max-width:560px; aspect-ratio:1 / 1; justify-self:center; }
+.float-poster{
+  width:100%; height:100%; object-fit:contain; display:block;
+  transition:opacity .9s var(--ease);
+}
+.float-row.is-live .float-poster{ opacity:0; }
+.float-copy{ max-width:30ch; justify-self:start; }
+.float-row--model-right .float-copy{ justify-self:end; text-align:left; }
+.float-copy h2{ margin:0 0 var(--sp-2); }
+
+@media (prefers-reduced-motion:no-preference){
+  .float-row:not(.is-live) .float-poster{ animation:float-bob 7s ease-in-out infinite; }
+  .float-row:nth-child(even):not(.is-live) .float-poster{ animation-delay:-3s; }
+}
+@keyframes float-bob{
+  0%,100%{ transform:translateY(-8px); }
+  50%{ transform:translateY(10px); }
+}
+
+@media (max-width:767px){
+  .float-row{ grid-template-columns:1fr; min-height:0; gap:var(--sp-2); padding:var(--sp-4) 0; }
+  .float-row--model-right .float-slot{ order:0; }
+  .float-slot{ width:84%; justify-self:start; }
+  .float-row--model-right .float-slot{ justify-self:end; }
+  .float-copy{ max-width:none; }
+  .float-row--model-right .float-copy{ justify-self:start; }
+}
+</style>
+</head>
+<body data-wst-page="solutions">
+<div data-wst-header></div>
+<main>
+
+<div class="float-stage" id="floatStage" aria-hidden="true"></div>
+
+<section class="wst-page-hero wst-page-hero--text-only float-hero">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <span class="eyebrow">Battery packs</span>
+      <h1 class="t-display">The packs we build.</h1>
+      <p class="wst-page-hero-intro">Production platforms, drawn and assembled in house. Scroll to watch them come through.</p>
+    </div>
+  </div>
+</section>
+
+<div class="float-flow">
+  <div class="container">
+
+    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-side="left" data-float-fit="0.95">
+      <div class="float-slot">
+        <img class="float-poster" src="assets/products/packs/compact-platform.png" alt="Compact battery platform" decoding="async">
+      </div>
+      <div class="float-copy">
+        <h2 class="t-subsection">Compact battery platform</h2>
+        <a class="wst-link-arrow" href="pack-compact-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-side="right" data-float-fit="1.05">
+      <div class="float-slot">
+        <img class="float-poster" src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform" loading="lazy" decoding="async">
+      </div>
+      <div class="float-copy">
+        <h2 class="t-subsection">Heavy machinery platform</h2>
+        <a class="wst-link-arrow" href="pack-heavy-machinery-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-side="left" data-float-fit="1.2">
+      <div class="float-slot">
+        <img class="float-poster" src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
+      </div>
+      <div class="float-copy">
+        <h2 class="t-subsection">UPS platform</h2>
+        <a class="wst-link-arrow" href="pack-ups-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-side="right" data-float-fit="1.0">
+      <div class="float-slot">
+        <img class="float-poster" src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
+      </div>
+      <div class="float-copy">
+        <h2 class="t-subsection">AGV platform</h2>
+        <a class="wst-link-arrow" href="pack-agv-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-side="left" data-float-fit="0.8">
+      <div class="float-slot">
+        <img class="float-poster" src="assets/products/packs/heavy-machinery-chassis.png" alt="Heavy machinery battery chassis" loading="lazy" decoding="async">
+      </div>
+      <div class="float-copy">
+        <h2 class="t-subsection">Heavy machinery chassis</h2>
+        <a class="wst-link-arrow" href="pack-heavy-machinery-chassis.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="float-after">
+  <section class="wst-cta-band">
+    <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
+    <div class="container">
+      <h2>Talk to us about your next project.</h2>
+      <p>None of these is a catalogue part. Bring us the machine, its duty cycle and the space the pack has to live in.</p>
+      <div class="wst-cta-band-actions">
+        <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=nav7"></script>
+<script src="assets/vendor/three.r128.min.js" defer></script>
+<script src="assets/vendor/fflate.min.js" defer></script>
+<script src="assets/scripts/wstm-loader.js?v=3" defer></script>
+<script src="assets/scripts/pack-float.js?v=1" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
+</body>
+</html>
