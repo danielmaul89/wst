@@ -1088,6 +1088,11 @@ textarea:focus {
   color:#9da4b8 !important;
   font-weight:600 !important;
 }
+.footer .footer-col h4 a{
+  color:inherit !important;
+  font:inherit;
+  opacity:1 !important;
+}
 
 @media (max-width:640px){
   .footer{
