@@ -222,6 +222,14 @@
   fill.position.set(-4, 1.5, 6);
   scene.add(fill);
 
+  /* Behind everything the canvas draws: the backdrop and its drawing grid. */
+  var backdrop = document.createElement('div');
+  backdrop.className = 'float-backdrop';
+  var grid = document.createElement('div');
+  grid.className = 'float-grid';
+  stage.insertBefore(grid, stage.firstChild);
+  stage.insertBefore(backdrop, stage.firstChild);
+
   var SVGNS = 'http://www.w3.org/2000/svg';
   var leaders = document.createElementNS(SVGNS, 'svg');
   leaders.setAttribute('class', 'float-leaders');
@@ -263,6 +271,9 @@
       index: i,
       yaw0: -side * 0.55,
       holdYaw: parseFloat(row.getAttribute('data-float-yaw')),
+      accent: (row.getAttribute('data-float-accent') || '15,42,92').split(',').map(Number),
+      sx: 0,
+      sy: 0,
       parts: [],
       callouts: [],
       openHalfY: 1,
@@ -440,6 +451,51 @@
     if (best) load(best);
   }
 
+  /* The backdrop follows whichever pack the page is nearest: its tint, a
+     spotlight on it, and a grid that comes up as it opens. Values are
+     rounded and only written when they change, since each write repaints a
+     screen-sized gradient. */
+  var lastPaint = '';
+  function paintBackdrop() {
+    var wSum = 0, r = 0, g = 0, b = 0, o = 0, gx = 0, gy = 0;
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      var w = smooth(1 - Math.abs(e.s));
+      if (w <= 0) continue;
+      wSum += w;
+      r += w * e.accent[0]; g += w * e.accent[1]; b += w * e.accent[2];
+      o += w * Math.max(e.open, 0);
+      gx += w * e.sx; gy += w * e.sy;
+    }
+    var tint, tintA, glowA, gridA, glowX, glowY;
+    if (wSum < 0.001) {
+      tint = '15,42,92'; tintA = 0.2; glowA = 0.45; gridA = 0; glowX = W / 2; glowY = H * 0.4;
+    } else {
+      var open = o / wSum;
+      tint = Math.round(r / wSum) + ',' + Math.round(g / wSum) + ',' + Math.round(b / wSum);
+      tintA = 0.36 + 0.16 * open;
+      glowA = 0.5 + 0.4 * open;
+      gridA = open;
+      glowX = gx / wSum; glowY = gy / wSum;
+    }
+    var sy = window.scrollY || 0;
+    var bx = (10 + 14 * Math.sin(sy / 1300)).toFixed(1);
+    var by = (6 + 10 * Math.cos(sy / 1700)).toFixed(1);
+    var key = [tint, tintA.toFixed(3), glowA.toFixed(3), gridA.toFixed(3), Math.round(glowX), Math.round(glowY), bx, by].join('|');
+    if (key === lastPaint) return;
+    lastPaint = key;
+    var st = stage.style;
+    st.setProperty('--tint', tint);
+    st.setProperty('--tint-a', tintA.toFixed(3));
+    st.setProperty('--tint2-a', (0.26 + 0.1 * gridA).toFixed(3));
+    st.setProperty('--glow-a', glowA.toFixed(3));
+    st.setProperty('--grid-a', gridA.toFixed(3));
+    st.setProperty('--glow-x', Math.round(glowX) + 'px');
+    st.setProperty('--glow-y', Math.round(glowY) + 'px');
+    st.setProperty('--bx', bx + '%');
+    st.setProperty('--by', by + '%');
+  }
+
   function hideLeaders(e) {
     for (var j = 0; j < e.callouts.length; j++) {
       e.callouts[j].path.style.opacity = '0';
@@ -459,6 +515,8 @@
       var r = e.slot.getBoundingClientRect();
       var cx0 = r.left + r.width / 2;
       var cy0 = r.top + r.height / 2;
+      e.sx = cx0;
+      e.sy = cy0;
       /* 0 with the slot centred on the screen, 1 as it reaches the bottom
          edge, -1 as it leaves at the top. */
       var s = (cy0 - H / 2) / (H / 2 + r.height / 2);
@@ -563,6 +621,7 @@
       }
     }
 
+    paintBackdrop();
     pump();
     if (any || drewLast) renderer.render(scene, camera);
     drewLast = any;
