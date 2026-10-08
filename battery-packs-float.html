@@ -14,7 +14,14 @@
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
-body{ background:var(--paper); }
+/* Not a flat sheet: two soft washes sit on the paper even where the live
+   backdrop below is not running (phones, reduced motion). */
+body{
+  background:
+    radial-gradient(70vmax 60vmax at 8% 0%, rgba(40,90,190,.10), rgba(40,90,190,0) 100%) fixed,
+    radial-gradient(60vmax 50vmax at 96% 100%, rgba(185,154,114,.16), rgba(185,154,114,0) 100%) fixed,
+    var(--paper);
+}
 
 /* One fixed layer holds the canvas every pack is drawn on, the soft shadow
    under each, and the lines from the named parts to their labels. It sits
@@ -26,6 +33,25 @@ body{ background:var(--paper); }
   position:absolute; left:0; top:0; opacity:0; border-radius:50%;
   background:radial-gradient(closest-side, rgba(10,20,50,.5), rgba(10,20,50,.18) 55%, rgba(10,20,50,0) 100%);
   will-change:transform,opacity;
+}
+/* The backdrop is driven from the script: the tint blends from one pack to the
+   next as the page moves, a spotlight follows the pack and brightens as it
+   opens, and a faint drawing grid comes up behind it while it is apart. */
+.float-backdrop{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(60vmax 50vmax at var(--glow-x,50%) var(--glow-y,40%), rgba(255,255,255,var(--glow-a,.5)), rgba(255,255,255,0) 100%),
+    radial-gradient(80vmax 70vmax at var(--bx,10%) var(--by,0%), rgba(var(--tint,15,42,92),var(--tint-a,.1)), rgba(var(--tint,15,42,92),0) 100%),
+    radial-gradient(70vmax 60vmax at calc(100% - var(--bx,10%)) calc(100% - var(--by,0%)), rgba(185,154,114,var(--tint2-a,.14)), rgba(185,154,114,0) 100%),
+    var(--paper);
+}
+.float-grid{
+  position:absolute; inset:0; opacity:var(--grid-a,0);
+  background-image:
+    repeating-linear-gradient(to right, rgba(6,8,26,.09) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(to bottom, rgba(6,8,26,.09) 0 1px, transparent 1px 56px);
+  -webkit-mask-image:radial-gradient(closest-side at var(--glow-x,50%) var(--glow-y,40%), #000, transparent 100%);
+  mask-image:radial-gradient(closest-side at var(--glow-x,50%) var(--glow-y,40%), #000, transparent 100%);
 }
 .float-leaders{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
 .float-leader{ fill:none; stroke:var(--ink); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
@@ -138,7 +164,7 @@ html.float-3d .float-poster{ animation:none; }
 <div class="float-flow">
   <div class="container">
 
-    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-key="compact" data-float-side="left" data-float-fit="0.95">
+    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-key="compact" data-float-accent="40,90,190" data-float-side="left" data-float-fit="0.95">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/compact-platform.png" alt="Compact battery platform" decoding="async">
@@ -152,7 +178,7 @@ html.float-3d .float-poster{ animation:none; }
       </div>
     </section>
 
-    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-key="heavy-machinery" data-float-side="right" data-float-fit="1.05">
+    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-key="heavy-machinery" data-float-accent="185,154,114" data-float-side="right" data-float-fit="1.05">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform" loading="lazy" decoding="async">
@@ -166,7 +192,7 @@ html.float-3d .float-poster{ animation:none; }
       </div>
     </section>
 
-    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-key="ups" data-float-side="left" data-float-fit="1.2">
+    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-key="ups" data-float-accent="30,130,150" data-float-side="left" data-float-fit="1.2">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
@@ -180,7 +206,7 @@ html.float-3d .float-poster{ animation:none; }
       </div>
     </section>
 
-    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-key="agv" data-float-side="right" data-float-fit="1.0">
+    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-key="agv" data-float-accent="90,100,190" data-float-side="right" data-float-fit="1.0">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
@@ -194,7 +220,7 @@ html.float-3d .float-poster{ animation:none; }
       </div>
     </section>
 
-    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-key="chassis" data-float-side="left" data-float-fit="0.8">
+    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-key="chassis" data-float-accent="200,120,60" data-float-side="left" data-float-fit="0.8">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/heavy-machinery-chassis.png" alt="Heavy machinery battery chassis" loading="lazy" decoding="async">
@@ -230,7 +256,7 @@ html.float-3d .float-poster{ animation:none; }
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/pack-float.js?v=4" defer></script>
+<script src="assets/scripts/pack-float.js?v=5" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
