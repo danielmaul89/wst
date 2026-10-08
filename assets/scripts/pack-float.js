@@ -1,6 +1,6 @@
-/* Battery packs, floating: the five production models, live, drifting down
-   the page - one to the left, the next to the right - and each one folding
-   fully apart, with its real parts named, as the page scrolls through it.
+/* Battery packs, live: the five production models down the page - one to the
+   left, the next to the right - each standing still until the page reaches
+   it, then spinning and folding fully apart with its real parts named.
 
    One fixed, full-screen canvas draws every model, so a pack is never
    clipped to its own box and only one WebGL context is paid for. Each pack's
@@ -8,10 +8,10 @@
    where its pack floats, and the scroll position through the row drives the
    sequence:
 
-     arrive      sweeps in from the opposite side, assembled
-     fold out    the layers part, the pack turns to its showing angle
+     rest        stands still in its slot, assembled
+     fold out    one full turn as the layers part, ending at its showing angle
      details     parts are named one by one, a line to each real part
-     close up    the layers return, the name comes back, the pack moves on
+     close up    the layers return as it turns once more, the name comes back
 
    The still render in each slot stays until its model has loaded. Models
    load one at a time, nearest first, so a visitor is never waiting on the
@@ -41,12 +41,6 @@
   /* How far a layer travels when the pack is fully apart, as a share of the
      pack's own size. */
   var LAYER_LIFT = 0.55;
-  /* Sideways travel as a share of the screen width: how far from the other
-     side a pack sweeps in, and how far outward it drifts on its way out. */
-  var SWEEP_IN = 0.2;
-  var DRIFT_OUT = 0.08;
-  /* The packs trail the page a little, which is what makes them float. */
-  var TRAIL = 0.12;
 
   var GENERIC_TIERS = [
     { test: 'lid', y: 4.05 }, { test: 'cover', y: 4.05 },
@@ -267,7 +261,7 @@
       fit: parseFloat(row.getAttribute('data-float-fit')) || 1.2,
       side: side,
       index: i,
-      yaw0: -side * 0.55 + i * 0.4,
+      yaw0: -side * 0.55,
       holdYaw: parseFloat(row.getAttribute('data-float-yaw')),
       parts: [],
       callouts: [],
@@ -487,29 +481,27 @@
       }
       any = true;
 
-      var t = Math.max(-1, Math.min(1, s));
-      var settle = 1 - smooth(Math.abs(t));
       var born = easeInOutCubic(clamp01((now - e.bornAt) / 900));
       var diameter = Math.min(r.width, r.height) * 0.96;
 
       /* The fold: apart between 14% and 40% of the way through, held, and
          back together by 96%. */
-      var open = Math.min(smooth((p - 0.14) / 0.26), 1 - smooth((p - 0.84) / 0.12));
+      var fold = smooth((p - 0.14) / 0.26);
+      var close = smooth((p - 0.84) / 0.12);
+      var open = Math.min(fold, 1 - close);
       if (Math.abs(open - e.open) > 0.002) {
         e.open = open;
         applyOpen(e, open);
       }
 
-      var enter = t > 0 ? smooth(t) : 0;
-      var leave = t < 0 ? smooth(-t) : 0;
-      var cx = cx0 + (-e.side * SWEEP_IN * enter + e.side * DRIFT_OUT * leave) * W;
-      var bob = Math.sin(now / 1000 * 0.8 + e.index * 1.3) * diameter * 0.018 * (1 - open);
-      var cy = cy0 - TRAIL * (cy0 - H / 2) + bob;
+      /* It stands where its slot is and moves with the page, nothing more. */
+      var cx = cx0;
+      var cy = cy0;
 
       /* Together it is sized to its slot; apart it is taller than it is wide
          and is given the height of the screen instead, held back from the
          edges by the width it can have beside the names. */
-      var sizeClosed = diameter / 2 * e.fit * (0.84 + 0.16 * settle) * (0.88 + 0.12 * born);
+      var sizeClosed = diameter / 2 * e.fit * (0.88 + 0.12 * born);
       var sizeOpen = Math.min(H * 0.74 / (2 * e.openHalfY), W * 0.46 / (2 * e.openReach)) * (0.88 + 0.12 * born);
       var shrink = smooth(open * 1.5);
       var size = (sizeClosed + (sizeOpen - sizeClosed) * shrink) * wpp;
@@ -518,22 +510,23 @@
       g.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp - e.openCentreY * size * open, 0);
       g.scale.setScalar(size);
 
-      /* Turns freely while it travels; as it opens it comes round to the
-         angle it is shown at and holds there, so the lines stay on their parts. */
-      var yawFree = e.yaw0 - t * 1.6 + now / 1000 * 0.1;
-      g.rotation.y = yawFree + wrapAngle(e.holdYaw - yawFree) * open;
-      g.rotation.x = (0.3 - 0.1 * t) + (0.22 - (0.3 - 0.1 * t)) * open;
+      /* Still at its resting angle until the row pins. Then one full turn as it
+         folds out, ending at the angle it is shown at, and one more as it closes,
+         ending back at rest: the same direction throughout, so it never winds back. */
+      var toHold = wrapAngle(e.holdYaw - e.yaw0);
+      g.rotation.y = e.yaw0 + (Math.PI * 2 + toHold) * fold + (Math.PI * 2 - toHold) * close;
+      g.rotation.x = 0.3 + (0.22 - 0.3) * open;
 
       var sw = diameter * 0.92;
       var sh = diameter * 0.15;
       e.shadow.style.width = sw + 'px';
       e.shadow.style.height = sh + 'px';
       e.shadow.style.transform = 'translate3d(' + (cx - sw / 2).toFixed(1) + 'px,' + (cy + diameter * 0.5 + open * (H * 0.42 - diameter * 0.5) - sh / 2).toFixed(1) + 'px,0)';
-      e.shadow.style.opacity = (0.55 * born * (0.35 + 0.65 * settle) * (1 - open * 0.7)).toFixed(3);
+      e.shadow.style.opacity = (0.55 * born * (1 - open * 0.7)).toFixed(3);
 
       /* The name leaves as the pack opens and comes back as it closes. */
       var nameOn = Math.max(1 - smooth((p - 0.1) / 0.1), smooth((p - 0.94) / 0.05));
-      e.copy.style.opacity = (nameOn * (1 - smooth((Math.abs(t) - 0.15) / 0.6))).toFixed(3);
+      e.copy.style.opacity = nameOn.toFixed(3);
 
       /* The details: one part named after another while it holds. */
       var n = e.callouts.length;
