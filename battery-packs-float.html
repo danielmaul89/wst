@@ -13,6 +13,11 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p2u">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<script>
+/* Decided before anything paints: where the page will run live, the still
+   renders are never shown, so they cannot flash up and vanish. */
+(function(){var d=document.documentElement;if(window.innerWidth>=768&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&!(navigator.connection&&navigator.connection.saveData))d.classList.add("float-pending");setTimeout(function(){if(!d.classList.contains("float-3d"))d.classList.remove("float-pending");},8000);})();
+</script>
 <style>
 /* Not a flat sheet: two soft washes sit on the paper even where the live
    backdrop below is not running (phones, reduced motion). */
@@ -120,7 +125,9 @@ body{
 
 html.float-3d .float-row{ height:380vh; }
 html.float-3d .float-pin{ position:sticky; top:0; height:100vh; height:100svh; min-height:0; }
-html.float-3d .float-poster{ animation:none; }
+html.float-pending .float-poster,
+html.float-3d .float-poster{ opacity:0; animation:none; }
+.float-row.is-failed .float-poster{ opacity:1; }
 
 @media (prefers-reduced-motion:no-preference){
   html:not(.float-3d) .float-row:not(.is-live) .float-poster{ animation:float-bob 7s ease-in-out infinite; }
@@ -256,7 +263,7 @@ html.float-3d .float-poster{ animation:none; }
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/pack-float.js?v=5" defer></script>
+<script src="assets/scripts/pack-float.js?v=6" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
