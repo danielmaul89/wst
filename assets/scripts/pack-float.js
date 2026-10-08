@@ -24,17 +24,23 @@
 (function () {
   'use strict';
 
+  /* The page hides its still renders from the start whenever it expects to
+     run live (see the script in its head), so that they never flash up and
+     vanish. Anything that stops it running puts them back. */
+  var root = document.documentElement;
+  function bail() { root.classList.remove('float-pending'); }
+
   var rows = Array.prototype.slice.call(document.querySelectorAll('[data-float-model]'));
   var stage = document.getElementById('floatStage');
-  if (!rows.length || !stage) return;
+  if (!rows.length || !stage) return bail();
 
   var THREE = window.THREE;
-  if (!THREE || !window.WSTMLoader) return;
+  if (!THREE || !window.WSTMLoader) return bail();
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var saveData = navigator.connection && navigator.connection.saveData;
   var narrow = window.matchMedia('(max-width: 767px)').matches;
-  if (reduceMotion || saveData || narrow) return;
+  if (reduceMotion || saveData || narrow) return bail();
 
   var FOV = 22;
   var DIST = 22;
@@ -173,7 +179,7 @@
   try {
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
   } catch (e) {
-    return;
+    return bail();
   }
   /* The tall, pinned layout only applies once the pack can actually be shown. */
   document.documentElement.classList.add('float-3d');
@@ -433,7 +439,7 @@
           build(e, window.WSTMLoader.parse(buffer));
         });
       })
-      .catch(function () { e.failed = true; })
+      .catch(function () { e.failed = true; e.row.classList.add('is-failed'); })
       .then(function () { busy = false; e.loading = false; });
   }
 
@@ -528,10 +534,21 @@
       var travel = rr.height - H;
       var p = travel > 0 ? clamp01(-rr.top / travel) : 0;
 
+      var diameter = Math.min(r.width, r.height) * 0.96;
       var visible = e.ready && Math.abs(s) < 1.25;
       e.group.visible = visible;
       if (!visible) {
-        e.shadow.style.opacity = '0';
+        /* While a pack is still on its way, its slot holds only the soft shadow
+           it will stand on, breathing slowly - not a picture of something else. */
+        if (!e.ready && !e.failed && Math.abs(s) < 1.2) {
+          var psw = diameter * 0.92, psh = diameter * 0.15;
+          e.shadow.style.width = psw + 'px';
+          e.shadow.style.height = psh + 'px';
+          e.shadow.style.transform = 'translate3d(' + (cx0 - psw / 2).toFixed(1) + 'px,' + (cy0 + diameter * 0.5 - psh / 2).toFixed(1) + 'px,0)';
+          e.shadow.style.opacity = (0.16 + 0.07 * Math.sin(now / 520)).toFixed(3);
+        } else {
+          e.shadow.style.opacity = '0';
+        }
         e.copy.style.opacity = '1';
         e.details.style.visibility = 'hidden';
         hideLeaders(e);
@@ -540,7 +557,6 @@
       any = true;
 
       var born = easeInOutCubic(clamp01((now - e.bornAt) / 900));
-      var diameter = Math.min(r.width, r.height) * 0.96;
 
       /* The fold: apart between 14% and 40% of the way through, held, and
          back together by 96%. */
@@ -568,11 +584,9 @@
       g.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp - e.openCentreY * size * open, 0);
       g.scale.setScalar(size);
 
-      /* Still at its resting angle until the row pins. Then one full turn as it
-         folds out, ending at the angle it is shown at, and one more as it closes,
-         ending back at rest: the same direction throughout, so it never winds back. */
-      var toHold = wrapAngle(e.holdYaw - e.yaw0);
-      g.rotation.y = e.yaw0 + (Math.PI * 2 + toHold) * fold + (Math.PI * 2 - toHold) * close;
+      /* Still at its resting angle until the row pins. Then a gentle turn to the
+         angle it is shown at as it folds out, and back again as it closes. */
+      g.rotation.y = e.yaw0 + wrapAngle(e.holdYaw - e.yaw0) * (fold - close);
       g.rotation.x = 0.3 + (0.22 - 0.3) * open;
 
       var sw = diameter * 0.92;
@@ -580,7 +594,7 @@
       e.shadow.style.width = sw + 'px';
       e.shadow.style.height = sh + 'px';
       e.shadow.style.transform = 'translate3d(' + (cx - sw / 2).toFixed(1) + 'px,' + (cy + diameter * 0.5 + open * (H * 0.42 - diameter * 0.5) - sh / 2).toFixed(1) + 'px,0)';
-      e.shadow.style.opacity = (0.55 * born * (1 - open * 0.7)).toFixed(3);
+      e.shadow.style.opacity = (0.55 * (0.3 + 0.7 * born) * (1 - open * 0.7)).toFixed(3);
 
       /* The name leaves as the pack opens and comes back as it closes. */
       var nameOn = Math.max(1 - smooth((p - 0.1) / 0.1), smooth((p - 0.94) / 0.05));
