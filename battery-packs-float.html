@@ -39,24 +39,27 @@ body{
   background:radial-gradient(closest-side, rgba(10,20,50,.5), rgba(10,20,50,.18) 55%, rgba(10,20,50,0) 100%);
   will-change:transform,opacity;
 }
-/* The backdrop is driven from the script: the tint blends from one pack to the
-   next as the page moves, a spotlight follows the pack and brightens as it
-   opens, and a faint drawing grid comes up behind it while it is apart. */
+/* The backdrop is driven from the script: one tint layer per pack whose opacity
+   blends as the page moves, a spotlight that follows the pack and brightens as
+   it opens, and a faint drawing grid while it is apart. Only transforms and
+   opacity change, so it moves on the compositor and never repaints. */
 .float-backdrop{
   position:absolute; inset:0;
-  background:
-    radial-gradient(60vmax 50vmax at var(--glow-x,50%) var(--glow-y,40%), rgba(255,255,255,var(--glow-a,.5)), rgba(255,255,255,0) 100%),
-    radial-gradient(80vmax 70vmax at var(--bx,10%) var(--by,0%), rgba(var(--tint,15,42,92),var(--tint-a,.1)), rgba(var(--tint,15,42,92),0) 100%),
-    radial-gradient(70vmax 60vmax at calc(100% - var(--bx,10%)) calc(100% - var(--by,0%)), rgba(185,154,114,var(--tint2-a,.14)), rgba(185,154,114,0) 100%),
-    var(--paper);
+  background:radial-gradient(70vmax 60vmax at 100% 100%, rgba(185,154,114,.3), rgba(185,154,114,0) 100%), var(--paper);
+}
+.float-tints{ position:absolute; inset:-12%; will-change:transform; }
+.float-tint{ position:absolute; inset:0; opacity:0; will-change:opacity; }
+.float-glow{
+  position:absolute; left:0; top:0; opacity:0; border-radius:50%; will-change:transform,opacity;
+  background:radial-gradient(closest-side, rgba(255,255,255,1), rgba(255,255,255,0));
 }
 .float-grid{
-  position:absolute; inset:0; opacity:var(--grid-a,0);
+  position:absolute; left:0; top:0; opacity:0; will-change:transform,opacity;
   background-image:
     repeating-linear-gradient(to right, rgba(6,8,26,.09) 0 1px, transparent 1px 56px),
     repeating-linear-gradient(to bottom, rgba(6,8,26,.09) 0 1px, transparent 1px 56px);
-  -webkit-mask-image:radial-gradient(closest-side at var(--glow-x,50%) var(--glow-y,40%), #000, transparent 100%);
-  mask-image:radial-gradient(closest-side at var(--glow-x,50%) var(--glow-y,40%), #000, transparent 100%);
+  -webkit-mask-image:radial-gradient(closest-side, #000, transparent 100%);
+  mask-image:radial-gradient(closest-side, #000, transparent 100%);
 }
 .float-leaders{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
 .float-leader{ fill:none; stroke:var(--ink); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
@@ -263,7 +266,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/pack-float.js?v=6" defer></script>
+<script src="assets/scripts/pack-float.js?v=7" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
