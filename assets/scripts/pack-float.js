@@ -9,11 +9,12 @@
    sequence:
 
      rest        stands still in its slot, assembled
-     fold out    one full turn as the layers part, ending at its showing angle
+     fold out    a gentle turn to its showing angle as the layers part
      details     parts are named one by one, a line to each real part
-     close up    the layers return as it turns once more, the name comes back
+     close up    the layers return as it turns back, the name comes back
 
-   The still render in each slot stays until its model has loaded. Models
+   Until a model has loaded its slot holds only the soft shadow it will stand
+   on; the stills are shown only where this cannot run. Models
    load one at a time, nearest first, so a visitor is never waiting on the
    72 MB behind the one in view.
 
@@ -228,14 +229,6 @@
   fill.position.set(-4, 1.5, 6);
   scene.add(fill);
 
-  /* Behind everything the canvas draws: the backdrop and its drawing grid. */
-  var backdrop = document.createElement('div');
-  backdrop.className = 'float-backdrop';
-  var grid = document.createElement('div');
-  grid.className = 'float-grid';
-  stage.insertBefore(grid, stage.firstChild);
-  stage.insertBefore(backdrop, stage.firstChild);
-
   var SVGNS = 'http://www.w3.org/2000/svg';
   var leaders = document.createElementNS(SVGNS, 'svg');
   leaders.setAttribute('class', 'float-leaders');
@@ -295,6 +288,28 @@
   });
   entries.forEach(function (e) { if (isNaN(e.holdYaw)) e.holdYaw = e.side * 0.5; });
 
+  /* Behind everything the canvas draws. Moved with transforms and opacity
+     only, so scrolling never repaints a screen-sized gradient. */
+  function tintGradient(a) {
+    var c = a[0] + ',' + a[1] + ',' + a[2];
+    return 'radial-gradient(80vmax 70vmax at 14% 8%, rgba(' + c + ',.5), rgba(' + c + ',0) 100%)';
+  }
+  function layer(cls) { var d = document.createElement('div'); d.className = cls; return d; }
+  var backdrop = layer('float-backdrop');
+  var tintsWrap = layer('float-tints');
+  var tintEls = entries.map(function (e) {
+    var d = layer('float-tint');
+    d.style.background = tintGradient(e.accent);
+    tintsWrap.appendChild(d);
+    return d;
+  });
+  var heroTint = layer('float-tint');
+  heroTint.style.background = tintGradient([15, 42, 92]);
+  tintsWrap.appendChild(heroTint);
+  var glow = layer('float-glow');
+  var grid = layer('float-grid');
+  [grid, glow, tintsWrap, backdrop].forEach(function (el) { stage.insertBefore(el, stage.firstChild); });
+
   stage.appendChild(renderer.domElement);
   renderer.domElement.className = 'float-canvas';
   renderer.domElement.setAttribute('aria-hidden', 'true');
@@ -321,8 +336,10 @@
   function applyOpen(e, open) {
     for (var i = 0; i < e.parts.length; i++) {
       var p = e.parts[i];
-      var own = easeInOutCubic(clamp01(((1 - open) - p.delay) / (1 - p.delay)));
-      p.mesh.position.copy(p.basePos).addScaledVector(p.delta, 1 - own);
+      /* `open` arrives already linear in the scroll; this is the only easing the
+         parts get, and the lid and harness simply finish sooner than the cells. */
+      var apart = smooth(clamp01(open / (1 - p.delay)));
+      p.mesh.position.copy(p.basePos).addScaledVector(p.delta, apart);
     }
   }
 
@@ -457,49 +474,39 @@
     if (best) load(best);
   }
 
-  /* The backdrop follows whichever pack the page is nearest: its tint, a
-     spotlight on it, and a grid that comes up as it opens. Values are
-     rounded and only written when they change, since each write repaints a
-     screen-sized gradient. */
-  var lastPaint = '';
+  /* The backdrop follows whichever pack the page is nearest: its tint fades up
+     as the page reaches it and down as it leaves, a spotlight sits behind it
+     and brightens as it opens, and a grid comes up while it is apart. Every
+     write is a transform or an opacity, which the browser composites without
+     repainting anything. */
   function paintBackdrop() {
-    var wSum = 0, r = 0, g = 0, b = 0, o = 0, gx = 0, gy = 0;
-    for (var i = 0; i < entries.length; i++) {
-      var e = entries[i];
-      var w = smooth(1 - Math.abs(e.s));
-      if (w <= 0) continue;
-      wSum += w;
-      r += w * e.accent[0]; g += w * e.accent[1]; b += w * e.accent[2];
-      o += w * Math.max(e.open, 0);
-      gx += w * e.sx; gy += w * e.sy;
+    var wSum = 0, oSum = 0, gx = 0, gy = 0, i, e;
+    for (i = 0; i < entries.length; i++) {
+      e = entries[i];
+      e.w = smooth(1 - Math.abs(e.s));
+      wSum += e.w;
+      oSum += e.w * (e.openE || 0);
+      gx += e.w * e.sx; gy += e.w * e.sy;
     }
-    var tint, tintA, glowA, gridA, glowX, glowY;
-    if (wSum < 0.001) {
-      tint = '15,42,92'; tintA = 0.2; glowA = 0.45; gridA = 0; glowX = W / 2; glowY = H * 0.4;
-    } else {
-      var open = o / wSum;
-      tint = Math.round(r / wSum) + ',' + Math.round(g / wSum) + ',' + Math.round(b / wSum);
-      tintA = 0.36 + 0.16 * open;
-      glowA = 0.5 + 0.4 * open;
-      gridA = open;
-      glowX = gx / wSum; glowY = gy / wSum;
+    var norm = Math.max(1, wSum);
+    for (i = 0; i < entries.length; i++) {
+      e = entries[i];
+      tintEls[i].style.opacity = (e.w / norm * (0.72 + 0.28 * (e.openE || 0))).toFixed(3);
     }
+    heroTint.style.opacity = (0.8 * (1 - Math.min(1, wSum))).toFixed(3);
+    var open = wSum > 0.001 ? oSum / wSum : 0;
+    var glowX = wSum > 0.001 ? gx / wSum : W / 2;
+    var glowY = wSum > 0.001 ? gy / wSum : H * 0.4;
+    var gs = Math.max(W, H) * 1.3;
+    glow.style.width = glow.style.height = gs + 'px';
+    glow.style.transform = 'translate3d(' + (glowX - gs / 2).toFixed(0) + 'px,' + (glowY - gs / 2).toFixed(0) + 'px,0)';
+    glow.style.opacity = (0.5 + 0.4 * open).toFixed(3);
+    var gg = Math.min(W, H) * 1.6;
+    grid.style.width = grid.style.height = gg + 'px';
+    grid.style.transform = 'translate3d(' + (glowX - gg / 2).toFixed(0) + 'px,' + (glowY - gg / 2).toFixed(0) + 'px,0)';
+    grid.style.opacity = open.toFixed(3);
     var sy = window.scrollY || 0;
-    var bx = (10 + 14 * Math.sin(sy / 1300)).toFixed(1);
-    var by = (6 + 10 * Math.cos(sy / 1700)).toFixed(1);
-    var key = [tint, tintA.toFixed(3), glowA.toFixed(3), gridA.toFixed(3), Math.round(glowX), Math.round(glowY), bx, by].join('|');
-    if (key === lastPaint) return;
-    lastPaint = key;
-    var st = stage.style;
-    st.setProperty('--tint', tint);
-    st.setProperty('--tint-a', tintA.toFixed(3));
-    st.setProperty('--tint2-a', (0.26 + 0.1 * gridA).toFixed(3));
-    st.setProperty('--glow-a', glowA.toFixed(3));
-    st.setProperty('--grid-a', gridA.toFixed(3));
-    st.setProperty('--glow-x', Math.round(glowX) + 'px');
-    st.setProperty('--glow-y', Math.round(glowY) + 'px');
-    st.setProperty('--bx', bx + '%');
-    st.setProperty('--by', by + '%');
+    tintsWrap.style.transform = 'translate3d(' + (W * 0.04 * Math.sin(sy / 1300)).toFixed(0) + 'px,' + (H * 0.04 * Math.cos(sy / 1700)).toFixed(0) + 'px,0)';
   }
 
   function hideLeaders(e) {
@@ -511,8 +518,11 @@
 
   var _v = new THREE.Vector3();
   var drewLast = false;
+  var lastNow = 0;
   function frame(now) {
     requestAnimationFrame(frame);
+    var dt = lastNow ? Math.min((now - lastNow) / 1000, 0.05) : 0.016;
+    lastNow = now;
     var any = false;
     var vis = 0;
 
@@ -532,7 +542,11 @@
          pinned, so this runs 0 to 1 while the pack holds the screen. */
       var rr = e.row.getBoundingClientRect();
       var travel = rr.height - H;
-      var p = travel > 0 ? clamp01(-rr.top / travel) : 0;
+      var pTarget = travel > 0 ? clamp01(-rr.top / travel) : 0;
+      /* The page moves in wheel-sized steps; the pack glides to where the page
+         is instead of jumping with it. */
+      e.ps = e.ps === undefined ? pTarget : e.ps + (pTarget - e.ps) * (1 - Math.exp(-dt * 9));
+      var p = e.ps;
 
       var diameter = Math.min(r.width, r.height) * 0.96;
       var visible = e.ready && Math.abs(s) < 1.25;
@@ -560,12 +574,12 @@
 
       /* The fold: apart between 14% and 40% of the way through, held, and
          back together by 96%. */
-      var fold = smooth((p - 0.14) / 0.26);
-      var close = smooth((p - 0.84) / 0.12);
-      var open = Math.min(fold, 1 - close);
-      if (Math.abs(open - e.open) > 0.002) {
-        e.open = open;
-        applyOpen(e, open);
+      var openRaw = Math.min(clamp01((p - 0.12) / 0.3), 1 - clamp01((p - 0.82) / 0.14));
+      var open = smooth(openRaw);
+      e.openE = open;
+      if (Math.abs(openRaw - e.open) > 0.0015) {
+        e.open = openRaw;
+        applyOpen(e, openRaw);
       }
 
       /* It stands where its slot is and moves with the page, nothing more. */
@@ -577,7 +591,7 @@
          edges by the width it can have beside the names. */
       var sizeClosed = diameter / 2 * e.fit * (0.88 + 0.12 * born);
       var sizeOpen = Math.min(H * 0.74 / (2 * e.openHalfY), W * 0.46 / (2 * e.openReach)) * (0.88 + 0.12 * born);
-      var shrink = smooth(open * 1.5);
+      var shrink = clamp01(open * 1.25);
       var size = (sizeClosed + (sizeOpen - sizeClosed) * shrink) * wpp;
 
       var g = e.group;
@@ -586,7 +600,7 @@
 
       /* Still at its resting angle until the row pins. Then a gentle turn to the
          angle it is shown at as it folds out, and back again as it closes. */
-      g.rotation.y = e.yaw0 + wrapAngle(e.holdYaw - e.yaw0) * (fold - close);
+      g.rotation.y = e.yaw0 + wrapAngle(e.holdYaw - e.yaw0) * open;
       g.rotation.x = 0.3 + (0.22 - 0.3) * open;
 
       var sw = diameter * 0.92;
