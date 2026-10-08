@@ -1,17 +1,24 @@
 /* Battery packs, floating: the five production models, live, drifting down
-   the page - one to the left, the next to the right.
+   the page - one to the left, the next to the right - and each one folding
+   fully apart, with its real parts named, as the page scrolls through it.
 
    One fixed, full-screen canvas draws every model, so a pack is never
-   clipped to its own box and only one WebGL context is paid for. Each row
-   of the page carries an empty slot; every frame the slot's place on screen
-   says where its pack floats. Scroll does the rest: a pack sweeps in from
-   the opposite side, turns as it travels, lifts its layers slightly as it
-   reaches the middle of the screen and closes up again as it leaves.
+   clipped to its own box and only one WebGL context is paid for. Each pack's
+   row is tall and holds a pinned screen; the empty slot in that screen says
+   where its pack floats, and the scroll position through the row drives the
+   sequence:
+
+     arrive      sweeps in from the opposite side, assembled
+     fold out    the layers part, the pack turns to its showing angle
+     details     parts are named one by one, a line to each real part
+     close up    the layers return, the name comes back, the pack moves on
 
    The still render in each slot stays until its model has loaded. Models
    load one at a time, nearest first, so a visitor is never waiting on the
    72 MB behind the one in view.
 
+   Layers, part keywords and titles are the ones product-3d-showcase.js uses
+   for the same models, so what is named here is what that page names.
    Look and lighting follow home-hero-3d.js. Skipped (the stills simply
    stay) with no WebGL, reduced motion, data saver or a narrow screen. */
 (function () {
@@ -31,10 +38,9 @@
 
   var FOV = 22;
   var DIST = 22;
-  /* How far the layers open at the middle of the screen, as a share of the
-     distances the hero's full explode uses. */
-  var OPEN = 0.3;
-  var LAYER_LIFT = 0.82;
+  /* How far a layer travels when the pack is fully apart, as a share of the
+     pack's own size. */
+  var LAYER_LIFT = 0.55;
   /* Sideways travel as a share of the screen width: how far from the other
      side a pack sweeps in, and how far outward it drifts on its way out. */
   var SWEEP_IN = 0.2;
@@ -42,35 +48,122 @@
   /* The packs trail the page a little, which is what makes them float. */
   var TRAIL = 0.12;
 
-  var LAYER_TIERS = [
-    { test: 'lid', y: 4.0 }, { test: 'cover', y: 4.0 },
+  var GENERIC_TIERS = [
+    { test: 'lid', y: 4.05 }, { test: 'cover', y: 4.05 },
     { test: 'harness', y: 3.15 }, { test: 'cable', y: 3.15 }, { test: 'wire', y: 3.15 },
-    { test: 'connector', y: 3.15 }, { test: 'plug', y: 3.15 }, { test: 'socket', y: 3.15 },
-    { test: 'solder', y: 3.15 }, { test: 'ntc', y: 3.15 }, { test: 'board', y: 3.15 },
-    { test: 'pcb', y: 3.15 }, { test: 'fr4', y: 3.15 }, { test: 'cmu', y: 3.15 },
-    { test: 'bms', y: 3.15 }, { test: 'dzlr', y: 3.15 }, { test: 'foam', y: 3.15 },
-    { test: 'eva', y: 3.15 }, { test: 'rubber', y: 3.15 }, { test: 'gasket', y: 3.15 },
-    { test: 'seal', y: 3.15 }, { test: 'tape', y: 3.15 },
-    { test: 'top', y: 2.35 }, { test: 'busbar', y: 2.35 }, { test: 'terminal', y: 2.35 },
-    { test: 'bottom', y: 0.85 }, { test: 'holder', y: 0.85 }, { test: 'tray', y: 0.85 },
-    { test: 'divider', y: 0.85 }, { test: 'spacer', y: 0.85 },
-    { test: 'cell', y: 1.6 }, { test: 'battery', y: 1.6 }, { test: 'highstar', y: 1.6 },
-    { test: 'eve_c', y: 1.6 },
+    { test: 'connector', y: 3.15 }, { test: 'solder', y: 3.15 }, { test: 'ntc', y: 3.15 },
+    { test: 'board', y: 2.62 }, { test: 'pcb', y: 2.62 }, { test: 'fr4', y: 2.62 },
+    { test: 'cmu', y: 2.62 }, { test: 'bms', y: 2.62 }, { test: 'dzlr', y: 2.62 },
+    { test: 'tape', y: 2.2 }, { test: 'heatpad', y: 2.2 }, { test: 'eva', y: 2.2 },
+    { test: 'foam', y: 2.2 }, { test: 'rubber', y: 2.2 }, { test: 'epdm', y: 2.2 },
+    { test: 'seal', y: 2.2 },
+    { test: 'busbar', y: 2.05 }, { test: 'terminal', y: 2.05 },
+    { test: 'top', y: 1.78 },
+    { test: 'cell', y: 1.16 }, { test: 'highstar', y: 1.16 }, { test: 'inr2', y: 1.16 },
+    { test: 'eve_c', y: 1.16 },
+    { test: 'bottom', y: 0.6 }, { test: 'holder', y: 0.6 }, { test: 'tray', y: 0.6 },
+    { test: 'divider', y: 0.6 }, { test: 'spacer', y: 0.6 },
     { test: 'casing', anchor: true }, { test: 'enclosure', anchor: true },
-    { test: 'housing', anchor: true }, { test: 'chassis', anchor: true },
-    { test: 'shell', anchor: true }, { test: 'case', anchor: true }
+    { test: 'housing', anchor: true }, { test: 'case', anchor: true }
   ];
 
-  function tierFor(name) {
-    var lower = (name || '').toLowerCase();
-    for (var i = 0; i < LAYER_TIERS.length; i++) {
-      if (lower.indexOf(LAYER_TIERS[i].test) !== -1) return LAYER_TIERS[i];
+  /* From product-3d-showcase.js: a model's own layers first, then the
+     generic list; callouts in order from the top of the stack down. */
+  var SPECS = {
+    'compact': {
+      cells: '21700 cylindrical',
+      callouts: [
+        { test: 'casinglid', title: 'Casing lid', sub: 'Sealed top cover' },
+        { test: 'harness', title: 'Cable harness', sub: 'Sense + power' },
+        { test: 'dzlr', title: 'BMS board', sub: 'Protection + balancing' },
+        { test: 'busbar', title: 'Busbars', sub: 'Cell interconnect' },
+        { test: 'cellholder', title: 'Cell holders', sub: 'Retention + spacing' },
+        { test: 'highstar', title: '21700 cells', sub: 'Cylindrical array' },
+        { test: 'maincasing', title: 'Main casing', sub: 'Structural enclosure' }
+      ]
+    },
+    'heavy-machinery': {
+      cells: 'EVE C40 prismatic',
+      callouts: [
+        { test: 'enclosure_lid', title: 'Enclosure lid', sub: 'Sealed top cover' },
+        { test: 'hdrcable', title: 'Power cables', sub: 'Pack terminals' },
+        { test: 'cmu_pcb', title: 'CMU board', sub: 'Cell monitoring' },
+        { test: 'heatpad', title: 'Heat pads', sub: 'Thermal interface' },
+        { test: 'busbarseries', title: 'Series busbars', sub: 'Cell interconnect' },
+        { test: 'eve_c40', title: 'EVE C40 cells', sub: 'Prismatic array' },
+        { test: 'enclosure_case', title: 'Enclosure', sub: 'Structural housing' }
+      ]
+    },
+    'ups': {
+      cells: 'Rack enclosure',
+      tiers: [
+        { test: 'bp_fr4_top', y: 3.7 }, { test: 'fans_bracket', y: 3.05 }, { test: 'fan', y: 3.05 },
+        { test: 'ens', y: 2.62 }, { test: 'connector_metal', y: 2.05 }, { test: 'bp_fr4_bottom', y: 0.6 },
+        { test: 'rack_bracket', anchor: true }, { test: 'side_metal', anchor: true },
+        { test: 'rear_metal', anchor: true }, { test: 'front_metal', anchor: true },
+        { test: 'plastic_front', anchor: true }, { test: 'cube', anchor: true }
+      ],
+      callouts: [
+        { test: 'bp_fr4_top', title: 'Top insulator', sub: 'FR4 cover sheet' },
+        { test: 'fan', title: 'Cooling fans', sub: 'Forced airflow' },
+        { test: 'ens', title: 'Indicator board', sub: 'Status LEDs' },
+        { test: 'connector_metal', title: 'Connector panel', sub: 'Pack interface' },
+        { test: 'rack_bracket', title: 'Rack brackets', sub: '19-inch mounting' },
+        { test: 'side_metal', title: 'Sheet metal shell', sub: 'Structural housing' }
+      ]
+    },
+    'agv': {
+      cells: 'Sealed enclosure',
+      tiers: [
+        { test: 'service_lid', y: 4.05 }, { test: 'if-fm', y: 2.05 },
+        { test: 'molex', y: 2.62 }, { test: 'case_rev', anchor: true }
+      ],
+      callouts: [
+        { test: 'service_lid', title: 'Service lid', sub: 'Access hatch' },
+        { test: '_lid_rev', title: 'Casing lid', sub: 'Sealed top cover' },
+        { test: 'harness', title: 'Cable harness', sub: 'Comms + sense' },
+        { test: 'if-fm', title: 'Pack terminals', sub: 'Positive + negative' },
+        { test: 'eva', title: 'EVA padding', sub: 'Shock isolation' },
+        { test: 'divider', title: 'Divider', sub: 'Internal partition' },
+        { test: 'case_rev', title: 'Case', sub: 'Structural enclosure' }
+      ]
+    },
+    'chassis': {
+      cells: 'Bend-plate chassis',
+      tiers: [
+        { test: 'lid_', y: 4.05 }, { test: 'small_lid', y: 4.05 },
+        { test: 'msd', y: 3.4 }, { test: 'rsd', y: 3.4 }, { test: 'cmu', y: 2.62 },
+        { test: 'busbar', y: 2.05 }, { test: 'component_layer', y: 1.6 },
+        { test: 'layer_rubber', y: 0.8 }, { test: 'support_plate', y: 0.6 },
+        { test: 'inner_plate_holder', y: 0.6 },
+        { test: 'bend_plate', anchor: true }, { test: 'straight_plate', anchor: true },
+        { test: 'reinforcementplate', anchor: true }, { test: 'mounting_flange', anchor: true },
+        { test: 'corner_flange', anchor: true }, { test: 'locking_plate', anchor: true },
+        { test: 'bottom_stop-plate', anchor: true }
+      ],
+      callouts: [
+        { test: 'lid_', title: 'Lids', sub: 'Sealed covers' },
+        { test: 'msd', title: 'Service disconnect', sub: 'Manual isolation' },
+        { test: 'cmu', title: 'BMS master + CMU', sub: 'Cell monitoring' },
+        { test: 'busbar', title: 'Busbars', sub: 'Shunt to relay' },
+        { test: 'component_layer', title: 'Component layer', sub: 'Contactors + shunt' },
+        { test: 'bend_plate', title: 'Bend plates', sub: 'Structural chassis' }
+      ]
     }
+  };
+
+  function tierFor(spec, name) {
+    var lower = (name || '').toLowerCase();
+    var i;
+    var own = spec.tiers || [];
+    for (i = 0; i < own.length; i++) if (lower.indexOf(own[i].test) !== -1) return own[i];
+    for (i = 0; i < GENERIC_TIERS.length; i++) if (lower.indexOf(GENERIC_TIERS[i].test) !== -1) return GENERIC_TIERS[i];
     return null;
   }
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
   function smooth(t) { t = clamp01(t); return t * t * (3 - 2 * t); }
   function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function wrapAngle(a) { return a - Math.PI * 2 * Math.floor((a + Math.PI) / (Math.PI * 2)); }
 
   /* A world-space offset converted into the mesh's local space: CAD exports
      nest sub-assemblies under their own scale nodes. */
@@ -88,6 +181,9 @@
   } catch (e) {
     return;
   }
+  /* The tall, pinned layout only applies once the pack can actually be shown. */
+  document.documentElement.classList.add('float-3d');
+
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.06;
@@ -96,6 +192,8 @@
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 200);
   camera.position.set(0, 0, DIST);
+  camera.updateMatrixWorld(true);
+  camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
 
   function buildEnvScene() {
     var env = new THREE.Scene();
@@ -130,6 +228,11 @@
   fill.position.set(-4, 1.5, 6);
   scene.add(fill);
 
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var leaders = document.createElementNS(SVGNS, 'svg');
+  leaders.setAttribute('class', 'float-leaders');
+  leaders.setAttribute('aria-hidden', 'true');
+
   var entries = rows.map(function (row, i) {
     var shadow = document.createElement('div');
     shadow.className = 'float-shadow';
@@ -139,17 +242,38 @@
     group.visible = false;
     scene.add(group);
     var side = row.getAttribute('data-float-side') === 'right' ? 1 : -1;
+
+    var details = document.createElement('div');
+    details.className = 'float-details';
+    var list = document.createElement('ul');
+    list.className = 'float-labels';
+    var specLine = document.createElement('p');
+    specLine.className = 'float-spec';
+    details.appendChild(list);
+    details.appendChild(specLine);
+    row.querySelector('.float-pin').appendChild(details);
+
     return {
       row: row,
       slot: row.querySelector('.float-slot'),
+      copy: row.querySelector('.float-copy'),
+      details: details,
+      list: list,
+      specLine: specLine,
       shadow: shadow,
       group: group,
+      spec: SPECS[row.getAttribute('data-float-key')] || { callouts: [] },
       url: row.getAttribute('data-float-model'),
       fit: parseFloat(row.getAttribute('data-float-fit')) || 1.2,
       side: side,
       index: i,
       yaw0: -side * 0.55 + i * 0.4,
+      holdYaw: parseFloat(row.getAttribute('data-float-yaw')),
       parts: [],
+      callouts: [],
+      openHalfY: 1,
+      openReach: 1,
+      openCentreY: 0,
       ready: false,
       loading: false,
       failed: false,
@@ -158,10 +282,12 @@
       s: 9
     };
   });
+  entries.forEach(function (e) { if (isNaN(e.holdYaw)) e.holdYaw = e.side * 0.5; });
 
   stage.appendChild(renderer.domElement);
   renderer.domElement.className = 'float-canvas';
   renderer.domElement.setAttribute('aria-hidden', 'true');
+  stage.appendChild(leaders);
 
   var W = 0, H = 0, wpp = 1;
   function resize() {
@@ -180,13 +306,12 @@
   window.addEventListener('resize', resize);
 
   /* Layers open in order: the lid and harness first, the casing last, and
-     close the other way round. `open` is 0 together to 1 fully open. */
+     close the other way round. `open` is 0 together to 1 fully apart. */
   function applyOpen(e, open) {
     for (var i = 0; i < e.parts.length; i++) {
       var p = e.parts[i];
       var own = easeInOutCubic(clamp01(((1 - open) - p.delay) / (1 - p.delay)));
-      var apart = (1 - own) * OPEN;
-      p.mesh.position.copy(p.basePos).addScaledVector(p.delta, apart);
+      p.mesh.position.copy(p.basePos).addScaledVector(p.delta, 1 - own);
     }
   }
 
@@ -215,7 +340,7 @@
       child.castShadow = false;
       child.receiveShadow = false;
       child.getWorldPosition(wp);
-      var tier = tierFor(child.name);
+      var tier = tierFor(e.spec, child.name);
       var yFrac = clamp01((wp.y - minY) / height);
       var tierY;
       if (tier && tier.anchor) tierY = 0.12;
@@ -230,11 +355,61 @@
       else delay = 0;
       e.parts.push({
         mesh: child,
+        name: (child.name || '').toLowerCase(),
         basePos: child.position.clone(),
         delta: worldToLocalDelta(child, wp, new THREE.Vector3(0, lift, 0)),
         delay: delay
       });
     });
+
+    /* How big the pack is, and where its middle sits, once fully apart, so
+       the view can make room for it. */
+    applyOpen(e, 1);
+    e.group.updateMatrixWorld(true);
+    var apart = new THREE.Box3().setFromObject(e.group);
+    var aSize = apart.getSize(new THREE.Vector3());
+    var aMid = apart.getCenter(new THREE.Vector3());
+    e.openHalfY = Math.max(aSize.y / 2, 0.5);
+    e.openReach = Math.max(Math.sqrt(aSize.x * aSize.x + aSize.z * aSize.z) / 2, 0.5);
+    e.openCentreY = aMid.y;
+    applyOpen(e, 0);
+    e.group.updateMatrixWorld(true);
+
+    /* One anchor part per named component: the largest that matches, so the
+       line lands on the body of the part and not an incidental fastener. */
+    var v = new THREE.Vector3();
+    e.spec.callouts.forEach(function (c) {
+      var best = null, bestVol = -1;
+      e.parts.forEach(function (p) {
+        if (p.name.indexOf(c.test) === -1) return;
+        var g = p.mesh.geometry;
+        if (!g.boundingBox) g.computeBoundingBox();
+        g.boundingBox.getSize(v);
+        var vol = v.x * v.y * v.z;
+        if (vol > bestVol) { bestVol = vol; best = p; }
+      });
+      if (!best) return;
+      var li = document.createElement('li');
+      li.className = 'float-label';
+      li.innerHTML = '<span class="float-label-title"></span><span class="float-label-sub"></span>';
+      li.firstChild.textContent = c.title;
+      li.lastChild.textContent = c.sub;
+      e.list.appendChild(li);
+      var path = document.createElementNS(SVGNS, 'path');
+      path.setAttribute('class', 'float-leader');
+      path.setAttribute('pathLength', '1');
+      var dot = document.createElementNS(SVGNS, 'circle');
+      dot.setAttribute('class', 'float-dot');
+      dot.setAttribute('r', '4');
+      leaders.appendChild(path);
+      leaders.appendChild(dot);
+      var g2 = best.mesh.geometry;
+      e.callouts.push({
+        el: li, path: path, dot: dot, mesh: best.mesh,
+        anchorLocal: g2.boundingBox.getCenter(new THREE.Vector3())
+      });
+    });
+    e.specLine.textContent = e.parts.length + ' parts' + (e.spec.cells ? ' · ' + e.spec.cells : '');
 
     e.ready = true;
     e.bornAt = performance.now();
@@ -271,10 +446,19 @@
     if (best) load(best);
   }
 
+  function hideLeaders(e) {
+    for (var j = 0; j < e.callouts.length; j++) {
+      e.callouts[j].path.style.opacity = '0';
+      e.callouts[j].dot.style.opacity = '0';
+    }
+  }
+
+  var _v = new THREE.Vector3();
   var drewLast = false;
   function frame(now) {
     requestAnimationFrame(frame);
     var any = false;
+    var vis = 0;
 
     for (var i = 0; i < entries.length; i++) {
       var e = entries[i];
@@ -286,9 +470,21 @@
       var s = (cy0 - H / 2) / (H / 2 + r.height / 2);
       e.s = s;
 
+      /* How far through its row the page is: the row is tall and its screen
+         pinned, so this runs 0 to 1 while the pack holds the screen. */
+      var rr = e.row.getBoundingClientRect();
+      var travel = rr.height - H;
+      var p = travel > 0 ? clamp01(-rr.top / travel) : 0;
+
       var visible = e.ready && Math.abs(s) < 1.25;
       e.group.visible = visible;
-      if (!visible) { e.shadow.style.opacity = '0'; continue; }
+      if (!visible) {
+        e.shadow.style.opacity = '0';
+        e.copy.style.opacity = '1';
+        e.details.style.visibility = 'hidden';
+        hideLeaders(e);
+        continue;
+      }
       any = true;
 
       var t = Math.max(-1, Math.min(1, s));
@@ -296,32 +492,82 @@
       var born = easeInOutCubic(clamp01((now - e.bornAt) / 900));
       var diameter = Math.min(r.width, r.height) * 0.96;
 
-      var enter = t > 0 ? smooth(t) : 0;
-      var leave = t < 0 ? smooth(-t) : 0;
-      var cx = cx0 + (-e.side * SWEEP_IN * enter + e.side * DRIFT_OUT * leave) * W;
-      var bob = Math.sin(now / 1000 * 0.8 + e.index * 1.3) * diameter * 0.018;
-      var cy = cy0 - TRAIL * (cy0 - H / 2) + bob;
-
-      var open = settle * settle * (3 - 2 * settle);
-      if (Math.abs(open - e.open) > 0.003) {
+      /* The fold: apart between 14% and 40% of the way through, held, and
+         back together by 96%. */
+      var open = Math.min(smooth((p - 0.14) / 0.26), 1 - smooth((p - 0.84) / 0.12));
+      if (Math.abs(open - e.open) > 0.002) {
         e.open = open;
         applyOpen(e, open);
       }
 
-      var size = diameter / 2 * wpp * e.fit * (0.84 + 0.16 * settle) * (0.88 + 0.12 * born) / (1 + 0.5 * open);
+      var enter = t > 0 ? smooth(t) : 0;
+      var leave = t < 0 ? smooth(-t) : 0;
+      var cx = cx0 + (-e.side * SWEEP_IN * enter + e.side * DRIFT_OUT * leave) * W;
+      var bob = Math.sin(now / 1000 * 0.8 + e.index * 1.3) * diameter * 0.018 * (1 - open);
+      var cy = cy0 - TRAIL * (cy0 - H / 2) + bob;
+
+      /* Together it is sized to its slot; apart it is taller than it is wide
+         and is given the height of the screen instead, held back from the
+         edges by the width it can have beside the names. */
+      var sizeClosed = diameter / 2 * e.fit * (0.84 + 0.16 * settle) * (0.88 + 0.12 * born);
+      var sizeOpen = Math.min(H * 0.74 / (2 * e.openHalfY), W * 0.46 / (2 * e.openReach)) * (0.88 + 0.12 * born);
+      var shrink = smooth(open * 1.5);
+      var size = (sizeClosed + (sizeOpen - sizeClosed) * shrink) * wpp;
+
       var g = e.group;
-      g.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp - size * 0.45 * open, 0);
+      g.position.set((cx - W / 2) * wpp, -(cy - H / 2) * wpp - e.openCentreY * size * open, 0);
       g.scale.setScalar(size);
-      g.rotation.y = e.yaw0 - t * 1.6 + now / 1000 * 0.1;
-      g.rotation.x = 0.3 - 0.1 * t;
+
+      /* Turns freely while it travels; as it opens it comes round to the
+         angle it is shown at and holds there, so the lines stay on their parts. */
+      var yawFree = e.yaw0 - t * 1.6 + now / 1000 * 0.1;
+      g.rotation.y = yawFree + wrapAngle(e.holdYaw - yawFree) * open;
+      g.rotation.x = (0.3 - 0.1 * t) + (0.22 - (0.3 - 0.1 * t)) * open;
 
       var sw = diameter * 0.92;
       var sh = diameter * 0.15;
-      var lifted = 1 - open * 0.45;
       e.shadow.style.width = sw + 'px';
       e.shadow.style.height = sh + 'px';
-      e.shadow.style.transform = 'translate3d(' + (cx - sw / 2).toFixed(1) + 'px,' + (cy + diameter * 0.5 - sh / 2).toFixed(1) + 'px,0)';
-      e.shadow.style.opacity = (0.55 * born * (0.35 + 0.65 * settle) * lifted).toFixed(3);
+      e.shadow.style.transform = 'translate3d(' + (cx - sw / 2).toFixed(1) + 'px,' + (cy + diameter * 0.5 + open * (H * 0.42 - diameter * 0.5) - sh / 2).toFixed(1) + 'px,0)';
+      e.shadow.style.opacity = (0.55 * born * (0.35 + 0.65 * settle) * (1 - open * 0.7)).toFixed(3);
+
+      /* The name leaves as the pack opens and comes back as it closes. */
+      var nameOn = Math.max(1 - smooth((p - 0.1) / 0.1), smooth((p - 0.94) / 0.05));
+      e.copy.style.opacity = (nameOn * (1 - smooth((Math.abs(t) - 0.15) / 0.6))).toFixed(3);
+
+      /* The details: one part named after another while it holds. */
+      var n = e.callouts.length;
+      var q = clamp01((p - 0.42) / 0.38);
+      var away = 1 - smooth((p - 0.84) / 0.08);
+      var showing = n && p > 0.4 && away > 0.01;
+      e.details.style.visibility = showing ? 'visible' : 'hidden';
+      if (showing) {
+        e.group.updateMatrixWorld(true);
+        for (var k = 0; k < n; k++) {
+          var c = e.callouts[k];
+          var a = smooth(q * (n + 1) - k) * away;
+          c.el.style.opacity = a.toFixed(3);
+          c.el.style.transform = 'translateY(' + ((1 - a) * 10).toFixed(1) + 'px)';
+          _v.copy(c.anchorLocal);
+          c.mesh.localToWorld(_v);
+          _v.project(camera);
+          var sx = (_v.x + 1) / 2 * W;
+          var sy = (1 - _v.y) / 2 * H;
+          var lr = c.el.getBoundingClientRect();
+          var lx = e.side < 0 ? lr.left - 16 : lr.right + 16;
+          var ly = lr.top + 16;
+          c.path.setAttribute('d', 'M' + lx.toFixed(1) + ' ' + ly.toFixed(1) + ' L' + sx.toFixed(1) + ' ' + sy.toFixed(1));
+          c.path.style.strokeDashoffset = (1 - a).toFixed(3);
+          c.path.style.opacity = a > 0.01 ? '1' : '0';
+          c.dot.setAttribute('cx', sx.toFixed(1));
+          c.dot.setAttribute('cy', sy.toFixed(1));
+          c.dot.style.opacity = a.toFixed(3);
+        }
+        e.specLine.style.opacity = (smooth(q * (n + 1) - n) * away).toFixed(3);
+        vis++;
+      } else {
+        hideLeaders(e);
+      }
     }
 
     pump();
