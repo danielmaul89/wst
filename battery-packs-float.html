@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>Battery packs, floating | WS Technicals</title>
-<meta name="description" content="An alternative Battery packs page: the production models, live, floating down the page.">
+<meta name="description" content="An alternative Battery packs page: the production models, live, folding apart down the page.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +16,10 @@
 <style>
 body{ background:var(--paper); }
 
-/* One fixed layer holds the canvas every pack is drawn on, with a soft
-   shadow under each. It sits under the page's words and over its
-   background, and the closing band and footer sit over it in turn. */
+/* One fixed layer holds the canvas every pack is drawn on, the soft shadow
+   under each, and the lines from the named parts to their labels. It sits
+   under the page's words and over its background, and the closing band and
+   footer sit over it in turn. */
 .float-stage{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
 .float-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 .float-shadow{
@@ -26,22 +27,19 @@ body{ background:var(--paper); }
   background:radial-gradient(closest-side, rgba(10,20,50,.5), rgba(10,20,50,.18) 55%, rgba(10,20,50,0) 100%);
   will-change:transform,opacity;
 }
-
+.float-leaders{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.float-leader{ fill:none; stroke:var(--ink); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
+.float-dot{ fill:var(--paper); stroke:var(--ink); stroke-width:1.5; opacity:0; }
 
 .float-hero,
 .float-flow{ position:relative; z-index:2; }
 .float-after,
 [data-wst-footer]{ position:relative; z-index:3; }
 
-/* One screen at a time. The page settles gently on each pack (proximity, so
-   it never traps a scroll) and the pack is open and centred when it does. */
-html{ scroll-snap-type:y proximity; }
-
 .float-hero{
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   min-height:100vh; min-height:100svh; text-align:center;
   padding:calc(var(--nav-height) + var(--sp-5)) 0 var(--sp-7);
-  scroll-snap-align:start;
 }
 .float-title{ max-width:none; margin:var(--sp-2) 0 var(--sp-3); }
 .float-hero p{ max-width:34ch; margin:0 auto; color:var(--ink-soft); font-size:var(--fs-body); line-height:1.6; }
@@ -55,19 +53,25 @@ html{ scroll-snap-type:y proximity; }
 }
 @keyframes float-cue{ 0%,100%{ transform:scaleY(.35); opacity:.2; } 50%{ transform:scaleY(1); opacity:.6; } }
 
-/* Each pack gets a whole screen to itself: the pack on the larger side, its
-   name and one link opposite, and a lot of air around both. */
-.float-row{
+/* Each pack is a row, and each row holds one screen of its own: the pack on
+   the larger side, its name opposite and a lot of air around both. Where the
+   pack can be drawn live the row is made tall and the screen pins, so the
+   scroll through the row is the pack folding apart and being named. */
+.float-pin{
   display:grid;
   grid-template-columns:7fr 5fr;
   align-items:center;
   column-gap:var(--sp-7);
   min-height:100vh; min-height:100svh;
-  scroll-snap-align:center;
 }
-.float-row--model-right{ grid-template-columns:5fr 7fr; }
-.float-row--model-right .float-slot{ order:2; }
-.float-slot{ position:relative; width:min(100%, 74vh, 74svh); aspect-ratio:1 / 1; justify-self:center; }
+.float-row--model-right .float-pin{ grid-template-columns:5fr 7fr; }
+.float-slot{ position:relative; grid-column:1; grid-row:1; width:min(100%, 74vh, 74svh); aspect-ratio:1 / 1; justify-self:center; }
+.float-row--model-right .float-slot{ grid-column:2; }
+.float-copy,
+.float-details{ grid-column:2; grid-row:1; }
+.float-row--model-right .float-copy,
+.float-row--model-right .float-details{ grid-column:1; }
+
 .float-poster{ width:100%; height:100%; object-fit:contain; display:block; transition:opacity .9s var(--ease); }
 .float-row.is-live .float-poster{ opacity:0; }
 
@@ -76,31 +80,41 @@ html{ scroll-snap-type:y proximity; }
 .float-copy h2{ margin:0 0 var(--sp-3); max-width:none; }
 .float-link{ font-size:var(--fs-body); }
 
-/* The name and link arrive as their pack reaches the middle of the screen. */
-.float-js .float-copy{ opacity:0; transform:translateY(24px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
-.float-js .float-row.is-in .float-copy{ opacity:1; transform:none; }
+/* The named parts: a short list opposite the pack, one line to each part. */
+.float-details{ justify-self:start; width:min(100%, 300px); visibility:hidden; }
+.float-row--model-right .float-details{ justify-self:end; }
+.float-labels{ list-style:none; margin:0; padding:0; display:grid; gap:var(--sp-3); }
+.float-label{ display:block; opacity:0; }
+.float-label-title{ display:block; font-size:var(--fs-body); font-weight:600; color:var(--ink); line-height:1.3; }
+.float-label-sub{ display:block; margin-top:2px; font-size:var(--fs-small); color:var(--ink-soft); line-height:1.4; }
+.float-spec{
+  margin:var(--sp-4) 0 0; padding-top:var(--sp-2); border-top:1px solid var(--line-2); opacity:0;
+  font-family:var(--font-mono); font-size:var(--fs-small); letter-spacing:.04em; color:var(--ink-soft);
+}
 
-.float-after{ scroll-snap-align:start; }
+html.float-3d .float-row{ height:380vh; }
+html.float-3d .float-pin{ position:sticky; top:0; height:100vh; height:100svh; min-height:0; }
+html.float-3d .float-poster{ animation:none; }
 
 @media (prefers-reduced-motion:no-preference){
-  .float-row:not(.is-live) .float-poster{ animation:float-bob 7s ease-in-out infinite; }
-  .float-row:nth-child(even):not(.is-live) .float-poster{ animation-delay:-3s; }
+  html:not(.float-3d) .float-row:not(.is-live) .float-poster{ animation:float-bob 7s ease-in-out infinite; }
+  html:not(.float-3d) .float-row:nth-child(even):not(.is-live) .float-poster{ animation-delay:-3s; }
 }
 @keyframes float-bob{ 0%,100%{ transform:translateY(-8px); } 50%{ transform:translateY(10px); } }
 
 @media (max-width:1000px){
-  .float-row,
-  .float-row--model-right{ column-gap:var(--sp-5); }
+  .float-pin,
+  .float-row--model-right .float-pin{ column-gap:var(--sp-5); }
 }
 @media (max-width:767px){
-  html{ scroll-snap-type:none; }
-  .float-row,
-  .float-row--model-right{ grid-template-columns:1fr; min-height:0; row-gap:var(--sp-3); padding:var(--sp-6) 0; }
-  .float-row--model-right .float-slot{ order:0; }
-  .float-slot{ width:86%; justify-self:start; }
+  .float-pin,
+  .float-row--model-right .float-pin{ grid-template-columns:1fr; min-height:0; row-gap:var(--sp-3); padding:var(--sp-6) 0; }
+  .float-slot,
+  .float-row--model-right .float-slot{ grid-column:1; grid-row:auto; width:86%; justify-self:start; }
   .float-row--model-right .float-slot{ justify-self:end; }
-  .float-copy{ max-width:none; }
-  .float-row--model-right .float-copy{ justify-self:start; }
+  .float-copy,
+  .float-row--model-right .float-copy{ grid-column:1; grid-row:auto; max-width:none; justify-self:start; }
+  .float-details{ display:none; }
   .float-hero{ min-height:0; padding-bottom:var(--sp-6); }
   .float-cue{ display:none; }
 }
@@ -124,63 +138,73 @@ html{ scroll-snap-type:y proximity; }
 <div class="float-flow">
   <div class="container">
 
-    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-side="left" data-float-fit="0.95">
-      <div class="float-slot">
-        <img class="float-poster" src="assets/products/packs/compact-platform.png" alt="Compact battery platform" decoding="async">
-      </div>
-      <div class="float-copy">
-        <h2 class="t-section">Compact battery platform</h2>
-        <a class="wst-link-arrow float-link" href="pack-compact-platform.html">View pack
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-side="right" data-float-fit="1.05">
-      <div class="float-slot">
-        <img class="float-poster" src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform" loading="lazy" decoding="async">
-      </div>
-      <div class="float-copy">
-        <h2 class="t-section">Heavy machinery platform</h2>
-        <a class="wst-link-arrow float-link" href="pack-heavy-machinery-platform.html">View pack
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-key="compact" data-float-side="left" data-float-fit="0.95">
+      <div class="float-pin">
+        <div class="float-slot">
+          <img class="float-poster" src="assets/products/packs/compact-platform.png" alt="Compact battery platform" decoding="async">
+        </div>
+        <div class="float-copy">
+          <h2 class="t-section">Compact battery platform</h2>
+          <a class="wst-link-arrow float-link" href="pack-compact-platform.html">View pack
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-side="left" data-float-fit="1.2">
-      <div class="float-slot">
-        <img class="float-poster" src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
-      </div>
-      <div class="float-copy">
-        <h2 class="t-section">UPS platform</h2>
-        <a class="wst-link-arrow float-link" href="pack-ups-platform.html">View pack
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-side="right" data-float-fit="1.0">
-      <div class="float-slot">
-        <img class="float-poster" src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
-      </div>
-      <div class="float-copy">
-        <h2 class="t-section">AGV platform</h2>
-        <a class="wst-link-arrow float-link" href="pack-agv-platform.html">View pack
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-key="heavy-machinery" data-float-side="right" data-float-fit="1.05">
+      <div class="float-pin">
+        <div class="float-slot">
+          <img class="float-poster" src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform" loading="lazy" decoding="async">
+        </div>
+        <div class="float-copy">
+          <h2 class="t-section">Heavy machinery platform</h2>
+          <a class="wst-link-arrow float-link" href="pack-heavy-machinery-platform.html">View pack
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-side="left" data-float-fit="0.8">
-      <div class="float-slot">
-        <img class="float-poster" src="assets/products/packs/heavy-machinery-chassis.png" alt="Heavy machinery battery chassis" loading="lazy" decoding="async">
+    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-key="ups" data-float-side="left" data-float-fit="1.2">
+      <div class="float-pin">
+        <div class="float-slot">
+          <img class="float-poster" src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
+        </div>
+        <div class="float-copy">
+          <h2 class="t-section">UPS platform</h2>
+          <a class="wst-link-arrow float-link" href="pack-ups-platform.html">View pack
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
-      <div class="float-copy">
-        <h2 class="t-section">Heavy machinery chassis</h2>
-        <a class="wst-link-arrow float-link" href="pack-heavy-machinery-chassis.html">View pack
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+    </section>
+
+    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-key="agv" data-float-side="right" data-float-fit="1.0">
+      <div class="float-pin">
+        <div class="float-slot">
+          <img class="float-poster" src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
+        </div>
+        <div class="float-copy">
+          <h2 class="t-section">AGV platform</h2>
+          <a class="wst-link-arrow float-link" href="pack-agv-platform.html">View pack
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-key="chassis" data-float-side="left" data-float-fit="0.8">
+      <div class="float-pin">
+        <div class="float-slot">
+          <img class="float-poster" src="assets/products/packs/heavy-machinery-chassis.png" alt="Heavy machinery battery chassis" loading="lazy" decoding="async">
+        </div>
+        <div class="float-copy">
+          <h2 class="t-section">Heavy machinery chassis</h2>
+          <a class="wst-link-arrow float-link" href="pack-heavy-machinery-chassis.html">View pack
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -202,23 +226,11 @@ html{ scroll-snap-type:y proximity; }
 
 </main>
 <div data-wst-footer></div>
-<script>
-/* The name and link of each pack arrive as it reaches the middle of the screen. */
-(function(){
-  var rows = document.querySelectorAll(".float-row");
-  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  document.documentElement.classList.add("float-js");
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ e.target.classList.toggle("is-in", e.isIntersecting); });
-  }, { rootMargin:"-30% 0px -30% 0px" });
-  rows.forEach(function(r){ io.observe(r); });
-})();
-</script>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/pack-float.js?v=1" defer></script>
+<script src="assets/scripts/pack-float.js?v=3" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
