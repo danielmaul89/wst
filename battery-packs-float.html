@@ -23,8 +23,8 @@
    backdrop below is not running (phones, reduced motion). */
 body{
   background:
-    radial-gradient(70vmax 60vmax at 8% 0%, rgba(40,90,190,.10), rgba(40,90,190,0) 100%) fixed,
-    radial-gradient(60vmax 50vmax at 96% 100%, rgba(185,154,114,.16), rgba(185,154,114,0) 100%) fixed,
+    radial-gradient(70vmax 60vmax at 12% 6%, rgba(15,42,92,.16), rgba(15,42,92,0) 100%) fixed,
+    radial-gradient(60vmax 50vmax at 88% 94%, rgba(203,176,138,.3), rgba(203,176,138,0) 100%) fixed,
     var(--paper);
 }
 
@@ -39,27 +39,27 @@ body{
   background:radial-gradient(closest-side, rgba(10,20,50,.5), rgba(10,20,50,.18) 55%, rgba(10,20,50,0) 100%);
   will-change:transform,opacity;
 }
-/* The backdrop is driven from the script: one tint layer per pack whose opacity
-   blends as the page moves, a spotlight that follows the pack and brightens as
-   it opens, and a faint drawing grid while it is apart. Only transforms and
-   opacity change, so it moves on the compositor and never repaints. */
-.float-backdrop{
-  position:absolute; inset:0;
-  background:radial-gradient(70vmax 60vmax at 100% 100%, rgba(185,154,114,.3), rgba(185,154,114,0) 100%), var(--paper);
-}
-.float-tints{ position:absolute; inset:-12%; will-change:transform; }
-.float-tint{ position:absolute; inset:0; opacity:0; will-change:opacity; }
+/* The backdrop is driven from the script. It is one continuous colour that
+   follows the page from blue, through white, to golden sand: two washes whose
+   opacity is a smooth function of how far down the page you are, so there is
+   no point at which anything switches. A spotlight sits behind the pack and
+   the drawing grid is always there. Only transforms and opacity change, so it
+   moves on the compositor and never repaints. */
+.float-bg{ position:absolute; inset:0; opacity:0; transition:opacity 1.8s ease; }
+.float-bg.is-on{ opacity:1; }
+.float-backdrop{ position:absolute; inset:0; background:var(--paper); }
+.float-wash{ position:absolute; inset:-10%; opacity:0; will-change:transform,opacity; }
 .float-glow{
   position:absolute; left:0; top:0; opacity:0; border-radius:50%; will-change:transform,opacity;
   background:radial-gradient(closest-side, rgba(255,255,255,1), rgba(255,255,255,0));
 }
 .float-grid{
-  position:absolute; left:0; top:0; opacity:0; will-change:transform,opacity;
+  position:absolute; inset:0; opacity:.75; will-change:opacity;
   background-image:
-    repeating-linear-gradient(to right, rgba(6,8,26,.09) 0 1px, transparent 1px 56px),
-    repeating-linear-gradient(to bottom, rgba(6,8,26,.09) 0 1px, transparent 1px 56px);
-  -webkit-mask-image:radial-gradient(closest-side, #000, transparent 100%);
-  mask-image:radial-gradient(closest-side, #000, transparent 100%);
+    repeating-linear-gradient(to right, rgba(6,8,26,.07) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(to bottom, rgba(6,8,26,.07) 0 1px, transparent 1px 56px);
+  -webkit-mask-image:radial-gradient(ellipse 90% 85% at 50% 45%, #000 35%, transparent 100%);
+  mask-image:radial-gradient(ellipse 90% 85% at 50% 45%, #000 35%, transparent 100%);
 }
 .float-leaders{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
 .float-leader{ fill:none; stroke:var(--ink); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
@@ -174,7 +174,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
 <div class="float-flow">
   <div class="container">
 
-    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-key="compact" data-float-accent="40,90,190" data-float-side="left" data-float-fit="0.95">
+    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-key="compact" data-float-side="left" data-float-fit="0.95">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/compact-platform.png" alt="Compact battery platform" decoding="async">
@@ -188,7 +188,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
       </div>
     </section>
 
-    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-key="heavy-machinery" data-float-accent="185,154,114" data-float-side="right" data-float-fit="1.05">
+    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-key="heavy-machinery" data-float-side="right" data-float-fit="1.05">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform" loading="lazy" decoding="async">
@@ -202,7 +202,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
       </div>
     </section>
 
-    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-key="ups" data-float-accent="30,130,150" data-float-side="left" data-float-fit="1.2">
+    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-key="ups" data-float-side="left" data-float-fit="1.2">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
@@ -216,7 +216,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
       </div>
     </section>
 
-    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-key="agv" data-float-accent="90,100,190" data-float-side="right" data-float-fit="1.0">
+    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-key="agv" data-float-side="right" data-float-fit="1.0">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
@@ -230,7 +230,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
       </div>
     </section>
 
-    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-key="chassis" data-float-accent="200,120,60" data-float-side="left" data-float-fit="0.8">
+    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-key="chassis" data-float-side="left" data-float-fit="0.8">
       <div class="float-pin">
         <div class="float-slot">
           <img class="float-poster" src="assets/products/packs/heavy-machinery-chassis.png" alt="Heavy machinery battery chassis" loading="lazy" decoding="async">
@@ -266,7 +266,7 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/pack-float.js?v=7" defer></script>
+<script src="assets/scripts/pack-float.js?v=8" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
