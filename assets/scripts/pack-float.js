@@ -270,7 +270,6 @@
       index: i,
       yaw0: -side * 0.55,
       holdYaw: parseFloat(row.getAttribute('data-float-yaw')),
-      accent: (row.getAttribute('data-float-accent') || '15,42,92').split(',').map(Number),
       sx: 0,
       sy: 0,
       parts: [],
@@ -290,25 +289,20 @@
 
   /* Behind everything the canvas draws. Moved with transforms and opacity
      only, so scrolling never repaints a screen-sized gradient. */
-  function tintGradient(a) {
-    var c = a[0] + ',' + a[1] + ',' + a[2];
-    return 'radial-gradient(80vmax 70vmax at 14% 8%, rgba(' + c + ',.5), rgba(' + c + ',0) 100%)';
-  }
   function layer(cls) { var d = document.createElement('div'); d.className = cls; return d; }
-  var backdrop = layer('float-backdrop');
-  var tintsWrap = layer('float-tints');
-  var tintEls = entries.map(function (e) {
-    var d = layer('float-tint');
-    d.style.background = tintGradient(e.accent);
-    tintsWrap.appendChild(d);
-    return d;
-  });
-  var heroTint = layer('float-tint');
-  heroTint.style.background = tintGradient([15, 42, 92]);
-  tintsWrap.appendChild(heroTint);
+  var bg = layer('float-bg');
+  var blue = layer('float-wash');
+  blue.style.background = 'radial-gradient(75vmax 65vmax at 12% 6%, rgba(15,42,92,.5), rgba(15,42,92,0) 100%)';
+  var sand = layer('float-wash');
+  sand.style.background = 'radial-gradient(80vmax 70vmax at 88% 94%, rgba(203,176,138,.75), rgba(203,176,138,0) 100%), radial-gradient(60vmax 40vmax at 28% 104%, rgba(203,176,138,.45), rgba(203,176,138,0) 100%)';
   var glow = layer('float-glow');
   var grid = layer('float-grid');
-  [grid, glow, tintsWrap, backdrop].forEach(function (el) { stage.insertBefore(el, stage.firstChild); });
+  [layer('float-backdrop'), blue, sand, glow, grid].forEach(function (el) { bg.appendChild(el); });
+  stage.insertBefore(bg, stage.firstChild);
+  /* Fades in over what the page already shows, so nothing snaps when it starts. */
+  setTimeout(function () { bg.classList.add('is-on'); }, 50);
+  var flowEl = document.querySelector('.float-flow');
+  var bgP = -1;
 
   stage.appendChild(renderer.domElement);
   renderer.domElement.className = 'float-canvas';
@@ -474,12 +468,24 @@
     if (best) load(best);
   }
 
-  /* The backdrop follows whichever pack the page is nearest: its tint fades up
-     as the page reaches it and down as it leaves, a spotlight sits behind it
-     and brightens as it opens, and a grid comes up while it is apart. Every
-     write is a transform or an opacity, which the browser composites without
-     repainting anything. */
-  function paintBackdrop() {
+  /* The backdrop is blue at the top of the page, white through the middle and
+     golden sand at the end, however you get there: how far down the page you
+     are (itself eased, so a flick of the wheel cannot jump it) sets how much of
+     each wash shows, and both fade through zero rather than switching. The
+     spotlight sits behind whichever pack the page is nearest and brightens as
+     it opens. Every write is a transform or an opacity, which the browser
+     composites without repainting anything. */
+  function paintBackdrop(dt) {
+    var sy = window.scrollY || 0;
+    var end = flowEl ? flowEl.getBoundingClientRect().bottom + sy : document.documentElement.scrollHeight;
+    var target = clamp01(sy / Math.max(1, end - H));
+    bgP = bgP < 0 ? target : bgP + (target - bgP) * (1 - Math.exp(-dt * 3));
+    blue.style.opacity = (1 - smooth((bgP - 0.04) / 0.46)).toFixed(3);
+    sand.style.opacity = smooth((bgP - 0.42) / 0.52).toFixed(3);
+    var drift = 'translate3d(' + (W * 0.03 * Math.sin(bgP * 6)).toFixed(1) + 'px,' + (H * 0.03 * Math.cos(bgP * 5)).toFixed(1) + 'px,0)';
+    blue.style.transform = drift;
+    sand.style.transform = drift;
+
     var wSum = 0, oSum = 0, gx = 0, gy = 0, i, e;
     for (i = 0; i < entries.length; i++) {
       e = entries[i];
@@ -488,12 +494,6 @@
       oSum += e.w * (e.openE || 0);
       gx += e.w * e.sx; gy += e.w * e.sy;
     }
-    var norm = Math.max(1, wSum);
-    for (i = 0; i < entries.length; i++) {
-      e = entries[i];
-      tintEls[i].style.opacity = (e.w / norm * (0.72 + 0.28 * (e.openE || 0))).toFixed(3);
-    }
-    heroTint.style.opacity = (0.8 * (1 - Math.min(1, wSum))).toFixed(3);
     var open = wSum > 0.001 ? oSum / wSum : 0;
     var glowX = wSum > 0.001 ? gx / wSum : W / 2;
     var glowY = wSum > 0.001 ? gy / wSum : H * 0.4;
@@ -501,12 +501,7 @@
     glow.style.width = glow.style.height = gs + 'px';
     glow.style.transform = 'translate3d(' + (glowX - gs / 2).toFixed(0) + 'px,' + (glowY - gs / 2).toFixed(0) + 'px,0)';
     glow.style.opacity = (0.5 + 0.4 * open).toFixed(3);
-    var gg = Math.min(W, H) * 1.6;
-    grid.style.width = grid.style.height = gg + 'px';
-    grid.style.transform = 'translate3d(' + (glowX - gg / 2).toFixed(0) + 'px,' + (glowY - gg / 2).toFixed(0) + 'px,0)';
-    grid.style.opacity = open.toFixed(3);
-    var sy = window.scrollY || 0;
-    tintsWrap.style.transform = 'translate3d(' + (W * 0.04 * Math.sin(sy / 1300)).toFixed(0) + 'px,' + (H * 0.04 * Math.cos(sy / 1700)).toFixed(0) + 'px,0)';
+    grid.style.opacity = (0.75 + 0.25 * open).toFixed(3);
   }
 
   function hideLeaders(e) {
@@ -649,7 +644,7 @@
       }
     }
 
-    paintBackdrop();
+    paintBackdrop(dt);
     pump();
     if (any || drewLast) renderer.render(scene, camera);
     drewLast = any;
