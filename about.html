@@ -121,13 +121,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .section-head p{ color:var(--ink-soft); max-width:420px; font-size:15.5px; }
 
 
-.career{ background:var(--paper-2); padding:var(--sp-8) 0; }
-.career-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6); align-items:center; }
-.career-grid h2{ font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); margin-bottom:var(--sp-3); max-width:14ch; }
-.career-grid p{ color:var(--ink-soft); font-size:16px; max-width:48ch; margin-bottom:var(--sp-3); }
-.career-card{ background:var(--card); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:var(--sp-4); }
-.career-card h3{ font-size:var(--h5-card-sm); letter-spacing:var(--h5-ls); line-height:var(--h5-lh); margin-bottom:8px; }
-.career-card p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:var(--sp-3); }
 .facility-preview{ padding:var(--sp-7) 0; background:var(--card); }
 .facility-preview-head{ margin-bottom:var(--sp-4); }
 .facility-preview-head h2{ max-width:15ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
@@ -280,23 +273,22 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 }
 .about-gallery-link{
   position:absolute;
-  right:18px;
+  left:18px;
   bottom:18px;
   z-index:2;
+  max-width:calc(100% - 36px);
   display:inline-flex;
   align-items:center;
   gap:8px;
-  padding:11px 18px;
-  border-radius:999px;
-  font-size:13px;
+  padding:12px 18px;
+  border-radius:var(--r);
+  line-height:1.35;
+  font-size:14px;
   font-weight:600;
   color:var(--blue-deep);
   background:rgba(255,255,255,.92);
   box-shadow:0 8px 30px rgba(3,11,33,.14);
   backdrop-filter:blur(12px);
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity .35s var(--ease),transform .35s var(--ease);
 }
 .about-gallery-link svg{ transition:transform .35s var(--ease); }
 @media (hover:hover){
@@ -304,11 +296,11 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
     transform:scale(1.025);
     filter:saturate(.88) brightness(.84) contrast(1.08);
   }
-  .about-gallery-item:hover .about-gallery-link{ opacity:1; transform:none; }
   .about-gallery-item:hover .about-gallery-link svg{ transform:translateX(3px); }
 }
 .about-gallery-item:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
 .about-gallery-item{ transition:opacity .55s var(--ease), transform .55s var(--ease), box-shadow .55s var(--ease); }
+.about-principles{ position:relative; z-index:4; background:#fff; padding:0 0 clamp(56px,7vh,96px); }
 .work-rail{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -398,7 +390,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   .work-rail{ grid-template-columns:1fr 1fr; }
   .work-principle:nth-child(2){ border-right:0; }
   .work-principle:nth-child(-n+2){ border-bottom:1px solid var(--line-2); }
-  .career-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
   .facility-preview-image{ min-height:440px; }
 }
 @media (max-width:640px){
@@ -480,26 +471,33 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   </div>
 </section>
 
-<section class="about-gallery" aria-label="Engineering and production">
+<section class="about-gallery" aria-label="News">
   <div class="container">
     <div class="about-gallery-head head-split">
-      <h2>Engineering is a team discipline.</h2>
-      <p>Our work moves between engineering, electronics and production. These environments are connected by the same objective: turning complex requirements into dependable systems.</p>
+      <h2>News</h2>
+      <a class="wst-link-arrow" href="news.html">All news
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
     <div class="about-gallery-grid">
-    <a class="about-gallery-item" href="news.html">
-      <img src="assets/general/_MG_0754.webp" alt="Technician testing a battery pack on a charge and discharge rack in the workshop">
-      <span class="about-gallery-link">Read our stories <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-    <a class="about-gallery-item" href="news-peter-bms.html">
-      <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board with a multimeter">
-      <span class="about-gallery-link">Read our stories <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <a class="about-gallery-item" href="news-liftra.html">
+      <img src="assets/news/liftra/hero.webp" alt="Liftra's Self-Hoisting Crane climbing a wind turbine tower">
+      <span class="about-gallery-link">Liftra lifts the future of wind energy <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
     <a class="about-gallery-item" href="news-soren-norby.html">
-      <img src="assets/general/_MG_8380.webp" alt="Engineers reviewing an exploded 3D CAD battery assembly on screen">
-      <span class="about-gallery-link">Read our stories <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <img src="assets/news/soren-norby/hero.jpg" alt="Søren Nørby, Senior Project Engineer at WS Technicals">
+      <span class="about-gallery-link">A complex battery design requires a creative mind <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+    <a class="about-gallery-item" href="news-farmdroid.html">
+      <img src="assets/news/farmdroid/hero.jpg" alt="Aerial view of a FarmDroid solar-powered seeding and weeding robot in a field">
+      <span class="about-gallery-link">FarmDroid cultivates the future of agriculture <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
     </div>
+  </div>
+</section>
+
+<section class="about-principles">
+  <div class="container">
     <div class="work-rail" aria-label="The way we work">
       <article class="work-principle">
         <span class="index">01</span>
@@ -521,20 +519,6 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
         <h3>Verified output</h3>
         <p>End-of-line testing protects the agreed performance in every delivered pack.</p>
       </article>
-    </div>
-  </div>
-</section>
-
-<section class="career" id="career">
-  <div class="container career-grid">
-    <div>
-      <h2>Build custom battery systems with us.</h2>
-      <p>We're a team of engineers, technicians and specialists who take a project from first sketch to production line. If you want to work on batteries that power real, demanding applications rather than just spec sheets, we'd like to hear from you.</p>
-    </div>
-    <div class="career-card">
-      <h3>Open positions</h3>
-      <p>We don't have specific openings listed here yet. We are always interested in hearing from engineers and specialists who want to work on custom battery systems. Send us your CV and tell us what you're looking for.</p>
-      <a href="careers.html" class="btn btn-primary">View career disciplines</a>
     </div>
   </div>
 </section>
