@@ -246,34 +246,46 @@
   max-width: 48ch;
   margin: 0;
   color: var(--ink-soft);
-  font-size: var(--fs-body);
+  font-size: clamp(var(--fs-body), 1.4vw, var(--fs-24));
   line-height: 1.6;
 }
 
 /* The page name above the headline. It is the first thing that says where you
-   are, so it is set as a tag with some presence: body size, semibold, in a
-   soft brass pill with a dot, instead of 14px of plain text. */
+   are, so it is set as a clear tag: a soft brass pill with a dot, semibold,
+   at body size on phones and at 24px from tablet width up. */
 .wst-page-hero-copy .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 18px 8px 14px;
-  border: 1px solid var(--brass-soft);
+  gap: 12px;
+  padding: 10px 22px 10px 18px;
+  border: 1px solid var(--brass);
   border-radius: 999px;
-  background: rgba(231, 221, 203, .45);
+  background: rgba(231, 221, 203, .7);
   color: var(--brass-text);
   font-size: var(--fs-body);
   font-weight: 600;
-  letter-spacing: .02em;
+  letter-spacing: .01em;
   line-height: 1.2;
 }
 
 .wst-page-hero-copy .eyebrow::before {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--brass);
+}
+
+@media (min-width: 768px) {
+  .wst-page-hero-copy .eyebrow {
+    padding: 12px 28px 12px 22px;
+    font-size: var(--fs-24);
+  }
+
+  .wst-page-hero-copy .eyebrow::before {
+    width: 12px;
+    height: 12px;
+  }
 }
 
 .wst-page-hero-media {
