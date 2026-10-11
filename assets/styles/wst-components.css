@@ -246,8 +246,34 @@
   max-width: 48ch;
   margin: 0;
   color: var(--ink-soft);
-  font-size: clamp(var(--fs-body), 1.4vw, var(--fs-24));
+  font-size: var(--fs-body);
   line-height: 1.6;
+}
+
+/* The page name above the headline. It is the first thing that says where you
+   are, so it is set as a tag with some presence: body size, semibold, in a
+   soft brass pill with a dot, instead of 14px of plain text. */
+.wst-page-hero-copy .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px 8px 14px;
+  border: 1px solid var(--brass-soft);
+  border-radius: 999px;
+  background: rgba(231, 221, 203, .45);
+  color: var(--brass-text);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1.2;
+}
+
+.wst-page-hero-copy .eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brass);
 }
 
 .wst-page-hero-media {
@@ -273,6 +299,12 @@
 
 .wst-page-hero--dark .wst-page-hero-intro {
   color: var(--ink-soft-on-dark);
+}
+
+.wst-page-hero--dark .wst-page-hero-copy .eyebrow {
+  border-color: rgba(226, 205, 174, .35);
+  background: rgba(226, 205, 174, .1);
+  color: var(--brass-on-dark);
 }
 
 .wst-page-hero--dark .wst-page-hero-media {
