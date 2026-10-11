@@ -11,7 +11,8 @@
      rest        stands still in its slot, assembled
      fold out    a gentle turn to its showing angle as the layers part
      details     parts are named one by one, a line to each real part
-     close up    the layers return as it turns back, the name comes back
+     link        the link to the pack comes into focus, and the page moves on
+                 to the next pack, this one still open
 
    Until a model has loaded its slot holds only the soft shadow it will stand
    on; the stills are shown only where this cannot run. Models
@@ -250,8 +251,19 @@
     list.className = 'float-labels';
     var specLine = document.createElement('p');
     specLine.className = 'float-spec';
+    var detailsTitle = document.createElement('p');
+    detailsTitle.className = 'float-details-title';
+    detailsTitle.textContent = row.querySelector('h2').textContent;
+    /* The link to the pack comes last, once the parts have been named. */
+    var srcLink = row.querySelector('.float-link');
+    var cta = document.createElement('a');
+    cta.className = 'btn btn-primary float-cta';
+    cta.href = srcLink ? srcLink.getAttribute('href') : '#';
+    cta.textContent = 'View pack';
+    details.appendChild(detailsTitle);
     details.appendChild(list);
     details.appendChild(specLine);
+    details.appendChild(cta);
     row.querySelector('.float-pin').appendChild(details);
 
     return {
@@ -261,6 +273,8 @@
       details: details,
       list: list,
       specLine: specLine,
+      detailsTitle: detailsTitle,
+      cta: cta,
       shadow: shadow,
       group: group,
       spec: SPECS[row.getAttribute('data-float-key')] || { callouts: [] },
@@ -567,9 +581,9 @@
 
       var born = easeInOutCubic(clamp01((now - e.bornAt) / 900));
 
-      /* The fold: apart between 14% and 40% of the way through, held, and
-         back together by 96%. */
-      var openRaw = Math.min(clamp01((p - 0.12) / 0.3), 1 - clamp01((p - 0.82) / 0.14));
+      /* The fold: apart between 10% and 38% of the way through, and it stays
+         apart: the pack leaves the screen opened. */
+      var openRaw = clamp01((p - 0.1) / 0.28);
       var open = smooth(openRaw);
       e.openE = open;
       if (Math.abs(openRaw - e.open) > 0.0015) {
@@ -605,21 +619,20 @@
       e.shadow.style.transform = 'translate3d(' + (cx - sw / 2).toFixed(1) + 'px,' + (cy + diameter * 0.5 + open * (H * 0.42 - diameter * 0.5) - sh / 2).toFixed(1) + 'px,0)';
       e.shadow.style.opacity = (0.55 * (0.3 + 0.7 * born) * (1 - open * 0.7)).toFixed(3);
 
-      /* The name leaves as the pack opens and comes back as it closes. */
-      var nameOn = Math.max(1 - smooth((p - 0.1) / 0.1), smooth((p - 0.94) / 0.05));
+      /* The name leaves as the pack opens; the parts take its place. */
+      var nameOn = 1 - smooth((p - 0.08) / 0.1);
       e.copy.style.opacity = nameOn.toFixed(3);
 
       /* The details: one part named after another while it holds. */
       var n = e.callouts.length;
-      var q = clamp01((p - 0.42) / 0.38);
-      var away = 1 - smooth((p - 0.84) / 0.08);
-      var showing = n && p > 0.4 && away > 0.01;
+      var q = clamp01((p - 0.4) / 0.3);
+      var showing = n && p > 0.38;
       e.details.style.visibility = showing ? 'visible' : 'hidden';
       if (showing) {
         e.group.updateMatrixWorld(true);
         for (var k = 0; k < n; k++) {
           var c = e.callouts[k];
-          var a = smooth(q * (n + 1) - k) * away;
+          var a = smooth(q * (n + 1) - k);
           c.el.style.opacity = a.toFixed(3);
           c.el.style.transform = 'translateY(' + ((1 - a) * 10).toFixed(1) + 'px)';
           _v.copy(c.anchorLocal);
@@ -637,7 +650,14 @@
           c.dot.setAttribute('cy', sy.toFixed(1));
           c.dot.style.opacity = a.toFixed(3);
         }
-        e.specLine.style.opacity = (smooth(q * (n + 1) - n) * away).toFixed(3);
+        e.specLine.style.opacity = smooth(q * (n + 1) - n).toFixed(3);
+        e.detailsTitle.style.opacity = smooth((p - 0.38) / 0.06).toFixed(3);
+        /* Then the link to the pack, as the last thing in focus before the page
+           moves on to the next one. */
+        var ctaA = smooth((p - 0.72) / 0.08);
+        e.cta.style.opacity = ctaA.toFixed(3);
+        e.cta.style.transform = 'translateY(' + ((1 - ctaA) * 12).toFixed(1) + 'px)';
+        e.cta.style.pointerEvents = ctaA > 0.6 ? 'auto' : 'none';
         vis++;
       } else {
         hideLeaders(e);
