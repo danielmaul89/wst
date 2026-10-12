@@ -15,58 +15,7 @@
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
 <style>
-/* Unlisted review page: not in wst-shell.js's nav, not linked from any
-   live page, noindex. Built on the shared component layer like any other
-   page so it still looks like the site, not a scratch file. */
 body{ background:var(--paper); }
-
-.render-hero{ padding:calc(var(--nav-height) + var(--sp-6)) 0 var(--sp-5); }
-.render-hero-inner{ max-width:720px; }
-.render-hero p{ max-width:66ch; margin-top:var(--sp-2); color:var(--ink-soft); font-size:16px; line-height:1.7; }
-
-.render-section{ padding:0 0 var(--sp-8); }
-.render-frame{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:var(--sp-6);
-  overflow:hidden;
-  border:1px solid var(--line-2);
-  border-radius:var(--r-lg);
-  background:var(--studio-hi);
-  box-shadow:var(--shadow-sm);
-}
-.render-frame img{ display:block; max-width:100%; max-height:74vh; width:auto; height:auto; }
-.render-frame--dark{ border-color:rgba(251,249,245,.14); background:var(--blue-deep); }
-.render-frame--dark .turntable-host{ position:relative; z-index:1; }
-
-.render-meta{ max-width:720px; margin-top:var(--sp-4); padding-top:var(--sp-3); border-top:1px solid var(--line-2); }
-.render-meta dl{ display:grid; grid-template-columns:140px 1fr; gap:10px var(--sp-3); margin:0; }
-.render-meta dt{ color:var(--ink-faint); font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
-.render-meta dd{ margin:0; color:var(--ink); font-size:15px; }
-@media(max-width:560px){ .render-meta dl{ grid-template-columns:1fr; gap:2px var(--sp-3); } .render-meta dt{ margin-top:10px; } }
-
-.render-divider{ max-width:720px; margin:var(--sp-6) 0 var(--sp-5); padding-top:var(--sp-5); border-top:1px solid var(--line-2); }
-.render-divider h2{ margin:0 0 var(--sp-2); font-size:28px; }
-.render-divider p{ max-width:66ch; margin:0; color:var(--ink-soft); font-size:16px; line-height:1.7; }
-
-.turntable-host{ position:relative; min-height:400px; display:flex; align-items:center; justify-content:center; }
-.turntable-host:not(.is-ready)::after{
-  content:"Loading frames…";
-  color:var(--ink-faint);
-  font-family:var(--font-mono);
-  font-size:13px;
-  letter-spacing:.04em;
-  text-transform:uppercase;
-}
-.turntable-canvas{ display:none; max-width:100%; max-height:74vh; width:auto; height:auto; }
-.turntable-host.is-ready .turntable-canvas{ display:block; }
-
-/* Scroll theatre: an <img> standing in for product-3d-showcase.js's
-   <canvas>, so it takes .sc-canvas's position:absolute/inset:0 sizing but
-   needs its own object-fit - a canvas draws pixel-for-pixel into its box,
-   an img would otherwise stretch. */
 </style>
 </head>
 <body data-wst-page="">
@@ -74,55 +23,6 @@ body{ background:var(--paper); }
 <div data-wst-header></div>
 
 <main>
-  <section class="render-hero">
-    <div class="container render-hero-inner">
-      <span class="eyebrow">Render check</span>
-      <h1 class="t-display">Homepage hero pack, rendered in Blender.</h1>
-      <p>A studio render of the same model the homepage hero uses, built with Blender instead of the live WebGL viewer — camera angle and three-point lighting matched to how the site already lights it.</p>
-    </div>
-  </section>
-
-  <section class="wst-section render-section">
-    <div class="container">
-      <div class="render-frame">
-        <img src="assets/renders/hero-blender-render.png" alt="Blender-rendered studio shot of the homepage hero battery pack enclosure" width="1241" height="1390">
-      </div>
-      <div class="render-meta">
-        <dl>
-          <div><dt>Source model</dt><dd>assets/models/HDR.fbx</dd></div>
-          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 192 samples</dd></div>
-          <div><dt>Camera</dt><dd>30&deg; FOV, matched to the live hero's resting angle</dd></div>
-          <div><dt>Lighting</dt><dd>Warm key, cool rim, soft fill &mdash; matched to home-hero-3d.js</dd></div>
-        </dl>
-      </div>
-
-      <div class="render-divider">
-        <h2>Full sequence &mdash; still, rotate, explode, reassemble.</h2>
-        <p>Still &rarr; the camera starts turning &rarr; the pack comes apart into layers, still turning &rarr; holds exploded through most of a full rotation &rarr; comes back together &rarr; settles back to still, matching the reference recording of the site's own scroll-scrubbed pack theatre. Explode direction/height per part is ported from <code>home-hero-3d.js</code>'s <code>LAYER_TIERS</code> keyword list; the camera's rotation speed eases in and out (zero at both ends) rather than starting or stopping abruptly, and completes exactly one turn so the loop point is seamless.</p>
-      </div>
-
-      <div class="render-frame render-frame--dark">
-        <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
-        <div class="turntable-host" data-turntable-dir="assets/renders/hero-sequence" data-turntable-count="264" data-turntable-fps="24" data-turntable-pad="4" data-turntable-ext="jpg"></div>
-      </div>
-
-      <div class="render-meta">
-        <dl>
-          <div><dt>Frames</dt><dd>264 at 24fps &mdash; an 11s loop</dd></div>
-          <div><dt>Timeline</dt><dd>1s still &middot; 3s explode &middot; 4s exploded &middot; 2s reassemble &middot; 1s still</dd></div>
-          <div><dt>Layout</dt><dd>Ported from home-hero-3d.js's LAYER_TIERS &mdash; per-part lift by name match</dd></div>
-          <div><dt>Renderer</dt><dd>Blender 5.2.1 LTS, Cycles, 48 samples, 1440&times;1920, denoised</dd></div>
-          <div><dt>Playback</dt><dd>24fps canvas loop, pauses off-screen</dd></div>
-        </dl>
-      </div>
-
-      <div class="render-divider">
-        <h2>Scroll-scrubbed &mdash; with pinpoint callouts.</h2>
-        <p>The pack theatre pattern the live pack pages use (<code>sc-theatre</code>/<code>sc-callouts</code>, same CSS, same track/stage scroll math), driven by a pre-rendered frame sequence instead of live WebGL. Scroll explodes the pack while the camera turns; once it reaches the callout angle, both freeze and the seven part labels reveal one by one, reading their screen position from a JSON file <a href="assets/renders/hero-scroll/callouts.json" target="_blank" rel="noopener noreferrer">Blender wrote at render time</a> (<code>world_to_camera_view()</code>, projected through that exact frozen camera). Keep scrolling and the labels clear as the pack reassembles &mdash; the camera keeps turning the same direction rather than winding back, so reassembly never reads as the animation rewinding.</p>
-      </div>
-    </div>
-  </section>
-
   <section class="sc-theatre" id="scTheatre">
     <div class="sc-stage">
       <div class="sc-screen" id="scScreen">
@@ -137,24 +37,10 @@ body{ background:var(--paper); }
       </div>
     </div>
   </section>
-
-  <section class="wst-section render-section">
-    <div class="container">
-      <div class="render-meta">
-        <dl>
-          <div><dt>Frames</dt><dd>98 &mdash; vs. 264 for the autoplay loop above</dd></div>
-          <div><dt>Why fewer</dt><dd>Camera + geometry freeze during the hold; one frame covers the whole reading dwell</dd></div>
-          <div><dt>Callouts</dt><dd>7, one per LAYER_TIERS group &mdash; largest part in each group, by name match</dd></div>
-          <div><dt>Camera</dt><dd>Turns one direction throughout &mdash; 0&deg;&rarr;150&deg; exploding, 150&deg;&rarr;300&deg; reassembling, never reverses</dd></div>
-        </dl>
-      </div>
-    </div>
-  </section>
 </main>
 
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
-<script src="assets/scripts/turntable-player.js?v=1" defer></script>
 <script src="assets/scripts/hero-scroll-theatre.js?v=5" defer></script>
 </body>
 </html>
