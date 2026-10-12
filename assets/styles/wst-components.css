@@ -992,6 +992,21 @@
   color: var(--blue-deep);
 }
 
+/* Bare picture: the product alone, centred in the box, with no name and no
+   wash for one. The link carries its name in an aria-label instead. */
+.wst-product-tile--bare {
+  min-height: 300px;
+}
+.wst-product-tile--bare .wst-product-tile-img {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;
+}
+.wst-product-tile--bare .wst-product-tile-img img {
+  width: 78%;
+  height: 78%;
+}
+
 .wst-product-tile--photo .wst-product-tile-img {
   background: none;
 }
