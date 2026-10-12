@@ -224,14 +224,12 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 .about-gallery{
   position:relative;
   z-index:4;
-  min-height:100vh;
-  padding:clamp(48px,6vh,80px) 0 clamp(72px,8vh,112px);
+  padding:clamp(56px,7vh,88px) 0 clamp(40px,5vh,64px);
   background:#fff;
-  display:flex;
-  align-items:center;
 }
 .about-gallery-head h2{ max-width:15ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
 .about-gallery-head p{ max-width:48ch; }
+.about-news-all{ grid-column:2; grid-row:1; justify-self:end; align-self:end; }
 .about-gallery-grid{
   display:grid;
   grid-template-columns:repeat(12,1fr);
@@ -427,8 +425,8 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   .about-gallery-item img{ transition:none !important; }
 }
 </style>
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2x">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2n">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 </head>
 <body data-wst-page="about">
@@ -475,7 +473,7 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
   <div class="container">
     <div class="about-gallery-head head-split">
       <h2>News</h2>
-      <a class="wst-link-arrow" href="news.html">All news
+      <a class="wst-link-arrow about-news-all" href="news.html">All news
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>

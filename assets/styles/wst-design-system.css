@@ -383,13 +383,30 @@ h4,
   filter: blur(100px);
 }
 
+/* The pre-headline: the line above a headline that says where you are. One
+   style everywhere - the display face, semibold, brass, no box and no rule -
+   body size on phones and 24px from tablet width up. Anything that sits above
+   a headline takes this class (alone, or alongside its own layout class)
+   rather than setting a size of its own. */
 .eyebrow {
-  font-size: var(--fs-small);
+  display: block;
   color: var(--brass-text);
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: .01em;
+  line-height: 1.2;
+  text-transform: none;
 }
 
 .on-dark .eyebrow {
   color: var(--brass-on-dark);
+}
+
+@media (min-width: 768px) {
+  .eyebrow {
+    font-size: var(--fs-24);
+  }
 }
 
 /* 3. Shared buttons
