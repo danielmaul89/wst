@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2x">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2n">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 
@@ -214,15 +214,7 @@
 }
 .show-row-text.is-changing{ opacity:0; transform:translateY(6px); }
 
-.show-row-eyebrow{
-  display:block;
-  margin-bottom:12px;
-  color:var(--brass-text);
-  font-family:var(--font-mono);
-  font-size:12px;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-}
+.show-row-eyebrow{ margin-bottom:12px; }
 .show-row-title{
   margin:0 0 12px;
   color:var(--ink);
@@ -520,7 +512,7 @@
       '<div class="show-row-link">' +
         '<div class="show-row-media"><img alt=""></div>' +
         '<div class="show-row-text">' +
-          '<span class="show-row-eyebrow">' + cat.eyebrow + '</span>' +
+          '<span class="eyebrow show-row-eyebrow">' + cat.eyebrow + '</span>' +
           '<h3 class="show-row-title"></h3>' +
           '<p class="show-row-desc"></p>' +
           '<ul class="show-row-specs"></ul>' +

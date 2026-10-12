@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2m">
-<link rel="stylesheet" href="assets/styles/wst-components.css?v=p2x">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2n">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
 body{ position:relative; background:var(--paper); }
@@ -109,7 +109,7 @@ body{ position:relative; background:var(--paper); }
 .news-cta{ position:relative; overflow:hidden; padding:104px 0; color:var(--paper); background:radial-gradient(circle at 75% 35%,rgba(46,91,157,.38),transparent 35%),var(--blue-deep); }
 .news-cta::before{ content:""; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(251,249,245,.2) 18%,rgba(251,249,245,.2) 82%,transparent); }
 .news-cta-inner{ position:relative; z-index:1; display:grid; grid-template-columns:1fr .8fr; gap:72px; align-items:start; }
-.news-cta-eyebrow{ display:block; margin-bottom:16px; color:var(--brass-hi); font-family:var(--font-mono); font-size:14px; letter-spacing:.07em; text-transform:uppercase; }
+.news-cta-eyebrow{ margin-bottom:16px; color:var(--brass-hi); }
 .news-cta h2{ max-width:14ch; margin-bottom:22px; color:var(--paper); font-size:48px; }
 .news-cta p{ max-width:52ch; color:var(--ink-soft-on-dark); font-size:17px; line-height:1.7; }
 .news-cta-side{ display:flex; flex-direction:column; align-items:flex-start; gap:34px; }
@@ -276,7 +276,7 @@ body{ position:relative; background:var(--paper); }
     <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
     <div class="container news-cta-inner">
       <div>
-        <span class="news-cta-eyebrow">Get in touch</span>
+        <span class="eyebrow news-cta-eyebrow">Get in touch</span>
         <h2>Have a project in mind?</h2>
         <p>Tell us about the application and the constraints it has to work within. We'll tell you what a dependable battery system for it actually looks like.</p>
       </div>

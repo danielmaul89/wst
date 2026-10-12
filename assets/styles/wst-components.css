@@ -250,40 +250,6 @@
   line-height: 1.6;
 }
 
-/* The page name above the headline. It says where you are, so it is set as a
-   quiet editorial label rather than a badge: the display face, semibold, in
-   the brass text colour, led by a fine brass rule. No box, no dot. Body size
-   on phones and 24px from tablet width up. */
-.wst-page-hero-copy .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  color: var(--brass-text);
-  font-family: var(--font-display);
-  font-size: var(--fs-body);
-  font-weight: 600;
-  letter-spacing: .01em;
-  line-height: 1.2;
-}
-
-.wst-page-hero-copy .eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 1.5px;
-  background: var(--brass);
-}
-
-@media (min-width: 768px) {
-  .wst-page-hero-copy .eyebrow {
-    gap: 18px;
-    font-size: var(--fs-24);
-  }
-
-  .wst-page-hero-copy .eyebrow::before {
-    width: 44px;
-  }
-}
-
 .wst-page-hero-media {
   position: relative;
   margin: 0;
@@ -311,10 +277,6 @@
 
 .wst-page-hero--dark .wst-page-hero-copy .eyebrow {
   color: var(--brass-on-dark);
-}
-
-.wst-page-hero--dark .wst-page-hero-copy .eyebrow::before {
-  background: var(--brass-on-dark);
 }
 
 .wst-page-hero--dark .wst-page-hero-media {
@@ -507,15 +469,25 @@
   color: var(--paper);
 }
 
-/* Small brass category label above a card title. `--brass-text` is the
-   AA-contrast brass; never use the decorative `--brass` for text this size. */
+/* A tag above a headline is a pre-headline, so it is set exactly like
+   `.eyebrow`: one style for everything that sits above a headline.
+   `--brass-text` is the AA-contrast brass; never use the decorative `--brass`
+   for text. */
 .wst-tag {
   display: block;
   color: var(--brass-text);
-  font-size: var(--fs-small);
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
   font-weight: 600;
-  letter-spacing: .02em;
-  text-transform: uppercase;
+  letter-spacing: .01em;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+@media (min-width: 768px) {
+  .wst-tag {
+    font-size: var(--fs-24);
+  }
 }
 
 .on-dark .wst-tag,
