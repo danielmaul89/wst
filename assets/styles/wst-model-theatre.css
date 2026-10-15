@@ -258,3 +258,15 @@
 }
 .sc-theatre--open .sc-backdrop,
 .sc-theatre--open .sc-vignette{ display:none; }
+
+/* A mirrored set is drawn flipped, so its labels sit to the left of the pack
+   and read towards it. */
+.sc-callout.is-left{ padding-left:0; padding-right:12px; text-align:right; }
+
+/* Light stage: the theatre drawn on the paper side of the site, so the leaders
+   and labels are ink rather than brass and paper. */
+.sc-theatre--light .sc-leader{ background:linear-gradient(to right, rgba(6,8,26,.75), rgba(6,8,26,.3)); }
+.sc-theatre--light .sc-leader::before{ background:var(--paper); border:1.5px solid var(--ink); box-sizing:border-box; box-shadow:none; }
+.sc-theatre--light .sc-callout{ text-shadow:none; }
+.sc-theatre--light .sc-callout-title{ color:var(--ink); }
+.sc-theatre--light .sc-callout-sub{ color:var(--ink-soft); }
