@@ -65,18 +65,18 @@ body{
 @keyframes float-cue{ 0%,100%{ transform:scaleY(.35); opacity:.2; } 50%{ transform:scaleY(1); opacity:.6; } }
 
 /* Each pack is a theatre of its own, a few screens tall: the pack on one side,
-   its name as a headline beneath it, the named parts as it opens and
+   its name as a headline above the named parts, the named parts as it opens and
    the link to the page once they are all up. The set is drawn flipped on the
    right-hand rows, so the pack alternates sides down the page. */
 .float-theatre{ height:300vh; margin-top:0; }
 .float-theatre .sc-screen{ flex:0 1 auto; width:100%; max-width:calc(100vh * 1.6 * .84); margin:0 auto; }
 .float-name,
 .float-cta{ position:absolute; z-index:6; transition:opacity .5s var(--ease), transform .5s var(--ease); }
-.float-name{ bottom:calc(5vh + 38px); left:4%; width:46%; }
+.float-name{ top:13vh; left:58%; width:38%; }
 .float-name h2{ margin:0; max-width:none; }
-.float-theatre--mirror .float-name{ left:auto; right:4%; text-align:right; }
-.float-cta{ bottom:5vh; left:4%; opacity:0; transform:translateY(12px); pointer-events:none; }
-.float-theatre--mirror .float-cta{ left:auto; right:4%; }
+.float-theatre--mirror .float-name{ left:4%; }
+.float-cta{ bottom:6vh; left:58%; opacity:0; transform:translateY(12px); pointer-events:none; }
+.float-theatre--mirror .float-cta{ left:4%; }
 .float-theatre[data-sc-phase="done"] .float-cta{ opacity:1; transform:none; pointer-events:auto; }
 
 @media (prefers-reduced-motion:reduce){
@@ -85,7 +85,7 @@ body{
 @media (max-width:767px){
   .float-theatre{ height:260vh; }
   .float-name,
-  .float-theatre--mirror .float-name{ left:5%; right:auto; width:90%; text-align:left; bottom:calc(5vh + 38px); }
+  .float-theatre--mirror .float-name{ left:5%; right:auto; width:90%; text-align:left; top:auto; bottom:calc(5vh + 38px); }
   .float-cta,
   .float-theatre--mirror .float-cta{ left:5%; right:auto; bottom:5vh; }
   .float-hero{ min-height:0; padding-bottom:var(--sp-6); }
@@ -112,9 +112,9 @@ body{
   <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="Compact battery platform">
     <div class="sc-stage">
       <div class="sc-screen">
-        <canvas class="sc-canvas" data-frame-dir="assets/renders/compact-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1"></canvas>
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/compact-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="1"></canvas>
         <div class="sc-callouts" aria-hidden="true"></div>
-        <div class="float-name"><h2 class="t-section">Compact battery platform</h2></div>
+        <div class="float-name"><h2 class="t-display">Compact battery platform</h2></div>
         <a class="wst-link-arrow float-cta" href="pack-compact-platform.html">View pack
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -124,9 +124,9 @@ body{
   <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre float-theatre--mirror" aria-label="Heavy machinery platform">
     <div class="sc-stage">
       <div class="sc-screen">
-        <canvas class="sc-canvas" data-frame-dir="assets/renders/hdr-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-mirror data-lazy></canvas>
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/hdr-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="1" data-mirror data-lazy></canvas>
         <div class="sc-callouts" aria-hidden="true"></div>
-        <div class="float-name"><h2 class="t-section">Heavy machinery platform</h2></div>
+        <div class="float-name"><h2 class="t-display">Heavy machinery platform</h2></div>
         <a class="wst-link-arrow float-cta" href="pack-heavy-machinery-platform.html">View pack
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -136,9 +136,9 @@ body{
   <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="UPS platform">
     <div class="sc-stage">
       <div class="sc-screen">
-        <canvas class="sc-canvas" data-frame-dir="assets/renders/ups-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-lazy></canvas>
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/ups-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="1" data-lazy></canvas>
         <div class="sc-callouts" aria-hidden="true"></div>
-        <div class="float-name"><h2 class="t-section">UPS platform</h2></div>
+        <div class="float-name"><h2 class="t-display">UPS platform</h2></div>
         <a class="wst-link-arrow float-cta" href="pack-ups-platform.html">View pack
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -148,9 +148,9 @@ body{
   <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre float-theatre--mirror" aria-label="AGV platform">
     <div class="sc-stage">
       <div class="sc-screen">
-        <canvas class="sc-canvas" data-frame-dir="assets/renders/agv-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-mirror data-lazy></canvas>
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/agv-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="1" data-mirror data-lazy></canvas>
         <div class="sc-callouts" aria-hidden="true"></div>
-        <div class="float-name"><h2 class="t-section">AGV platform</h2></div>
+        <div class="float-name"><h2 class="t-display">AGV platform</h2></div>
         <a class="wst-link-arrow float-cta" href="pack-agv-platform.html">View pack
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -160,9 +160,9 @@ body{
   <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="Heavy machinery chassis">
     <div class="sc-stage">
       <div class="sc-screen">
-        <canvas class="sc-canvas" data-frame-dir="assets/renders/chassis-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-lazy></canvas>
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/chassis-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="1" data-lazy></canvas>
         <div class="sc-callouts" aria-hidden="true"></div>
-        <div class="float-name"><h2 class="t-section">Heavy machinery chassis</h2></div>
+        <div class="float-name"><h2 class="t-display">Heavy machinery chassis</h2></div>
         <a class="wst-link-arrow float-cta" href="pack-heavy-machinery-chassis.html">View pack
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -187,7 +187,7 @@ body{
 </main>
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
-<script src="assets/scripts/hero-scroll-theatre.js?v=10" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=11" defer></script>
 <script src="assets/scripts/pack-float.js?v=10" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>

@@ -55,6 +55,8 @@
     var VER = frameHost.getAttribute('data-frame-ver') || '';
     var MIRROR = frameHost.hasAttribute('data-mirror');
     var LAZY = frameHost.hasAttribute('data-lazy');
+    // Keep every label below this fraction of the frame, leaving room above them for a headline.
+    var LABEL_TOP = parseFloat(frameHost.getAttribute("data-label-top")) || 0;
 
     var WIDTHS = (frameHost.getAttribute('data-frame-widths') || '')
       .split(',').map(function (w) { return parseInt(w, 10); })
@@ -224,12 +226,12 @@
       var order = calloutEls.map(function (c, idx) { return idx; })
         .sort(function (a, b) { return calloutEls[a].data.y - calloutEls[b].data.y; });
       var labelY = {};
-      order.forEach(function (idx) { labelY[idx] = originY + hostH * calloutEls[idx].data.y / 100; });
+      order.forEach(function (idx) { labelY[idx] = Math.max(originY + hostH * calloutEls[idx].data.y / 100, originY + hostH * LABEL_TOP); });
       for (var i = 1; i < order.length; i++) {
         var prev = order[i - 1], cur = order[i];
         if (labelY[cur] - labelY[prev] < MIN_LABEL_GAP) labelY[cur] = labelY[prev] + MIN_LABEL_GAP;
       }
-      for (var j = order.length - 2; j >= 0; j--) {
+      for (var j = order.length - 2; j >= 0 && !LABEL_TOP; j--) {
         var a = order[j], b = order[j + 1];
         if (labelY[b] - labelY[a] < MIN_LABEL_GAP) labelY[a] = labelY[b] - MIN_LABEL_GAP;
       }
