@@ -186,7 +186,10 @@
     onResize(); // canvasCssW/H may be stale if this observer fires before the canvas's
     var box = getImageBox();
     var originX = box.x, originY = box.y, hostW = box.w, hostH = box.h;
-    var labelX = originX + hostW * 0.82;
+    /* On a narrow screen the labels move in and wrap, so none run off the right
+       edge and widen the page. */
+    var narrowHost = hostW < 700;
+    var labelX = originX + hostW * (narrowHost ? 0.6 : 0.82);
 
     var order = calloutEls.map(function (c, idx) { return idx; })
       .sort(function (a, b) { return calloutEls[a].data.y - calloutEls[b].data.y; });
@@ -211,6 +214,13 @@
       c.leader.style.width = dist.toFixed(1) + 'px';
       c.leader.style.transform = 'translate(' + ax.toFixed(1) + 'px,' + ay.toFixed(1) + 'px) rotate(' + ang.toFixed(4) + 'rad)';
       c.el.style.transform = 'translate(' + (labelX + 12).toFixed(1) + 'px,' + ly.toFixed(1) + 'px) translateY(-50%)';
+      if (narrowHost) {
+        c.el.style.whiteSpace = 'normal';
+        c.el.style.width = Math.max(60, originX + hostW - (labelX + 12) - 8).toFixed(0) + 'px';
+      } else {
+        c.el.style.whiteSpace = '';
+        c.el.style.width = '';
+      }
     });
   }
   if ('ResizeObserver' in window) new ResizeObserver(positionCallouts).observe(calloutsHost);
