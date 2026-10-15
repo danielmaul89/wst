@@ -65,14 +65,17 @@ body{
 @keyframes float-cue{ 0%,100%{ transform:scaleY(.35); opacity:.2; } 50%{ transform:scaleY(1); opacity:.6; } }
 
 /* Each pack is a theatre of its own, a few screens tall: the pack on one side,
-   its name as a headline above the named parts, the named parts as it opens and
+   its name centred opposite while it is closed and moving up above the named parts as it opens, the named parts as it opens and
    the link to the page once they are all up. The set is drawn flipped on the
    right-hand rows, so the pack alternates sides down the page. */
 .float-theatre{ height:300vh; margin-top:0; }
 .float-theatre .sc-screen{ flex:0 1 auto; width:100%; max-width:calc(100vh * 1.6 * .84); margin:0 auto; }
 .float-name,
 .float-cta{ position:absolute; z-index:6; transition:opacity .5s var(--ease), transform .5s var(--ease); }
-.float-name{ top:13vh; left:58%; width:38%; }
+.float-name{ top:13vh; left:58%; width:38%; transition-duration:.9s; }
+@media (min-width:768px){
+  .float-theatre[data-sc-phase="rest"] .float-name{ transform:translateY(calc(37vh - 50%)); }
+}
 .float-name h2{ margin:0; max-width:none; }
 .float-theatre--mirror .float-name{ left:4%; }
 .float-cta{ bottom:6vh; left:58%; opacity:0; transform:translateY(12px); pointer-events:none; }
