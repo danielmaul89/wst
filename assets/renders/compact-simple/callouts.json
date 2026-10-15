@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Casing lid",
+    "sub": "Sealed top cover",
+    "part": "lid",
+    "x": 40.0,
+    "y": 11.74,
+    "inFrame": true
+  },
+  {
+    "label": "Top cell holder",
+    "sub": "Retention and terminals",
+    "part": "top",
+    "x": 40.01,
+    "y": 27.1,
+    "inFrame": true
+  },
+  {
+    "label": "21700 cells",
+    "sub": "Cylindrical array",
+    "part": "cells",
+    "x": 39.97,
+    "y": 44.16,
+    "inFrame": true
+  },
+  {
+    "label": "BMS board",
+    "sub": "Protection and balancing",
+    "part": "board",
+    "x": 25.43,
+    "y": 43.14,
+    "inFrame": true
+  },
+  {
+    "label": "Bottom cell holder",
+    "sub": "Retention and spacing",
+    "part": "bottom",
+    "x": 39.96,
+    "y": 62.28,
+    "inFrame": true
+  },
+  {
+    "label": "Main casing",
+    "sub": "Structural enclosure",
+    "part": "case",
+    "x": 40.0,
+    "y": 80.42,
+    "inFrame": true
+  }
+]

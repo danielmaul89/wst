@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>Battery packs, floating | WS Technicals</title>
-<meta name="description" content="An alternative Battery packs page: the production models, live, folding apart down the page.">
+<meta name="description" content="An alternative Battery packs page: the production models, taken apart on screen as you scroll.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,14 +13,10 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2n">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
-<script>
-/* Decided before anything paints: where the page will run live, the still
-   renders are never shown, so they cannot flash up and vanish. */
-(function(){var d=document.documentElement;if(window.innerWidth>=768&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&!(navigator.connection&&navigator.connection.saveData))d.classList.add("float-pending");setTimeout(function(){if(!d.classList.contains("float-3d"))d.classList.remove("float-pending");},8000);})();
-</script>
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=5">
 <style>
-/* Not a flat sheet: two soft washes sit on the paper even where the live
-   backdrop below is not running (phones, reduced motion). */
+/* Not a flat sheet: two soft washes sit on the paper even where the backdrop
+   below is not running (reduced motion). */
 body{
   background:
     radial-gradient(70vmax 60vmax at 12% 6%, rgba(15,42,92,.16), rgba(15,42,92,0) 100%) fixed,
@@ -28,42 +24,23 @@ body{
     var(--paper);
 }
 
-/* One fixed layer holds the canvas every pack is drawn on, the soft shadow
-   under each, and the lines from the named parts to their labels. It sits
-   under the page's words and over its background, and the closing band and
-   footer sit over it in turn. */
+/* One fixed layer holds the backdrop, under the page's words and over its
+   background; the closing band and footer sit over it in turn. The backdrop
+   is one continuous colour that follows the page from blue, through white, to
+   golden sand, with the drawing grid always on (see pack-float.js). */
 .float-stage{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
-.float-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-.float-shadow{
-  position:absolute; left:0; top:0; opacity:0; border-radius:50%;
-  background:radial-gradient(closest-side, rgba(10,20,50,.5), rgba(10,20,50,.18) 55%, rgba(10,20,50,0) 100%);
-  will-change:transform,opacity;
-}
-/* The backdrop is driven from the script. It is one continuous colour that
-   follows the page from blue, through white, to golden sand: two washes whose
-   opacity is a smooth function of how far down the page you are, so there is
-   no point at which anything switches. A spotlight sits behind the pack and
-   the drawing grid is always there. Only transforms and opacity change, so it
-   moves on the compositor and never repaints. */
 .float-bg{ position:absolute; inset:0; opacity:0; transition:opacity 1.8s ease; }
 .float-bg.is-on{ opacity:1; }
 .float-backdrop{ position:absolute; inset:0; background:var(--paper); }
 .float-wash{ position:absolute; inset:-10%; opacity:0; will-change:transform,opacity; }
-.float-glow{
-  position:absolute; left:0; top:0; opacity:0; border-radius:50%; will-change:transform,opacity;
-  background:radial-gradient(closest-side, rgba(255,255,255,1), rgba(255,255,255,0));
-}
 .float-grid{
-  position:absolute; inset:0; opacity:.75; will-change:opacity;
+  position:absolute; inset:0; opacity:.75;
   background-image:
     repeating-linear-gradient(to right, rgba(6,8,26,.07) 0 1px, transparent 1px 56px),
     repeating-linear-gradient(to bottom, rgba(6,8,26,.07) 0 1px, transparent 1px 56px);
   -webkit-mask-image:radial-gradient(ellipse 90% 85% at 50% 45%, #000 35%, transparent 100%);
   mask-image:radial-gradient(ellipse 90% 85% at 50% 45%, #000 35%, transparent 100%);
 }
-.float-leaders{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
-.float-leader{ fill:none; stroke:var(--ink); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
-.float-dot{ fill:var(--paper); stroke:var(--ink); stroke-width:1.5; opacity:0; }
 
 .float-hero,
 .float-flow{ position:relative; z-index:2; }
@@ -87,76 +64,32 @@ body{
 }
 @keyframes float-cue{ 0%,100%{ transform:scaleY(.35); opacity:.2; } 50%{ transform:scaleY(1); opacity:.6; } }
 
-/* Each pack is a row, and each row holds one screen of its own: the pack on
-   the larger side, its name opposite and a lot of air around both. Where the
-   pack can be drawn live the row is made tall and the screen pins, so the
-   scroll through the row is the pack folding apart and being named. */
-.float-pin{
-  display:grid;
-  grid-template-columns:7fr 5fr;
-  align-items:center;
-  column-gap:var(--sp-7);
-  min-height:100vh; min-height:100svh;
-}
-.float-row--model-right .float-pin{ grid-template-columns:5fr 7fr; }
-.float-slot{ position:relative; grid-column:1; grid-row:1; width:min(100%, 74vh, 74svh); aspect-ratio:1 / 1; justify-self:center; }
-.float-row--model-right .float-slot{ grid-column:2; }
-.float-copy,
-.float-details{ grid-column:2; grid-row:1; }
-.float-row--model-right .float-copy,
-.float-row--model-right .float-details{ grid-column:1; }
+/* Each pack is a theatre of its own, a few screens tall: the pack on one side,
+   its name opposite while it is still closed, the named parts as it opens and
+   the link to the page once they are all up. The set is drawn flipped on the
+   right-hand rows, so the pack alternates sides down the page. */
+.float-theatre{ height:300vh; margin-top:0; }
+.float-theatre .sc-screen{ flex:0 1 auto; width:100%; max-width:calc(100vh * 1.6); margin:0 auto; }
+.float-name,
+.float-cta{ position:absolute; z-index:6; transition:opacity .5s var(--ease), transform .5s var(--ease); }
+.float-name{ top:50%; left:60%; width:36%; transform:translateY(-50%); }
+.float-name h2{ margin:0; max-width:none; }
+.float-theatre--mirror .float-name{ left:4%; }
+.float-cta{ bottom:11vh; left:60%; opacity:0; transform:translateY(12px); pointer-events:none; }
+.float-theatre--mirror .float-cta{ left:4%; }
+.float-theatre[data-sc-phase="done"] .float-cta{ opacity:1; transform:none; pointer-events:auto; }
+.float-theatre:not([data-sc-phase="rest"]) .float-name{ opacity:0; transform:translateY(calc(-50% - 14px)); }
 
-.float-poster{ width:100%; height:100%; object-fit:contain; display:block; transition:opacity .9s var(--ease); }
-.float-row.is-live .float-poster{ opacity:0; }
-
-.float-copy{ max-width:min(100%, 420px); justify-self:start; }
-.float-row--model-right .float-copy{ justify-self:end; }
-.float-copy h2{ margin:0 0 var(--sp-3); max-width:none; }
-.float-link{ font-size:var(--fs-body); }
-
-/* The named parts: a short list opposite the pack, one line to each part. */
-.float-details{ justify-self:start; width:min(100%, 300px); visibility:hidden; }
-.float-row--model-right .float-details{ justify-self:end; }
-.float-labels{ list-style:none; margin:0; padding:0; display:grid; gap:var(--sp-3); }
-.float-label{ display:block; opacity:0; }
-.float-label-title{ display:block; font-size:var(--fs-body); font-weight:600; color:var(--ink); line-height:1.3; }
-.float-label-sub{ display:block; margin-top:2px; font-size:var(--fs-small); color:var(--ink-soft); line-height:1.4; }
-.float-details-title{
-  margin:0 0 var(--sp-3); opacity:0;
-  font-family:var(--font-mono); font-size:var(--fs-small); letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft);
-}
-.float-cta{ margin-top:var(--sp-4); opacity:0; pointer-events:none; }
-.float-spec{
-  margin:var(--sp-4) 0 0; padding-top:var(--sp-2); border-top:1px solid var(--line-2); opacity:0;
-  font-family:var(--font-mono); font-size:var(--fs-small); letter-spacing:.04em; color:var(--ink-soft);
-}
-
-html.float-3d .float-row{ height:340vh; }
-html.float-3d .float-copy .float-link{ display:none; }
-html.float-3d .float-pin{ position:sticky; top:0; height:100vh; height:100svh; min-height:0; }
-html.float-pending .float-poster,
-html.float-3d .float-poster{ opacity:0; animation:none; }
-.float-row.is-failed .float-poster{ opacity:1; }
-
-@media (prefers-reduced-motion:no-preference){
-  html:not(.float-3d) .float-row:not(.is-live) .float-poster{ animation:float-bob 7s ease-in-out infinite; }
-  html:not(.float-3d) .float-row:nth-child(even):not(.is-live) .float-poster{ animation-delay:-3s; }
-}
-@keyframes float-bob{ 0%,100%{ transform:translateY(-8px); } 50%{ transform:translateY(10px); } }
-
-@media (max-width:1000px){
-  .float-pin,
-  .float-row--model-right .float-pin{ column-gap:var(--sp-5); }
+@media (prefers-reduced-motion:reduce){
+  .float-theatre{ height:auto; }
 }
 @media (max-width:767px){
-  .float-pin,
-  .float-row--model-right .float-pin{ grid-template-columns:1fr; min-height:0; row-gap:var(--sp-3); padding:var(--sp-6) 0; }
-  .float-slot,
-  .float-row--model-right .float-slot{ grid-column:1; grid-row:auto; width:86%; justify-self:start; }
-  .float-row--model-right .float-slot{ justify-self:end; }
-  .float-copy,
-  .float-row--model-right .float-copy{ grid-column:1; grid-row:auto; max-width:none; justify-self:start; }
-  .float-details{ display:none; }
+  .float-theatre{ height:260vh; }
+  .float-name,
+  .float-theatre--mirror .float-name{ top:14vh; left:5%; width:90%; transform:none; }
+  .float-theatre:not([data-sc-phase="rest"]) .float-name{ transform:translateY(-14px); }
+  .float-cta,
+  .float-theatre--mirror .float-cta{ left:5%; bottom:9vh; }
   .float-hero{ min-height:0; padding-bottom:var(--sp-6); }
   .float-cue{ display:none; }
 }
@@ -178,79 +111,66 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
 </section>
 
 <div class="float-flow">
-  <div class="container">
-
-    <section class="float-row" data-float-model="assets/models/c4e.wstm" data-float-key="compact" data-float-side="left" data-float-fit="0.95">
-      <div class="float-pin">
-        <div class="float-slot">
-          <img class="float-poster" src="assets/products/packs/compact-platform.png" alt="Compact battery platform" decoding="async">
-        </div>
-        <div class="float-copy">
-          <h2 class="t-section">Compact battery platform</h2>
-          <a class="wst-link-arrow float-link" href="pack-compact-platform.html">View pack
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="Compact battery platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/compact-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1"></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">Compact battery platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-compact-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </section>
-
-    <section class="float-row float-row--model-right" data-float-model="assets/models/HDR.wstm" data-float-key="heavy-machinery" data-float-side="right" data-float-fit="1.05">
-      <div class="float-pin">
-        <div class="float-slot">
-          <img class="float-poster" src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform" loading="lazy" decoding="async">
-        </div>
-        <div class="float-copy">
-          <h2 class="t-section">Heavy machinery platform</h2>
-          <a class="wst-link-arrow float-link" href="pack-heavy-machinery-platform.html">View pack
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre float-theatre--mirror" aria-label="Heavy machinery platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/hdr-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-mirror data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">Heavy machinery platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-heavy-machinery-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </section>
-
-    <section class="float-row" data-float-model="assets/models/wl03.wstm" data-float-key="ups" data-float-side="left" data-float-fit="1.2">
-      <div class="float-pin">
-        <div class="float-slot">
-          <img class="float-poster" src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
-        </div>
-        <div class="float-copy">
-          <h2 class="t-section">UPS platform</h2>
-          <a class="wst-link-arrow float-link" href="pack-ups-platform.html">View pack
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="UPS platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/ups-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">UPS platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-ups-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </section>
-
-    <section class="float-row float-row--model-right" data-float-model="assets/models/sl02.wstm" data-float-key="agv" data-float-side="right" data-float-fit="1.0">
-      <div class="float-pin">
-        <div class="float-slot">
-          <img class="float-poster" src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
-        </div>
-        <div class="float-copy">
-          <h2 class="t-section">AGV platform</h2>
-          <a class="wst-link-arrow float-link" href="pack-agv-platform.html">View pack
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre float-theatre--mirror" aria-label="AGV platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/agv-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-mirror data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">AGV platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-agv-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </section>
-
-    <section class="float-row" data-float-model="assets/models/B7W.wstm" data-float-key="chassis" data-float-side="left" data-float-fit="0.8">
-      <div class="float-pin">
-        <div class="float-slot">
-          <img class="float-poster" src="assets/products/packs/heavy-machinery-chassis.png" alt="Heavy machinery battery chassis" loading="lazy" decoding="async">
-        </div>
-        <div class="float-copy">
-          <h2 class="t-section">Heavy machinery chassis</h2>
-          <a class="wst-link-arrow float-link" href="pack-heavy-machinery-chassis.html">View pack
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="Heavy machinery chassis">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/chassis-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-frame-ver="1" data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">Heavy machinery chassis</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-heavy-machinery-chassis.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </section>
-
-  </div>
+    </div>
+  </section>
 </div>
 
 <div class="float-after">
@@ -269,10 +189,8 @@ html.float-3d .float-poster{ opacity:0; animation:none; }
 </main>
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
-<script src="assets/vendor/three.r128.min.js" defer></script>
-<script src="assets/vendor/fflate.min.js" defer></script>
-<script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/pack-float.js?v=9" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=10" defer></script>
+<script src="assets/scripts/pack-float.js?v=10" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>

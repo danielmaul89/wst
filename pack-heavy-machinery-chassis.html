@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2n">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
-<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=5">
 <style>
 /* A product page served on deep blue, the way the contact page is, with the
    blueprint grid behind all of it: the grid is laid over main rather than
@@ -34,6 +34,9 @@ main{ position:relative; }
 .pack-fact{ display:flex; flex-direction:column; gap:5px; }
 .pack-fact dt{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft-on-dark); }
 .pack-fact dd{ margin:0; font-size:var(--fs-body); font-weight:600; }
+
+/* Four steps rather than the full layer stack, so a shorter run of scroll. */
+#scTheatre{ height:340vh; }
 
 .pack-detail{ position:relative; padding:var(--sp-7) 0 var(--sp-8); border-top:1px solid rgba(251,249,245,.12); }
 .pack-detail h2{ max-width:18ch; font-size:var(--h2-section); letter-spacing:var(--h2-ls); line-height:var(--h2-lh); }
@@ -70,14 +73,16 @@ main{ position:relative; }
   </div>
 </section>
 
-<!-- The stage the engineering showcase runs, driven by the same script and
-     styled from the same sheet, but open: no panel, no backdrop of its own
-     and no loading screen, so the pack is drawn straight onto the page. The
-     switcher and the loader are both optional to the script. -->
-<section class="sc-theatre sc-theatre--open" id="scTheatre" data-model="chassis">
+<!-- A simplified take-apart: the lids come off, the plate layer rises out of
+     the shell, and the electronics (BMS, service disconnect and cabling)
+     slide out at the front, leaving the bend-plate chassis. Pre-rendered in
+     Blender from the real CAD (every part is still drawn) and stepped through
+     by scroll; the parts are named once it is open, and it stays open. Open
+     stage: drawn straight onto the page. -->
+<section class="sc-theatre sc-theatre--open" id="scTheatre">
   <div class="sc-stage">
    <div class="sc-screen" id="scScreen">
-    <canvas class="sc-canvas" id="scCanvas"></canvas>
+    <canvas class="sc-canvas" id="scFrame" data-frame-dir="assets/renders/chassis-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.5" data-hold-end="0.84" data-stays-open data-frame-ver="1"></canvas>
     <div class="sc-callouts" id="scCallouts" aria-hidden="true"></div>
 
     <div class="sc-hint" id="scHint">
@@ -115,12 +120,7 @@ main{ position:relative; }
 </main>
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
-<script src="assets/vendor/three.r128.min.js" defer></script>
-<script src="assets/vendor/fflate.min.js" defer></script>
-<script src="assets/vendor/FBXLoader.js" defer></script>
-<script src="assets/scripts/wstm-loader.js?v=3" defer></script>
-<script src="assets/scripts/wst-cad-colour.js?v=1" defer></script>
-<script src="assets/scripts/product-3d-showcase.js?v=21" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=10" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>

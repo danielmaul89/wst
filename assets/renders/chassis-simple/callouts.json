@@ -1,0 +1,34 @@
+[
+  {
+    "label": "Lids",
+    "sub": "Sealed covers",
+    "part": "cover",
+    "x": 39.82,
+    "y": 33.48,
+    "inFrame": true
+  },
+  {
+    "label": "Component layer",
+    "sub": "Plates and sealing rubber",
+    "part": "layer",
+    "x": 39.98,
+    "y": 36.4,
+    "inFrame": true
+  },
+  {
+    "label": "Bend-plate chassis",
+    "sub": "Structural housing",
+    "part": "housing",
+    "x": 39.98,
+    "y": 67.66,
+    "inFrame": true
+  },
+  {
+    "label": "Electronics",
+    "sub": "BMS, service disconnect and cabling",
+    "part": "electronics",
+    "x": 26.45,
+    "y": 68.24,
+    "inFrame": true
+  }
+]
