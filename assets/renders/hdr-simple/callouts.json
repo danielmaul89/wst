@@ -3,32 +3,32 @@
     "label": "Enclosure lid",
     "sub": "Sealed top cover",
     "part": "cover",
-    "x": 31.5,
-    "y": 22.16,
+    "x": 40.09,
+    "y": 24.12,
     "inFrame": true
   },
   {
     "label": "Cell block",
     "sub": "Cells, busbars and heat pads",
     "part": "cells",
-    "x": 30.4,
-    "y": 48.51,
+    "x": 39.01,
+    "y": 46.16,
     "inFrame": true
   },
   {
     "label": "Enclosure",
     "sub": "Structural housing",
     "part": "base",
-    "x": 31.94,
-    "y": 81.04,
+    "x": 40.0,
+    "y": 73.68,
     "inFrame": true
   },
   {
     "label": "Connectors and cabling",
     "sub": "Terminals, cables, CMU board",
     "part": "connect",
-    "x": 58.95,
-    "y": 69.43,
+    "x": 62.42,
+    "y": 64.41,
     "inFrame": true
   }
 ]
