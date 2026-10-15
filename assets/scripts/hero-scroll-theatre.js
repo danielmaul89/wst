@@ -46,7 +46,10 @@
     .split(',').map(function (w) { return parseInt(w, 10); })
     .filter(function (w) { return w > 0; })
     .sort(function (x, y) { return x - y; });
-  var FRAME_ASPECT = 3 / 4; // all sets are 3:4 portrait; only used to pick a width
+  /* Width over height of the frames, only used to pick a width. The packs are
+     3:4 portrait unless a page says otherwise (a pack that lies on its side
+     when apart is rendered landscape). */
+  var FRAME_ASPECT = parseFloat(frameHost.getAttribute('data-frame-aspect')) || 3 / 4;
   var WINDOW_AHEAD = 12, WINDOW_BEHIND = 5;
   var MAX_FETCH = 6, MAX_DECODE = 3;
 
@@ -159,12 +162,16 @@
 
   function buildCallouts(data) {
     var items = data.filter(function (c) { return c.inFrame; });
+    /* Labels with a description underneath are two lines tall, so they need
+       more room between them than a title alone. */
+    if (items.some(function (c) { return c.sub; })) MIN_LABEL_GAP = 58;
     items.forEach(function (c) {
       var leader = document.createElement('div');
       leader.className = 'sc-leader';
       var el = document.createElement('div');
       el.className = 'sc-callout';
-      el.innerHTML = '<span class="sc-callout-title">' + c.label + '</span>';
+      el.innerHTML = '<span class="sc-callout-title">' + c.label + '</span>' +
+        (c.sub ? '<span class="sc-callout-sub">' + c.sub + '</span>' : '');
       calloutsHost.appendChild(leader);
       calloutsHost.appendChild(el);
       calloutEls.push({ leader: leader, el: el, data: c, on: false });
@@ -238,8 +245,12 @@
     return p < 0 ? 0 : p > 1 ? 1 : p;
   }
 
-  var EXPLODE_END = 0.32;
-  var HOLD_END = 0.68;
+  /* Where the scroll hands over from the opening to the hold, and from the
+     hold to the return. A set with no return frames (data-stays-open) keeps
+     its labels up from the end of the hold to the end of the page. */
+  var EXPLODE_END = parseFloat(frameHost.getAttribute('data-explode-end')) || 0.32;
+  var HOLD_END = parseFloat(frameHost.getAttribute('data-hold-end')) || 0.68;
+  var STAYS_OPEN = frameHost.hasAttribute('data-stays-open');
 
   function currentFrame(p) {
     if (p <= EXPLODE_END) {
@@ -427,8 +438,10 @@
     }
     if (hint) hint.style.opacity = p > 0.02 ? '0' : '1';
 
-    if (p <= EXPLODE_END || p > HOLD_END) {
+    if (p <= EXPLODE_END) {
       updateReveal(0);
+    } else if (p > HOLD_END) {
+      updateReveal(STAYS_OPEN ? 1 : 0);
     } else {
       updateReveal((p - EXPLODE_END) / (HOLD_END - EXPLODE_END));
     }
