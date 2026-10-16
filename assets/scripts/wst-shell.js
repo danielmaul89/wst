@@ -80,8 +80,10 @@
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
 
+    var darkHero = document.body.getAttribute("data-wst-hero") === "dark" ? document.querySelector("main > section") : null;
     var onNavScroll = function () {
       navEl.classList.toggle("nav--scrolled", window.scrollY > 8);
+      if (darkHero) navEl.classList.toggle("nav--over-dark", darkHero.getBoundingClientRect().bottom > navEl.offsetHeight);
     };
     onNavScroll();
     window.addEventListener("scroll", onNavScroll, { passive: true });

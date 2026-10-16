@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,-25&amp;display=block" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2p">
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2r">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
 <style>
@@ -44,22 +44,29 @@
 .bms-card-partner{ position:absolute; top:12px; left:12px; z-index:1; display:inline-flex; align-items:center; gap:8px; padding:7px 14px 7px 12px; border-radius:999px; background:rgba(251,249,245,.94); color:var(--ink-soft); font-size:14px; line-height:1; text-decoration:none; box-shadow:var(--shadow-sm); }
 .bms-card-partner img{ display:block; width:auto; height:18px; }
 .bms-card-partner:hover{ color:var(--ink); }
+/* The partner badge under the hero text: a light pill on the deep blue, so the
+   logo keeps its own colours. */
+.bms-hero-badge{ display:inline-flex; align-items:center; gap:10px; margin-top:var(--sp-4); padding:9px 18px 9px 16px; border-radius:999px; background:rgba(251,249,245,.96); color:var(--ink-soft); font-size:14px; line-height:1; text-decoration:none; }
+.bms-hero-badge img{ display:block; width:auto; height:22px; }
+.bms-hero-badge:hover{ color:var(--ink); }
+.wst-page-hero-copy .bms-hero-badge{ display:flex; width:fit-content; }
 @media(max-width:560px){ .bms-platform{ padding:var(--sp-3); } .bms-type{ white-space:normal; } }
 </style>
 </head>
-<body data-wst-page="bms">
+<body data-wst-page="bms" data-wst-hero="dark">
 
 <div data-wst-header></div>
 
 <main>
 
-<section class="wst-page-hero">
+<section class="wst-page-hero wst-page-hero--dark wst-section--dark on-dark">
   <div class="container wst-page-hero-grid">
     <div class="wst-page-hero-copy">
       <span class="eyebrow">Battery Management Systems</span>
       <h1 class="t-display">Every cell, monitored and protected.</h1>
       <p class="wst-page-hero-intro">Integrated and distributed BMS platforms, designed and firmware-tuned in-house.</p>
-      <a href="contact-v2.html" class="btn btn-primary">Talk to our BMS engineers</a>
+      <a href="contact-v2.html" class="btn btn-on-dark">Talk to our BMS engineers</a>
+      <a class="bms-hero-badge" href="https://lithiumbalance.com/" target="_blank" rel="noopener noreferrer" aria-label="BMS platforms by Lithium Balance (opens in a new tab)"><span>Platforms by</span><img src="assets/partners/lithium-balance.svg" alt=""></a>
     </div>
     <figure class="wst-page-hero-media">
       <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board">
@@ -197,7 +204,7 @@
 
 <div data-wst-footer></div>
 
-<script src="assets/scripts/wst-shell.js?v=nav7"></script>
+<script src="assets/scripts/wst-shell.js?v=nav8"></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
 </body>
 </html>
