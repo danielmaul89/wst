@@ -3,32 +3,32 @@
     "label": "Casing lid",
     "sub": "Sealed top cover",
     "part": "lid",
-    "x": 40.54,
-    "y": 34.68,
+    "x": 41.54,
+    "y": 33.9,
     "inFrame": true
   },
   {
     "label": "Terminals and harness",
     "sub": "Pack terminals, comms and sense",
     "part": "internals",
-    "x": 39.7,
-    "y": 45.21,
+    "x": 38.38,
+    "y": 44.91,
     "inFrame": true
   },
   {
     "label": "Service lid",
     "sub": "Access hatch",
     "part": "service",
-    "x": 17.85,
-    "y": 70.03,
+    "x": 17.68,
+    "y": 69.45,
     "inFrame": true
   },
   {
     "label": "Case",
     "sub": "Structural enclosure",
     "part": "case",
-    "x": 40.22,
-    "y": 63.34,
+    "x": 40.38,
+    "y": 62.74,
     "inFrame": true
   }
 ]

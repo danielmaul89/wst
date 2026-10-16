@@ -4,7 +4,7 @@
     "sub": "FR4 insulator sheet",
     "part": "cover",
     "x": 40.47,
-    "y": 42.09,
+    "y": 41.35,
     "inFrame": true
   },
   {
@@ -12,15 +12,15 @@
     "sub": "Cooling, power and indicators",
     "part": "modules",
     "x": 37.56,
-    "y": 45.82,
+    "y": 45.76,
     "inFrame": true
   },
   {
     "label": "Connector panel",
     "sub": "Pack interface",
     "part": "panel",
-    "x": 18.72,
-    "y": 61.84,
+    "x": 18.71,
+    "y": 61.78,
     "inFrame": true
   },
   {
@@ -28,7 +28,7 @@
     "sub": "19-inch housing",
     "part": "shell",
     "x": 40.0,
-    "y": 57.55,
+    "y": 57.49,
     "inFrame": true
   }
 ]

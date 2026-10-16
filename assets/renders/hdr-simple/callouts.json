@@ -3,8 +3,8 @@
     "label": "Enclosure lid",
     "sub": "Sealed top cover",
     "part": "cover",
-    "x": 40.09,
-    "y": 24.12,
+    "x": 39.95,
+    "y": 24.15,
     "inFrame": true
   },
   {
@@ -12,15 +12,15 @@
     "sub": "Cells, busbars and heat pads",
     "part": "cells",
     "x": 39.01,
-    "y": 46.16,
+    "y": 46.18,
     "inFrame": true
   },
   {
     "label": "Enclosure",
     "sub": "Structural housing",
     "part": "base",
-    "x": 40.0,
-    "y": 73.68,
+    "x": 40.03,
+    "y": 73.72,
     "inFrame": true
   },
   {
