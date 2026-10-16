@@ -309,6 +309,22 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* Centred opening: the words sit on the page's centre line, for a hero that
+   is followed by a full-width picture or film rather than set beside one.
+   Pair with `--text-only`. */
+.wst-page-hero--center .wst-page-hero-copy {
+  align-items: center;
+  text-align: center;
+}
+
+.wst-page-hero--center .wst-page-hero-copy .t-display {
+  max-width: 20ch;
+}
+
+.wst-page-hero--center .wst-page-hero-intro {
+  max-width: 52ch;
+}
+
 
 /* ============================================================================
    2. AMBIENT WASH
