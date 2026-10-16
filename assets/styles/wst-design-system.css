@@ -570,6 +570,26 @@ h4,
   color: var(--ink);
 }
 
+/* The page you are on: the hover colour is only a darker ink, so the current
+   page takes a blue label on a light blue tint with a brass line beneath. */
+.nav-link { position: relative; }
+.nav-link[aria-current="page"],
+.nav-item:hover > .nav-link[aria-current="page"] {
+  color: var(--blue);
+  background: rgba(15, 42, 92, .07);
+  font-weight: 600;
+}
+.nav-link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brass);
+}
+
 .nav-link .chev {
   display: block;
   width: 10px;
@@ -645,8 +665,8 @@ h4,
 
 .dropdown a:hover,
 .dropdown a:focus-visible {
-  color: var(--ink);
-  background: var(--paper-2);
+  color: var(--blue);
+  background: rgba(15, 42, 92, .09);
 }
 
 .nav-cta {
@@ -1320,6 +1340,11 @@ body[data-wst-theme="dark"] .nav-item.current > .nav-link {
   color: var(--paper);
   background: rgba(251, 249, 245, .08);
 }
+body[data-wst-theme="dark"] .nav-link[aria-current="page"],
+body[data-wst-theme="dark"] .nav-item:hover > .nav-link[aria-current="page"] {
+  color: var(--brass-on-dark);
+  background: rgba(251, 249, 245, .1);
+}
 body[data-wst-theme="dark"] .dropdown {
   background: var(--blue);
   border-color: rgba(251, 249, 245, .14);
@@ -1330,7 +1355,7 @@ body[data-wst-theme="dark"] .dropdown a {
 body[data-wst-theme="dark"] .dropdown a:hover,
 body[data-wst-theme="dark"] .dropdown a:focus-visible {
   color: var(--paper);
-  background: rgba(251, 249, 245, .08);
+  background: rgba(251, 249, 245, .14);
 }
 body[data-wst-theme="dark"] .nav.nav--scrolled {
   background: transparent;
