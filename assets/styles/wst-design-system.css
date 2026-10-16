@@ -571,7 +571,7 @@ h4,
 }
 
 /* The page you are on: the hover colour is only a darker ink, so the current
-   page takes a blue label on a light blue tint with a brass line beneath. */
+   page takes a blue label on a light blue tint and a semi-bold weight. */
 .nav-link { position: relative; }
 .nav-link[aria-current="page"],
 .nav-item:hover > .nav-link[aria-current="page"] {
@@ -579,17 +579,6 @@ h4,
   background: rgba(15, 42, 92, .07);
   font-weight: 600;
 }
-.nav-link[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 3px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--brass);
-}
-
 .nav-link .chev {
   display: block;
   width: 10px;
