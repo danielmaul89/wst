@@ -236,6 +236,12 @@
         if (labelY[b] - labelY[a] < MIN_LABEL_GAP) labelY[a] = labelY[b] - MIN_LABEL_GAP;
       }
 
+      /* Where the list ends, for a page that wants something just beneath it. */
+      var lastY = 0;
+      calloutEls.forEach(function (c, idx) { lastY = Math.max(lastY, labelY[idx]); });
+      track.style.setProperty("--sc-labels-bottom", (lastY + 22).toFixed(0) + "px");
+      track.style.setProperty("--sc-labels-edge", (MIRROR ? labelX - 24 : labelX + 24).toFixed(0) + "px");
+
       calloutEls.forEach(function (c, idx) {
         var ax = originX + hostW * (MIRROR ? 100 - c.data.x : c.data.x) / 100;
         var ay = originY + hostH * c.data.y / 100;

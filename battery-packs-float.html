@@ -79,8 +79,8 @@ body{
 }
 .float-name h2{ margin:0; max-width:none; }
 .float-theatre--mirror .float-name{ left:4%; }
-.float-cta{ bottom:6vh; left:58%; opacity:0; transform:translateY(12px); pointer-events:none; }
-.float-theatre--mirror .float-cta{ left:4%; }
+.float-cta{ top:calc(var(--sc-labels-bottom, 80%) + 24px); left:var(--sc-labels-edge, 58%); opacity:0; transform:translateY(12px); pointer-events:none; }
+.float-theatre--mirror .float-cta{ left:auto; right:calc(100% - var(--sc-labels-edge, 40%)); }
 .float-theatre[data-sc-phase="done"] .float-cta{ opacity:1; transform:none; pointer-events:auto; }
 
 @media (prefers-reduced-motion:reduce){
@@ -91,7 +91,7 @@ body{
   .float-name,
   .float-theatre--mirror .float-name{ left:5%; right:auto; width:90%; text-align:left; top:auto; bottom:calc(5vh + 38px); }
   .float-cta,
-  .float-theatre--mirror .float-cta{ left:5%; right:auto; bottom:5vh; }
+  .float-theatre--mirror .float-cta{ top:auto; left:5%; right:auto; top:auto; bottom:5vh; }
   .float-hero{ min-height:0; padding-bottom:var(--sp-6); }
   .float-cue{ display:none; }
 }
@@ -191,7 +191,7 @@ body{
 </main>
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
-<script src="assets/scripts/hero-scroll-theatre.js?v=11" defer></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=12" defer></script>
 <script src="assets/scripts/pack-float.js?v=10" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
