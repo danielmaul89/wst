@@ -46,6 +46,9 @@
 .bms-card-partner:hover{ color:var(--ink); }
 /* The Lithium Balance logo under the hero text, in its light variant for the
    deep blue. */
+/* The blueprint grid sits behind the hero copy. */
+.bms-hero{ overflow:hidden; }
+.bms-hero > .container{ position:relative; z-index:1; }
 .bms-hero-logo{ display:block; width:fit-content; margin-top:var(--sp-5); }
 .bms-hero-logo img{ display:block; width:auto; height:clamp(44px,6vw,64px); }
 @media(max-width:560px){ .bms-platform{ padding:var(--sp-3); } .bms-type{ white-space:normal; } }
@@ -57,13 +60,14 @@
 
 <main>
 
-<section class="wst-page-hero wst-page-hero--dark wst-section--dark on-dark">
+<section class="wst-page-hero wst-page-hero--dark wst-section--dark on-dark bms-hero">
+  <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
   <div class="container wst-page-hero-grid">
     <div class="wst-page-hero-copy">
       <span class="eyebrow">Battery Management Systems</span>
       <h1 class="t-display">Every cell, monitored and protected.</h1>
       <p class="wst-page-hero-intro">Integrated and distributed BMS platforms, designed and firmware-tuned in-house.</p>
-      <a class="bms-hero-logo" href="https://lithiumbalance.com/" target="_blank" rel="noopener noreferrer" aria-label="BMS platforms by Lithium Balance (opens in a new tab)"><img src="assets/partners/lithium-balance-light.svg" alt="Lithium Balance"></a>
+      <a class="bms-hero-logo" href="https://lithiumbalance.com/" target="_blank" rel="noopener noreferrer" aria-label="BMS platforms by Lithium Balance (opens in a new tab)"><img src="assets/partners/lithium-balance-gradient.svg" alt="Lithium Balance"></a>
     </div>
     <figure class="wst-page-hero-media">
       <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board">
