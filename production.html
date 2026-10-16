@@ -13,7 +13,7 @@
 <style>
 .prod-partner-tag{ margin-bottom:var(--sp-2); }
 .prod-hero{ padding-bottom:0; }
-.prod-video{ margin:var(--sp-6) 0 0; width:100%; aspect-ratio:16 / 9; max-height:calc(100svh - var(--nav-height)); overflow:hidden; background:var(--blue-deep); }
+.prod-video{ margin:0; width:100%; aspect-ratio:16 / 9; max-height:calc(100svh - var(--nav-height) - var(--sp-6)); overflow:hidden; border-radius:var(--r-lg); background:var(--blue-deep); }
 .prod-video video{ display:block; width:100%; height:100%; object-fit:cover; }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2s">
@@ -32,9 +32,8 @@
       <span class="eyebrow">Production</span>
       <h1 class="t-display">Built for series production, verified before it ships.</h1>
     </div>
-  </div>
 
-  <!-- The production film, edge to edge. Until it is delivered the poster
+  <!-- The production film, at the width of the page layout. Until it is delivered the poster
        (a finished pack on display) stands in; add the file as
        assets/video/production.mp4 and the <source> below plays it. -->
   <figure class="prod-video">
@@ -42,6 +41,7 @@
       <!-- <source src="assets/video/production.mp4" type="video/mp4"> -->
     </video>
   </figure>
+  </div>
 </section>
 
 <section class="wst-section" id="partner">
