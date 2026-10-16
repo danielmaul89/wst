@@ -16,6 +16,12 @@
 .prod-hero{ padding-bottom:0; }
 .prod-video{ margin:0; width:100%; aspect-ratio:16 / 9; max-height:calc(100svh - var(--nav-height) - var(--sp-6)); overflow:hidden; border-radius:var(--r-lg); background:var(--blue-deep); }
 .prod-video video{ display:block; width:100%; height:100%; object-fit:cover; }
+.prod-video{ position:relative; }
+.prod-play{ position:absolute; top:50%; left:50%; z-index:2; display:grid; place-items:center; width:clamp(64px,8vw,96px); aspect-ratio:1; padding:0; border:0; border-radius:50%; transform:translate(-50%,-50%); background:rgba(251,249,245,.94); color:var(--blue-deep); box-shadow:0 12px 40px rgba(3,11,33,.35); cursor:pointer; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease); }
+.prod-play svg{ display:block; width:34%; height:auto; margin-left:6%; }
+.prod-play:hover{ transform:translate(-50%,-50%) scale(1.06); background:#fff; }
+.prod-play:focus-visible{ outline:2px solid var(--brass-hi); outline-offset:4px; }
+.prod-video.is-playing .prod-play{ display:none; }
 </style>
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2s">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p3b">
@@ -41,6 +47,7 @@
     <video muted loop playsinline preload="metadata" poster="assets/general/_MG_8264_VN09GRAIN.webp" aria-label="Battery pack production at WS Technicals">
       <!-- <source src="assets/video/production.mp4" type="video/mp4"> -->
     </video>
+    <button class="prod-play" type="button" aria-label="Play the production film"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></button>
   </figure>
   </div>
 </section>
@@ -123,5 +130,23 @@
 
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
+<script>
+/* Play button on the film: starts it with sound and the native controls once a
+   source is in place; until then there is nothing to play. */
+(function () {
+  var box = document.querySelector(".prod-video");
+  if (!box) return;
+  var video = box.querySelector("video"), button = box.querySelector(".prod-play");
+  if (!video || !button) return;
+  button.addEventListener("click", function () {
+    if (!video.querySelector("source[src]") && !video.getAttribute("src")) return;
+    video.muted = false;
+    video.controls = true;
+    video.loop = false;
+    box.classList.add("is-playing");
+    video.play();
+  });
+})();
+</script>
 </body>
 </html>
