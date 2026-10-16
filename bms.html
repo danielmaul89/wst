@@ -44,12 +44,10 @@
 .bms-card-partner{ position:absolute; top:12px; left:12px; z-index:1; display:inline-flex; align-items:center; gap:8px; padding:7px 14px 7px 12px; border-radius:999px; background:rgba(251,249,245,.94); color:var(--ink-soft); font-size:14px; line-height:1; text-decoration:none; box-shadow:var(--shadow-sm); }
 .bms-card-partner img{ display:block; width:auto; height:18px; }
 .bms-card-partner:hover{ color:var(--ink); }
-/* The partner badge under the hero text: a light pill on the deep blue, so the
-   logo keeps its own colours. */
-.bms-hero-badge{ display:inline-flex; align-items:center; gap:10px; margin-top:var(--sp-4); padding:9px 18px 9px 16px; border-radius:999px; background:rgba(251,249,245,.96); color:var(--ink-soft); font-size:14px; line-height:1; text-decoration:none; }
-.bms-hero-badge img{ display:block; width:auto; height:22px; }
-.bms-hero-badge:hover{ color:var(--ink); }
-.wst-page-hero-copy .bms-hero-badge{ display:flex; width:fit-content; }
+/* The Lithium Balance logo under the hero text, in its light variant for the
+   deep blue. */
+.bms-hero-logo{ display:block; width:fit-content; margin-top:var(--sp-5); }
+.bms-hero-logo img{ display:block; width:auto; height:clamp(44px,6vw,64px); }
 @media(max-width:560px){ .bms-platform{ padding:var(--sp-3); } .bms-type{ white-space:normal; } }
 </style>
 </head>
@@ -65,8 +63,7 @@
       <span class="eyebrow">Battery Management Systems</span>
       <h1 class="t-display">Every cell, monitored and protected.</h1>
       <p class="wst-page-hero-intro">Integrated and distributed BMS platforms, designed and firmware-tuned in-house.</p>
-      <a href="contact-v2.html" class="btn btn-on-dark">Talk to our BMS engineers</a>
-      <a class="bms-hero-badge" href="https://lithiumbalance.com/" target="_blank" rel="noopener noreferrer" aria-label="BMS platforms by Lithium Balance (opens in a new tab)"><span>Platforms by</span><img src="assets/partners/lithium-balance.svg" alt=""></a>
+      <a class="bms-hero-logo" href="https://lithiumbalance.com/" target="_blank" rel="noopener noreferrer" aria-label="BMS platforms by Lithium Balance (opens in a new tab)"><img src="assets/partners/lithium-balance-light.svg" alt="Lithium Balance"></a>
     </div>
     <figure class="wst-page-hero-media">
       <img src="assets/general/_MG_1571.webp" alt="Engineer probing a battery management system circuit board">
