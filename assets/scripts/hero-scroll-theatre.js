@@ -129,10 +129,14 @@
     if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(canvas.parentElement);
     else window.addEventListener('resize', onResize);
 
-    // One set for the whole session (no switching on resize): the smallest
-    // listed width covering the drawn image height in device pixels, else
-    // the largest. An unlaid-out canvas (1px) gets the largest.
-    if (WIDTHS.length) {
+    // One set for the whole session (no switching on resize): the largest
+    // listed width on a big display (1440p and up, 2000+ CSS px across), the
+    // smallest on everything else, retina laptops and phones included.
+    // (A set without data-big-screen picks the smallest width covering the drawn
+    // image height in device pixels, else the largest.)
+    if (WIDTHS.length && frameHost.hasAttribute('data-big-screen')) {
+      chosenWidth = window.innerWidth >= 2000 ? WIDTHS[WIDTHS.length - 1] : WIDTHS[0];
+    } else if (WIDTHS.length) {
       var boxH0 = canvasCssW / canvasCssH > FRAME_ASPECT ? canvasCssH : canvasCssW / FRAME_ASPECT;
       var needed = canvasCssH > 1 ? boxH0 * dpr * FRAME_ASPECT : Infinity;
       chosenWidth = WIDTHS[WIDTHS.length - 1];
