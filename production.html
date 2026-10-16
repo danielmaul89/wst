@@ -18,7 +18,7 @@
 .prod-video video{ display:block; width:100%; height:100%; object-fit:cover; }
 .prod-video{ position:relative; }
 .prod-play{ position:absolute; top:50%; left:50%; z-index:2; display:grid; place-items:center; width:clamp(64px,8vw,96px); aspect-ratio:1; padding:0; border:0; border-radius:50%; transform:translate(-50%,-50%); background:rgba(251,249,245,.94); color:var(--blue-deep); box-shadow:0 12px 40px rgba(3,11,33,.35); cursor:pointer; transition:transform var(--dur) var(--ease), background var(--dur) var(--ease); }
-.prod-play svg{ display:block; width:34%; height:auto; margin-left:6%; }
+.prod-play svg{ display:block; width:34%; height:auto; }
 .prod-play:hover{ transform:translate(-50%,-50%) scale(1.06); background:#fff; }
 .prod-play:focus-visible{ outline:2px solid var(--brass-hi); outline-offset:4px; }
 .prod-video.is-playing .prod-play{ display:none; }
