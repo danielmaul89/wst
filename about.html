@@ -298,11 +298,10 @@ body[data-wst-page="about"] > .ambient{ opacity:.3; }
 }
 .about-gallery-item:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
 .about-gallery-item{ transition:opacity .55s var(--ease), transform .55s var(--ease), box-shadow .55s var(--ease); }
-.about-principles{ position:relative; z-index:4; background:#fff; padding:0 0 clamp(56px,7vh,96px); }
+.about-principles{ position:relative; z-index:4; background:#fff; padding:clamp(24px,3.5vh,42px) 0 clamp(56px,7vh,96px); }
 .work-rail{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  margin-top:clamp(24px,3.5vh,42px);
   border-top:1px solid var(--line-2);
   border-bottom:1px solid var(--line-2);
 }
