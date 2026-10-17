@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>Battery packs | WS Technicals</title>
-<meta name="description" content="Production battery platforms built by WS Technicals, from a compact 21700 pack to heavy machinery and UPS installations.">
+<meta name="description" content="The production battery platforms, taken apart on screen as you scroll: compact, heavy machinery, UPS, AGV and the heavy machinery chassis.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,49 +13,87 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2t">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p3a">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=5">
 <style>
-body{ background:var(--paper); }
-/* A mosaic rather than an even grid: twelve columns with the tiles
-   alternating wide and narrow, the same rhythm the applications page uses. */
-.packs{ padding:var(--sp-7) 0 var(--sp-8); }
-.pack-grid{ grid-template-columns:repeat(12,1fr); }
-.pack-grid > *{ grid-column:span 4; }
-.pack-wide{ grid-column:span 7; min-height:360px; }
-.pack-narrow{ grid-column:span 5; min-height:360px; }
-
-/* The closing panel sits in the mosaic rather than after it, taking the
-   space the sixth pack would have. */
-.pack-cta{
-  position:relative;
-  overflow:hidden;
-  grid-column:span 7;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:flex-start;
-  padding:var(--sp-5);
-  border-radius:var(--r-lg);
-  background:linear-gradient(155deg,#101c3a 0%,var(--blue-deep) 72%);
-  color:var(--paper);
+/* Not a flat sheet: two soft washes sit on the paper even where the backdrop
+   below is not running (reduced motion). */
+body{
+  background:
+    radial-gradient(70vmax 60vmax at 12% 6%, rgba(15,42,92,.16), rgba(15,42,92,0) 100%) fixed,
+    radial-gradient(60vmax 50vmax at 88% 94%, rgba(203,176,138,.3), rgba(203,176,138,0) 100%) fixed,
+    var(--paper);
 }
-/* Not .eyebrow: that colour is pinned for light backgrounds, and this
-   panel is dark. */
-.pack-cta-content{ position:relative; z-index:1; }
-.pack-cta-eyebrow{ font-size:var(--fs-small); color:var(--brass-hi); }
-.pack-cta h2{ margin:14px 0 10px; max-width:16ch; font-size:var(--h2-section); line-height:var(--h2-lh); letter-spacing:var(--h2-ls); }
-.pack-cta p{ max-width:40ch; margin:0 0 var(--sp-3); color:var(--ink-soft-on-dark); line-height:1.65; }
 
-@media (max-width:1000px){
-  .pack-grid > *,
-  .pack-wide,
-  .pack-narrow,
-  .pack-cta{ grid-column:span 6; }
+/* One fixed layer holds the backdrop, under the page's words and over its
+   background; the closing band and footer sit over it in turn. The backdrop
+   is one continuous colour that follows the page from blue, through white, to
+   golden sand, with the drawing grid always on (see pack-float.js). */
+.float-stage{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+.float-bg{ position:absolute; inset:0; opacity:0; transition:opacity 1.8s ease; }
+.float-bg.is-on{ opacity:1; }
+.float-backdrop{ position:absolute; inset:0; background:var(--paper); }
+.float-wash{ position:absolute; inset:-10%; opacity:0; will-change:transform,opacity; }
+.float-grid{
+  position:absolute; inset:0; opacity:.75;
+  background-image:
+    repeating-linear-gradient(to right, rgba(6,8,26,.07) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(to bottom, rgba(6,8,26,.07) 0 1px, transparent 1px 56px);
+  -webkit-mask-image:radial-gradient(ellipse 90% 85% at 50% 45%, #000 35%, transparent 100%);
+  mask-image:radial-gradient(ellipse 90% 85% at 50% 45%, #000 35%, transparent 100%);
 }
-@media (max-width:620px){
-  .pack-grid > *,
-  .pack-wide,
-  .pack-narrow,
-  .pack-cta{ grid-column:span 12; }
+
+.float-hero,
+.float-flow{ position:relative; z-index:2; }
+.float-after,
+[data-wst-footer]{ position:relative; z-index:3; }
+
+.float-hero{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-height:60vh; min-height:60svh; text-align:center;
+  padding:calc(var(--nav-height) + var(--sp-5)) 0 var(--sp-7);
+}
+.float-title{ max-width:none; margin:var(--sp-2) 0 var(--sp-3); }
+.float-hero p{ max-width:34ch; margin:0 auto; color:var(--ink-soft); font-size:var(--fs-body); line-height:1.6; }
+.float-cue{
+  margin-top:var(--sp-7); width:1px; height:56px;
+  background:linear-gradient(to bottom, var(--ink-soft), rgba(74,76,88,0));
+  opacity:.5; transform-origin:top;
+}
+@media (prefers-reduced-motion:no-preference){
+  .float-cue{ animation:float-cue 2.4s ease-in-out infinite; }
+}
+@keyframes float-cue{ 0%,100%{ transform:scaleY(.35); opacity:.2; } 50%{ transform:scaleY(1); opacity:.6; } }
+
+/* Each pack is a theatre of its own, a few screens tall: the pack on one side,
+   its name centred opposite while it is closed and moving up above the named parts as it opens, the named parts as it opens and
+   the link to the page once they are all up. The set is drawn flipped on the
+   right-hand rows, so the pack alternates sides down the page. */
+.float-theatre{ height:300vh; margin-top:0; }
+.float-flow > .float-theatre:first-child{ margin-top:-14vh; }
+.float-theatre .sc-screen{ flex:0 1 auto; width:100%; max-width:calc(100vh * 1.6 * .84); margin:0 auto; }
+.float-name,
+.float-cta{ position:absolute; z-index:6; transition:opacity .5s var(--ease), transform .5s var(--ease); }
+.float-name{ top:13vh; left:58%; width:38%; transition-duration:.9s; }
+@media (min-width:768px){
+  .float-theatre[data-sc-phase="rest"] .float-name{ transform:translateY(calc(37vh - 50%)); }
+}
+.float-name h2{ margin:0; max-width:none; }
+.float-theatre--mirror .float-name{ left:4%; }
+.float-cta{ top:calc(var(--sc-labels-bottom, 80%) + 24px); left:var(--sc-labels-edge, 58%); opacity:0; transform:translateY(12px); pointer-events:none; }
+.float-theatre--mirror .float-cta{ left:auto; right:calc(100% - var(--sc-labels-edge, 40%)); }
+.float-theatre[data-sc-phase="done"] .float-cta{ opacity:1; transform:none; pointer-events:auto; }
+
+@media (prefers-reduced-motion:reduce){
+  .float-theatre{ height:auto; }
+}
+@media (max-width:767px){
+  .float-theatre{ height:260vh; }
+  .float-name,
+  .float-theatre--mirror .float-name{ left:5%; right:auto; width:90%; text-align:left; top:auto; bottom:calc(5vh + 38px); }
+  .float-cta,
+  .float-theatre--mirror .float-cta{ top:auto; left:5%; right:auto; top:auto; bottom:5vh; }
+  .float-hero{ min-height:0; padding-bottom:var(--sp-6); }
+  .float-cue{ display:none; }
 }
 </style>
 </head>
@@ -63,73 +101,98 @@ body{ background:var(--paper); }
 <div data-wst-header></div>
 <main>
 
-<section class="wst-page-hero wst-page-hero--text-only">
-  <div class="container wst-page-hero-grid">
-    <div class="wst-page-hero-copy">
-      <span class="eyebrow">Battery packs</span>
-      <h1 class="t-display">The packs we build.</h1>
-      <p class="wst-page-hero-intro">Production platforms from our own drawings, each one designed around a machine and its duty cycle. Every pack here is a delivered build, shown from the CAD we manufacture it from.</p>
-      <a href="contact-v2.html" class="btn btn-primary">Discuss your pack</a>
-    </div>
-  </div>
-</section>
+<div class="float-stage" id="floatStage" aria-hidden="true"></div>
 
-<section class="packs">
+<section class="float-hero">
   <div class="container">
-    <div class="wst-section-head">
-      <h2>Production platforms.</h2>
-      <p>Five builds, drawn and assembled in house, each shown from the CAD it is manufactured from.</p>
-    </div>
-
-    <div class="wst-grid pack-grid">
-
-      <a class="wst-product-tile wst-product-tile--bare wst-card--interactive pack-narrow" href="pack-compact-platform.html" aria-label="Compact battery platform">
-        <div class="wst-product-tile-img">
-          <img src="assets/products/packs/compact-platform.png" alt="Compact battery platform, a sealed rectangular pack" loading="lazy" decoding="async">
-        </div>
-      </a>
-
-      <a class="wst-product-tile wst-product-tile--bare wst-card--interactive pack-wide" href="pack-heavy-machinery-platform.html" aria-label="Heavy machinery platform">
-        <div class="wst-product-tile-img">
-          <img src="assets/products/packs/heavy-machinery-platform.png" alt="Heavy machinery battery platform in a perforated sheet metal enclosure" loading="lazy" decoding="async">
-        </div>
-      </a>
-
-      <a class="wst-product-tile wst-product-tile--bare wst-card--interactive pack-wide" href="pack-ups-platform.html" aria-label="UPS platform">
-        <div class="wst-product-tile-img">
-          <img src="assets/products/packs/ups-platform.png" alt="Rack-mounted UPS battery platform" loading="lazy" decoding="async">
-        </div>
-      </a>
-
-      <a class="wst-product-tile wst-product-tile--bare wst-card--interactive pack-narrow" href="pack-agv-platform.html" aria-label="AGV platform">
-        <div class="wst-product-tile-img">
-          <img src="assets/products/packs/agv-platform.png" alt="AGV battery platform" loading="lazy" decoding="async">
-        </div>
-      </a>
-
-      <a class="wst-product-tile wst-product-tile--bare wst-card--interactive pack-narrow" href="pack-heavy-machinery-chassis.html" aria-label="Heavy machinery chassis">
-        <div class="wst-product-tile-img">
-          <img src="assets/products/packs/heavy-machinery-chassis.png" alt="Structural bend-plate battery chassis for heavy machinery" loading="lazy" decoding="async">
-        </div>
-      </a>
-
-      <aside class="pack-cta">
-        <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
-        <div class="pack-cta-content">
-          <span class="pack-cta-eyebrow">Custom solutions</span>
-          <h2>Talk to us about your next project.</h2>
-          <p>None of these is a catalogue part. Bring us the machine, its duty cycle and the space the pack has to live in: where a platform above is close, we adapt it, and where it is not, we draw one.</p>
-          <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
-        </div>
-      </aside>
-
-    </div>
+    <span class="eyebrow">Battery packs</span>
+    <h1 class="t-display float-title">The packs we build.</h1>
+    <p>Production platforms, drawn and assembled in house.</p>
+    <div class="float-cue" aria-hidden="true"></div>
   </div>
 </section>
+
+<div class="float-flow">
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="Compact battery platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/compact-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-big-screen data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="2"></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">Compact battery platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-compact-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre float-theatre--mirror" aria-label="Heavy machinery platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/hdr-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-big-screen data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="2" data-mirror data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">Heavy machinery platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-heavy-machinery-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="UPS platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/ups-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-big-screen data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="2" data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">UPS platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-ups-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre float-theatre--mirror" aria-label="AGV platform">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/agv-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-big-screen data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="3" data-mirror data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">AGV platform</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-agv-platform.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="sc-theatre sc-theatre--open sc-theatre--light float-theatre" aria-label="Heavy machinery chassis">
+    <div class="sc-stage">
+      <div class="sc-screen">
+        <canvas class="sc-canvas" data-frame-dir="assets/renders/chassis-simple" data-frame-ext="webp" data-frame-widths="1280,1920" data-big-screen data-frame-aspect="1.6" data-frame-pad="4" data-frame-count="80" data-frame-hold="79" data-explode-end="0.45" data-hold-end="0.78" data-stays-open data-label-top="0.44" data-frame-ver="2" data-lazy></canvas>
+        <div class="sc-callouts" aria-hidden="true"></div>
+        <div class="float-name"><h2 class="t-display">Heavy machinery chassis</h2></div>
+        <a class="wst-link-arrow float-cta" href="pack-heavy-machinery-chassis.html">View pack
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="float-after">
+  <section class="wst-cta-band">
+    <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
+    <div class="container">
+      <h2>Talk to us about your next project.</h2>
+      <p>None of these is a catalogue part. Bring us the machine, its duty cycle and the space the pack has to live in.</p>
+      <div class="wst-cta-band-actions">
+        <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+      </div>
+    </div>
+  </section>
+</div>
 
 </main>
 <div data-wst-footer></div>
 <script src="assets/scripts/wst-shell.js?v=nav7"></script>
+<script src="assets/scripts/hero-scroll-theatre.js?v=13" defer></script>
+<script src="assets/scripts/pack-float.js?v=10" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=about-pages1" defer></script>
 </body>
 </html>
