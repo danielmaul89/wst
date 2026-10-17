@@ -1,4 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360" role="img" fill="none">
+<style>
+@keyframes a0{0%{opacity:0;transform:translate(-114.3px,-66.0px)}11%{opacity:1;transform:translate(0,0)}92%{opacity:1;transform:translate(0,0)}98%{opacity:0;transform:translate(0,0)}100%{opacity:0;transform:translate(-114.3px,-66.0px)}}
+.a0{animation:a0 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a1{0%{stroke-dashoffset:1;opacity:0}14%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}14.5%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:1}24%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}92%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}98%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:1;opacity:0}}
+.a1{animation:a1 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a2{0%{stroke-dashoffset:1;opacity:0}17%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}17.5%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:1}27%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}92%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}98%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:1;opacity:0}}
+.a2{animation:a2 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a3{0%{stroke-dashoffset:1;opacity:0}30%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:1}38%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}54%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}57%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:1;opacity:0}}
+.a3{animation:a3 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a4{0%{stroke-dashoffset:1;opacity:0}36%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:1}44%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}54%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}57%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:1;opacity:0}}
+.a4{animation:a4 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a5{0%{stroke-dashoffset:1;opacity:0}42%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:1}50%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}54%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}57%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:1;opacity:0}}
+.a5{animation:a5 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a6{0%{stroke-dashoffset:1;opacity:0}58%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}58.5%{stroke-dasharray:1 1;stroke-dashoffset:1;opacity:1}67%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}92%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:1}98%{stroke-dasharray:1 1;stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:1;opacity:0}}
+.a6{animation:a6 9s cubic-bezier(.45,0,.2,1) infinite both}
+@keyframes a7{0%{fill:#ffffff}57%{fill:#ffffff}60%{fill:#b99a72}100%{fill:#b99a72}}
+.a7{animation:a7 9s linear infinite both}
+.an{transform-box:fill-box}
+@media (prefers-reduced-motion:reduce){.an{animation:none!important}}
+</style>
 <g transform="translate(181.1 53.6) scale(0.9655)">
 <polygon points="-15.2,79.2 0.0,88.0 0.0,35.2 -15.2,26.4" fill="#f1eee7" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="15.2,79.2 0.0,88.0 0.0,35.2 15.2,26.4" fill="#e2ddd1" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
@@ -15,6 +35,7 @@
 <polygon points="-160.0,92.4 121.9,255.2 121.9,239.8 -160.0,77.0" fill="#f1eee7" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="282.0,162.8 121.9,255.2 121.9,239.8 282.0,147.4" fill="#e2ddd1" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="0.0,-15.4 282.0,147.4 121.9,239.8 -160.0,77.0" fill="#ffffff" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
+<g class="an a0">
 <polygon points="-91.5,72.6 7.6,129.8 7.6,77.0 -91.5,19.8" fill="#f1eee7" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="91.5,81.4 7.6,129.8 7.6,77.0 91.5,28.6" fill="#e2ddd1" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="-7.6,-28.6 91.5,28.6 7.6,77.0 -91.5,19.8" fill="#ffffff" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
@@ -33,14 +54,21 @@
 <polygon points="28.6,100.1 34.3,103.4 34.3,88.0 28.6,84.7" fill="#e9dcc7" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="53.3,92.4 34.3,103.4 34.3,88.0 53.3,77.0" fill="#b99a72" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="47.6,73.7 53.3,77.0 34.3,88.0 28.6,84.7" fill="#e9dcc7" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
-<polyline points="70.5,75.0 91.5,101.2 102.9,118.4 137.2,138.2" fill="none" stroke="#06081a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"  opacity="1"/>
-<polyline points="43.8,90.4 64.8,116.6 76.2,133.8 110.5,153.6" fill="none" stroke="#06081a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"  opacity="1"/>
+</g>
+<polyline pathLength="1" points="70.5,75.0 91.5,101.2 102.9,118.4 137.2,138.2" fill="none" stroke="#06081a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"  opacity="1" class="an a1"/>
+<polyline pathLength="1" points="43.8,90.4 64.8,116.6 76.2,133.8 110.5,153.6" fill="none" stroke="#06081a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"  opacity="1" class="an a2"/>
 <polygon points="87.6,158.4 148.6,193.6 148.6,99.0 87.6,63.8" fill="#f1eee7" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="224.8,149.6 148.6,193.6 148.6,99.0 224.8,55.0" fill="#e2ddd1" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="163.9,19.8 224.8,55.0 148.6,99.0 87.6,63.8" fill="#ffffff" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="215.3,115.5 158.1,148.5 158.1,104.5 215.3,71.5" fill="#ffffff" stroke="#06081a" stroke-width="2.4" stroke-linejoin="round"/>
-<polyline points="200.1,102.3 189.8,119.2 171.5,105.6" fill="none" stroke="#b99a72" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"  opacity="1"/>
-<circle cx="205.8" cy="138.6" r="3.2" fill="#b99a72" stroke="#06081a" stroke-width="1.92"/>
+<polyline points="209.6,83.6 163.9,110.0" fill="none" stroke="#06081a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"  opacity="0.18"/>
+<polyline pathLength="1" points="209.6,83.6 163.9,110.0" fill="none" stroke="#b99a72" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"  opacity="1" class="an a3"/>
+<polyline points="209.6,94.6 163.9,121.0" fill="none" stroke="#06081a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"  opacity="0.18"/>
+<polyline pathLength="1" points="209.6,94.6 163.9,121.0" fill="none" stroke="#b99a72" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"  opacity="1" class="an a4"/>
+<polyline points="209.6,105.6 163.9,132.0" fill="none" stroke="#06081a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"  opacity="0.18"/>
+<polyline pathLength="1" points="209.6,105.6 163.9,132.0" fill="none" stroke="#b99a72" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"  opacity="1" class="an a5"/>
+<polyline pathLength="1" points="200.1,102.3 189.8,119.2 171.5,105.6" fill="none" stroke="#b99a72" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"  opacity="1" class="an a6"/>
+<circle cx="205.8" cy="138.6" r="3.2" fill="#b99a72" stroke="#06081a" stroke-width="1.92" class="an a7"/>
 <circle cx="190.5" cy="147.4" r="3.2" fill="#ffffff" stroke="#06081a" stroke-width="1.92"/>
 <polyline points="95.3,147.4 137.2,171.6" fill="none" stroke="#06081a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"  opacity="0.5"/>
 <polyline points="95.3,136.4 137.2,160.6" fill="none" stroke="#06081a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"  opacity="0.5"/>
