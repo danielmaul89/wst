@@ -553,7 +553,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 .hero-visual--turn .hero-turn-canvas{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; }
 .hero-visual--turn img{ transition:opacity .4s ease; }
 .hero-visual--turn.is-live img{ opacity:0; pointer-events:none; }
-.hero-turn-canvas{ display:block; cursor:grab; touch-action:pan-y; user-select:none; -webkit-user-select:none; }
+.hero-turn-canvas{ display:block; touch-action:pan-y; user-select:none; -webkit-user-select:none; }
+.hero-visual--turn.is-ready .hero-turn-canvas{ cursor:grab; }
 .hero-visual--turn.is-dragging .hero-turn-canvas{ cursor:grabbing; }
 .hero-turn-canvas:focus-visible{ outline:2px solid var(--brass); outline-offset:6px; border-radius:var(--r-lg); }
 /* Live 3D pack (assets/scripts/home-hero-3d.js), faded in once the model is
@@ -3194,7 +3195,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/vendor/three.r128.min.js" defer></script>
-<script src="assets/scripts/hero-turntable.js?v=3" defer></script>
+<script src="assets/scripts/hero-turntable.js?v=4" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>
