@@ -545,8 +545,17 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* The stage takes up no room until the live pack is running: where the 3D
    is skipped - phones, reduced motion, no WebGL - the hero is text alone. */
 .hero-visual{ margin:0; }
-/* The hero pack is a pre-rendered Blender still, sat in its column. */
-.hero-visual--still img{ display:block; width:100%; height:auto; max-height:clamp(380px, 62vh, 700px); object-fit:contain; object-position:center; }
+/* The hero pack: Blender frames of it exploded, turning slowly; drag to turn it.
+   The first frame shows until the canvas has drawn, and stays where scripts or
+   motion are off. */
+.hero-visual--turn{ position:relative; width:100%; height:clamp(380px, 62vh, 700px); }
+.hero-visual--turn img,
+.hero-visual--turn .hero-turn-canvas{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; }
+.hero-visual--turn img{ transition:opacity .4s ease; }
+.hero-visual--turn.is-live img{ opacity:0; pointer-events:none; }
+.hero-turn-canvas{ display:block; cursor:grab; touch-action:pan-y; user-select:none; -webkit-user-select:none; }
+.hero-visual--turn.is-dragging .hero-turn-canvas{ cursor:grabbing; }
+.hero-turn-canvas:focus-visible{ outline:2px solid var(--brass); outline-offset:6px; border-radius:var(--r-lg); }
 /* Live 3D pack (assets/scripts/home-hero-3d.js), faded in once the model is
    ready. */
 /* The stage fills its column; the camera fits the pack to whatever shape
@@ -2188,6 +2197,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   /* One column: the copy, then the stage under it. */
   .hero-grid{ grid-template-columns:minmax(0,1fr); gap:var(--sp-4); }
   .hero-visual.is-3d{ height:clamp(300px, 42vh, 460px); }
+  .hero-visual--turn{ height:clamp(300px, 42vh, 460px); }
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
   .nav-toggle{ display:flex; }
   .nav-cta{ gap:var(--sp-1); }
@@ -2383,8 +2393,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <p>WS Technicals is specialized in lithium battery solutions. We design, certify and mass produce batteries for applications in all sectors.</p>
       <a href="#contact" class="btn btn-primary">Get in touch</a>
     </div>
-    <div class="hero-visual hero-visual--still">
-      <img src="assets/renders/hero/hdr-hero.webp" alt="Heavy machinery battery platform, rendered" width="1800" height="1350" fetchpriority="high" decoding="async">
+    <div class="hero-visual hero-visual--turn" data-turn-dir="assets/renders/hero-turn" data-turn-count="72" data-turn-ver="1">
+      <img src="assets/renders/hero-turn/frame_0000.webp?v=1" alt="Heavy machinery battery platform, exploded and turning" width="1200" height="900" fetchpriority="high" decoding="async">
     </div>
   </div>
 </section>
@@ -3184,6 +3194,7 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/vendor/three.r128.min.js" defer></script>
+<script src="assets/scripts/hero-turntable.js?v=2" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>
