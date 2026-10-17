@@ -84,7 +84,7 @@
   // ---- loading: outward from frame 0, a few requests at a time
   var order = [0];
   for (var k = 1; k <= N / 2; k++) { order.push(wrap(k)); if (k !== N - k) order.push(wrap(-k)); }
-  var next = 0, inflight = 0;
+  var next = 0, inflight = 0, settled = 0, ready = false;
   function pump() {
     while (inflight < 5 && next < order.length) {
       (function (i) {
@@ -92,7 +92,11 @@
         fetch(url(i)).then(function (r) { if (!r.ok) throw 0; return r.blob(); })
           .then(function (b) { blobs[i] = b; })
           .catch(function () {})
-          .then(function () { inflight--; pump(); });
+          .then(function () {
+            inflight--; settled++; pump();
+            // it only turns once the whole ring is here: turning through gaps jumps about
+            if (settled === N) { ready = true; host.classList.add('is-ready'); }
+          });
       })(order[next++]);
     }
   }
@@ -165,7 +169,7 @@
     if (!visible || document.hidden) { lastNow = 0; return; }
     var dt = lastNow ? Math.min((now - lastNow) / 1000, 0.05) : 0.016;
     lastNow = now;
-    if (!dragging) {
+    if (!dragging && ready) {
       var auto = now >= idleUntil ? AUTO : 0;
       // a flick's speed fades out; the slow turn takes over from there
       velocity *= Math.exp(-dt * 3.2);
@@ -180,6 +184,7 @@
   // ---- drag to turn
   function ppf() { return Math.max(8, cssW / (N * 0.5)); }   // a full width of travel is half a turn
   canvas.addEventListener('pointerdown', function (e) {
+    if (!ready) return;
     dragging = true; lastX = e.clientX; lastT = e.timeStamp; velocity = 0;
     canvas.setPointerCapture(e.pointerId);
     host.classList.add('is-dragging');
@@ -203,6 +208,7 @@
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
   canvas.addEventListener('keydown', function (e) {
+    if (!ready) return;
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     var s = e.key === 'ArrowRight' ? -1 : 1;
     angle = wrap(angle + s * 2); dir = s;
