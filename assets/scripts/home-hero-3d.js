@@ -94,7 +94,7 @@
     }
   })();
   var ASSEMBLE_DELAY_MS = 2000;
-  if (/[?&]apart=1/.test(location.search)) ASSEMBLE_DELAY_MS = 1e9;   // for checking the exploded view
+  var HOLD_APART = /[?&]apart=1/.test(location.search);   // for checking the exploded view: held as it starts
   var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
   /* How far the pack is turned while it is apart (see the frame loop). */
@@ -297,6 +297,7 @@
     var readyAt = 0;
     var center = new THREE.Vector3();
     var yaw = 0, pitch = 0;
+    var spinA = SPREAD_SPIN, spinB = 0.62;   // turn while apart, and how much more it turns closing
     var restDist = 0;
     var restTarget = new THREE.Vector3();
     var spinVelocity = 0, tiltVelocity = 0;
@@ -617,6 +618,32 @@
         /* Wind the turn back by as much as it will cover while the pack comes
            together, so it lands facing SETTLE_YAW when it closes. */
         yaw = SETTLE_YAW - SPIN_RATE * ((ASSEMBLE_DELAY_MS + ASSEMBLE_MS) / 1000);
+        /* With the Blender grouping, the exploded pack starts with its
+           connectors turned towards the reader, and turns the same way while
+           it closes as it does once it is together, landing where it always
+           has. The connectors' bearing is measured around the pack's axis. */
+        if (blockSize) {
+          var cSum = new THREE.Vector3(), cN = 0, cTmp = new THREE.Vector3(), mid0 = box2.getCenter(new THREE.Vector3());
+          object.traverse(function (c) {
+            if (c.isMesh && c.userData.lookGroup === 3) { c.getWorldPosition(cTmp); cSum.add(cTmp); cN++; }
+          });
+          if (cN) {
+            cSum.multiplyScalar(1 / cN).sub(mid0);
+            var bearing = Math.atan2(cSum.x, cSum.z);            // where the connectors point, unturned
+            var towardsReader = Math.atan2(VIEW_DIR.x, VIEW_DIR.z);
+            var start = towardsReader + Math.sign(SPIN_RATE || -1) * -0.45 - bearing;
+            var finish = SPREAD_SPIN + 0.62 + SETTLE_YAW;          // the old landing, unchanged
+            var turn = finish - start;                              // whole turn, start to landed
+            var dirSign = SPIN_RATE < 0 ? -1 : 1;
+            while (turn * dirSign <= 0) turn += dirSign * 2 * Math.PI;
+            while (turn * dirSign > 2 * Math.PI) turn -= dirSign * 2 * Math.PI;
+            var byYaw = SPIN_RATE * ((ASSEMBLE_DELAY_MS + ASSEMBLE_MS) / 1000);
+            spinB = turn - byYaw;
+            // never against the turn: if it would be, go once more round instead
+            if (spinB * dirSign < 0) spinB += dirSign * 2 * Math.PI;
+            spinA = start - yaw;
+          }
+        }
         ready = true;
         readyAt = performance.now();
         host.classList.add('is-3d-ready');
@@ -724,13 +751,13 @@
       var timeT = easeInOutCubic(clamp01((now - readyAt - ASSEMBLE_DELAY_MS) / ASSEMBLE_MS));
       var scrollT = easeInOutCubic(scrollAssembled());
       var target = 1 - Math.max(timeT, scrollT);
-      if (target < explode) explode = target;
+      if (target < explode && !HOLD_APART) explode = target;
       var hover = clamp01((now - readyAt) / ASSEMBLE_DELAY_MS);
       applyLayout(explode, now, hover);
 
       /* The pack keeps turning on its own; a drag adds to that turn and
          leaves momentum behind, which friction takes back out. */
-      if (!dragging) {
+      if (!dragging && !HOLD_APART) {
         yaw += (SPIN_RATE + spinVelocity) * dt;
         var decay = Math.exp(-SPIN_FRICTION * dt);
         spinVelocity *= decay;
@@ -739,7 +766,7 @@
         pitch += (0 - pitch) * (1 - Math.exp(-1.2 * dt));
       }
       pitch = Math.max(-TILT_LIMIT, Math.min(TILT_LIMIT, pitch));
-      group.rotation.y = SPREAD_SPIN + 0.62 * (1 - explode) + yaw;
+      group.rotation.y = spinA + spinB * (1 - explode) + yaw;
       group.rotation.x = -0.08 + pitch;
 
       if (shadowMesh) {
