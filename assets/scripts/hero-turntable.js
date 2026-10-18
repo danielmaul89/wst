@@ -189,8 +189,17 @@
       if (!A) return;
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    draw(A, 1);
-    if (B && f > 0.01) draw(B, f);
+    if (B && f > 0.01) {
+      // a true cross-fade: (1 - f) of one frame plus f of the next, added
+      // together. Laying the next frame over a fully drawn last one would
+      // leave the last one's outline showing until the step, then drop it.
+      draw(A, 1 - f);
+      ctx.globalCompositeOperation = 'lighter';
+      draw(B, f);
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      draw(A, 1);
+    }
     ctx.globalAlpha = 1;
     if (!shown) { shown = true; host.classList.add('is-live'); }
   }
