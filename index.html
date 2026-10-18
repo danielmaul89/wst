@@ -545,18 +545,12 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 /* The stage takes up no room until the live pack is running: where the 3D
    is skipped - phones, reduced motion, no WebGL - the hero is text alone. */
 .hero-visual{ margin:0; }
-/* The hero pack: Blender frames of it exploded, turning slowly; drag to turn it.
-   The first frame shows until the canvas has drawn, and stays where scripts or
-   motion are off. */
-.hero-visual--turn{ position:relative; z-index:41; width:100%; height:clamp(380px, 62vh, 700px); }
-.hero-visual--turn img,
-.hero-visual--turn .hero-turn-canvas{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; }
-.hero-visual--turn img{ transition:opacity .4s ease; }
-.hero-visual--turn.is-live img{ opacity:0; pointer-events:none; }
-.hero-turn-canvas{ display:block; touch-action:pan-y; user-select:none; -webkit-user-select:none; }
-.hero-visual--turn.is-ready .hero-turn-canvas{ cursor:grab; }
-.hero-visual--turn.is-dragging .hero-turn-canvas{ cursor:grabbing; }
-.hero-turn-canvas:focus-visible{ outline:2px solid var(--brass); outline-offset:6px; border-radius:var(--r-lg); }
+/* Where the live pack does not run (phones, reduced motion, no WebGL) a
+   Blender still of it stands in; once the live pack takes the stage the still
+   is not shown. The live pack sits above the page's blueprint grid. */
+.hero-poster{ display:block; width:100%; height:auto; max-height:clamp(300px, 48vh, 560px); object-fit:contain; }
+.hero-visual.is-3d .hero-poster{ display:none; }
+.hero-visual.is-3d{ z-index:41; }
 /* Live 3D pack (assets/scripts/home-hero-3d.js), faded in once the model is
    ready. */
 /* The stage fills its column; the camera fits the pack to whatever shape
@@ -2198,7 +2192,6 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
   /* One column: the copy, then the stage under it. */
   .hero-grid{ grid-template-columns:minmax(0,1fr); gap:var(--sp-4); }
   .hero-visual.is-3d{ height:clamp(300px, 42vh, 460px); }
-  .hero-visual--turn{ height:clamp(300px, 42vh, 460px); }
   .nav-menu, .nav-cta .btn-ghost{ display:none; }
   .nav-toggle{ display:flex; }
   .nav-cta{ gap:var(--sp-1); }
@@ -2366,6 +2359,22 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,-25&amp;display=block" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2t">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<!-- The hero's 3D pack is a big download, so it starts here rather than after
+     the scripts at the end of the body. The guards match the ones in
+     assets/scripts/home-hero-3d.js, so phones, data savers and readers who
+     ask for reduced motion never fetch it. -->
+<script>
+  (function () {
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia('(max-width: 767px)').matches) return;
+      if (navigator.connection && navigator.connection.saveData) return;
+      window.__wstHeroModel = fetch('assets/models/HDR.wstm')
+        .then(function (r) { return r.ok ? r.arrayBuffer() : null; })
+        .catch(function () { return null; });
+    } catch (e) { /* the hero script falls back to fetching it itself */ }
+  })();
+</script>
 </head>
 
 <body data-wst-page="home">
@@ -2394,8 +2403,8 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
       <p>WS Technicals is specialized in lithium battery solutions. We design, certify and mass produce batteries for applications in all sectors.</p>
       <a href="#contact" class="btn btn-primary">Get in touch</a>
     </div>
-    <div class="hero-visual hero-visual--turn" data-trans-dir="assets/renders/hero-trans" data-trans-count="45" data-ring-dir="assets/renders/hero-ring" data-ring-count="240" data-frame-ver="2">
-      <img src="assets/renders/hero-trans/frame_0000.webp?v=1" alt="Heavy machinery battery platform, coming together and turning" width="1200" height="900" fetchpriority="high" decoding="async">
+    <div class="hero-visual" data-hero-3d="assets/models/HDR.wstm" data-model-look="assets/models/HDR.look.json">
+      <img class="hero-poster" src="assets/renders/hero/hdr-exploded.webp" alt="Heavy machinery battery platform, exploded" width="1200" height="900" decoding="async">
     </div>
   </div>
 </section>
@@ -3195,7 +3204,10 @@ body.menu-open .nav-toggle span::after{ top:0; transform:rotate(-45deg); backgro
 <div class="blueprint-grid" aria-hidden="true"></div>
 
 <script src="assets/vendor/three.r128.min.js" defer></script>
-<script src="assets/scripts/hero-turntable.js?v=7" defer></script>
+<script src="assets/vendor/fflate.min.js" defer></script>
+<script src="assets/scripts/wstm-loader.js?v=3" defer></script>
+<script src="assets/scripts/wst-cad-colour.js?v=1" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=35" defer></script>
 <script src="assets/map/wst-globe-land.js?v=1" defer></script>
 <script src="assets/scripts/wst-globe-webgl.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=proof4" defer></script>
