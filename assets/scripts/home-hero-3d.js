@@ -33,6 +33,23 @@
 
   var url = host.getAttribute('data-hero-3d');
 
+  /* The Blender look: a palette and, for each mesh in the model's own order,
+     which entry it takes (-1: a fastener, left out, as in the renders). Each
+     entry is linear colour, metalness, roughness, from the Blender materials.
+     With it the pack is lit the way the renders are: the same three lights
+     and only a dim, even surround. */
+  var lookUrl = host.getAttribute('data-model-look');
+  var lookData = null, lookDone = !lookUrl, lookWaiters = [];
+  if (lookUrl) {
+    fetch(lookUrl).then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (d) {
+        lookData = d; lookDone = true;
+        lookWaiters.splice(0).forEach(function (f) { f(); });
+      });
+  }
+  function whenLook(fn) { if (lookDone) fn(); else lookWaiters.push(fn); }
+
   /* How much room to leave around the pack. A page whose stage is mostly
      given over to the model asks for less than the hero does. */
   var askedMargin = parseFloat(host.getAttribute('data-model-margin'));
@@ -65,6 +82,17 @@
     { test: 'shell', anchor: true }, { test: 'case', anchor: true }
   ];
 
+  /* The Blender look's lighting (see data-model-look); overridable from the
+     page for tuning: ?look=env,key,rim,fill,exposure */
+  var LOOK_ENV = 0.08, LOOK_KEY = 2.3, LOOK_RIM = 5.0, LOOK_FILL = 0.25, LOOK_EXPOSURE = 0.95;
+  (function () {
+    var m = /[?&]look=([\d.,]+)/.exec(location.search);
+    if (!m) return;
+    var v = m[1].split(',').map(parseFloat);
+    if (v.length === 5 && v.every(function (x) { return x >= 0; })) {
+      LOOK_ENV = v[0]; LOOK_KEY = v[1]; LOOK_RIM = v[2]; LOOK_FILL = v[3]; LOOK_EXPOSURE = v[4];
+    }
+  })();
   var ASSEMBLE_DELAY_MS = 2000;
   var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
@@ -194,6 +222,7 @@
 
     function keepColour(source) {
       if (!source) return null;
+      if (source.userData && source.userData.look) return source;
       /* .wstm already carries standard materials, colour and all. */
       if (source.isMeshStandardMaterial) {
         if (lightTone && !source.userData.lifted) {
@@ -394,7 +423,42 @@
       }
     }
 
-    function build(object) {
+    function build(object) { whenLook(function () { buildWithLook(object); }); }
+
+    var lookMaterials = {};
+    function applyLook(object) {
+      if (!lookData || !lookData.mesh) return;
+      var meshes = [];
+      object.traverse(function (c) { if (c.isMesh) meshes.push(c); });
+      if (meshes.length !== lookData.mesh.length) return;   // a different model: leave it as it is
+      var gone = [];
+      meshes.forEach(function (m, i) {
+        var k = lookData.mesh[i];
+        if (k < 0) { gone.push(m); return; }
+        var mat = lookMaterials[k];
+        if (!mat) {
+          var e = lookData.palette[k];
+          mat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(e[0], e[1], e[2]),
+            metalness: e[3],
+            roughness: e[4],
+            envMapIntensity: LOOK_ENV,
+            side: THREE.DoubleSide
+          });
+          mat.userData.look = true;
+          lookMaterials[k] = mat;
+        }
+        m.material = mat;
+      });
+      gone.forEach(function (m) { if (m.parent) m.parent.remove(m); });
+      key.color.setHex(0xfff2e0); key.intensity = LOOK_KEY;
+      rim.color.setHex(0x7fa8ff); rim.intensity = LOOK_RIM;
+      fill.intensity = LOOK_FILL;
+      renderer.toneMappingExposure = LOOK_EXPOSURE;
+    }
+
+    function buildWithLook(object) {
+      applyLook(object);
       try {
         var box = new THREE.Box3().setFromObject(object);
         var size = new THREE.Vector3();
