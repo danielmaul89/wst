@@ -94,6 +94,7 @@
     }
   })();
   var ASSEMBLE_DELAY_MS = 2000;
+  if (/[?&]apart=1/.test(location.search)) ASSEMBLE_DELAY_MS = 1e9;   // for checking the exploded view
   var ASSEMBLE_MS = 4600;
   var VIEW_DIR = new THREE.Vector3(0.24, 0.3, 0.92).normalize();
   /* How far the pack is turned while it is apart (see the frame loop). */
@@ -435,6 +436,7 @@
       meshes.forEach(function (m, i) {
         var k = lookData.mesh[i];
         if (k < 0) { gone.push(m); return; }
+        if (lookData.group) m.userData.lookGroup = lookData.group[i];
         var mat = lookMaterials[k];
         if (!mat) {
           var e = lookData.palette[k];
@@ -480,6 +482,23 @@
         var dir = new THREE.Vector3();
         var index = 0;
 
+        /* For the Blender grouping: the pack's size, its long axis, and which
+           end of it the connectors sit at. */
+        var blockSize = null, blockAxis = 'z', blockSign = 1;
+        (function () {
+          var sum = new THREE.Vector3(), n = 0, any = false, tmp = new THREE.Vector3();
+          object.traverse(function (c) {
+            if (!c.isMesh || c.userData.lookGroup === undefined) return;
+            any = true;
+            if (c.userData.lookGroup === 3) { c.getWorldPosition(tmp); sum.add(tmp); n++; }
+          });
+          if (!any) return;
+          blockSize = box2.getSize(new THREE.Vector3());
+          blockAxis = blockSize.x > blockSize.z ? 'x' : 'z';
+          var centre = box2.getCenter(new THREE.Vector3());
+          if (n) blockSign = (sum.multiplyScalar(1 / n)[blockAxis] - centre[blockAxis]) >= 0 ? 1 : -1;
+        })();
+
         object.traverse(function (child) {
           if (!child.isMesh) return;
           child.material = ownMaterial(child) || child.material;
@@ -507,6 +526,39 @@
           else if (tier && tier.y >= 3) delay = 0.16;
           else if (tier && tier.y >= 2) delay = 0.08;
           else delay = 0;
+
+          /* With the Blender look the pack comes apart the way the Blender
+             animations do: four blocks, each moving as one - the lid lifts
+             highest, the cell block rises out of the case, the connectors
+             and cabling slide out of the end and drop a little, the case
+             stays. On the way back the connectors seat first and the lid
+             closes last. */
+          var g = child.userData.lookGroup;
+          if (g !== undefined && blockSize) {
+            var move = new THREE.Vector3();
+            var bd = 0;
+            if (g === 1) { move.set(0, blockSize.y * 2.35, 0); bd = 0.26; }
+            else if (g === 2) { move.set(0, blockSize.y * 1.18, 0); bd = 0.12; }
+            else if (g === 3) {
+              move[blockAxis] = blockSign * blockSize[blockAxis] * 0.5;
+              move.y = -blockSize.y * 0.55;
+              bd = 0;
+            }
+            parts.push({
+              mesh: child,
+              basePos: child.position.clone(),
+              baseQuat: child.quaternion.clone(),
+              delta: worldToLocalDelta(child, wp, move),
+              drift: new THREE.Vector3(),
+              spinAxis: new THREE.Vector3(0, 1, 0),
+              spinAmp: 0,
+              phase: 0,
+              delay: bd,
+              dist: move.length()
+            });
+            index++;
+            return;
+          }
 
           /* Which way is outwards from the pack's axis, kept for the drift
              below. The lift itself is straight up, so the layers stay in
