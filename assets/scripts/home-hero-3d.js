@@ -115,7 +115,7 @@
   var MAX_PULLBACK = 12;
   /* Turns like a globe: a slow drift the reader can grab and spin, which
      carries its own momentum and eases back to the drift when let go. */
-  var SPIN_RATE = 0.22;
+  var SPIN_RATE = -0.22;   // negative: turns the other way
   /* Where the pack is facing as the last piece seats: the three-quarter view
      with the vented end towards the reader. The turn starts far enough back
      that it arrives here exactly on that beat, rather than wherever the
