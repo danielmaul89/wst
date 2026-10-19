@@ -688,6 +688,7 @@ h4,
 .contact-form textarea,
 .select-trigger {
   min-height: 52px;
+  padding: 12px 16px;
   border: 1px solid rgba(251, 249, 245, .34);
   border-radius: var(--r);
   color: #fff;
