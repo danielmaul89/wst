@@ -485,6 +485,34 @@
   color: var(--paper);
 }
 
+/* Back link: shown only when the reader arrived from the page it points to
+   (see wst-shell.js), and takes them back to where they were on it. */
+.wst-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--sp-3);
+  padding: 8px 14px 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.wst-back-link[hidden] { display: none; }
+.wst-back-link svg { transition: transform var(--dur) var(--ease); }
+.wst-back-link:hover { border-color: var(--ink-soft); }
+.wst-back-link:hover svg { transform: translateX(-3px); }
+.on-dark .wst-back-link {
+  color: var(--paper);
+  border-color: rgba(251, 249, 245, .28);
+}
+.on-dark .wst-back-link:hover {
+  border-color: rgba(251, 249, 245, .6);
+  background: rgba(251, 249, 245, .06);
+}
+
 /* A tag above a headline is a pre-headline, so it is set exactly like
    `.eyebrow`: one style for everything that sits above a headline.
    `--brass-text` is the AA-contrast brass; never use the decorative `--brass`

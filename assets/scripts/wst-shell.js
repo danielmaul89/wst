@@ -452,4 +452,36 @@
       }
     });
   }
+
+  /* Back links (data-wst-back="page.html"): shown only when the reader came
+     from that page. They go back to it at the point the reader left it: every
+     page notes its scroll position as it is left, and the page a back link
+     returns to picks that up again. Anyone else keeps the plain link. */
+  var here = location.pathname.split("/").pop() || "index.html";
+  window.addEventListener("pagehide", function () {
+    try { sessionStorage.setItem("wst-scroll:" + here, String(window.scrollY)); } catch (e) {}
+  });
+  try {
+    if (sessionStorage.getItem("wst-restore") === here) {
+      sessionStorage.removeItem("wst-restore");
+      var y = parseFloat(sessionStorage.getItem("wst-scroll:" + here)) || 0;
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      var restore = function () { window.scrollTo({ top: y, behavior: "instant" }); };
+      restore();
+      window.addEventListener("load", restore);
+    }
+  } catch (e) {}
+  document.querySelectorAll("[data-wst-back]").forEach(function (link) {
+    var from = link.getAttribute("data-wst-back");
+    var cameFrom = false;
+    try {
+      var u = new URL(document.referrer);
+      cameFrom = u.origin === location.origin && u.pathname.split("/").pop() === from;
+    } catch (e) { /* no referrer */ }
+    if (!cameFrom) return;
+    link.hidden = false;
+    link.addEventListener("click", function () {
+      try { sessionStorage.setItem("wst-restore", from); } catch (e) {}
+    });
+  });
 })();
