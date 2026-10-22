@@ -13,6 +13,18 @@
 <style>
 .prod-partner-tag{ margin-bottom:var(--sp-2); }
 .prod-illo{ display:block; width:100%; height:auto; margin:0 0 var(--sp-3); }
+/* The production gallery runs in groups of three: one large picture and two
+   smaller beside it, the large one changing sides from group to group. */
+.prod-gallery > .wst-gallery-item:nth-child(n){ grid-column:span 5; grid-row:auto; }
+.prod-gallery > .wst-gallery-item:nth-child(6n+1){ grid-column:1 / span 7; grid-row:span 2; }
+.prod-gallery > .wst-gallery-item:nth-child(6n+4){ grid-column:6 / span 7; grid-row:span 2; }
+.prod-gallery{ grid-auto-flow:dense; grid-auto-rows:clamp(200px, 22vw, 320px); }
+.prod-gallery .wst-gallery-item{ min-height:0; }
+@media (max-width:980px){
+  .prod-gallery > .wst-gallery-item:nth-child(n){ grid-column:auto; grid-row:auto; }
+  .prod-gallery > .wst-gallery-item:nth-child(3n+1){ grid-column:1 / -1; }
+  .prod-gallery{ grid-auto-rows:clamp(180px, 40vw, 300px); }
+}
 .prod-hero{ padding-bottom:0; }
 .prod-video{ margin:0; width:100%; aspect-ratio:16 / 9; max-height:calc(100svh - var(--nav-height) - var(--sp-6)); overflow:hidden; border-radius:var(--r-lg); background:var(--blue-deep); }
 .prod-video video{ display:block; width:100%; height:100%; object-fit:cover; }
@@ -40,12 +52,11 @@
       <h1 class="t-display">Built for series production, verified before it ships.</h1>
     </div>
 
-  <!-- The production film, at the width of the page layout. Until it is delivered the poster
-       (a finished pack on display) stands in; add the file as
-       assets/video/production.mp4 and the <source> below plays it. -->
+  <!-- The production film from HAIDI, at the width of the page layout: 1080p
+       H.264 cut from the 4K master, played with sound from the play button. -->
   <figure class="prod-video">
-    <video muted loop playsinline preload="metadata" poster="assets/general/_MG_8264_VN09GRAIN.webp" aria-label="Battery pack production at WS Technicals">
-      <!-- <source src="assets/video/production.mp4" type="video/mp4"> -->
+    <video muted loop playsinline preload="metadata" poster="assets/video/production-poster.webp" aria-label="Battery pack production at HAIDI, our manufacturing partner">
+      <source src="assets/video/production.mp4" type="video/mp4">
     </video>
     <button class="prod-play" type="button" aria-label="Play the production film"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></button>
   </figure>
@@ -63,8 +74,7 @@
         <p>A dedicated engineer follows every programme from first article through to stable series output, so a deviation is caught and corrected at the source rather than at the customer's door.</p>
       </div>
       <div class="wst-split-media">
-        <!-- Stand-in until HAIDI's own production photography arrives. -->
-        <img src="assets/unsplash/production-line-web.jpg" alt="Automated battery production line in a manufacturing hall" loading="lazy" decoding="async">
+        <img src="assets/production/haidi/DSC01129_Web.jpg" alt="Operators assembling cell modules on the HAIDI production line" width="1600" height="1067" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -105,10 +115,16 @@
       <h2>Inside the production floor.</h2>
       <p>A closer look at the assembly and test process behind every pack.</p>
     </div>
-    <div class="wst-gallery wst-gallery--mosaic">
-      <div class="wst-gallery-item"><img src="assets/production/factory-cells.jpg" alt="Trays of cylindrical cells on the production floor, with the assembly hall behind" loading="lazy" decoding="async"></div>
-      <div class="wst-gallery-item"><img src="assets/about/gallery/production-testing.jpg" alt="Technician testing a battery pack connected to a test rack" loading="lazy" decoding="async"></div>
-      <div class="wst-gallery-item"><img src="assets/production/factory-benches.jpg" alt="Assembly benches and shelving along the production hall" loading="lazy" decoding="async"></div>
+    <div class="wst-gallery wst-gallery--mosaic prod-gallery">
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC06893_Web.jpg" alt="Finished battery packs with orange lids lined up on pallets" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC01140_Web.jpg" alt="Operator at an automated laser welding station" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC01378_Web.jpg" alt="Cells being spot-welded by hand" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC06848_Web.jpg" alt="Operator heat-sealing cell modules" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC07116_Web.jpg" alt="Cylindrical cell groups with nickel strips on a work board" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC07122_Web.jpg" alt="Automated assembly line with handling stations" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC01655_Web.jpg" alt="Laser welding busbars onto a prismatic cell module" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC06927_Web.jpg" alt="Rows of finished cell modules ready for testing" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC07083_Web.jpg" alt="Packs wired up for end-of-line testing" loading="lazy" decoding="async"></div>
     </div>
   </div>
 </section>
