@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Applications (v7 concept) | WS Technicals</title>
+<title>Applications | WS Technicals</title>
 <meta name="description" content="Custom lithium battery systems grouped by application category, from unmanned platforms to heavy machinery.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -226,8 +226,9 @@
 .show-row-desc{ max-width:36ch; margin:0 0 22px; color:var(--ink-soft); font-size:15px; line-height:1.62; }
 .show-row-specs{ display:flex; flex-direction:column; gap:9px; margin:0 0 22px; padding:0; list-style:none; }
 .show-row-specs li{ display:flex; align-items:baseline; gap:10px; }
-.show-row-specs .k{ flex:none; min-width:112px; color:var(--ink-faint); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; }
+.show-row-specs .k{ flex:none; min-width:22px; color:var(--ink-faint); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; }
 .show-row-specs .v{ color:var(--ink); font-size:13.5px; font-weight:600; }
+.show-row-specs-label{ display:block; margin:0 0 10px; color:var(--ink-faint); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; }
 .show-row-cta{
   display:inline-flex;
   align-items:center;
@@ -400,103 +401,81 @@
   // instead of the split-card layout: content mirrors wst-shell.js's
   // PRODUCT_INFO (desc + specs) for the specific application each row
   // links to; "eyebrow" is the umbrella category, one per row.
+  // Applications, grouped by sector. Each sector carries its key
+  // considerations (shown as the numbered list in every row of that sector);
+  // "modal" names the entry in wst-shell.js's PRODUCT_INFO that "View full
+  // specs" opens.
   var categories = [
     {
       eyebrow: 'Unmanned vehicles',
       full: true,
+      considerations: ['Lightweight system design','High discharge rate','High energy density'],
       items: [
-        { key: 'Multirotor UAV', img: 'assets/products/web/hexacopter-grounded_scaled.jpg',
-          desc: 'Custom battery packs engineered for payload capacity, flight time and rapid field swaps in multirotor platforms.',
-          specs: [['Weight','Minimised for flight time'],['Vibration','Shock-isolated mounting'],['Peak load','Payload-dependent draw']] },
-        { key: 'Fixed-Wing UAV', img: 'assets/products/web/fixed-wing-uav02.webp?v=2',
-          desc: 'Long-range power systems balancing weight, endurance and reliability for fixed-wing aircraft.',
-          specs: [['Energy density','High, for range'],['Weight','Balanced to CG'],['Altitude','Rated to -30°C']] },
-        { key: 'VTOL UAV', img: 'assets/products/web/vtol-uav02.jpg',
-          desc: 'Battery systems tuned for the high peak-power demands of vertical takeoff paired with efficient cruise flight.',
-          specs: [['Peak power','High-current hover draw'],['Thermal','Burst-load managed'],['Weight','Hover/cruise balanced']] },
-        { key: 'Long-Endurance UAV', img: 'assets/products/web/fixed-wing-uav01.jpg',
-          desc: 'High energy density packs designed to extend flight time without adding excess weight.',
-          specs: [['Energy density','Maximised per kg'],['Self-discharge','Low-leakage cells'],['Weight','Minimal, for endurance']] },
-        { key: 'Unmanned Surface Vehicle', img: 'assets/products/web/usv_unmanned-surface-vehicle.webp?v=2',
-          desc: 'Marine-grade battery systems built for autonomous surface vessels operating in harsh conditions.',
-          specs: [['Waterproofing','IP67 sealed'],['Temperature','-20°C to 55°C'],['Corrosion','Marine-grade housing']] },
-        { key: 'Unmanned Ground Vehicle', img: 'assets/products/web/ugv.webp?v=2',
-          desc: 'Rugged battery packs engineered for remote and autonomous ground operation in demanding environments.',
-          specs: [['Ingress','Dust and water sealed'],['Shock','Reinforced mounting'],['Temperature','Extreme-range rated']] }
+        { key: 'UAV', img: 'assets/products/web/fixed-wing-uav02.webp?v=2', alt: 'Unmanned Aerial Vehicle', modal: 'Fixed-Wing UAV',
+          desc: 'Battery packs for multirotor, fixed-wing and VTOL aircraft, where every gram traded against flight time and payload counts.' },
+        { key: 'USV', img: 'assets/products/web/usv_unmanned-surface-vehicle.webp?v=2', alt: 'Unmanned Surface Vehicle', modal: 'Unmanned Surface Vehicle',
+          desc: 'Battery systems for autonomous vessels that run unattended for long missions in harsh conditions.' },
+        { key: 'UGV', img: 'assets/products/web/ugv.webp?v=2', alt: 'Unmanned Ground Vehicle', modal: 'Unmanned Ground Vehicle',
+          desc: 'Battery packs for remote and autonomous ground vehicles working in demanding environments.' }
       ]
     },
     {
-      eyebrow: 'Warehouse robotics',
-      items: [
-        { key: 'AGV and AMR', img: 'assets/products/web/agv_scaled02.webp?v=2',
-          desc: 'Battery systems built for continuous shift cycles and fast opportunity charging in automated warehouses.',
-          specs: [['Duty cycle','Multi-shift continuous'],['Charging','Opportunity-charge ready'],['Footprint','Chassis-constrained']] }
-      ]
-    },
-    {
-      eyebrow: 'Boats & maritime',
+      eyebrow: 'Marine',
       full: true,
+      considerations: ['IP67 rating','Vibration dampening','Low- and high-voltage systems'],
       items: [
-        { key: 'Electric Workboat', img: 'assets/products/web/boat.webp?v=2',
-          desc: 'Marine battery systems engineered for electric propulsion and onboard power in commercial workboats.',
-          specs: [['Waterproofing','IP-rated enclosure'],['Temperature','Marine-range rated'],['Corrosion','Salt-air resistant']] }
+        { key: 'Boat', img: 'assets/products/web/boat.webp?v=2', alt: 'Electric boat', modal: 'Electric Workboat',
+          desc: 'Marine battery systems for electric propulsion and onboard power, from small craft to commercial workboats.' }
       ]
     },
     {
       eyebrow: 'Heavy machinery',
       full: true,
+      considerations: ['Rugged enclosures','High current applications','Vehicle integration'],
       items: [
-        { key: 'Electric Excavator', img: 'assets/products/web/excavator02.webp?v=2',
-          desc: 'High-voltage battery packs engineered for the torque and duty cycle of electric excavators.',
-          specs: [['Power draw','High, for digging torque'],['Thermal','Sustained high-current'],['Duty cycle','Full-shift rated']] },
-        { key: 'Agricultural Tractor', img: 'assets/products/web/traktor01.webp?v=2',
-          desc: 'Battery systems built for the power demands and duty cycles of agricultural machinery.',
-          specs: [['Power draw','High, machine-scale'],['Duty cycle','Long field days'],['Ingress','Dust and mud sealed']] },
-        { key: 'Outdoor Maintenance', img: 'assets/products/web/lawn-mover.webp?v=2',
-          desc: 'Battery systems built for the duty cycles of outdoor maintenance and grounds equipment.',
-          specs: [['Ingress','Dust and moisture sealed'],['Temperature','Year-round outdoor'],['Duty cycle','Extended shifts']] },
-        { key: 'Municipal Equipment', img: 'assets/products/web/fejemaskine.webp?v=2',
-          desc: 'Custom power systems engineered for municipal vehicles and public works equipment.',
-          specs: [['Duty cycle','Full daily routes'],['Ingress','Weather-sealed'],['Charging','Depot-scheduled']] },
-        { key: 'Utility Vehicle', img: 'assets/products/web/utility-vehicle.webp?v=2',
-          desc: 'Custom battery systems built for electric utility vehicles operating across varied terrain.',
-          specs: [['Terrain','On/off-road rated'],['Duty cycle','Multi-stop routes'],['Ingress','Dust and mud sealed']] }
+        { key: 'Excavator', img: 'assets/products/web/excavator02.webp?v=2', alt: 'Electric excavator', modal: 'Electric Excavator',
+          desc: 'High-voltage battery packs built for the torque and duty cycle of electric excavators.' },
+        { key: 'Tractor', img: 'assets/products/web/traktor01.webp?v=2', alt: 'Agricultural tractor', modal: 'Agricultural Tractor',
+          desc: 'Battery systems for the power demands and long field days of agricultural machinery.' },
+        { key: 'Outdoor maintenance', img: 'assets/products/web/lawn-mover.webp?v=2', alt: 'Grounds equipment', modal: 'Outdoor Maintenance',
+          desc: 'Battery systems for the duty cycles of outdoor maintenance and grounds equipment.' },
+        { key: 'Municipal equipment', img: 'assets/products/web/fejemaskine.webp?v=2', alt: 'Public works', modal: 'Municipal Equipment',
+          desc: 'Power systems for municipal vehicles and public works equipment on full daily routes.' },
+        { key: 'Utility vehicle', img: 'assets/products/web/utility-vehicle.webp?v=2', alt: 'Utility vehicle', modal: 'Utility Vehicle',
+          desc: 'Battery systems for electric utility vehicles working across varied terrain.' }
       ]
     },
     {
       eyebrow: 'Robotics',
       full: true,
+      considerations: ['Swappability','Peak power considerations','Gravimetric energy density'],
       items: [
-        { key: 'Humanoid Robotics', img: 'assets/products/web/humanoid02.webp?v=2',
-          desc: 'Compact, high-density battery systems built for the space and weight constraints of humanoid platforms.',
-          specs: [['Weight','Balance-critical'],['Size','Tightly constrained'],['Energy density','Maximised per litre']] }
+        { key: 'Humanoids', img: 'assets/products/web/humanoid02.webp?v=2', alt: 'Humanoid robotics', modal: 'Humanoid Robotics',
+          desc: 'Compact, high-density battery systems for the space and weight constraints of humanoid platforms.' }
       ]
     },
     {
-      eyebrow: 'UPS & backup power',
+      eyebrow: 'Backup systems',
       full: true,
+      considerations: ['Parallel scalability','Isolation monitoring','System integration'],
       items: [
-        { key: 'Infrastructure Bank', img: 'assets/products/web/ups-system02.webp?v=2',
-          desc: 'Large-format battery installations built for grid support and facility-scale energy storage.',
-          specs: [['Capacity','Facility-scale'],['Thermal','Array-level managed'],['Safety','Unattended-rated']] },
-        { key: 'Modular UPS Cabinet', img: 'assets/products/web/ups-system.webp?v=2',
-          desc: 'Scalable battery banks engineered for uninterrupted backup power in critical infrastructure.',
-          specs: [['Redundancy','N+1 capable'],['Thermal','Rack-load managed'],['Certification','Critical-infra rated']] }
+        { key: 'UPS', img: 'assets/products/web/ups-system.webp?v=2', alt: 'Uninterruptible power supply', modal: 'Modular UPS Cabinet',
+          desc: 'Scalable battery systems for uninterrupted backup power, from a single cabinet to facility-scale banks.' }
       ]
     },
     {
-      eyebrow: 'Material handling',
+      eyebrow: 'Material handling / Warehouse robotics',
       full: true,
+      considerations: ['Opportunity and fast charging','Cost efficiency','Functional safety (FuSa)'],
       items: [
-        { key: 'Industrial Robotics', img: 'assets/products/web/robotic-arm.webp?v=2',
-          desc: 'Custom power systems for robotic arms and automated production line equipment.',
-          specs: [['Footprint','Base-chassis sized'],['Duty cycle','Continuous production'],['EMI','Shielded from controls']] },
-        { key: 'Pallet Truck', img: 'assets/products/web/pallet-truck.webp?v=2',
-          desc: 'Compact battery packs engineered for the daily cycles of electric pallet trucks.',
-          specs: [['Weight','Low-profile chassis'],['Cycle life','Frequent short lifts'],['Charging','Opportunity-charge sized']] },
-        { key: 'Electric Forklift', img: 'assets/products/web/forklift.webp?v=2',
-          desc: 'High-cycle battery packs engineered for daily duty in material handling and warehouse operations.',
-          specs: [['Cycle life','High-cycle rated'],['Weight','Counterbalance-critical'],['Charging','Shift-length sized']] }
+        { key: 'AGV/AMR', img: 'assets/products/web/agv_scaled02.webp?v=2', alt: 'Automated guided vehicles and mobile robots', modal: 'AGV and AMR',
+          desc: 'Battery systems for continuous shift cycles and opportunity charging in automated warehouses.' },
+        { key: 'Industrial robotics', img: 'assets/products/web/robotic-arm.webp?v=2', alt: 'Robot arms and production lines', modal: 'Industrial Robotics',
+          desc: 'Power systems for robotic arms and automated production line equipment.' },
+        { key: 'Pallet truck', img: 'assets/products/web/pallet-truck.webp?v=2', alt: 'Electric pallet truck', modal: 'Pallet Truck',
+          desc: 'Compact battery packs for the frequent, short duty cycles of electric pallet trucks.' },
+        { key: 'Forklift', img: 'assets/products/web/forklift.webp?v=2', alt: 'Electric forklift', modal: 'Electric Forklift',
+          desc: 'High-cycle battery packs for daily duty in material handling and warehouse operations.' }
       ]
     }
   ];
@@ -515,6 +494,7 @@
           '<span class="eyebrow show-row-eyebrow">' + cat.eyebrow + '</span>' +
           '<h3 class="show-row-title"></h3>' +
           '<p class="show-row-desc"></p>' +
+          '<span class="show-row-specs-label">Key considerations</span>' +
           '<ul class="show-row-specs"></ul>' +
           '<button type="button" class="show-row-cta" hidden>View full specs' +
             '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
@@ -545,15 +525,15 @@
     function renderText(item){
       titleEl.textContent = item.key;
       descEl.textContent = item.desc;
-      specsEl.innerHTML = item.specs.map(function(pair){
-        return '<li><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + '</span></li>';
+      specsEl.innerHTML = cat.considerations.map(function(text, n){
+        return '<li><span class="k">' + (n < 9 ? '0' : '') + (n + 1) + '</span><span class="v">' + text + '</span></li>';
       }).join('');
       if (counterEl) counterEl.textContent = String(index + 1);
-      ctaEl.hidden = !(window.WSTProductModal && window.WSTProductModal.has(item.key));
+      ctaEl.hidden = !(window.WSTProductModal && window.WSTProductModal.has(item.modal));
       ctaEl.onclick = function(event){
         event.preventDefault();
         event.stopPropagation();
-        if (window.WSTProductModal) window.WSTProductModal.open(item.key, ctaEl);
+        if (window.WSTProductModal) window.WSTProductModal.open(item.modal, ctaEl);
       };
     }
 
@@ -566,7 +546,7 @@
 
       if (reduceMotion || !img.src) {
         img.src = item.img;
-        img.alt = item.key;
+        img.alt = item.alt || item.key;
         renderText(item);
         return;
       }
@@ -576,7 +556,7 @@
 
       var incoming = new Image();
       incoming.className = 'show-row-media-incoming';
-      incoming.alt = item.key;
+      incoming.alt = item.alt || item.key;
 
       function reveal(){
         media.appendChild(incoming);
@@ -590,7 +570,7 @@
 
         window.setTimeout(function(){
           img.src = incoming.src;
-          img.alt = item.key;
+          img.alt = item.alt || item.key;
           incoming.remove();
           animating = false;
         }, 900);
