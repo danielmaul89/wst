@@ -1454,3 +1454,11 @@ body[data-wst-theme="dark"] .btn-ghost:hover {
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
 }
+
+/* The page-wide drawing grid (a `.blueprint-grid` laid over the whole body)
+   sits behind the content, never over it: it shows where the page background
+   shows, and photographs, renders and video always cover it. Pages declare
+   the grid themselves; this one rule decides its layer for all of them. */
+body > .blueprint-grid {
+  z-index: -1;
+}
