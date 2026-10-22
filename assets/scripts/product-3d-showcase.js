@@ -140,6 +140,30 @@
   fill.position.set(-4, 1.5, 6);
   scene.add(fill);
 
+  /* A platform with a look file (see wst-model-look.js) is lit the way its
+     look was matched to the client's renders: the look's own studio, its key
+     light and a soft sky fill in place of the rim and fill above. Any other
+     platform gets this studio back. */
+  var lookSky = new THREE.HemisphereLight(0xffffff, 0xe6e6e6, 0);
+  scene.add(lookSky);
+  var lookEnv = null;
+  function useStudio(look, envs, centre, radius) {
+    if (lookEnv) { lookEnv.dispose(); lookEnv = null; }
+    if (!look || !look.studio) {
+      scene.environment = envTarget.texture;
+      key.color.setHex(0xfff2e0); key.intensity = 1.9; key.position.set(5.5, 8.5, 6);
+      rim.intensity = 1.45; fill.intensity = 0.35; lookSky.intensity = 0;
+      renderer.toneMappingExposure = 1.06;
+      return;
+    }
+    var s = look.studio;
+    lookEnv = envs.main;
+    scene.environment = lookEnv;
+    window.WSTModelLook.placeKey(THREE, key, s, centre, radius);
+    rim.intensity = 0; fill.intensity = 0; lookSky.intensity = s.hemi;
+    renderer.toneMappingExposure = s.exposure;
+  }
+
   /* ---------------------------------------------------------------
      Material palette, assigned by part name
      --------------------------------------------------------------- */
@@ -306,6 +330,12 @@
      */
   var modelTiers = [];
 
+  /* How far round a platform is turned so the tour opens on its front: the
+     keyframes assume a pack whose front faces +z, and a model exported
+     facing elsewhere would open on its back. In radians, added to every
+     keyframe's azimuth. */
+  var modelTurn = 0;
+
   function tierFor(name) {
     var lower = (name || '').toLowerCase();
     var i;
@@ -361,6 +391,10 @@
     {
       key: 'ups',
       url: 'assets/models/wl03.wstm',
+      look: 'assets/models/wl03.look.json',
+      /* Its front faces -x; this opens the tour on the three-quarter view
+         of the client's render, front right and vented side left. */
+      turn: -1.64,
       name: 'UPS platform',
       cells: 'Rack enclosure',
       /* A 19-inch rack unit: the structure is sheet metal panels and rack
@@ -577,6 +611,7 @@
     }
 
     modelTiers = spec.tiers || [];
+    modelTurn = spec.turn || 0;
 
   /* .wstm is the same geometry written for a browser rather than for a CAD
      package - typed arrays it can hand straight to the GPU. The FBX path
@@ -585,6 +620,11 @@
     ? window.WSTMLoader
     : new THREE.FBXLoader();
 
+  /* The look file is small; it is fetched alongside the model and the model
+     waits for it, so the pack never shows in the wrong materials first. */
+  var lookReady = spec.look && window.WSTModelLook ? window.WSTModelLook.load(spec.look) : Promise.resolve(null);
+
+  lookReady.then(function (look) {
   reader.load(
     spec.url,
     function (object) {
@@ -606,6 +646,19 @@
           shadowMesh = null;
         }
         currentObject = object;
+        /* The look's materials and printed labels go on before the model is
+           measured; the labels are parented to the parts they are printed
+           on, so they travel with them in the teardown. */
+        /* Counted before a look leaves its fasteners out: the figure is the
+           assembly's, not what happens to be drawn. */
+        var partTotal = 0;
+        object.traverse(function (c) { if (c.isMesh) partTotal++; });
+        var looked = false, envs = null;
+        if (look) {
+          envs = window.WSTModelLook.environments(THREE, renderer, look);
+          looked = window.WSTModelLook.applyMaterials(THREE, object, look, envs);
+          if (looked) (look.decals || []).forEach(function (d) { window.WSTModelLook.makeDecal(THREE, object, d, d.url); });
+        }
         parts = [];
         callouts = [];
         if (calloutLayer) calloutLayer.innerHTML = '';
@@ -630,6 +683,7 @@
         var sphere = box2.getBoundingSphere(new THREE.Sphere());
         center.copy(sphere.center);
         var radius = sphere.radius;
+        useStudio(looked ? look : null, envs, center, radius);
         var minY = box2.min.y;
         var height = Math.max(box2.max.y - minY, 1e-4);
         var UP = new THREE.Vector3(0, 1, 0);
@@ -638,7 +692,8 @@
         var index = 0;
 
         object.traverse(function (child) {
-          if (!child.isMesh) return;
+          /* Labels ride on their part rather than moving on their own. */
+          if (!child.isMesh || child.userData.decal) return;
 
           child.material = materialsFor(child);
           child.castShadow = false;
@@ -1005,7 +1060,7 @@
           });
         }
 
-        if (partCountEl) partCountEl.textContent = parts.length + ' parts';
+        if (partCountEl) partCountEl.textContent = partTotal + ' parts';
         if (platformEl) platformEl.textContent = spec.name;
         if (cellsEl) cellsEl.textContent = spec.cells;
         if (switchName) switchName.textContent = spec.name;
@@ -1049,6 +1104,7 @@
       if (nextBtn) nextBtn.disabled = false;
     }
   );
+  });
   }
 
   if (nextBtn) {
@@ -1300,7 +1356,7 @@
 
       var cam = sampleCamera(camProgress);
       /* The intro resolves into the act-1 pose by easing these back to 0. */
-      var az = cam.az - introMix * 0.95;
+      var az = cam.az - introMix * 0.95 + modelTurn;
       /* Never let the keyframed zoom sit tighter than the spread actually
          needs, or parts leave the frame mid-teardown. */
       var zoom = Math.min(1, Math.max(cam.zoom, reach * 0.97) + introMix * 0.85);
