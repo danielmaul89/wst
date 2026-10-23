@@ -12,7 +12,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 .prod-partner-tag{ margin-bottom:var(--sp-2); }
-.prod-illo{ display:block; width:100%; height:auto; margin:0 0 var(--sp-3); }
+.prod-illo{ display:block; width:100%; height:auto; aspect-ratio:16 / 9; object-fit:cover; border-radius:var(--r); margin:0 0 var(--sp-3); }
+/* EOL shows two stills from our own film, the second fading in over the first. */
+.prod-illo-pair{ position:relative; overflow:hidden; }
+.prod-illo-pair img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.prod-illo-pair img + img{ animation:prod-illo-fade 12s ease-in-out infinite alternate; }
+@keyframes prod-illo-fade{ 0%, 40%{ opacity:0; } 60%, 100%{ opacity:1; } }
+@media (prefers-reduced-motion:reduce){ .prod-illo-pair img + img{ animation:none; opacity:0; } }
 /* The production gallery runs in groups of three: one large picture and two
    smaller beside it, the large one changing sides from group to group. */
 .prod-gallery > .wst-gallery-item:nth-child(n){ grid-column:span 5; grid-row:auto; }
@@ -91,19 +97,22 @@
     </div>
     <div class="wst-grid wst-grid--3">
       <div class="wst-step-card wst-step-card--static">
-        <img class="prod-illo" src="assets/illustrations/production-eol.svg" alt="A battery pack on a test bench, connected by leads to a test unit showing a pass" width="480" height="360" loading="lazy" decoding="async">
+        <div class="prod-illo prod-illo-pair">
+          <img src="assets/production/quality/eol-order-to-shipment.webp" alt="Still from our film: a signed order leads to tested cells and a pallet of WS Technicals boxes ready to ship" width="960" height="540" loading="lazy" decoding="async">
+          <img src="assets/production/quality/eol-test-record-approved.webp" alt="Still from our film: a signed order leads to a test record on screen, marked approved" width="960" height="540" loading="lazy" decoding="async">
+        </div>
         <span class="wst-index">EOL</span>
         <h3>End-of-line testing</h3>
         <p>Every single unit is functionally tested before it leaves the line: voltage, capacity, insulation resistance and communication with the host system. A unit that does not pass is not shipped.</p>
       </div>
       <div class="wst-step-card wst-step-card--static">
-        <img class="prod-illo" src="assets/illustrations/production-flow.svg" alt="Battery packs moving along a conveyor under two scanning stations" width="480" height="360" loading="lazy" decoding="async">
+        <img class="prod-illo" src="assets/production/quality/flow-order-overview-tablet.webp" alt="Tablet showing the order overview, with each purchase order line's produced and shipped quantities and status" width="960" height="540" loading="lazy" decoding="async">
         <span class="wst-index">FLOW</span>
         <h3>Controlled production flow</h3>
         <p>A defined sequence of work instructions, component lot tracking and in-process checks, so any batch can be traced back to the components and the station that built it.</p>
       </div>
       <div class="wst-step-card wst-step-card--static">
-        <img class="prod-illo" src="assets/illustrations/production-passport.svg" alt="A battery pack beside its digital record card with a QR code and a seal" width="480" height="360" loading="lazy" decoding="async">
+        <img class="prod-illo" src="assets/production/quality/passport-eu-flag.webp" alt="The flag of the European Union" width="960" height="540" loading="lazy" decoding="async">
         <span class="wst-index">PASSPORT</span>
         <h3>Battery passport ready</h3>
         <p>Production records are structured to meet the EU's upcoming digital battery passport requirements, giving every pack a documented history from cell to finished system.</p>
