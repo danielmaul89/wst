@@ -361,6 +361,8 @@
     {
       key: 'compact',
       url: 'assets/models/c4e.wstm',
+      look: 'assets/models/c4e.look.json',
+      turn: -1.93,
       name: 'Compact battery platform',
       cells: '21700 cylindrical',
       callouts: [
@@ -376,6 +378,9 @@
     {
       key: 'heavy-machinery',
       url: 'assets/models/HDR.wstm',
+      /* Not HDR.look.json: that is the home hero's Blender look. */
+      look: 'assets/models/HDR.render.look.json',
+      turn: 2.73,
       name: 'Heavy machinery platform',
       cells: 'EVE C40 prismatic',
       callouts: [
@@ -425,6 +430,8 @@
     {
       key: 'agv',
       url: 'assets/models/sl02.wstm',
+      look: 'assets/models/sl02.look.json',
+      turn: -0.36,
       name: 'AGV platform',
       cells: 'Sealed enclosure',
       tiers: [
@@ -446,6 +453,8 @@
     {
       key: 'chassis',
       url: 'assets/models/B7W.wstm',
+      look: 'assets/models/B7W.look.json',
+      turn: 1.46,
       name: 'Heavy machinery chassis',
       cells: 'Bend-plate chassis',
       tiers: [

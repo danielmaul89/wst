@@ -94,15 +94,42 @@
     return true;
   }
 
-  /* A decal as a flat card facing -x (the front of the models matched so
-     far), parented to the part it is printed on so it travels with it when
-     the model comes apart. `texture` is a THREE texture or an image URL. */
+  /* The faces a decal can lie on: which world axis it sits across (`at` is
+     its depth on that axis), which two axes it spans - the image's width
+     first, then its height - and the turn that faces a plane that way, so
+     the image reads the right way round from outside. `sign` says which
+     way the image's rightward and upward run along those two axes. */
+  var FACES = {
+    '-x': { across: 'x', span: ['z', 'y'], sign: [1, 1], rot: [0, -Math.PI / 2, 0] },
+    '+x': { across: 'x', span: ['z', 'y'], sign: [-1, 1], rot: [0, Math.PI / 2, 0] },
+    '+z': { across: 'z', span: ['x', 'y'], sign: [1, 1], rot: [0, 0, 0] },
+    '-z': { across: 'z', span: ['x', 'y'], sign: [-1, 1], rot: [0, Math.PI, 0] },
+    '+y': { across: 'y', span: ['x', 'z'], sign: [1, -1], rot: [-Math.PI / 2, 0, 0] }
+  };
+
+  /* A decal's face, depth and extent, in the model's own units. Decals
+     written before faces existed lie on -x with their depth as `x`. */
+  function decalFrame(d) {
+    var face = FACES[d.face || '-x'];
+    var at = d.at !== undefined ? d.at : d.x;
+    var u = d[face.span[0]], v = d[face.span[1]];
+    var centre = {};
+    centre[face.across] = at;
+    centre[face.span[0]] = (u[0] + u[1]) / 2;
+    centre[face.span[1]] = (v[0] + v[1]) / 2;
+    return { face: face, u: u, v: v, width: u[1] - u[0], height: v[1] - v[0], centre: centre };
+  }
+
+  /* A decal as a flat card on one face of the model, parented to the part
+     it is printed on so it travels with it when the model comes apart.
+     `texture` is a THREE texture or an image URL. */
   function makeDecal(THREE, object, d, texture) {
     if (typeof texture === 'string') texture = new THREE.TextureLoader().load(texture);
     texture.encoding = THREE.sRGBEncoding;
     texture.anisotropy = 8;
+    var frame = decalFrame(d);
     var mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(d.z[1] - d.z[0], d.y[1] - d.y[0]),
+      new THREE.PlaneGeometry(frame.width, frame.height),
       new THREE.MeshStandardMaterial({ map: texture, transparent: true, roughness: 0.55, metalness: 0,
         polygonOffset: true, polygonOffsetFactor: -2 })
     );
@@ -116,8 +143,8 @@
     }
     /* Placed in the model's space, then carried into the part's own. */
     var place = new THREE.Object3D();
-    place.rotation.y = -Math.PI / 2;
-    place.position.set(d.x, (d.y[0] + d.y[1]) / 2, (d.z[0] + d.z[1]) / 2);
+    place.rotation.set(frame.face.rot[0], frame.face.rot[1], frame.face.rot[2]);
+    place.position.set(frame.centre.x, frame.centre.y, frame.centre.z);
     place.updateMatrix();
     var inParent = new THREE.Matrix4().copy(parent.matrixWorld).invert()
       .multiply(object.matrixWorld).multiply(place.matrix);
@@ -154,6 +181,7 @@
     environments: environments,
     applyMaterials: applyMaterials,
     makeDecal: makeDecal,
+    decalFrame: decalFrame,
     placeKey: placeKey
   };
 })(window);
