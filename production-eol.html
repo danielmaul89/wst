@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>End-of-line testing | Production | WS Technicals</title>
+<meta name="description" content="How every WS Technicals battery pack is functionally tested before it leaves the line: voltage, capacity, insulation resistance and communication with the host system.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* A sub-page of Production: a short opening, then the content for it. The
+   content area below is where the client's text and pictures are added. */
+.sub-hero{ padding-bottom:var(--sp-5); }
+.sub-hero .wst-back-link{ align-self:center; margin-bottom:var(--sp-2); }
+.sub-media{ display:grid; gap:var(--sp-3); }
+.sub-media img{ display:block; width:100%; height:auto; border-radius:var(--r-lg); }
+.sub-body p{ max-width:60ch; color:var(--ink-soft); font-size:18px; line-height:1.7; }
+.sub-next{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3); }
+.sub-next a{ display:flex; flex-direction:column; gap:6px; padding:var(--sp-3) var(--sp-4); border:1px solid var(--line); border-radius:var(--r-lg); background:var(--paper); transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.sub-next a:hover{ border-color:var(--ink-soft); box-shadow:var(--shadow-sm); }
+.sub-next .k{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+.sub-next .v{ font-size:var(--fs-body); font-weight:600; color:var(--ink); }
+.sub-next .next{ text-align:right; }
+@media (max-width:767px){ .sub-next{ grid-template-columns:1fr; } .sub-next .next{ text-align:left; } }
+</style>
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2w">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p3c">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+</head>
+<body data-wst-page="production">
+
+<div data-wst-header></div>
+
+<main>
+
+<section class="wst-page-hero wst-page-hero--text-only wst-page-hero--center sub-hero">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <a class="wst-back-link" href="production.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3M7 3 3 7l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to production</a>
+      <span class="eyebrow">Production &middot; EOL</span>
+      <h1 class="t-display">End-of-line testing.</h1>
+      <p class="wst-page-hero-intro">Every single unit is functionally tested before it leaves the line. A unit that does not pass is not shipped.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT: add the client's text, pictures and facts for this page here.
+     The section below is a text and picture block to start from. -->
+<section class="wst-section">
+  <div class="container">
+    <div class="wst-split wst-split--top">
+      <div class="wst-split-copy sub-body">
+        <h2>End-of-line testing</h2>
+        <p>Every single unit is functionally tested before it leaves the line: voltage, capacity, insulation resistance and communication with the host system. A unit that does not pass is not shipped.</p>
+      </div>
+      <div class="wst-split-media sub-media">
+          <img src="assets/production/quality/eol-order-to-shipment.webp" alt="Still from our film: a signed order leads to tested cells and a pallet of WS Technicals boxes ready to ship" width="960" height="540" loading="lazy" decoding="async">
+          <img src="assets/production/quality/eol-test-record-approved.webp" alt="Still from our film: a signed order leads to a test record on screen, marked approved" width="960" height="540" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wst-section wst-section--tint">
+  <div class="container">
+    <div class="sub-next">
+      <a class="prev" href="production-passport.html"><span class="k">Previous</span><span class="v">Battery passport ready</span></a>
+      <a class="next" href="production-flow.html"><span class="k">Next</span><span class="v">Controlled production flow</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="wst-cta-band">
+  <div class="wst-blueprint-grid" aria-hidden="true"></div>
+  <div class="container">
+    <h2>Ready to scope your production volumes?</h2>
+    <p>Tell us the application, the target volume and the timeline. We will help scope the right manufacturing path, from first article to stable series output.</p>
+    <div class="wst-cta-band-actions">
+      <a href="contact-v2.html" class="btn btn-on-dark">Start the conversation</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=nav12"></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
+</body>
+</html>
