@@ -117,7 +117,7 @@
       '        <a href="index.html" class="brand" aria-label="WS Technicals home">',
       '          <img class="brand-logo brand-logo--on-dark" src="assets/logo/full.svg" alt="WS Technicals">',
       "        </a>",
-      '        <p class="footer-address">WS Technicals A/S<br>Gjellerupvej 89A<br>8230 Aarhus, Denmark</p>',
+      '        <p class="footer-address">WS Technicals A/S<br>Elmegårdsvej 32<br>8361 Hasselager, Denmark</p>',
       "      </div>",
       '      <div class="footer-col"><h4><a href="battery-packs.html">Solutions</a></h4><ul>',
       '        <li><a href="solutions-v7.html">Applications</a></li>',
