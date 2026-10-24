@@ -149,9 +149,6 @@
       '        <span class="footer-copy">© 2026 WS Technicals A/S. All rights reserved.</span>',
       '        <a href="terms.html" class="footer-terms">Salgs- og leveringsbetingelser</a>',
       "      </div>",
-      '      <div class="cert-chips" aria-label="Compliance standards">',
-      '        <span class="cert-chip">CE</span><span class="cert-chip">UN 38.3</span><span class="cert-chip">RoHS</span>',
-      "      </div>",
       "    </div>",
       "  </div>",
       "</footer>"
