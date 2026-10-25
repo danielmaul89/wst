@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Compact battery platform (demo) | WS Technicals</title>
+<meta name="description" content="Demo page for a single battery pack: a still in the hero, the live 3D model on a dark blueprint section, and a gallery.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* DEMO of a single battery pack page: still hero, a dark blueprint section
+   with the live 3D model beside three facts, then a picture gallery. */
+.demo-hero .wst-page-hero-media img{ width:100%; }
+
+/* The 3D stage: the canvas assets/scripts/home-hero-3d.js drops in fills this
+   box; without WebGL (or on a phone) the still inside it stays. */
+.demo-stage{ position:relative; padding:var(--sp-7) 0; overflow:hidden; }
+.demo-stage > .container{ position:relative; z-index:1; }
+.demo-stage-grid{ display:grid; grid-template-columns:minmax(0,7fr) minmax(0,4fr); gap:clamp(32px,5vw,80px); align-items:center; }
+.demo-model{ position:relative; width:100%; height:clamp(380px, 62vh, 640px); }
+.demo-model > img{ display:block; width:100%; height:100%; object-fit:contain; }
+.demo-model.is-3d > img{ display:none; }
+.demo-model.is-3d{ --model-bleed-top:-8%; --model-bleed-left:-6%; --model-width:112%; --model-height:116%; }
+.demo-facts{ margin:0; display:grid; gap:var(--sp-4); }
+.demo-fact{ padding-top:var(--sp-3); border-top:1px solid rgba(251,249,245,.18); }
+.demo-fact dt{ font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--brass-on-dark); }
+.demo-fact dd{ margin:8px 0 0; }
+.demo-fact .big{ display:block; font-family:var(--font-display); font-size:var(--fs-40, 40px); line-height:1.1; letter-spacing:-.01em; color:var(--paper); }
+.demo-fact .note{ display:block; margin-top:6px; color:var(--ink-soft-on-dark); font-size:var(--fs-small); line-height:1.5; }
+@media (max-width:980px){ .demo-stage-grid{ grid-template-columns:minmax(0,1fr); } .demo-model{ height:clamp(300px, 52vw, 460px); } }
+
+/* Gallery: groups of three, one large and two smaller, switching sides. */
+.prod-gallery > .wst-gallery-item:nth-child(n){ grid-column:span 5; grid-row:auto; }
+.prod-gallery > .wst-gallery-item:nth-child(6n+1){ grid-column:1 / span 7; grid-row:span 2; }
+.prod-gallery > .wst-gallery-item:nth-child(6n+4){ grid-column:6 / span 7; grid-row:span 2; }
+.prod-gallery{ grid-auto-flow:dense; grid-auto-rows:clamp(200px, 22vw, 320px); }
+.prod-gallery .wst-gallery-item{ min-height:0; }
+@media (max-width:980px){
+  .prod-gallery > .wst-gallery-item:nth-child(n){ grid-column:auto; grid-row:auto; }
+  .prod-gallery > .wst-gallery-item:nth-child(3n+1){ grid-column:1 / -1; }
+  .prod-gallery{ grid-auto-rows:clamp(180px, 40vw, 300px); }
+}
+</style>
+<link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2w">
+<link rel="stylesheet" href="assets/styles/wst-components.css?v=p3c">
+<link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+</head>
+<body data-wst-page="solutions">
+
+<div data-wst-header></div>
+
+<main>
+
+<!-- 1. Hero: words on one side, a still of the pack on the other. -->
+<section class="wst-page-hero wst-page-hero--cutout demo-hero">
+  <div class="container wst-page-hero-grid">
+    <div class="wst-page-hero-copy">
+      <a class="wst-back-link" data-wst-back="battery-packs.html" href="battery-packs.html" hidden><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3M7 3 3 7l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to battery packs</a>
+      <span class="eyebrow">Battery pack</span>
+      <h1 class="t-display">Compact battery platform.</h1>
+      <p class="wst-page-hero-intro">Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid.</p>
+      <a href="contact-v2.html" class="btn btn-primary">Discuss this pack</a>
+    </div>
+    <figure class="wst-page-hero-media">
+      <img src="assets/products/stills/compact-hero.webp?v=2" alt="The compact battery platform, assembled" width="1400" height="1351" fetchpriority="high" decoding="async">
+    </figure>
+  </div>
+</section>
+
+<!-- 2. Dark section: the live 3D model, with three facts beside it. -->
+<section class="demo-stage wst-section--dark on-dark" aria-label="The pack in 3D">
+  <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
+  <div class="container">
+    <div class="demo-stage-grid">
+      <div class="demo-model" data-hero-3d="assets/models/c4e.wstm" data-model-tone="light" data-model-margin="1.15">
+        <img src="assets/products/stills/compact-hero.webp?v=2" alt="The compact battery platform" width="1400" height="1351" loading="lazy" decoding="async">
+      </div>
+      <dl class="demo-facts">
+        <div class="demo-fact"><dt>Cell format</dt><dd><span class="big">21700</span><span class="note">Cylindrical cells, held in moulded holders.</span></dd></div>
+        <div class="demo-fact"><dt>Assembly</dt><dd><span class="big">284 parts</span><span class="note">Drawn from the production CAD, every part modelled.</span></dd></div>
+        <div class="demo-fact"><dt>Enclosure</dt><dd><span class="big">Sealed</span><span class="note">A sealed casing, with the BMS and harness inside the lid.</span></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Gallery: the pack, and the work around it. -->
+<section class="wst-section">
+  <div class="container">
+    <div class="wst-section-head">
+      <h2>The pack, up close.</h2>
+      <p>Cells, assembly and test, from the production floor.</p>
+    </div>
+    <div class="wst-gallery wst-gallery--mosaic prod-gallery">
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC07116_Web.jpg" alt="Cylindrical cell groups with nickel strips on a work board" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC01378_Web.jpg" alt="Cells being spot-welded by hand" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC06848_Web.jpg" alt="Operator heat-sealing cell modules" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC01655_Web.jpg" alt="Laser welding busbars onto a cell module" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC07122_Web.jpg" alt="Automated assembly line with handling stations" loading="lazy" decoding="async"></div>
+      <div class="wst-gallery-item"><img src="assets/production/haidi/DSC06927_Web.jpg" alt="Rows of finished cell modules ready for testing" loading="lazy" decoding="async"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div data-wst-footer></div>
+<script src="assets/scripts/wst-shell.js?v=nav12"></script>
+<script src="assets/vendor/three.r128.min.js" defer></script>
+<script src="assets/vendor/fflate.min.js" defer></script>
+<script src="assets/scripts/wstm-loader.js?v=3" defer></script>
+<script src="assets/scripts/wst-cad-colour.js?v=1" defer></script>
+<script src="assets/scripts/home-hero-3d.js?v=38" defer></script>
+<script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
+</body>
+</html>
