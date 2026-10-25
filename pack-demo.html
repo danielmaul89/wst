@@ -16,22 +16,29 @@
 .demo-hero .wst-page-hero-media img{ width:100%; }
 .demo-hero .wst-page-hero-media{ align-self:center; }
 
-/* The 3D stage: the canvas assets/scripts/home-hero-3d.js drops in fills this
-   box; without WebGL (or on a phone) the still inside it stays. */
-.demo-stage{ position:relative; padding:var(--sp-7) 0; overflow:hidden; }
-.demo-stage > .container{ position:relative; z-index:1; }
-.demo-stage-grid{ display:grid; grid-template-columns:minmax(0,7fr) minmax(0,4fr); gap:clamp(32px,5vw,80px); align-items:center; }
-.demo-model{ position:relative; width:100%; height:clamp(380px, 62vh, 640px); }
-.demo-model > img{ display:block; width:100%; height:100%; object-fit:contain; }
-.demo-model.is-3d > img{ display:none; }
-.demo-model.is-3d{ --model-bleed-top:-8%; --model-bleed-left:-6%; --model-width:112%; --model-height:116%; }
-.demo-facts{ margin:0; display:grid; gap:var(--sp-4); }
+/* The 3D stage: the same scroll-driven theatre the UPS pack page runs
+   (assets/scripts/product-3d-showcase.js). The dark band is as tall as the
+   scroll that opens the pack, the model pinned on the left while the three
+   facts stay beside it. */
+.demo-stage{ position:relative; background:var(--blue-deep); color:var(--paper); overflow:hidden; }
+.demo-stage > .wst-blueprint-grid{ position:absolute; inset:0; }
+.demo-theatre{ height:420vh; margin-top:0; }
+.demo-theatre .sc-stage{ align-items:center; gap:clamp(24px,4vw,64px); padding:calc(var(--nav-height) + 8px) clamp(24px,4vw,64px) 24px; }
+.demo-theatre .sc-screen{ flex:0 0 63%; align-self:stretch; min-height:0; }
+.demo-facts{ flex:1; margin:0; display:grid; gap:var(--sp-4); position:relative; z-index:6; }
 .demo-fact{ padding-top:var(--sp-3); border-top:1px solid rgba(251,249,245,.18); }
 .demo-fact dt{ font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--brass-on-dark); }
 .demo-fact dd{ margin:8px 0 0; }
 .demo-fact .big{ display:block; font-family:var(--font-display); font-size:var(--fs-40, 40px); line-height:1.1; letter-spacing:-.01em; color:var(--paper); }
-.demo-fact .note{ display:block; margin-top:6px; color:var(--ink-soft-on-dark); font-size:var(--fs-small); line-height:1.5; }
-@media (max-width:980px){ .demo-stage-grid{ grid-template-columns:minmax(0,1fr); } .demo-model{ height:clamp(300px, 52vw, 460px); } }
+ display:block; margin-top:6px; color:var(--ink-soft-on-dark); font-size:var(--fs-small); line-height:1.5; }
+@media (max-width:980px){
+  .demo-theatre{ height:360vh; }
+  .demo-theatre .sc-stage{ flex-direction:column; align-items:stretch; gap:12px; }
+  .demo-theatre .sc-screen{ flex:1 1 0; min-height:0; }
+  .demo-facts{ flex:none; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-2); }
+  .demo-fact .big{ font-size:var(--fs-24, 24px); }
+  .demo-fact .note{ display:none; }
+}
 
 /* Gallery: groups of three, one large and two smaller, switching sides. */
 .prod-gallery > .wst-gallery-item:nth-child(n){ grid-column:span 5; grid-row:auto; }
@@ -48,6 +55,7 @@
 <link rel="stylesheet" href="assets/styles/wst-design-system.css?v=p2w">
 <link rel="stylesheet" href="assets/styles/wst-components.css?v=p3c">
 <link rel="stylesheet" href="assets/styles/enterprise-polish.css?v=p1b">
+<link rel="stylesheet" href="assets/styles/wst-model-theatre.css?v=4">
 </head>
 <body data-wst-page="solutions">
 
@@ -71,13 +79,17 @@
   </div>
 </section>
 
-<!-- 2. Dark section: the live 3D model, with three facts beside it. -->
+<!-- 2. Dark section: the live 3D model, opened by scrolling, with three facts beside it. -->
 <section class="demo-stage wst-section--dark on-dark" aria-label="The pack in 3D">
   <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
-  <div class="container">
-    <div class="demo-stage-grid">
-      <div class="demo-model" data-hero-3d="assets/models/wl03.wstm" data-model-margin="1.15">
-        <img src="assets/products/stills/ups-hero.webp?v=3" alt="The UPS platform, a 19-inch rack battery unit" width="1800" height="677" loading="lazy" decoding="async">
+  <div class="sc-theatre sc-theatre--open demo-theatre" id="scTheatre" data-model="ups">
+    <div class="sc-stage">
+      <div class="sc-screen" id="scScreen">
+        <canvas class="sc-canvas" id="scCanvas"></canvas>
+        <div class="sc-hint" id="scHint">
+          <span>Scroll</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" stroke="#C7CCDE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
       </div>
       <dl class="demo-facts">
         <div class="demo-fact"><dt>Format</dt><dd><span class="big">19-inch rack</span><span class="note">A 2U rack unit on rack brackets, with status indication on the front.</span></dd></div>
@@ -111,9 +123,11 @@
 <script src="assets/scripts/wst-shell.js?v=nav12"></script>
 <script src="assets/vendor/three.r128.min.js" defer></script>
 <script src="assets/vendor/fflate.min.js" defer></script>
+<script src="assets/vendor/FBXLoader.js" defer></script>
 <script src="assets/scripts/wstm-loader.js?v=3" defer></script>
 <script src="assets/scripts/wst-cad-colour.js?v=1" defer></script>
-<script src="assets/scripts/home-hero-3d.js?v=38" defer></script>
+<script src="assets/scripts/wst-model-look.js?v=3" defer></script>
+<script src="assets/scripts/product-3d-showcase.js?v=25" defer></script>
 <script src="assets/scripts/enterprise-motion.js?v=publish1" defer></script>
 </body>
 </html>
