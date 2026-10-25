@@ -13,7 +13,8 @@
 <style>
 /* DEMO of a single battery pack page: still hero, a dark blueprint section
    with the live 3D model beside three facts, then a picture gallery. */
-.demo-hero{ min-height:clamp(560px, 82vh, 860px); display:flex; align-items:center; padding-bottom:var(--sp-7); }
+main{ position:relative; }
+.demo-hero{ position:relative; z-index:1; min-height:clamp(560px, 82vh, 860px); display:flex; align-items:center; padding-bottom:var(--sp-7); }
 .demo-hero .wst-page-hero-grid{ width:100%; }
 .demo-hero .wst-page-hero-media img{ width:100%; }
 .demo-hero .wst-page-hero-media{ align-self:center; }
@@ -68,6 +69,12 @@
 <div data-wst-header></div>
 
 <main>
+
+<div class="wst-ambient wst-ambient--hero" aria-hidden="true">
+  <span class="wst-ambient-blob wst-ambient-blob--brass"></span>
+  <span class="wst-ambient-blob wst-ambient-blob--grey"></span>
+  <span class="wst-ambient-blob wst-ambient-blob--blue"></span>
+</div>
 
 <!-- 1. Hero: words on one side, a still of the pack on the other. -->
 <section class="wst-page-hero wst-page-hero--cutout demo-hero">
