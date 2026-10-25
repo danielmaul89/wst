@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Compact battery platform (demo) | WS Technicals</title>
-<meta name="description" content="Demo page for a single battery pack: a still in the hero, the live 3D model on a dark blueprint section, and a gallery.">
+<title>UPS platform (demo) | WS Technicals</title>
+<meta name="description" content="Demo page for a single battery pack (the UPS platform): a still in the hero, the live 3D model on a dark blueprint section, and a gallery.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,7 @@
 /* DEMO of a single battery pack page: still hero, a dark blueprint section
    with the live 3D model beside three facts, then a picture gallery. */
 .demo-hero .wst-page-hero-media img{ width:100%; }
+.demo-hero .wst-page-hero-media{ align-self:center; }
 
 /* The 3D stage: the canvas assets/scripts/home-hero-3d.js drops in fills this
    box; without WebGL (or on a phone) the still inside it stays. */
@@ -60,12 +61,12 @@
     <div class="wst-page-hero-copy">
       <a class="wst-back-link" data-wst-back="battery-packs.html" href="battery-packs.html" hidden><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3M7 3 3 7l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to battery packs</a>
       <span class="eyebrow">Battery pack</span>
-      <h1 class="t-display">Compact battery platform.</h1>
-      <p class="wst-page-hero-intro">Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid.</p>
+      <h1 class="t-display">UPS platform.</h1>
+      <p class="wst-page-hero-intro">A 19-inch rack unit: a sheet metal shell on rack brackets, insulated top and bottom, with forced air through the enclosure and status indication on the front.</p>
       <a href="contact-v2.html" class="btn btn-primary">Discuss this pack</a>
     </div>
     <figure class="wst-page-hero-media">
-      <img src="assets/products/stills/compact-hero.webp?v=2" alt="The compact battery platform, assembled" width="1400" height="1351" fetchpriority="high" decoding="async">
+      <img src="assets/products/stills/ups-hero.webp?v=3" alt="The UPS platform, a 19-inch rack battery unit" width="1800" height="677" fetchpriority="high" decoding="async">
     </figure>
   </div>
 </section>
@@ -75,13 +76,13 @@
   <div class="wst-blueprint-grid wst-blueprint-grid--behind" aria-hidden="true"></div>
   <div class="container">
     <div class="demo-stage-grid">
-      <div class="demo-model" data-hero-3d="assets/models/c4e.wstm" data-model-tone="light" data-model-margin="1.15">
-        <img src="assets/products/stills/compact-hero.webp?v=2" alt="The compact battery platform" width="1400" height="1351" loading="lazy" decoding="async">
+      <div class="demo-model" data-hero-3d="assets/models/wl03.wstm" data-model-margin="1.15">
+        <img src="assets/products/stills/ups-hero.webp?v=3" alt="The UPS platform, a 19-inch rack battery unit" width="1800" height="677" loading="lazy" decoding="async">
       </div>
       <dl class="demo-facts">
-        <div class="demo-fact"><dt>Cell format</dt><dd><span class="big">21700</span><span class="note">Cylindrical cells, held in moulded holders.</span></dd></div>
-        <div class="demo-fact"><dt>Assembly</dt><dd><span class="big">284 parts</span><span class="note">Drawn from the production CAD, every part modelled.</span></dd></div>
-        <div class="demo-fact"><dt>Enclosure</dt><dd><span class="big">Sealed</span><span class="note">A sealed casing, with the BMS and harness inside the lid.</span></dd></div>
+        <div class="demo-fact"><dt>Format</dt><dd><span class="big">19-inch rack</span><span class="note">A 2U rack unit on rack brackets, with status indication on the front.</span></dd></div>
+        <div class="demo-fact"><dt>Assembly</dt><dd><span class="big">312 parts</span><span class="note">Drawn from the production CAD, every part modelled.</span></dd></div>
+        <div class="demo-fact"><dt>Cooling</dt><dd><span class="big">Forced air</span><span class="note">Air is drawn through the sheet metal enclosure, insulated top and bottom.</span></dd></div>
       </dl>
     </div>
   </div>
