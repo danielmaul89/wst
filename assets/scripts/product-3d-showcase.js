@@ -1028,11 +1028,13 @@
         /* Margins are compositional, not just "make it fit": the caption
            owns the top of the frame and the hint the bottom, so the pack
            is framed to sit in the middle band rather than edge to edge. */
-        distTight = fitDistance(halfW, halfH, 1.72);
+        /* A page can pull the camera in: data-fit-tight / data-fit-wide scale the
+           assembled and exploded framing (1 = the margins below). */
+        distTight = fitDistance(halfW, halfH, 1.72) * (parseFloat(track.getAttribute('data-fit-tight')) || 1);
         /* Exploded: the stack grows upward, and the camera target rises
            with it (see frame()), so only part of the rise counts against
            the framing. The arc widens the footprint slightly. */
-        distWide = fitDistance(halfW * 1.12, halfH + stackRise * 0.62, 1.14);
+        distWide = fitDistance(halfW * 1.12, halfH + stackRise * 0.62, 1.14) * (parseFloat(track.getAttribute('data-fit-wide')) || 1);
         /* Nudges the assembled pack below the caption. */
         composeBase = halfH * 0.20;
         camera.near = Math.max(0.01, distTight / 140);
