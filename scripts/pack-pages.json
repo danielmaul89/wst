@@ -1,0 +1,225 @@
+{
+  "gallery": [
+    {
+      "src": "assets/production/haidi/DSC07116_Web.jpg",
+      "alt": "Cylindrical cell groups with nickel strips on a work board"
+    },
+    {
+      "src": "assets/production/haidi/DSC01378_Web.jpg",
+      "alt": "Cells being spot-welded by hand"
+    },
+    {
+      "src": "assets/production/haidi/DSC06848_Web.jpg",
+      "alt": "Operator heat-sealing cell modules"
+    },
+    {
+      "src": "assets/production/haidi/DSC01655_Web.jpg",
+      "alt": "Laser welding busbars onto a cell module"
+    },
+    {
+      "src": "assets/production/haidi/DSC07122_Web.jpg",
+      "alt": "Automated assembly line with handling stations"
+    },
+    {
+      "src": "assets/production/haidi/DSC06927_Web.jpg",
+      "alt": "Rows of finished cell modules ready for testing"
+    }
+  ],
+  "packs": [
+    {
+      "file": "pack-compact-platform.html",
+      "name": "Compact battery platform",
+      "description": "The compact battery platform: 21700 cylindrical cells in moulded holders under a sealed casing, taken apart on screen from the production CAD.",
+      "intro": "Cylindrical cells in moulded holders under a sealed casing, with the BMS and the harness carried inside the lid. One of our production platforms, drawn and assembled in house.",
+      "still": {
+        "src": "assets/products/stills/compact-hero.webp?v=3",
+        "width": 1400,
+        "height": 1351,
+        "alt": "The compact battery platform"
+      },
+      "frames": {
+        "dir": "assets/renders/compact-simple",
+        "ver": 2
+      },
+      "view": {
+        "zoom": 1.2,
+        "x": 12.4,
+        "y": 3
+      },
+      "facts": [
+        {
+          "label": "Cells",
+          "big": "21700 cylindrical",
+          "note": "Held in moulded holders that space them apart and carry them through shock and vibration."
+        },
+        {
+          "label": "Assembly",
+          "big": "284 parts",
+          "note": "Drawn from the production CAD, every part modelled."
+        },
+        {
+          "label": "BMS",
+          "big": "Inside the lid",
+          "note": "The board handles protection and balancing, reachable without disturbing the cell stack."
+        }
+      ]
+    },
+    {
+      "file": "pack-heavy-machinery-platform.html",
+      "name": "Heavy machinery platform",
+      "description": "The heavy machinery platform: EVE C40 prismatic cells clamped in a welded enclosure, taken apart on screen from the production CAD.",
+      "intro": "Prismatic cells clamped in a welded enclosure, with cell monitoring and the series busbars carried under a sealed lid. Built for machines that work a full shift and charge overnight.",
+      "still": {
+        "src": "assets/products/stills/heavy-machinery.webp?v=3",
+        "width": 1400,
+        "height": 967,
+        "alt": "The heavy machinery platform"
+      },
+      "frames": {
+        "dir": "assets/renders/hdr-simple",
+        "ver": 5
+      },
+      "view": {
+        "zoom": 1.3,
+        "x": 8.2,
+        "y": 3.6
+      },
+      "facts": [
+        {
+          "label": "Cells",
+          "big": "EVE C40 prismatic",
+          "note": "A block held under compression, so the stack keeps its shape as the cells breathe."
+        },
+        {
+          "label": "Assembly",
+          "big": "247 parts",
+          "note": "Drawn from the production CAD, every part modelled."
+        },
+        {
+          "label": "Enclosure",
+          "big": "Welded, sealed lid",
+          "note": "Built to live outdoors on a machine rather than in a cabinet."
+        }
+      ]
+    },
+    {
+      "file": "pack-heavy-machinery-chassis.html",
+      "name": "Heavy machinery chassis",
+      "description": "The heavy machinery chassis: a bend-plate battery that is part of the machine's structure, taken apart on screen from the production CAD.",
+      "intro": "A battery that is part of the machine's structure: a folded plate chassis carrying the service disconnect, the relays, the busbars and the BMS master on their own layer inside it.",
+      "still": {
+        "src": "assets/products/stills/chassis.webp?v=3",
+        "width": 1400,
+        "height": 1237,
+        "alt": "The heavy machinery chassis"
+      },
+      "frames": {
+        "dir": "assets/renders/chassis-simple",
+        "ver": 2
+      },
+      "view": {
+        "zoom": 1.5,
+        "x": 13,
+        "y": -2
+      },
+      "facts": [
+        {
+          "label": "Build",
+          "big": "Bend-plate chassis",
+          "note": "Folded from plate and bolted through flanges, so the battery carries load instead of hanging off a bracket."
+        },
+        {
+          "label": "Assembly",
+          "big": "356 parts",
+          "note": "Drawn from the production CAD, every part modelled."
+        },
+        {
+          "label": "Isolation",
+          "big": "Service disconnect",
+          "note": "A manual disconnect breaks the string before the pack is opened."
+        }
+      ]
+    },
+    {
+      "file": "pack-ups-platform.html",
+      "name": "UPS platform",
+      "description": "The UPS platform: a 19-inch rack battery unit, taken apart on screen from the production CAD.",
+      "intro": "A 19-inch rack unit: a sheet metal shell on rack brackets, insulated top and bottom, with forced air through the enclosure and status indication on the front.",
+      "still": {
+        "src": "assets/products/stills/ups-hero.webp?v=3",
+        "width": 1800,
+        "height": 677,
+        "alt": "The UPS platform, a 19-inch rack battery unit"
+      },
+      "frames": {
+        "dir": "assets/renders/ups-simple",
+        "ver": 2,
+        "explodeEnd": 0.45,
+        "holdEnd": 0.78
+      },
+      "view": {
+        "zoom": 1.75,
+        "x": 12.9,
+        "y": -3.3
+      },
+      "facts": [
+        {
+          "label": "Format",
+          "big": "19-inch rack",
+          "note": "A 2U rack unit on rack brackets, with status indication on the front."
+        },
+        {
+          "label": "Assembly",
+          "big": "312 parts",
+          "note": "Drawn from the production CAD, every part modelled."
+        },
+        {
+          "label": "Cooling",
+          "big": "Forced air",
+          "note": "Air is drawn through the sheet metal enclosure, insulated top and bottom."
+        }
+      ]
+    },
+    {
+      "file": "pack-agv-platform.html",
+      "name": "AGV platform",
+      "description": "The AGV platform: a long, slim sealed pack for an automated guided vehicle, taken apart on screen from the production CAD.",
+      "intro": "A long, slim pack that drops into the frame of an automated guided vehicle: sealed case, padded internals, and a service lid that opens the parts a technician needs without opening the pack.",
+      "still": {
+        "src": "assets/products/stills/agv.webp?v=3",
+        "width": 1400,
+        "height": 1059,
+        "alt": "The AGV platform"
+      },
+      "frames": {
+        "dir": "assets/renders/agv-simple",
+        "ver": 3,
+        "explodeEnd": 0.45,
+        "holdEnd": 0.78,
+        "mirror": true
+      },
+      "view": {
+        "zoom": 1.9,
+        "x": -15.5,
+        "y": -1.6
+      },
+      "facts": [
+        {
+          "label": "Shape",
+          "big": "Long and slim",
+          "note": "The space an AGV has: under the deck, between the wheels."
+        },
+        {
+          "label": "Assembly",
+          "big": "127 parts",
+          "note": "Drawn from the production CAD, every part modelled."
+        },
+        {
+          "label": "Service",
+          "big": "Separate lid",
+          "note": "Routine work on the vehicle never breaks the seal on the pack."
+        }
+      ]
+    }
+  ]
+}
