@@ -25,7 +25,7 @@ main{ position:relative; }
    facts stay beside it. */
 .demo-stage{ position:relative; background:var(--blue-deep); color:var(--paper); overflow:clip; }
 /* Held to the screen while the band scrolls: sticky, one viewport tall, pulled out of the flow so the theatre sits over it. */
-.demo-stage > .wst-blueprint-grid{ position:sticky; inset:0 0 auto 0; height:100vh; margin-bottom:-100vh; }
+.demo-stage > div:first-child{ position:sticky; inset:0 0 auto 0; height:100vh; margin-bottom:-100vh; }
 .demo-stage .demo-theatre{ height:420vh; margin-top:0; }
 .demo-theatre .sc-stage{ align-items:center; gap:clamp(24px,4vw,64px); padding:calc(var(--nav-height) + 8px) clamp(24px,4vw,64px) 24px; }
 .demo-theatre .sc-screen{ flex:0 0 63%; align-self:stretch; min-height:0; }

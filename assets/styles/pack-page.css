@@ -1,0 +1,67 @@
+/* Battery pack pages (pack-*.html): a still in the hero, a dark blueprint
+   section where the pack opens as the page scrolls with three facts beside
+   it, then a picture gallery.
+
+   The pages are written by scripts/build-pack-pages.js from
+   scripts/pack-pages.json, so a change to the layout is made here and in the
+   script, and a change to a pack's words or numbers in the JSON. */
+
+.pk-main{ position:relative; }
+
+/* 1. Hero */
+.pk-hero{ position:relative; z-index:1; min-height:clamp(560px, 82vh, 860px); display:flex; align-items:center; padding-bottom:var(--sp-7); }
+.pk-hero .wst-page-hero-grid{ width:100%; }
+.pk-hero .wst-page-hero-media{ align-self:center; }
+.pk-hero .wst-page-hero-media img{ width:100%; max-height:56vh; object-fit:contain; }
+
+/* 2. The dark band. It is as tall as the scroll that opens the pack: the
+   model pinned on the left while the three facts stay beside it. */
+.pk-stage{ position:relative; background:var(--blue-deep); color:var(--paper); overflow:clip; }
+/* The grid is held to the screen while the band scrolls: sticky, one
+   viewport tall, and pulled out of the flow so the theatre sits over it. */
+.pk-stage > .wst-blueprint-grid{ position:sticky; inset:0 0 auto 0; height:100vh; margin-bottom:-100vh; }
+/* The shared open theatre pulls itself up under the section before it; the
+   band starts on its own edge instead. */
+.pk-stage .pk-theatre{ height:340vh; margin-top:0; }
+.pk-theatre .sc-stage{ align-items:center; gap:clamp(24px,4vw,64px); padding:calc(var(--nav-height) + 8px) clamp(24px,4vw,64px) 24px; }
+.pk-theatre .sc-screen{ flex:0 0 63%; align-self:stretch; min-height:0; }
+/* The renders leave room round the pack. Each pack names how far to draw
+   in (--pk-zoom) and how far to move it to the middle (--pk-x, --pk-y), so
+   the closed pack reads at a good size and the open one still fits. */
+.pk-theatre .sc-canvas{ transform:scale(var(--pk-zoom,1)) translate(var(--pk-x,0%), var(--pk-y,0%)); }
+
+/* The script that steps the frames wants a callouts layer; the facts replace the labels, so it stays empty and out of sight. */
+.pk-theatre .sc-callouts{ display:none; }
+
+.pk-facts{ flex:1; margin:0; display:grid; gap:var(--sp-4); position:relative; z-index:6; }
+.pk-fact{ padding-top:var(--sp-3); border-top:1px solid rgba(251,249,245,.18); }
+.pk-fact dt{ font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--brass-on-dark); }
+.pk-fact dd{ margin:8px 0 0; }
+.pk-fact .big{ display:block; font-family:var(--font-display); font-size:var(--fs-40, 40px); line-height:1.1; letter-spacing:-.01em; color:var(--paper); }
+.pk-fact .note{ display:block; margin-top:6px; color:var(--ink-soft-on-dark); font-size:var(--fs-small); line-height:1.5; }
+/* The facts come in one by one as the pack opens (assets/scripts/pack-page.js). */
+.js-facts .pk-fact{ opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease), transform .8s var(--ease); }
+.js-facts .pk-fact.is-in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .js-facts .pk-fact{ opacity:1; transform:none; transition:none; } }
+
+@media (max-width:980px){
+  .pk-stage .pk-theatre{ height:300vh; }
+  .pk-theatre .sc-stage{ flex-direction:column; align-items:stretch; gap:12px; }
+  .pk-theatre .sc-screen{ flex:1 1 0; min-height:0; }
+  .pk-theatre .sc-canvas{ transform:none; }
+  .pk-facts{ flex:none; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-2); }
+  .pk-fact .big{ font-size:var(--fs-24, 24px); }
+  .pk-fact .note{ display:none; }
+}
+
+/* 3. Gallery: groups of three, one large and two smaller, switching sides. */
+.pk-gallery > .wst-gallery-item:nth-child(n){ grid-column:span 5; grid-row:auto; }
+.pk-gallery > .wst-gallery-item:nth-child(6n+1){ grid-column:1 / span 7; grid-row:span 2; }
+.pk-gallery > .wst-gallery-item:nth-child(6n+4){ grid-column:6 / span 7; grid-row:span 2; }
+.pk-gallery{ grid-auto-flow:dense; grid-auto-rows:clamp(200px, 22vw, 320px); }
+.pk-gallery .wst-gallery-item{ min-height:0; }
+@media (max-width:980px){
+  .pk-gallery > .wst-gallery-item:nth-child(n){ grid-column:auto; grid-row:auto; }
+  .pk-gallery > .wst-gallery-item:nth-child(3n+1){ grid-column:1 / -1; }
+  .pk-gallery{ grid-auto-rows:clamp(180px, 40vw, 300px); }
+}
