@@ -605,14 +605,18 @@ h4,
   opacity: 0;
   visibility: hidden;
   transform: translateY(6px);
+  /* A short grace period on the way out, so a slow or slightly off-line mouse does not close it. */
   transition:
-    opacity var(--dur) var(--ease),
-    transform var(--dur) var(--ease),
-    visibility var(--dur);
+    opacity var(--dur) var(--ease) .18s,
+    transform var(--dur) var(--ease) .18s,
+    visibility var(--dur) .18s;
 }
+/* An invisible bridge over the gap between the link and the panel. */
+.dropdown::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
 
 .nav-item:hover .dropdown,
 .nav-item:focus-within .dropdown {
+  transition-delay: 0s;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -1247,6 +1251,7 @@ body.wst-modal-open {
     padding: 16px 8px;
   }
 
+  .dropdown::before { display: none; }
   .dropdown {
     position: static;
     display: none;
